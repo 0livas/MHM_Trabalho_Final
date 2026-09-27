@@ -9,7 +9,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src" / "exact-solutions"))
-import exact
+import problem
+from reference import brute_front
 import cpsat
 
 
@@ -21,24 +22,22 @@ class CpSatTest(unittest.TestCase):
         except ValueError:
             raise unittest.SkipTest("OR-Tools opcional não instalado")
 
-    def test_same_complete_front_as_backtracking(self):
+    def test_same_complete_front_as_oracle(self):
         for path in sorted((ROOT / "tests" / "fixtures").glob("*.dat")):
             with self.subTest(path=path.name), tempfile.TemporaryDirectory() as temp:
-                instance = exact.read_instance(path)
+                instance = problem.read_instance(path)
                 root = Path(temp)
-                brute = exact.search(instance, checkpoint=root / "brute-state.json",
-                                     output=root / "brute.json", time_limit=None)
                 sat = cpsat.solve_front(instance, output=root / "sat.json",
                                         seconds_per_solve=10, workers=2)
                 self.assertEqual(sat["status"], "complete")
                 self.assertTrue(sat["pareto_proven"])
                 self.assertEqual([(point["makespan"], point["tec_exact"])
                                   for point in sat["front"]],
-                                 [(point["makespan"], point["tec_exact"])
-                                  for point in brute["front"]])
+                                 [(c, {"numerator": e, "denominator": problem.energy_scale(instance)[0]})
+                                  for c, e in brute_front(instance)])
 
     def test_resume_between_proven_points(self):
-        instance = exact.read_instance(ROOT / "tests" / "fixtures" / "01_single_job_modes.dat")
+        instance = problem.read_instance(ROOT / "tests" / "fixtures" / "01_single_job_modes.dat")
         with tempfile.TemporaryDirectory() as temp:
             output = Path(temp) / "sat.json"
             full = cpsat.solve_front(instance, output=output, seconds_per_solve=10, workers=2)

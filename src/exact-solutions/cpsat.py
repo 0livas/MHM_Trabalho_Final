@@ -1,4 +1,4 @@
-"""Modelo CP-SAT exato para a fronteira de Pareto do mesmo UPMSP de exact.py.
+"""Modelo CP-SAT exato para a fronteira de Pareto do UPMSP.
 
 Usa intervalos opcionais para máquina/modo e um circuito por máquina para
 representar *somente* os setups entre jobs consecutivos. A fronteira é obtida
@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 import time
 
-from exact import (PROJECT_ROOT, Choice, Instance, archive_output, atomic_json,
+from problem import (PROJECT_ROOT, Choice, Instance, archive_output, atomic_json,
                    energy_scale, generate_choices, has_valid_setups, overlaps_any,
                    read_instance)
 

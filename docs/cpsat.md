@@ -1,6 +1,6 @@
 # Método exato CP-SAT
 
-O modelo em `src/exact-solutions/cpsat.py` resolve a **mesma região viável e os mesmos dois objetivos** do backtracking em `exact.py`. Para manter a instalação portátil e sem dependência de um `venv`, o OR-Tools é opcional e tem seu próprio arquivo de requisitos. No Git Bash, na raiz do repositório:
+O modelo em `src/exact-solutions/cpsat.py` resolve a **mesma região viável e os mesmos dois objetivos** do solver próprio em `custom_exact.py`. Para manter a instalação portátil e sem dependência de um `venv`, o OR-Tools é opcional e tem seu próprio arquivo de requisitos. No Git Bash, na raiz do repositório:
 
 ```bash
 python -m pip install --user -r requirements-cpsat.txt
@@ -14,7 +14,7 @@ O parâmetro `--time-limit` limita **cada chamada** do solver; zero significa se
 
 Para cada job, máquina e modo, há uma variável binária de presença e um intervalo opcional com início e duração `ceil(processing[j][i]/v[l])`. Exatamente um par máquina/modo é escolhido por job. Intervalos da mesma máquina não se sobrepõem. O custo de cada opção é uma tabela de inteiros exatos indexada pelo início; ela usa `pi`, `lambda`, as tarifas e as janelas de ponta de cada dia, com a mesma escala inteira do backtracking.
 
-Um circuito dirigido por máquina define a sequência dos jobs presentes. Uma aresta `j → k` impõe `início(k) ≥ término(j) + setup[i][j][k]`. Assim, o setup é exigido **entre jobs consecutivos**, sem impor indevidamente `setup[j][k]` a jobs que tenham outro job entre eles. O caso `06_reparable_setup.dat` testa especificamente essa distinção. `Cmax` é o maior término; `TEC` é a soma dos custos de processamento. `max_cost` permanece somente como normalizador na saída, igual ao backtracking.
+Um circuito dirigido por máquina define a sequência dos jobs presentes. Uma aresta `j → k` impõe `início(k) ≥ término(j) + setup[i][j][k]`. Assim, o setup é exigido **entre jobs consecutivos**, sem impor indevidamente `setup[j][k]` a jobs que tenham outro job entre eles. O caso `06_reparable_setup.dat` testa especificamente essa distinção. `Cmax` é o maior término; `TEC` é a soma dos custos de processamento. `max_cost` permanece somente como normalizador na saída, igual ao solver próprio.
 
 ## Fronteira de Pareto exata
 
@@ -35,6 +35,6 @@ As execuções usaram a mesma instância, identificada pelo SHA-256 nos arquivos
 | CP-SAT, primeira execução, 8 workers, até 15 s por chamada | 50,59 s | Dois pontos provados; busca ainda incompleta |
 | CP-SAT, após retomada, 8 workers, até 60 s por chamada | 1.141,53 s acumulados | **43 pontos provados**; 87 chamadas, a última `INFEASIBLE`; fronteira completa |
 
-Os 43 pares `(Cmax, TEC)` exatos estão em `data/baselines/6_2_1439_3_S_1-9_cpsat_complete.json`. O primeiro é `(94, 242,2037755)` e o último `(220, 134,099428)`. Os escalonamentos correspondentes permanecem no relatório detalhado `data/output/cpsat/6_2_1439_3_S_1-9.json` da máquina local. Cada escalonamento foi reavaliado com o parser e as regras do backtracking: não há sobreposição, todos os setups são respeitados e os dois objetivos coincidem com os inteiros exatos do relatório.
+Os 43 pares `(Cmax, TEC)` exatos estão em `data/baselines/6_2_1439_3_S_1-9_cpsat_complete.json`. O primeiro é `(94, 242,2037755)` e o último `(220, 134,099428)`. Os escalonamentos correspondentes permanecem no relatório detalhado `data/output/cpsat/6_2_1439_3_S_1-9.json` da máquina local. Cada escalonamento foi reavaliado com o parser e as regras compartilhadas em `problem.py`: não há sobreposição, todos os setups são respeitados e os dois objetivos coincidem com os inteiros exatos do relatório.
 
-O backtracking continua disponível para validar a modelagem; suas escolhas e checkpoints não foram substituídos pelo CP-SAT. Os seis casos pequenos em `tests/fixtures/` têm fronteiras completas idênticas nos dois métodos. Execute a bateria com `python -m unittest discover -s tests -v` depois de instalar o OR-Tools. Sem ele, os testes CP-SAT são ignorados, e os testes do backtracking continuam funcionando.
+O solver próprio permanece disponível para validar a modelagem. Os seis casos pequenos em `tests/fixtures/` têm fronteiras completas idênticas nos dois métodos e no oráculo exaustivo dos testes. Execute a bateria com `python -m unittest discover -s tests -v` depois de instalar o OR-Tools. Sem ele, os testes CP-SAT são ignorados, e os testes do solver próprio continuam funcionando.

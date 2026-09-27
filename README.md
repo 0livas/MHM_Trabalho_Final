@@ -1,8 +1,7 @@
 # MHM_Trabalho_Final
 
-Trabalho de otimização multiobjetivo para escalonamento em máquinas paralelas não relacionadas, com modos de operação, setups dependentes da sequência e tarifa de energia variável. O repositório reúne as implementações dos métodos exato, heurístico e meta-heurístico.
+Trabalho de otimização multiobjetivo para escalonamento em máquinas paralelas não relacionadas, com modos de operação, setups dependentes da sequência e tarifa de energia variável. O repositório está organizado para reunir métodos exatos, heurísticos e meta-heurísticos; atualmente, os métodos exatos estão implementados.
 
-O primeiro método disponível é uma enumeração exaustiva por backtracking da variável binária `X[i,j,h,l]`. A documentação de uso, dos objetivos e dos limites práticos está em [docs/forca_bruta.md](docs/forca_bruta.md).
+Os métodos exatos disponíveis são o [solver próprio](src/exact-solutions/custom_exact.py), que combina backtracking, propagação de domínios e podas seguras, e o [modelo CP-SAT](src/exact-solutions/cpsat.py), baseado no OR-Tools. Ambos leem as mesmas instâncias e usam as definições compartilhadas em [problem.py](src/exact-solutions/problem.py). Consulte [docs/custom_exact.md](docs/custom_exact.md) e [docs/cpsat.md](docs/cpsat.md) para execução e detalhes.
 
-O segundo método exato usa CP-SAT com ε-restrição para provar pontos da fronteira de Pareto. Sua modelagem, execução e comparação com o backtracking estão em [docs/cpsat.md](docs/cpsat.md). O backtracking permanece disponível para comparação e validação em instâncias pequenas.
-
+A enumeração exaustiva permanece apenas como oráculo em instâncias pequenas de teste. O resultado histórico da execução de força bruta na instância oficial está preservado em `data/baselines/`.
