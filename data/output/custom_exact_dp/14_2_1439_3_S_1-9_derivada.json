@@ -1,0 +1,357 @@
+{
+  "format_version": 1,
+  "instance": "E:\\geral\\MHM\\MHM_Trabalho_Final\\data\\input\\set1\\14_2_1439_3_S_1-9_derivada.dat",
+  "instance_sha256": "70ff0f54e92fbb4ee92af0eee49be2de8443a1580da898c97da2959e5253c8bb",
+  "method": "custom_exact_dp",
+  "status": "incomplete",
+  "pareto_proven": false,
+  "minimum_makespan": 196,
+  "makespan_dp": {
+    "instance": "E:\\geral\\MHM\\MHM_Trabalho_Final\\data\\input\\set1\\14_2_1439_3_S_1-9_derivada.dat",
+    "instance_sha256": "70ff0f54e92fbb4ee92af0eee49be2de8443a1580da898c97da2959e5253c8bb",
+    "method": "makespan_dp",
+    "status": "optimal",
+    "minimum_makespan": 196,
+    "horizon": 1440,
+    "schedule": [
+      {
+        "job": 0,
+        "machine": 1,
+        "mode": 0,
+        "start": 86,
+        "end": 126
+      },
+      {
+        "job": 1,
+        "machine": 0,
+        "mode": 0,
+        "start": 40,
+        "end": 44
+      },
+      {
+        "job": 2,
+        "machine": 1,
+        "mode": 0,
+        "start": 67,
+        "end": 68
+      },
+      {
+        "job": 3,
+        "machine": 1,
+        "mode": 0,
+        "start": 0,
+        "end": 57
+      },
+      {
+        "job": 4,
+        "machine": 1,
+        "mode": 0,
+        "start": 127,
+        "end": 150
+      },
+      {
+        "job": 5,
+        "machine": 0,
+        "mode": 0,
+        "start": 187,
+        "end": 196
+      },
+      {
+        "job": 6,
+        "machine": 1,
+        "mode": 0,
+        "start": 59,
+        "end": 63
+      },
+      {
+        "job": 7,
+        "machine": 1,
+        "mode": 0,
+        "start": 173,
+        "end": 194
+      },
+      {
+        "job": 8,
+        "machine": 1,
+        "mode": 0,
+        "start": 155,
+        "end": 171
+      },
+      {
+        "job": 9,
+        "machine": 0,
+        "mode": 0,
+        "start": 161,
+        "end": 183
+      },
+      {
+        "job": 10,
+        "machine": 0,
+        "mode": 0,
+        "start": 45,
+        "end": 75
+      },
+      {
+        "job": 11,
+        "machine": 0,
+        "mode": 0,
+        "start": 0,
+        "end": 35
+      },
+      {
+        "job": 12,
+        "machine": 0,
+        "mode": 0,
+        "start": 77,
+        "end": 157
+      },
+      {
+        "job": 13,
+        "machine": 1,
+        "mode": 0,
+        "start": 70,
+        "end": 85
+      }
+    ],
+    "elapsed_seconds": 0.7810000000026776
+  },
+  "horizon": 1440,
+  "epsilon_max": 1440,
+  "next_epsilon": 196,
+  "sweep": [],
+  "front": [],
+  "proven_points": [],
+  "candidate": {
+    "makespan": 196,
+    "tec": 273.444681,
+    "tec_exact": {
+      "numerator": 16406680860,
+      "denominator": 60000000
+    },
+    "normalized_makespan": 0.1361111111111111,
+    "normalized_tec": 0.23572817327586207,
+    "x_nonzero": [
+      {
+        "i": 1,
+        "j": 0,
+        "h": 86,
+        "l": 0
+      },
+      {
+        "i": 0,
+        "j": 1,
+        "h": 40,
+        "l": 0
+      },
+      {
+        "i": 1,
+        "j": 2,
+        "h": 67,
+        "l": 0
+      },
+      {
+        "i": 1,
+        "j": 3,
+        "h": 0,
+        "l": 0
+      },
+      {
+        "i": 1,
+        "j": 4,
+        "h": 127,
+        "l": 0
+      },
+      {
+        "i": 0,
+        "j": 5,
+        "h": 187,
+        "l": 0
+      },
+      {
+        "i": 1,
+        "j": 6,
+        "h": 59,
+        "l": 0
+      },
+      {
+        "i": 1,
+        "j": 7,
+        "h": 173,
+        "l": 0
+      },
+      {
+        "i": 1,
+        "j": 8,
+        "h": 155,
+        "l": 0
+      },
+      {
+        "i": 0,
+        "j": 9,
+        "h": 161,
+        "l": 0
+      },
+      {
+        "i": 0,
+        "j": 10,
+        "h": 45,
+        "l": 0
+      },
+      {
+        "i": 0,
+        "j": 11,
+        "h": 0,
+        "l": 0
+      },
+      {
+        "i": 0,
+        "j": 12,
+        "h": 77,
+        "l": 0
+      },
+      {
+        "i": 1,
+        "j": 13,
+        "h": 70,
+        "l": 0
+      }
+    ],
+    "schedule": [
+      {
+        "job": 0,
+        "machine": 1,
+        "mode": 0,
+        "start": 86,
+        "end": 126
+      },
+      {
+        "job": 1,
+        "machine": 0,
+        "mode": 0,
+        "start": 40,
+        "end": 44
+      },
+      {
+        "job": 2,
+        "machine": 1,
+        "mode": 0,
+        "start": 67,
+        "end": 68
+      },
+      {
+        "job": 3,
+        "machine": 1,
+        "mode": 0,
+        "start": 0,
+        "end": 57
+      },
+      {
+        "job": 4,
+        "machine": 1,
+        "mode": 0,
+        "start": 127,
+        "end": 150
+      },
+      {
+        "job": 5,
+        "machine": 0,
+        "mode": 0,
+        "start": 187,
+        "end": 196
+      },
+      {
+        "job": 6,
+        "machine": 1,
+        "mode": 0,
+        "start": 59,
+        "end": 63
+      },
+      {
+        "job": 7,
+        "machine": 1,
+        "mode": 0,
+        "start": 173,
+        "end": 194
+      },
+      {
+        "job": 8,
+        "machine": 1,
+        "mode": 0,
+        "start": 155,
+        "end": 171
+      },
+      {
+        "job": 9,
+        "machine": 0,
+        "mode": 0,
+        "start": 161,
+        "end": 183
+      },
+      {
+        "job": 10,
+        "machine": 0,
+        "mode": 0,
+        "start": 45,
+        "end": 75
+      },
+      {
+        "job": 11,
+        "machine": 0,
+        "mode": 0,
+        "start": 0,
+        "end": 35
+      },
+      {
+        "job": 12,
+        "machine": 0,
+        "mode": 0,
+        "start": 77,
+        "end": 157
+      },
+      {
+        "job": 13,
+        "machine": 1,
+        "mode": 0,
+        "start": 70,
+        "end": 85
+      }
+    ]
+  },
+  "elapsed_seconds": 292.3439999999973,
+  "cost_scale": 60000000,
+  "energy_lower_bound_units": 5597246852,
+  "code_sha256": "faebde9a91db3a4981f8991a7317ed7fe4f524cc3f5528bfb0b099061c0e4a10",
+  "run_parameters": {
+    "max_jobs": 14,
+    "memory_limit_mib": 1024.0,
+    "total_seconds": 600.0,
+    "profile": true,
+    "resume": false
+  },
+  "solver": "Programação dinâmica própria; biblioteca padrão Python",
+  "sweep_complete": false,
+  "stop_reason": "memory_limit",
+  "preparation_stats": {
+    "transitions": 114782208,
+    "inserted_labels": 24711894,
+    "rejected_labels": 90070314,
+    "machines_completed": 0,
+    "removed_labels": 17452840,
+    "peak_active_state_labels": 7259055,
+    "machine_state_labels": [],
+    "preparation_seconds": 290.35899999999674,
+    "stop_reason": "memory_limit"
+  },
+  "run_metrics": {
+    "rss_mib": 76.515625,
+    "peak_rss_mib": 1024.015625,
+    "private_mib": 69.3203125,
+    "peak_private_mib": 1019.3515625,
+    "source": "Windows GetProcessMemoryInfo",
+    "wall_seconds": 292.3439999999973,
+    "cpu_seconds": 291.578125,
+    "rss_initial_mib": 20.89453125,
+    "energy_initialization_seconds": 0.2970000000059372,
+    "timing_context": "Métricas da chamada atual; elapsed_seconds inclui retomadas"
+  }
+}
