@@ -1,6 +1,6 @@
 # MHM — otimização multiobjetivo
 
-Minimização do makespan e do custo de energia em máquinas paralelas não relacionadas, com modos de operação, setups entre tarefas consecutivas e tarifas por horário. A implementação atual cobre os métodos exatos.
+Minimização do makespan e do custo de energia em máquinas paralelas não relacionadas, com modos de operação, setups entre tarefas consecutivas e tarifas por horário. O projeto contém métodos exatos, uma infraestrutura comum de representação/avaliação, VNS/VND multiobjetivo manual e o spike de integração pymoo; MOEA/D e SPEA2 ainda não estão implementados.
 
 ```
 data/
@@ -18,10 +18,12 @@ src/
     custom_exact.py
     custom_exact_dp.py
     cpsat.py
+  schedule.py               # representação, decoder, validação e avaliação comuns
   heuristics/                # reservado para implementação 2
-  metaheuristics/            # reservado para implementação 3
+  metaheuristics/            # VNS/VND manual e spike pymoo
   problem.py                # leitura, regras e custo compartilhados
   plot_pareto.py
+tests/                       # unittest da infraestrutura e do VNS/VND
 requirements.txt
 ```
 
@@ -40,7 +42,15 @@ python src/exact_methods/custom_exact.py data/input/set1/6_2_1439_3_S_1-9.dat --
 python src/plot_pareto.py
 ```
 
-Cada método salva automaticamente em `data/output/<algoritmo>/<entrada>.json`. Os scripts também aceitam uma pasta de entradas; o orçamento é por arquivo. Os dois métodos próprios usam somente a biblioteca padrão do Python. OR-Tools é a dependência do CP-SAT; Matplotlib desenha os gráficos.
+Cada método salva automaticamente em `data/output/<algoritmo>/<entrada>.json`. Os scripts também aceitam uma pasta de entradas; o orçamento é por arquivo. Os métodos próprios usam somente a biblioteca padrão do Python. OR-Tools é a dependência do CP-SAT, Matplotlib desenha os gráficos e pymoo é usado pelo spike experimental de integração. Execute `python -m unittest discover -v` para validar a infraestrutura comum e o VNS/VND.
+
+O VNS/VND multiobjetivo manual está em `src/metaheuristics/vns_vnd.py`. Por padrão, ele usa 10.000 avaliações e seed 1, cria schedules iniciais próprios e se recusa a sobrescrever um resultado anterior. Para uma execução curta:
+
+```powershell
+python src/metaheuristics/vns_vnd.py data/input/set1/6_2_1439_3_S_1-9.dat --seed 1 --max-evaluations 500
+```
+
+Os limites de candidatos por vizinhança e de tentativas de shaking também são configuráveis por argumentos CLI. A frente aproximada e os metadados da execução são salvos em `data/output/vns_vnd/<entrada>.json`; use `--overwrite` para substituir esse arquivo explicitamente. Cada ponto contém `tec_exact`, o schedule decodificado compatível com os resultados existentes e a representação por máquina usada pelo algoritmo. A saída não certifica a frente global.
 
 Para retomar uma execução existente, substitua `--restart` por `--resume`. O backtracking precisa do resultado e do `.checkpoint.json`; a DP preserva os epsilons já provados e reconstrói suas tabelas. Checkpoints, caches, arquivos temporários, logs e configurações locais do editor são ignorados pelo Git. Os resultados JSON, CSV, Markdown, PDF e PNG são mantidos.
 

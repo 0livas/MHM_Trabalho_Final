@@ -1,5 +1,7 @@
 # Representação proposta para heurísticas e metaheurísticas
 
+A API reutilizável desta representação está em `src/schedule.py`: `Schedule` formaliza as listas por máquina, `evaluate_schedule` valida/decodifica e `schedule_from_result_rows` converte schedules já serializados. A avaliação expõe Cmax inteiro e TEC por unidades inteiras/escala; floats são apenas uma visão para bibliotecas e campos legados de saída. Os métodos exatos mantêm suas próprias rotinas e formatos, mas usam a mesma matemática de intervalo energético em `src/problem.py`.
+
 Usar uma lista ordenada de tarefas para cada máquina. Cada item contém `(job, modo, espera)`. A posição do item define a sequência; a lista que o contém define a máquina. Todos os índices começam em zero. `espera` é um número inteiro de intervalos adicionais depois do término do predecessor e do setup obrigatório.
 
 | Campo | Significado | Restrição |
@@ -84,4 +86,4 @@ A avaliação retorna `(makespan, TEC)`. Um arquivo externo de soluções manté
 
 Os JSONs em `data/baselines/*_custom_exact_dp.json` contêm uma fronteira completa e um schedule para cada par. É possível converter cada schedule para esta representação: ordenar por máquina/início e calcular cada espera residual pela fórmula acima. O hash do arquivo de entrada deve coincidir antes de comparar uma solução aproximada com o baseline. Duas sequências diferentes com o mesmo par de objetivos correspondem ao mesmo ponto da fronteira.
 
-Este arquivo é um esboço; os algoritmos das implementações 2 e 3 ainda serão definidos.
+O VNS/VND manual implementa N1–N5, shaking e arquivo Pareto sem crowding em `src/metaheuristics/vns_vnd.py`. Ele usa esta representação e as funções comuns de validação, avaliação, dominância e serialização; MOEA/D e SPEA2 seguem como etapas futuras.

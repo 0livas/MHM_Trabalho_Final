@@ -10,6 +10,7 @@ from pathlib import Path
 import json
 import os
 import time
+from typing import TypeVar
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -129,6 +130,14 @@ def energy_scale(instance: Instance) -> tuple[int, tuple[tuple[int, int, int, in
     return scale, integer_prices
 
 
+def interval_cost_units(instance: Instance, start: int, end: int,
+                        on_price: int, off_price: int) -> int:
+    """Custo escalado do processamento em [start, end), sem setup ou espera."""
+    peak_slots = sum(max(0, min(end, b) - max(start, a)) for a, b in instance.peaks)
+    duration = end - start
+    return on_price * peak_slots + off_price * (duration - peak_slots)
+
+
 def generate_choices(instance: Instance, prices: tuple[tuple[int, int, int, int], ...]) -> tuple[tuple[Choice, ...], ...]:
     """Gera posições individuais de X que cabem no horizonte, em ordem fixa."""
     by_job = []
@@ -138,8 +147,7 @@ def generate_choices(instance: Instance, prices: tuple[tuple[int, int, int, int]
             duration = instance.duration(job, machine, mode)
             for start in range(instance.horizon - duration + 1):
                 end = start + duration
-                peak_slots = sum(max(0, min(end, b) - max(start, a)) for a, b in instance.peaks)
-                cost_units = on_price * peak_slots + off_price * (duration - peak_slots)
+                cost_units = interval_cost_units(instance, start, end, on_price, off_price)
                 choices.append(Choice(machine, start, mode, end, cost_units))
         if not choices:
             raise ValueError(f"Job {job} não cabe no horizonte em nenhuma máquina/modo")
@@ -174,13 +182,22 @@ def dominates_or_equals(a: tuple[int, int], b: tuple[int, int]) -> bool:
     return a[0] <= b[0] and a[1] <= b[1]
 
 
-def insert_pareto(archive: list[tuple[tuple[int, int], tuple[int, ...]]],
-                  point: tuple[int, int], choice_indices: tuple[int, ...]) -> bool:
+def dominates(a: tuple[int, int], b: tuple[int, int]) -> bool:
+    """True when exact minimization point a strictly dominates point b."""
+    return dominates_or_equals(a, b) and a != b
+
+
+ParetoPayload = TypeVar("ParetoPayload")
+
+
+def insert_pareto(archive: list[tuple[tuple[int, int], ParetoPayload]],
+                  point: tuple[int, int], payload: ParetoPayload) -> bool:
+    """Insert a nondominated exact (Cmax, TEC-units) point; deduplicate equals."""
     if any(dominates_or_equals(existing, point) for existing, _ in archive):
         return False
-    archive[:] = [(existing, indices) for existing, indices in archive
+    archive[:] = [(existing, existing_payload) for existing, existing_payload in archive
                   if not dominates_or_equals(point, existing)]
-    archive.append((point, choice_indices))
+    archive.append((point, payload))
     archive.sort(key=lambda entry: (entry[0][0], entry[0][1]))
     return True
 
