@@ -1,0 +1,43 @@
+         1465003 function calls (1453369 primitive calls) in 0.400 seconds
+
+   Ordered by: cumulative time
+   List reduced from 114 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.414    0.414 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/metaheuristics/vns_vnd.py:390(run)
+        1    0.003    0.003    0.409    0.409 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/metaheuristics/vns_vnd.py:338(_vnd)
+     1000    0.004    0.000    0.403    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/metaheuristics/vns_vnd.py:308(_evaluate)
+     1000    0.050    0.000    0.390    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/schedule.py:88(evaluate_schedule)
+    61345    0.019    0.000    0.153    0.000 /usr/lib/python3.10/fractions.py:356(forward)
+     1000    0.006    0.000    0.144    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:115(energy_scale)
+     7000    0.009    0.000    0.097    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:118(<genexpr>)
+    48000    0.051    0.000    0.096    0.000 /usr/lib/python3.10/fractions.py:483(_mul)
+    13345    0.010    0.000    0.067    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:43(duration)
+    38649    0.011    0.000    0.048    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/schedule.py:82(_integer)
+    75690    0.037    0.000    0.045    0.000 /usr/lib/python3.10/fractions.py:62(__new__)
+   154434    0.018    0.000    0.044    0.000 {built-in method builtins.isinstance}
+     7000    0.007    0.000    0.036    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:124(<genexpr>)
+    13345    0.019    0.000    0.033    0.000 /usr/lib/python3.10/fractions.py:499(_div)
+13264/1658    0.009    0.000    0.027    0.000 {built-in method builtins.any}
+    38656    0.006    0.000    0.026    0.000 /usr/lib/python3.10/abc.py:117(__instancecheck__)
+      829    0.000    0.000    0.025    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:249(overlaps_any)
+    12712    0.007    0.000    0.024    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:133(interval_cost_units)
+    12435    0.004    0.000    0.023    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:250(<genexpr>)
+    38656    0.008    0.000    0.021    0.000 {built-in method _abc._abc_instancecheck}
+13576/13548    0.005    0.000    0.019    0.000 {built-in method builtins.sum}
+    11606    0.003    0.000    0.019    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:158(overlaps)
+    25424    0.007    0.000    0.013    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:136(<genexpr>)
+    38656    0.005    0.000    0.012    0.000 /usr/lib/python3.10/abc.py:121(__subclasscheck__)
+   123690    0.010    0.000    0.010    0.000 {built-in method math.gcd}
+    13352    0.003    0.000    0.010    0.000 {built-in method math.ceil}
+      829    0.003    0.000    0.009    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:168(has_valid_setups)
+    87045    0.008    0.000    0.008    0.000 /home/pedro/vscode_ubuntu/MHM_Trabalho_Final/src/problem.py:160(<genexpr>)
+   124035    0.008    0.000    0.008    0.000 /usr/lib/python3.10/fractions.py:256(numerator)
+   136035    0.008    0.000    0.008    0.000 /usr/lib/python3.10/fractions.py:260(denominator)
+    75690    0.008    0.000    0.008    0.000 {built-in method __new__ of type object at 0x6456a98e69a0}
+    38656    0.007    0.000    0.007    0.000 {built-in method _abc._abc_subclasscheck}
+    13345    0.005    0.000    0.007    0.000 /usr/lib/python3.10/fractions.py:607(__ceil__)
+     2492    0.003    0.000    0.006    0.000 {built-in method builtins.sorted}
+    26324    0.005    0.000    0.006    0.000 {built-in method builtins.max}
+
+

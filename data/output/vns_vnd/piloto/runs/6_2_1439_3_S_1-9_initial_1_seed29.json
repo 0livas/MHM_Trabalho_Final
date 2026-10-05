@@ -1,0 +1,675 @@
+{
+  "format_version": 1,
+  "algorithm": "VNS/VND multiobjetivo",
+  "method": "vns_vnd",
+  "instance": "6_2_1439_3_S_1-9.dat",
+  "instance_sha256": "c27aafe109609de23235d989af5593c4ebdf9faaa365649ab21ec4a8c3f07cc4",
+  "status": "budget_reached",
+  "stop_reason": "budget_reached",
+  "pareto_proven": false,
+  "horizon": 1440,
+  "cost_scale": 60000000,
+  "run_parameters": {
+    "seed": 29,
+    "max_evaluations": 2000,
+    "initial_solutions": 1,
+    "max_candidates_per_neighborhood": 100,
+    "shaking_attempts": 20
+  },
+  "evaluations": 2000,
+  "feasible_evaluations": 1591,
+  "rejected_evaluations": 409,
+  "elapsed_seconds": 0.1981834500002151,
+  "origin_selection_counts": [
+    {
+      "objective_key": [
+        185,
+        18834158132
+      ],
+      "selections": 1
+    }
+  ],
+  "points": 5,
+  "front": [
+    {
+      "makespan": 120,
+      "tec": 172.64951633333334,
+      "tec_exact": {
+        "numerator": 10358970980,
+        "denominator": 60000000
+      },
+      "normalized_makespan": 0.08333333333333333,
+      "normalized_tec": 0.2660239080636877,
+      "x_nonzero": [
+        {
+          "i": 1,
+          "j": 0,
+          "h": 100,
+          "l": 1
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "h": 0,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 2,
+          "h": 55,
+          "l": 1
+        },
+        {
+          "i": 1,
+          "j": 3,
+          "h": 0,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 4,
+          "h": 46,
+          "l": 2
+        },
+        {
+          "i": 1,
+          "j": 5,
+          "h": 14,
+          "l": 2
+        }
+      ],
+      "schedule": [
+        {
+          "job": 0,
+          "machine": 1,
+          "mode": 1,
+          "start": 100,
+          "end": 120
+        },
+        {
+          "job": 1,
+          "machine": 0,
+          "mode": 2,
+          "start": 0,
+          "end": 43
+        },
+        {
+          "job": 2,
+          "machine": 0,
+          "mode": 1,
+          "start": 55,
+          "end": 120
+        },
+        {
+          "job": 3,
+          "machine": 1,
+          "mode": 2,
+          "start": 0,
+          "end": 10
+        },
+        {
+          "job": 4,
+          "machine": 0,
+          "mode": 2,
+          "start": 46,
+          "end": 53
+        },
+        {
+          "job": 5,
+          "machine": 1,
+          "mode": 2,
+          "start": 14,
+          "end": 98
+        }
+      ],
+      "representation": [
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            4,
+            2,
+            0
+          ],
+          [
+            2,
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            3,
+            2,
+            0
+          ],
+          [
+            5,
+            2,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "makespan": 122,
+      "tec": 167.7614835,
+      "tec_exact": {
+        "numerator": 10065689010,
+        "denominator": 60000000
+      },
+      "normalized_makespan": 0.08472222222222223,
+      "normalized_tec": 0.2584922704160246,
+      "x_nonzero": [
+        {
+          "i": 0,
+          "j": 0,
+          "h": 107,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "h": 0,
+          "l": 0
+        },
+        {
+          "i": 1,
+          "j": 2,
+          "h": 0,
+          "l": 2
+        },
+        {
+          "i": 1,
+          "j": 3,
+          "h": 112,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 4,
+          "h": 98,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 5,
+          "h": 31,
+          "l": 2
+        }
+      ],
+      "schedule": [
+        {
+          "job": 0,
+          "machine": 0,
+          "mode": 2,
+          "start": 107,
+          "end": 122
+        },
+        {
+          "job": 1,
+          "machine": 0,
+          "mode": 0,
+          "start": 0,
+          "end": 29
+        },
+        {
+          "job": 2,
+          "machine": 1,
+          "mode": 2,
+          "start": 0,
+          "end": 110
+        },
+        {
+          "job": 3,
+          "machine": 1,
+          "mode": 2,
+          "start": 112,
+          "end": 122
+        },
+        {
+          "job": 4,
+          "machine": 0,
+          "mode": 2,
+          "start": 98,
+          "end": 105
+        },
+        {
+          "job": 5,
+          "machine": 0,
+          "mode": 2,
+          "start": 31,
+          "end": 94
+        }
+      ],
+      "representation": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            5,
+            2,
+            0
+          ],
+          [
+            4,
+            2,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ],
+        [
+          [
+            2,
+            2,
+            0
+          ],
+          [
+            3,
+            2,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "makespan": 125,
+      "tec": 167.672708,
+      "tec_exact": {
+        "numerator": 10060362480,
+        "denominator": 60000000
+      },
+      "normalized_makespan": 0.08680555555555555,
+      "normalized_tec": 0.2583554822804314,
+      "x_nonzero": [
+        {
+          "i": 1,
+          "j": 0,
+          "h": 100,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "h": 0,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 2,
+          "h": 55,
+          "l": 1
+        },
+        {
+          "i": 1,
+          "j": 3,
+          "h": 0,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 4,
+          "h": 46,
+          "l": 2
+        },
+        {
+          "i": 1,
+          "j": 5,
+          "h": 14,
+          "l": 2
+        }
+      ],
+      "schedule": [
+        {
+          "job": 0,
+          "machine": 1,
+          "mode": 2,
+          "start": 100,
+          "end": 125
+        },
+        {
+          "job": 1,
+          "machine": 0,
+          "mode": 2,
+          "start": 0,
+          "end": 43
+        },
+        {
+          "job": 2,
+          "machine": 0,
+          "mode": 1,
+          "start": 55,
+          "end": 120
+        },
+        {
+          "job": 3,
+          "machine": 1,
+          "mode": 2,
+          "start": 0,
+          "end": 10
+        },
+        {
+          "job": 4,
+          "machine": 0,
+          "mode": 2,
+          "start": 46,
+          "end": 53
+        },
+        {
+          "job": 5,
+          "machine": 1,
+          "mode": 2,
+          "start": 14,
+          "end": 98
+        }
+      ],
+      "representation": [
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            4,
+            2,
+            0
+          ],
+          [
+            2,
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            3,
+            2,
+            0
+          ],
+          [
+            5,
+            2,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "makespan": 127,
+      "tec": 158.101095,
+      "tec_exact": {
+        "numerator": 9486065700,
+        "denominator": 60000000
+      },
+      "normalized_makespan": 0.08819444444444445,
+      "normalized_tec": 0.24360723420647148,
+      "x_nonzero": [
+        {
+          "i": 0,
+          "j": 0,
+          "h": 112,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "h": 0,
+          "l": 1
+        },
+        {
+          "i": 1,
+          "j": 2,
+          "h": 0,
+          "l": 2
+        },
+        {
+          "i": 1,
+          "j": 3,
+          "h": 112,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 4,
+          "h": 103,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 5,
+          "h": 36,
+          "l": 2
+        }
+      ],
+      "schedule": [
+        {
+          "job": 0,
+          "machine": 0,
+          "mode": 2,
+          "start": 112,
+          "end": 127
+        },
+        {
+          "job": 1,
+          "machine": 0,
+          "mode": 1,
+          "start": 0,
+          "end": 34
+        },
+        {
+          "job": 2,
+          "machine": 1,
+          "mode": 2,
+          "start": 0,
+          "end": 110
+        },
+        {
+          "job": 3,
+          "machine": 1,
+          "mode": 2,
+          "start": 112,
+          "end": 122
+        },
+        {
+          "job": 4,
+          "machine": 0,
+          "mode": 2,
+          "start": 103,
+          "end": 110
+        },
+        {
+          "job": 5,
+          "machine": 0,
+          "mode": 2,
+          "start": 36,
+          "end": 99
+        }
+      ],
+      "representation": [
+        [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            5,
+            2,
+            0
+          ],
+          [
+            4,
+            2,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ],
+        [
+          [
+            2,
+            2,
+            0
+          ],
+          [
+            3,
+            2,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "makespan": 136,
+      "tec": 149.7626544,
+      "tec_exact": {
+        "numerator": 8985759264,
+        "denominator": 60000000
+      },
+      "normalized_makespan": 0.09444444444444444,
+      "normalized_tec": 0.2307590976887519,
+      "x_nonzero": [
+        {
+          "i": 0,
+          "j": 0,
+          "h": 121,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "h": 0,
+          "l": 2
+        },
+        {
+          "i": 1,
+          "j": 2,
+          "h": 0,
+          "l": 2
+        },
+        {
+          "i": 1,
+          "j": 3,
+          "h": 112,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 4,
+          "h": 112,
+          "l": 2
+        },
+        {
+          "i": 0,
+          "j": 5,
+          "h": 45,
+          "l": 2
+        }
+      ],
+      "schedule": [
+        {
+          "job": 0,
+          "machine": 0,
+          "mode": 2,
+          "start": 121,
+          "end": 136
+        },
+        {
+          "job": 1,
+          "machine": 0,
+          "mode": 2,
+          "start": 0,
+          "end": 43
+        },
+        {
+          "job": 2,
+          "machine": 1,
+          "mode": 2,
+          "start": 0,
+          "end": 110
+        },
+        {
+          "job": 3,
+          "machine": 1,
+          "mode": 2,
+          "start": 112,
+          "end": 122
+        },
+        {
+          "job": 4,
+          "machine": 0,
+          "mode": 2,
+          "start": 112,
+          "end": 119
+        },
+        {
+          "job": 5,
+          "machine": 0,
+          "mode": 2,
+          "start": 45,
+          "end": 108
+        }
+      ],
+      "representation": [
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            5,
+            2,
+            0
+          ],
+          [
+            4,
+            2,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ],
+        [
+          [
+            2,
+            2,
+            0
+          ],
+          [
+            3,
+            2,
+            0
+          ]
+        ]
+      ]
+    }
+  ]
+}
