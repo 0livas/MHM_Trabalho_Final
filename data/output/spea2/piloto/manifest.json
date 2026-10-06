@@ -1,0 +1,87 @@
+{
+  "algorithm": "SPEA2 incremental (pymoo 0.6.2)",
+  "seeds": [
+    11,
+    29,
+    47
+  ],
+  "instance_paths": [
+    "data/input/set1/6_2_1439_3_S_1-9.dat",
+    "data/input/set1/14_2_1439_3_S_1-9_derivada.dat",
+    "data/input/set2/50_10_1439_5_S_1-9.dat",
+    "data/input/set2/250_10_1439_5_S_1-9.dat"
+  ],
+  "configurations": [
+    {
+      "label": "pop20",
+      "population_size": 20,
+      "max_evaluations": 2000,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+    },
+    {
+      "label": "pop20",
+      "population_size": 20,
+      "max_evaluations": 8000,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+    },
+    {
+      "label": "pop50",
+      "population_size": 50,
+      "max_evaluations": 2000,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+    },
+    {
+      "label": "pop50",
+      "population_size": 50,
+      "max_evaluations": 8000,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+    },
+    {
+      "label": "pop100",
+      "population_size": 100,
+      "max_evaluations": 2000,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+    },
+    {
+      "label": "pop100",
+      "population_size": 100,
+      "max_evaluations": 8000,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+    },
+    {
+      "label": "mutation01",
+      "population_size": 50,
+      "max_evaluations": 2000,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.1
+    },
+    {
+      "label": "mutation05",
+      "population_size": 50,
+      "max_evaluations": 2000,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5
+    },
+    {
+      "label": "crossover06",
+      "population_size": 50,
+      "max_evaluations": 2000,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.3
+    }
+  ],
+  "execution_count": 108,
+  "search_attempts": 432000,
+  "runtime_environment": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "linux",
+    "run_script_sha256": "e2549cbbe17a2f9ec197f5525e3587952e7457f1c34e71ae5e8643d760a5e82c",
+    "pymoo": "0.6.2"
+  }
+}
