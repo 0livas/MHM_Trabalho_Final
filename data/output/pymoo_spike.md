@@ -1,5 +1,7 @@
 # Spike mínimo de integração com pymoo
 
+Este documento registra o spike anterior à implementação de `src/metaheuristics/spea2.py`. O SPEA2 já está implementado; apenas MOEA/D continua fora do escopo atual. As conclusões abaixo descrevem o protótipo, não os operadores da implementação final.
+
 Executar da raiz após instalar `requirements.txt`:
 
 ```bash
