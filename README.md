@@ -1,6 +1,6 @@
 # MHM — otimização multiobjetivo
 
-Minimização do makespan e do custo de energia em máquinas paralelas não relacionadas, com modos de operação, setups entre tarefas consecutivas e tarifas por horário. O projeto contém métodos exatos, uma infraestrutura comum de representação/avaliação, VNS/VND multiobjetivo manual e SPEA2 via pymoo. MOEA/D ainda não está implementado.
+Minimização do makespan e do custo de energia em máquinas paralelas não relacionadas, com modos de operação, setups entre tarefas consecutivas e tarifas por horário. O projeto contém métodos exatos, uma infraestrutura comum de representação/avaliação, VNS/VND multiobjetivo manual, SPEA2 incremental e MOEA/D via pymoo.
 
 ```
 data/
@@ -8,6 +8,7 @@ data/
   input/set2/               # entradas originais grandes
   baselines/                # fronteiras completas para comparação futura
   output/
+    moead/                   # MOEA/D, notas de integração e smokes instrumentados
     spea2/                   # execuções SPEA2
     custom_exact/           # backtracking, resultado e checkpoint
     custom_exact_dp/        # DP própria, resultado e desempenho.csv
@@ -21,7 +22,7 @@ src/
     cpsat.py
   schedule.py               # representação, decoder, validação e avaliação comuns
   heuristics/                # reservado para implementação 2
-  metaheuristics/            # VNS/VND manual, SPEA2 e spike pymoo
+  metaheuristics/            # VNS/VND manual, SPEA2, MOEA/D e spike pymoo
   problem.py                # leitura, regras e custo compartilhados
   plot_pareto.py
 tests/                       # unittest da infraestrutura e do VNS/VND
@@ -43,7 +44,7 @@ python src/exact_methods/custom_exact.py data/input/set1/6_2_1439_3_S_1-9.dat --
 python src/plot_pareto.py
 ```
 
-Cada método salva automaticamente em `data/output/<algoritmo>/<entrada>.json`. Os scripts também aceitam uma pasta de entradas; o orçamento é por arquivo. Os métodos próprios usam somente a biblioteca padrão do Python. OR-Tools é a dependência do CP-SAT, Matplotlib desenha os gráficos e pymoo é usado pelo SPEA2. Execute `python -m unittest discover -v` para validar a infraestrutura comum, o VNS/VND e o SPEA2.
+Cada método salva automaticamente em `data/output/<algoritmo>/<entrada>.json`. Os scripts também aceitam uma pasta de entradas; o orçamento é por arquivo. Os métodos próprios usam somente a biblioteca padrão do Python. OR-Tools é a dependência do CP-SAT, Matplotlib desenha os gráficos e pymoo é usado pelo SPEA2 e pelo MOEA/D. Execute `python -m unittest discover -v` para validar a infraestrutura comum, o VNS/VND, o SPEA2 e o MOEA/D.
 
 O VNS/VND multiobjetivo manual está em `src/metaheuristics/vns_vnd.py`. Por padrão, ele usa 10.000 avaliações e seed 1, cria schedules iniciais próprios e se recusa a sobrescrever um resultado anterior. Para uma execução curta:
 
@@ -60,6 +61,14 @@ python src/metaheuristics/spea2.py data/input/set1/6_2_1439_3_S_1-9.dat --seed 1
 ```
 
 Esta execução é **SPEA2 incremental**: a cada iteração o pymoo produz um descendente, mantendo seus operadores de seleção e survival SPEA2. O regime incremental permite respeitar literalmente o cap de avaliações e não é equivalente ao regime geracional clássico. O survival usa `SPEA2Survival(normalize=False)`, configuração pública do pymoo que evita divisão por amplitude zero; strength, raw fitness, densidade, seleção e truncamento continuam sendo calculados pelo pymoo. Cada schedule completo submetido ao evaluator consome uma unidade, inclusive candidatos inviáveis. A população inicial é avaliada integralmente; por isso `max_evaluations` deve ser pelo menos o tamanho da população. Após o término, os sobreviventes viáveis são reavaliados para validar a frente; essas chamadas aparecem como `post_search_validations` e ficam fora do orçamento da busca. A saída fica em `data/output/spea2/<entrada>.json`, preserva TEC exato e não sobrescreve resultado existente sem `--overwrite`. Os parâmetros dos operadores são provisórios e não foram ajustados.
+
+O MOEA/D executa o algoritmo nativo do **pymoo 0.6.2**, com directions uniformes para dois objetivos, Tchebycheff e escala fixa `Cmax/H`, `TEC/max_cost`:
+
+```powershell
+python src/metaheuristics/moead.py data/input/set1/6_2_1439_3_S_1-9.dat --seed 11 --max-evaluations 61 --population-size 12 --n-neighbors 4
+```
+
+A população tem exatamente o número de directions; configure `2 <= n_neighbors <= population_size`. O driver público `ask/tell` preserva o orçamento literal também em varreduras incompletas. Descendentes inviáveis consomem uma tentativa e são substituídos por uma cópia viável já avaliada, antes de chegar ao MOEA/D, sem constraints `G`, penalidades ou avaliação adicional. Ao final, a população é reavaliada e a frente é filtrada por `(Cmax, tec_units)` exatos; essas chamadas aparecem separadamente como `post_search_validations`. Os resultados ficam em `data/output/moead/<entrada>.json`, sem sobrescrita por padrão. Veja [API, escala, viabilidade e orçamento do MOEA/D](data/output/moead/implementation.md) e [audit dos smokes](data/output/moead/validation/audit.json). Não houve tuning nem piloto experimental nesta implementação.
 
 Para retomar uma execução existente, substitua `--restart` por `--resume`. O backtracking precisa do resultado e do `.checkpoint.json`; a DP preserva os epsilons já provados e reconstrói suas tabelas. Checkpoints, caches, arquivos temporários, logs e configurações locais do editor são ignorados pelo Git. Os resultados JSON, CSV, Markdown, PDF e PNG são mantidos.
 

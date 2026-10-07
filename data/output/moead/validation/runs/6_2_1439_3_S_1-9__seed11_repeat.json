@@ -1,0 +1,615 @@
+{
+  "format_version": 1,
+  "algorithm": "MOEA/D",
+  "method": "moead_pymoo",
+  "variant": "Tchebycheff with fixed instance scaling and feasible fallback",
+  "pymoo_version": "0.6.2",
+  "instance": "6_2_1439_3_S_1-9.dat",
+  "instance_sha256": "c27aafe109609de23235d989af5593c4ebdf9faaa365649ab21ec4a8c3f07cc4",
+  "pareto_proven": false,
+  "stop_reason": "budget_reached",
+  "horizon": 1440,
+  "cost_scale": 60000000,
+  "run_parameters": {
+    "seed": 11,
+    "max_evaluations": 61,
+    "population_size": 12,
+    "n_neighbors": 4,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.3,
+    "decomposition": "Tchebycheff",
+    "decomposition_eps": 0.0,
+    "objective_scaling": "Cmax/H, TEC/max_cost",
+    "reference_directions": {
+      "method": "uniform",
+      "n_obj": 2,
+      "n_partitions": 11
+    },
+    "offspring_per_subproblem": 1,
+    "infeasibility_policy": "cached_uniform_population_fallback"
+  },
+  "objective_scaling": {
+    "cmax_divisor": 1440,
+    "tec_divisor_exact": {
+      "numerator": 649,
+      "denominator": 1
+    }
+  },
+  "reference_directions": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.09090909090909091,
+      0.9090909090909091
+    ],
+    [
+      0.18181818181818182,
+      0.8181818181818182
+    ],
+    [
+      0.2727272727272727,
+      0.7272727272727273
+    ],
+    [
+      0.36363636363636365,
+      0.6363636363636364
+    ],
+    [
+      0.45454545454545453,
+      0.5454545454545454
+    ],
+    [
+      0.5454545454545454,
+      0.45454545454545453
+    ],
+    [
+      0.6363636363636364,
+      0.36363636363636365
+    ],
+    [
+      0.7272727272727273,
+      0.2727272727272727
+    ],
+    [
+      0.8181818181818182,
+      0.18181818181818182
+    ],
+    [
+      0.9090909090909091,
+      0.09090909090909091
+    ],
+    [
+      1.0,
+      0.0
+    ]
+  ],
+  "population_size": 12,
+  "n_neighbors": 4,
+  "budget": 61,
+  "max_evaluations": 61,
+  "evaluations": 61,
+  "attempts": 61,
+  "feasible_evaluations": 61,
+  "rejected_evaluations": 0,
+  "pymoo_evaluations": 61,
+  "post_search_validations": 12,
+  "elapsed_seconds": 0.024096508000184258,
+  "points": 4,
+  "front": [
+    {
+      "makespan": 94,
+      "tec": 252.655073,
+      "tec_exact": {
+        "numerator": 15159304380,
+        "denominator": 60000000
+      },
+      "normalized_makespan": 0.06527777777777778,
+      "normalized_tec": 0.38929903389830506,
+      "x_nonzero": [
+        {
+          "i": 1,
+          "j": 0,
+          "h": 58,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "h": 0,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 2,
+          "h": 39,
+          "l": 0
+        },
+        {
+          "i": 1,
+          "j": 3,
+          "h": 82,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 4,
+          "h": 32,
+          "l": 1
+        },
+        {
+          "i": 1,
+          "j": 5,
+          "h": 0,
+          "l": 0
+        }
+      ],
+      "schedule": [
+        {
+          "job": 0,
+          "machine": 1,
+          "mode": 0,
+          "start": 58,
+          "end": 75
+        },
+        {
+          "job": 1,
+          "machine": 0,
+          "mode": 0,
+          "start": 0,
+          "end": 29
+        },
+        {
+          "job": 2,
+          "machine": 0,
+          "mode": 0,
+          "start": 39,
+          "end": 94
+        },
+        {
+          "job": 3,
+          "machine": 1,
+          "mode": 0,
+          "start": 82,
+          "end": 89
+        },
+        {
+          "job": 4,
+          "machine": 0,
+          "mode": 1,
+          "start": 32,
+          "end": 37
+        },
+        {
+          "job": 5,
+          "machine": 1,
+          "mode": 0,
+          "start": 0,
+          "end": 56
+        }
+      ],
+      "representation": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            4,
+            1,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "makespan": 107,
+      "tec": 242.5265955,
+      "tec_exact": {
+        "numerator": 14551595730,
+        "denominator": 60000000
+      },
+      "normalized_makespan": 0.07430555555555556,
+      "normalized_tec": 0.37369275115562406,
+      "x_nonzero": [
+        {
+          "i": 0,
+          "j": 0,
+          "h": 33,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "h": 0,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 2,
+          "h": 52,
+          "l": 0
+        },
+        {
+          "i": 1,
+          "j": 3,
+          "h": 61,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 4,
+          "h": 45,
+          "l": 1
+        },
+        {
+          "i": 1,
+          "j": 5,
+          "h": 0,
+          "l": 0
+        }
+      ],
+      "schedule": [
+        {
+          "job": 0,
+          "machine": 0,
+          "mode": 0,
+          "start": 33,
+          "end": 43
+        },
+        {
+          "job": 1,
+          "machine": 0,
+          "mode": 0,
+          "start": 0,
+          "end": 29
+        },
+        {
+          "job": 2,
+          "machine": 0,
+          "mode": 0,
+          "start": 52,
+          "end": 107
+        },
+        {
+          "job": 3,
+          "machine": 1,
+          "mode": 0,
+          "start": 61,
+          "end": 68
+        },
+        {
+          "job": 4,
+          "machine": 0,
+          "mode": 1,
+          "start": 45,
+          "end": 50
+        },
+        {
+          "job": 5,
+          "machine": 1,
+          "mode": 0,
+          "start": 0,
+          "end": 56
+        }
+      ],
+      "representation": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            1,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "makespan": 112,
+      "tec": 232.866207,
+      "tec_exact": {
+        "numerator": 13971972420,
+        "denominator": 60000000
+      },
+      "normalized_makespan": 0.07777777777777778,
+      "normalized_tec": 0.3588077149460709,
+      "x_nonzero": [
+        {
+          "i": 0,
+          "j": 0,
+          "h": 38,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "h": 0,
+          "l": 1
+        },
+        {
+          "i": 0,
+          "j": 2,
+          "h": 57,
+          "l": 0
+        },
+        {
+          "i": 1,
+          "j": 3,
+          "h": 61,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 4,
+          "h": 50,
+          "l": 1
+        },
+        {
+          "i": 1,
+          "j": 5,
+          "h": 0,
+          "l": 0
+        }
+      ],
+      "schedule": [
+        {
+          "job": 0,
+          "machine": 0,
+          "mode": 0,
+          "start": 38,
+          "end": 48
+        },
+        {
+          "job": 1,
+          "machine": 0,
+          "mode": 1,
+          "start": 0,
+          "end": 34
+        },
+        {
+          "job": 2,
+          "machine": 0,
+          "mode": 0,
+          "start": 57,
+          "end": 112
+        },
+        {
+          "job": 3,
+          "machine": 1,
+          "mode": 0,
+          "start": 61,
+          "end": 68
+        },
+        {
+          "job": 4,
+          "machine": 0,
+          "mode": 1,
+          "start": 50,
+          "end": 55
+        },
+        {
+          "job": 5,
+          "machine": 1,
+          "mode": 0,
+          "start": 0,
+          "end": 56
+        }
+      ],
+      "representation": [
+        [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            1,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "makespan": 159,
+      "tec": 222.9798445,
+      "tec_exact": {
+        "numerator": 13378790670,
+        "denominator": 60000000
+      },
+      "normalized_makespan": 0.11041666666666666,
+      "normalized_tec": 0.3435744907550077,
+      "x_nonzero": [
+        {
+          "i": 0,
+          "j": 0,
+          "h": 142,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "h": 109,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 2,
+          "h": 49,
+          "l": 0
+        },
+        {
+          "i": 1,
+          "j": 3,
+          "h": 0,
+          "l": 0
+        },
+        {
+          "i": 0,
+          "j": 4,
+          "h": 154,
+          "l": 1
+        },
+        {
+          "i": 0,
+          "j": 5,
+          "h": 0,
+          "l": 0
+        }
+      ],
+      "schedule": [
+        {
+          "job": 0,
+          "machine": 0,
+          "mode": 0,
+          "start": 142,
+          "end": 152
+        },
+        {
+          "job": 1,
+          "machine": 0,
+          "mode": 0,
+          "start": 109,
+          "end": 138
+        },
+        {
+          "job": 2,
+          "machine": 0,
+          "mode": 0,
+          "start": 49,
+          "end": 104
+        },
+        {
+          "job": 3,
+          "machine": 1,
+          "mode": 0,
+          "start": 0,
+          "end": 7
+        },
+        {
+          "job": 4,
+          "machine": 0,
+          "mode": 1,
+          "start": 154,
+          "end": 159
+        },
+        {
+          "job": 5,
+          "machine": 0,
+          "mode": 0,
+          "start": 0,
+          "end": 42
+        }
+      ],
+      "representation": [
+        [
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            3,
+            0,
+            0
+          ]
+        ]
+      ]
+    }
+  ]
+}
