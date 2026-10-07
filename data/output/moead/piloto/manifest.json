@@ -1,0 +1,128 @@
+{
+  "status": "complete",
+  "algorithm": "pymoo 0.6.2 native MOEA/D",
+  "seeds": [
+    11,
+    29,
+    47
+  ],
+  "instances": [
+    "data/input/set1/6_2_1439_3_S_1-9.dat",
+    "data/input/set1/14_2_1439_3_S_1-9_derivada.dat",
+    "data/input/set2/50_10_1439_5_S_1-9.dat",
+    "data/input/set2/250_10_1439_5_S_1-9.dat"
+  ],
+  "primary_design": {
+    "populations": [
+      20,
+      50,
+      100
+    ],
+    "budgets": [
+      2000,
+      8000
+    ],
+    "seeds_per_cell": 3,
+    "executions": 72
+  },
+  "sensitivity": {
+    "population": 50,
+    "budget": 2000,
+    "seeds": [
+      11,
+      29,
+      47
+    ],
+    "one_factor_conditions": [
+      {
+        "label": "default_control",
+        "n_neighbors": 20,
+        "prob_neighbor_mating": 0.9
+      },
+      {
+        "label": "neighbors05",
+        "n_neighbors": 5,
+        "prob_neighbor_mating": 0.9
+      },
+      {
+        "label": "neighbors40",
+        "n_neighbors": 40,
+        "prob_neighbor_mating": 0.9
+      },
+      {
+        "label": "mating_global",
+        "n_neighbors": 20,
+        "prob_neighbor_mating": 0.0
+      }
+    ],
+    "additional_executions": 36
+  },
+  "expected_executions": 108,
+  "expected_attempts": 432000,
+  "operators": {
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.3,
+    "sampling": "randomized_lpt",
+    "crossover": "ScheduleCrossover",
+    "mutation": "ScheduleMutation"
+  },
+  "decomposition": "Tchebycheff",
+  "objective_scaling": "Cmax/H; TEC/max_cost; unchanged",
+  "timing": "Sequential MOEA/D run timer; includes setup/search and excludes post-search exact validations.",
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "numpy": "2.2.6",
+    "pymoo": "0.6.2"
+  },
+  "source_sha256": {
+    "src/metaheuristics/moead.py": "d697e799a9d2d283f7a67b1d32e9d7d0d4f8d0a41b49fb7e7c26b50e3450c60a",
+    "src/metaheuristics/spea2.py": "60ad144f6b5e825c5f616e7df9805be72e4af4f7ac4d0f3949bbc1e3b68352ef",
+    "src/metaheuristics/vns_vnd.py": "d6f4b3047486d56fbdda712d3a4941824d43297862cb9d75dd29a6a30f780abd",
+    "src/schedule.py": "4bc4a0d930e788cc833706bf2410dc7e39b26b072c657deb6bc0702be1da08b1",
+    "src/problem.py": "abb00ab278658935f8762d081262155e70e65fbab0f32326baf3e60963522e61",
+    "data/output/moead/piloto/run_pilot.py": "155841a4f257eac1920b7e920ab79dd5404a9783efea75c939b4d80f1d2f03a6",
+    "data/output/moead/piloto/run_confirmation.py": "1f6ed90c1eab14f568f4a1e665b854bdca49555aadc9a5dcf702cb443694f0f2",
+    "data/output/moead/piloto/summarize_pilot.py": "a7de8ad8b3c2a689aa3aa9f0edf7170e1dae3f7d93644dbf01d29e76ef1107dd"
+  },
+  "instance_sha256": {
+    "data/input/set1/6_2_1439_3_S_1-9.dat": "c27aafe109609de23235d989af5593c4ebdf9faaa365649ab21ec4a8c3f07cc4",
+    "data/input/set1/14_2_1439_3_S_1-9_derivada.dat": "70ff0f54e92fbb4ee92af0eee49be2de8443a1580da898c97da2959e5253c8bb",
+    "data/input/set2/50_10_1439_5_S_1-9.dat": "c9147e6b8b3bcab1863b62202baffbeee4e1fce0791b4e6309397c4037406da7",
+    "data/input/set2/250_10_1439_5_S_1-9.dat": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c"
+  },
+  "baseline_policy": "6-job exact baseline read only after all 108 searches complete",
+  "comparators": {
+    "spea2": "population 50, crossover .9, mutation .3; paired prior pilot",
+    "vns_vnd": "reference defaults, budget_8000 variant; paired prior pilot"
+  },
+  "completed_executions": 108,
+  "completed_attempts": 432000,
+  "total_elapsed_seconds": 669.8806397309995,
+  "baseline_read_after_search": true,
+  "baseline_path": "data/output/custom_exact_dp/6_2_1439_3_S_1-9.json",
+  "baseline_sha256": "affb902e849097668b66eb23948ebee11ddea0f7af56ff562af0853f18f9278d",
+  "confirmation_20k": {
+    "reason": "TEC minima improved for all three seeds from 2k to 8k on 250 jobs; check continuation",
+    "instance": "data/input/set2/250_10_1439_5_S_1-9.dat",
+    "seeds": [
+      11,
+      29,
+      47
+    ],
+    "population_size": 50,
+    "reference_directions": 50,
+    "n_neighbors": 20,
+    "prob_neighbor_mating": 0.9,
+    "max_evaluations": 20000,
+    "attempts": 60000,
+    "rejected_evaluations": 0,
+    "elapsed_seconds_sum": 230.98017491100018,
+    "executions": 3,
+    "baseline_read": false,
+    "metrics": "confirmation_metrics.csv",
+    "paired": "confirmation_paired.csv"
+  },
+  "total_executions_including_confirmation": 111,
+  "total_attempts_including_confirmation": 492000
+}
