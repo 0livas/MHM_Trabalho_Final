@@ -24,3 +24,12 @@ venv/
 *.checkpoint.json
 
 !/tests/
+# Final comparison raw/generated artifacts
+data/output/final_comparison/runs/
+data/output/final_comparison/outcomes/
+data/output/final_comparison/history/
+data/output/final_comparison/empirical_reference_fronts/
+data/output/final_comparison/checks.json
+data/output/final_comparison/checks_amendment.json
+data/output/final_comparison/execution_failure.json
+data/output/final_comparison/summarize_blocked.py

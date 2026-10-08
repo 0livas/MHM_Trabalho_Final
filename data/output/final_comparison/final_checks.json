@@ -1,0 +1,37 @@
+{
+  "unittest": {
+    "tests": 99,
+    "status": "passed",
+    "command": "python -m unittest discover -v"
+  },
+  "py_compile": {
+    "status": "passed",
+    "command": "python -m py_compile data/output/final_comparison/*.py tests/test_final_normalization.py"
+  },
+  "git_diff_check": "passed",
+  "completed_outcomes": 465,
+  "completed_runs": 460,
+  "initialization_failed": 5,
+  "execution_failed": 0,
+  "completed_attempts": 3530000,
+  "all_A_390_preserved": true,
+  "first_run_hash_preserved": true,
+  "searches_repeated": false,
+  "algorithm_source_hashes": {
+    "src/metaheuristics/vns_vnd.py": "d6f4b3047486d56fbdda712d3a4941824d43297862cb9d75dd29a6a30f780abd",
+    "src/metaheuristics/spea2.py": "60ad144f6b5e825c5f616e7df9805be72e4af4f7ac4d0f3949bbc1e3b68352ef",
+    "src/metaheuristics/moead.py": "d697e799a9d2d283f7a67b1d32e9d7d0d4f8d0a41b49fb7e7c26b50e3450c60a",
+    "src/schedule.py": "4bc4a0d930e788cc833706bf2410dc7e39b26b072c657deb6bc0702be1da08b1",
+    "src/problem.py": "abb00ab278658935f8762d081262155e70e65fbab0f32326baf3e60963522e61"
+  },
+  "baseline_reads_after_searches": true,
+  "analysis_exact_reference_instances": [
+    "data/input/set1/10_2_1439_3_S_1-9.dat",
+    "data/input/set1/6_2_1439_3_S_1-9.dat",
+    "data/input/set1/7_2_1439_3_S_1-9.dat",
+    "data/input/set1/8_2_1439_3_S_1-9.dat",
+    "data/input/set1/9_2_1439_3_S_1-9.dat"
+  ],
+  "final_schedules_revalidated": 8676,
+  "finished_utc": "2026-10-08T15:30:48.005829+00:00"
+}

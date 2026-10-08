@@ -1,0 +1,105 @@
+{
+  "primary_metric": "HV",
+  "unit": "instance",
+  "blocks": 13,
+  "seeds_per_cell": 10,
+  "alpha": 0.05,
+  "aggregation": "median per algorithm/instance over 10 seeds",
+  "primary_experiment": "A",
+  "secondary_metric": "IGD+",
+  "scipy": "1.15.1",
+  "metrics": {
+    "hv": {
+      "friedman": {
+        "statistic": 26.0,
+        "p_value": 2.2603294069810534e-06,
+        "kendall_W": 1.0,
+        "method": "asymptotic chi-square; 13 instance blocks, 3 algorithms; interpret cautiously"
+      },
+      "pairwise": [
+        {
+          "a": "vns_vnd",
+          "b": "spea2",
+          "statistic": 0.0,
+          "p_value": 0.000244140625,
+          "rank_biserial": -1.0,
+          "nonzero_blocks": 13,
+          "median_paired_difference": -0.14346103119705989,
+          "effect_sign": "positive: metric a > b; HV higher is better, IGD+ lower is better",
+          "p_holm": 0.000732421875,
+          "significant_holm": true
+        },
+        {
+          "a": "vns_vnd",
+          "b": "moead",
+          "statistic": 0.0,
+          "p_value": 0.000244140625,
+          "rank_biserial": -1.0,
+          "nonzero_blocks": 13,
+          "median_paired_difference": -0.13334547751583137,
+          "effect_sign": "positive: metric a > b; HV higher is better, IGD+ lower is better",
+          "p_holm": 0.000732421875,
+          "significant_holm": true
+        },
+        {
+          "a": "spea2",
+          "b": "moead",
+          "statistic": 0.0,
+          "p_value": 0.000244140625,
+          "rank_biserial": 1.0,
+          "nonzero_blocks": 13,
+          "median_paired_difference": 0.0038396629699772866,
+          "effect_sign": "positive: metric a > b; HV higher is better, IGD+ lower is better",
+          "p_holm": 0.000732421875,
+          "significant_holm": true
+        }
+      ]
+    },
+    "igd_plus": {
+      "friedman": {
+        "statistic": 26.0,
+        "p_value": 2.2603294069810534e-06,
+        "kendall_W": 1.0,
+        "method": "asymptotic chi-square; 13 instance blocks, 3 algorithms; interpret cautiously"
+      },
+      "pairwise": [
+        {
+          "a": "vns_vnd",
+          "b": "spea2",
+          "statistic": 0.0,
+          "p_value": 0.000244140625,
+          "rank_biserial": 1.0,
+          "nonzero_blocks": 13,
+          "median_paired_difference": 0.08603502690800026,
+          "effect_sign": "positive: metric a > b; HV higher is better, IGD+ lower is better",
+          "p_holm": 0.000732421875,
+          "significant_holm": true
+        },
+        {
+          "a": "vns_vnd",
+          "b": "moead",
+          "statistic": 0.0,
+          "p_value": 0.000244140625,
+          "rank_biserial": 1.0,
+          "nonzero_blocks": 13,
+          "median_paired_difference": 0.08446561712467714,
+          "effect_sign": "positive: metric a > b; HV higher is better, IGD+ lower is better",
+          "p_holm": 0.000732421875,
+          "significant_holm": true
+        },
+        {
+          "a": "spea2",
+          "b": "moead",
+          "statistic": 0.0,
+          "p_value": 0.000244140625,
+          "rank_biserial": -1.0,
+          "nonzero_blocks": 13,
+          "median_paired_difference": -0.0007857448116087417,
+          "effect_sign": "positive: metric a > b; HV higher is better, IGD+ lower is better",
+          "p_holm": 0.000732421875,
+          "significant_holm": true
+        }
+      ]
+    }
+  }
+}
