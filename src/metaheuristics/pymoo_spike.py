@@ -1,8 +1,4 @@
-"""Minimal pymoo integration spike for machine -> [(job, mode, wait), ...].
-
-Run from the repository root:
-    python src/metaheuristics/pymoo_spike.py
-"""
+# Protótipo mínimo de integração com pymoo.
 
 from __future__ import annotations
 
@@ -56,7 +52,7 @@ class SpikeTrace:
 
 
 def seed_schedule(instance: Instance) -> Schedule:
-    """Deterministic feasible seed for the small fixture; no baseline is read."""
+    # Semente viável e determinística; não lê o baseline.
     machines: list[list[tuple[int, int, int]]] = [[] for _ in range(instance.m)]
     for job in range(instance.n):
         machine = job % instance.m
@@ -69,7 +65,7 @@ def seed_schedule(instance: Instance) -> Schedule:
 
 
 class ScheduleProblem(ElementwiseProblem):
-    """A single object-valued variable holds the native schedule structure."""
+    # Uma variável-objeto armazena a estrutura nativa da solução.
 
     def __init__(self, instance: Instance, *, declare_constraint: bool = False,
                  trace: SpikeTrace | None = None):
@@ -115,7 +111,7 @@ class ScheduleSampling(Sampling):
 
 
 class CopyCrossover(Crossover):
-    """Keep one parent's schedule intact; mutation supplies the variation."""
+    # Mantém a solução de um pai; a mutação gera a variação.
 
     def __init__(self, trace: SpikeTrace | None = None):
         super().__init__(n_parents=2, n_offsprings=1)
@@ -131,7 +127,7 @@ class CopyCrossover(Crossover):
 
 
 class SwapWithinMachine(Mutation):
-    """Swap two operations on a machine; reject swaps outside horizon."""
+    # Troca duas operações; rejeita trocas fora do horizonte.
 
     def __init__(self, trace: SpikeTrace | None = None):
         super().__init__()
@@ -199,8 +195,7 @@ def check_algorithm_compatibility(problem: ScheduleProblem) -> dict[str, str]:
         crossover=crossover,
         mutation=mutation,
     )
-    # MOEA/D's setup explicitly rejects declared constraints. Rejection in the
-    # sampling/variation/evaluator boundary keeps this prototype unconstrained.
+    # O MOEA/D rejeita restrições declaradas; a rejeição ocorre na avaliação.
     spea2.setup(problem, termination=("n_gen", 1), seed=1, verbose=False)
     moead.setup(problem, termination=("n_gen", 1), seed=1, verbose=False)
     constrained_problem = ScheduleProblem(problem.instance, declare_constraint=True)
@@ -222,7 +217,7 @@ def check_algorithm_compatibility(problem: ScheduleProblem) -> dict[str, str]:
 
 
 class TracingSPEA2Survival(SPEA2Survival):
-    """Count SPEA2 environmental survival calls during the one-generation spike."""
+    # Conta chamadas de sobrevivência do SPEA2.
 
     def __init__(self, trace: SpikeTrace):
         super().__init__(normalize=True)
@@ -234,7 +229,7 @@ class TracingSPEA2Survival(SPEA2Survival):
 
 
 class TracingMOEAD(MOEAD):
-    """Count MOEA/D neighborhood replacements during its reproduction sweep."""
+    # Conta substituições na vizinhança do MOEA/D.
 
     def __init__(self, trace: SpikeTrace, **kwargs):
         super().__init__(**kwargs)
@@ -246,7 +241,7 @@ class TracingMOEAD(MOEAD):
 
 
 def run_real_cycle(name: str, instance: Instance) -> tuple[SpikeTrace, int, int]:
-    """Run initialization plus one real reproduction/survival generation."""
+    # Executa a inicialização e uma geração de reprodução/sobrevivência.
     trace = SpikeTrace()
     problem = ScheduleProblem(instance, trace=trace)
     sampling = ScheduleSampling(trace)
@@ -297,7 +292,7 @@ def run_real_cycle(name: str, instance: Instance) -> tuple[SpikeTrace, int, int]
 
 def verify_cost_against_existing_choices(instance: Instance, schedule: Schedule,
                                          evaluation: Evaluation) -> None:
-    """Cross-check the shared interval cost against exact-method Choice tables."""
+    # Confere o custo dos intervalos com as tabelas dos métodos exatos.
     scale, prices = energy_scale(instance)
     by_job = generate_choices(instance, prices)
     exact_units = 0
@@ -326,7 +321,7 @@ def main(argv: list[str] | None = None) -> int:
     compatibility = check_algorithm_compatibility(ScheduleProblem(instance))
     real_cycles = {name: run_real_cycle(name, instance) for name in ("SPEA2", "MOEA/D")}
 
-    # A malformed wait-independent overrun is explicitly refused by the decoder.
+    # O decodificador recusa explicitamente um estouro malformado.
     valid_seed = seed_schedule(instance)
     invalid_machines = [list(sequence) for sequence in valid_seed]
     job, mode, wait = invalid_machines[0][0]
