@@ -1,13 +1,4 @@
-"""Incremental SPEA2 for native machine-sequence schedules using pymoo.
-
-One offspring is evaluated per pymoo iteration to enforce a literal evaluation cap.
-The algorithm retains pymoo's SPEA2 selection and survival operators, but this
-incremental regime is not equivalent to the classical generational regime.
-
-Run from the repository root::
-
-    python src/metaheuristics/spea2.py data/input/set1/6_2_1439_3_S_1-9.dat
-"""
+# SPEA2 incremental para sequências nativas de máquinas usando pymoo.
 
 from __future__ import annotations
 
@@ -94,15 +85,8 @@ def _as_schedule(value) -> Schedule:
 
 
 def _random_schedule(instance: Instance, rng: np.random.Generator) -> Schedule:
-    """Construct a complete feasible schedule without evaluator calls or retries.
-
-    Jobs are prioritized by minimum duration (LPT). At each step, a seeded random
-    choice among the ``ceil(sqrt(remaining jobs))`` most difficult jobs adds bounded
-    sequence variety. Each selected job is appended to the machine/mode with the
-    earliest projected completion; seeded tie-breaking varies allocations and modes.
-    Appending at the current tail with zero wait preserves setup and non-overlap
-    invariants by construction, and the horizon check prevents an overrun.
-    """
+    # Constrói uma solução viável sem avaliações ou tentativas extras.
+    # A prioridade LPT e a escolha aleatória controlada geram variedade.
     difficulty = []
     for job in range(instance.n):
         shortest = min(instance.duration(job, machine, mode)
@@ -114,9 +98,8 @@ def _random_schedule(instance: Instance, rng: np.random.Generator) -> Schedule:
     machine_end = [0] * instance.m
     machine_last: list[int | None] = [None] * instance.m
     while remaining:
-        # Randomized LPT: select within a shrinking window of the hardest jobs.
-        # The window grows sublinearly with n, preserving long-job priority while
-        # creating meaningful sequence and machine-allocation variety.
+        # LPT aleatório: escolhe entre os jobs mais difíceis.
+        # A janela cresce sublinearmente e mantém variedade.
         window_size = int(np.ceil(np.sqrt(len(remaining))))
         job = remaining.pop(int(rng.integers(window_size)))
         options: list[tuple[int, int, int]] = []
@@ -143,10 +126,10 @@ def _random_schedule(instance: Instance, rng: np.random.Generator) -> Schedule:
 
 
 class ScheduleProblem(ElementwiseProblem):
-    """One object-valued pymoo variable stores the native schedule."""
+    # Uma variável-objeto do pymoo armazena a solução nativa.
 
     def __init__(self, instance: Instance, trace: SPEA2Trace):
-        # Invalid complete candidates are charged and marked infeasible through G.
+        # Candidatos inválidos são contabilizados e marcados por G.
         super().__init__(n_var=1, n_obj=2, n_ieq_constr=1, vtype=object)
         self.instance = instance
         self.trace = trace
@@ -157,7 +140,7 @@ class ScheduleProblem(ElementwiseProblem):
             evaluation = evaluate_schedule(self.instance, x[0])
         except ScheduleValidationError:
             self.trace.rejected += 1
-            # The objectives are ignored by pymoo while G > 0 and never exported.
+            # Com G > 0, o pymoo ignora os objetivos e não os exporta.
             out["F"] = np.array([0.0, 0.0])
             out["G"] = np.array([1.0])
             return
@@ -176,7 +159,7 @@ class ScheduleSampling(Sampling):
 
 
 class ScheduleCrossover(Crossover):
-    """Recombine job allocations/modes/waits and both parents' sequence ranks."""
+    # Recombina alocação, modos, esperas e posições dos pais.
 
     def __init__(self, prob: float = 0.9):
         super().__init__(n_parents=2, n_offsprings=1, prob=prob)
@@ -212,7 +195,7 @@ class ScheduleCrossover(Crossover):
 
 
 class ScheduleMutation(Mutation):
-    """Apply one of five native schedule edits; infeasible outputs are evaluated/rejected."""
+    # Aplica uma de cinco alterações; soluções inviáveis são rejeitadas.
 
     def _do(self, problem, x, random_state=None, **kwargs):
         rng = random_state if random_state is not None else np.random.default_rng()
@@ -300,7 +283,7 @@ class SPEA2Result:
 
 
 def _final_front(instance: Instance, population) -> tuple[ParetoSolution, ...]:
-    """Independently re-evaluate feasible survivors after the search budget ends."""
+    # Reavalia os sobreviventes viáveis após o fim do orçamento.
     archive: list[tuple[tuple[int, int], ParetoSolution]] = []
     for individual in population:
         if individual.get("G") is not None and np.any(individual.G > 0):
@@ -320,16 +303,14 @@ def run_spea2(instance: Instance, config: SPEA2Config = SPEA2Config()) -> SPEA2R
                       sampling=ScheduleSampling(),
                       crossover=ScheduleCrossover(prob=config.crossover_probability),
                       mutation=ScheduleMutation(prob=config.mutation_probability),
-                      # Pymoo's public non-normalized SPEA2 survival avoids
-                      # zero-range division while retaining its SPEA2 equations.
+                      # A sobrevivência sem normalização evita divisão por zero.
                       survival=SPEA2Survival(normalize=False),
                       eliminate_duplicates=False)
     started = time.monotonic()
     result = minimize(problem, algorithm, termination=("n_eval", config.max_evaluations),
                       seed=config.seed, verbose=False, copy_algorithm=False)
     elapsed = time.monotonic() - started
-    # These integrity checks occur after termination and are explicitly outside
-    # the search budget; the complete-call count is reported separately.
+    # Estas verificações ocorrem após o fim e fora do orçamento de busca.
     post_search_validations = sum(
         1 for individual in result.algorithm.pop
         if individual.get("G") is None or not np.any(individual.G > 0)

@@ -1,8 +1,4 @@
-"""Native pymoo 0.6.2 MOEA/D with feasible schedules and a literal attempt cap.
-
-The public ask/tell driver can stop between subproblems. Selection, ideal-point
-updates, Tchebycheff decomposition and neighborhood replacement belong to pymoo.
-"""
+# MOEA/D nativo do pymoo 0.6.2 com soluções viáveis e limite de tentativas.
 
 from __future__ import annotations
 
@@ -87,14 +83,14 @@ class MOEADTrace:
 
 
 class ScheduleProblem(ElementwiseProblem):
-    """No declared constraints: rejected candidates never reach MOEA/D."""
+    # Não declara restrições; candidatos rejeitados não chegam ao MOEA/D.
 
     def __init__(self, instance: Instance, trace: MOEADTrace, max_evaluations: int):
         super().__init__(n_var=1, n_obj=2, vtype=object)
         self.instance = instance
         self.trace = trace
         self.max_evaluations = max_evaluations
-        # These are input constants, not estimated objective ranges or optima.
+        # São constantes de entrada, não estimativas de faixas ou ótimos.
         if instance.horizon <= 0 or instance.max_cost <= 0:
             raise ValueError("H e max_cost devem ser positivos")
 
@@ -108,7 +104,7 @@ class ScheduleProblem(ElementwiseProblem):
             self.trace.rejected += 1
             raise
         self.trace.feasible += 1
-        # Convert the exact ratio once, rather than rounding TEC before scaling.
+        # Converte a razão exata sem arredondar o TEC antes da escala.
         out["F"] = np.array([evaluation.cmax / self.instance.horizon,
                              float(evaluation.tec_exact / self.instance.max_cost)])
         if not np.isfinite(out["F"]).all():
@@ -116,12 +112,8 @@ class ScheduleProblem(ElementwiseProblem):
 
 
 class FeasibleEvaluator(Evaluator):
-    """Charge the original attempt, then substitute cached feasible X/F if rejected.
-
-    Evaluator.eval owns n_eval bookkeeping, including rejected attempts. Only its
-    evaluation hook is adapted; no scalarization or replacement is overridden.
-    Initial construction failure aborts explicitly rather than using invalid F.
-    """
+    # Conta a tentativa original e usa X/F viáveis em caso de rejeição.
+    # O controle de n_eval permanece no Evaluator.eval.
 
     def __init__(self):
         super().__init__(skip_already_evaluated=False, evaluate_values_of=["F"])
@@ -137,7 +129,7 @@ class FeasibleEvaluator(Evaluator):
                 if self.fallback is None:
                     raise RuntimeError("Sampling produziu schedule inviável") from error
                 cached = self.fallback()
-                # Native schedules are immutable tuples; copy the object array and F.
+                # Soluções nativas são tuplas imutáveis; copia o array e F.
                 individual.X = cached.X.copy()
                 individual.F = cached.F.copy()
                 individual.evaluated.update(evaluate_values_of)
@@ -198,7 +190,7 @@ def _final_front(instance: Instance, population) -> tuple[ParetoSolution, ...]:
 
 
 def run_moead(instance: Instance, config: MOEADConfig = MOEADConfig()) -> MOEADResult:
-    # The integration is validated against this version's loopwise evaluation API.
+    # Valida a integração contra a API de avaliação desta versão.
     if pymoo.__version__ != "0.6.2":
         raise RuntimeError("MOEA/D requer pymoo 0.6.2; revalide a integração antes de atualizar")
     trace = MOEADTrace()
@@ -217,7 +209,7 @@ def run_moead(instance: Instance, config: MOEADConfig = MOEADConfig()) -> MOEADR
     while trace.attempts < config.max_evaluations:
         candidates = algorithm.ask()
         if candidates is None:
-            # The native generator can finish a sweep without yielding a candidate.
+            # O gerador nativo pode terminar uma varredura sem produzir candidato.
             continue
         evaluator.eval(problem, candidates)
         algorithm.tell(infills=candidates)
@@ -228,8 +220,8 @@ def run_moead(instance: Instance, config: MOEADConfig = MOEADConfig()) -> MOEADR
     if not (trace.attempts == evaluator.n_eval == config.max_evaluations
             and trace.feasible + trace.rejected == trace.attempts):
         raise RuntimeError("Contagem de avaliações inconsistente")
-    # Read pop directly: algorithm.opt may be stale during an incomplete sweep.
-    # These independent complete evaluations cannot affect the completed search.
+    # Lê pop diretamente: algorithm.opt pode estar desatualizado.
+    # Essas avaliações finais não alteram a busca concluída.
     front = _final_front(instance, algorithm.pop)
     return MOEADResult(instance, config, front, trace.attempts, trace.feasible,
                        trace.rejected, int(evaluator.n_eval), len(algorithm.pop), elapsed)

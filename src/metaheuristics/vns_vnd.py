@@ -1,10 +1,4 @@
-"""Manual multiobjective VNS with VND for machine-sequence schedules.
-
-Run a small experiment from the repository root with::
-
-    python src/metaheuristics/vns_vnd.py data/input/set1/6_2_1439_3_S_1-9.dat \
-        --max-evaluations 500 --seed 1
-"""
+# VNS multiobjetivo manual com VND para sequências de máquinas.
 
 from __future__ import annotations
 
@@ -119,7 +113,7 @@ class VNSResult:
 
 
 def _random_greedy_schedule(instance: Instance, rng: random.Random) -> Schedule | None:
-    """Construct an earliest-start schedule using randomized feasible extensions."""
+    # Constrói uma solução de início antecipado com extensões viáveis.
     machine_jobs: list[list[tuple[int, int, int]]] = [[] for _ in range(instance.m)]
     machine_end = [0] * instance.m
     machine_last: list[int | None] = [None] * instance.m
@@ -159,7 +153,7 @@ def _sample_ranks(total: int, limit: int, rng: random.Random) -> list[int]:
 
 
 def _wait_moves(instance: Instance, schedule: Schedule) -> list[tuple[int, int, int]]:
-    """Return unique (machine, position, new_wait) moves at tariff boundaries."""
+    # Retorna movimentos únicos nas mudanças de tarifa.
     boundaries = {0, instance.horizon}
     for day in range(instance.days):
         boundaries.add(day * instance.slots_per_day)
@@ -189,7 +183,7 @@ def _wait_moves(instance: Instance, schedule: Schedule) -> list[tuple[int, int, 
 
 def _candidate_schedules(instance: Instance, schedule: Schedule, neighborhood: int,
                          rng: random.Random, limit: int) -> Iterable[Schedule]:
-    """Yield up to `limit` distinct movements without building quadratic lists."""
+    # Gera até `limit` movimentos distintos sem listas quadráticas.
     mutable = [list(sequence) for sequence in schedule]
     if neighborhood == 0:  # N1 mode
         moves = [(machine, position, mode)
@@ -291,7 +285,7 @@ def _candidate_schedules(instance: Instance, schedule: Schedule, neighborhood: i
 
 
 class VNSVND:
-    """Budgeted, reproducible VNS/VND runner backed by the shared evaluator."""
+    # Executa VNS/VND reproduzível com orçamento e avaliador compartilhado.
 
     def __init__(self, instance: Instance, config: VNSConfig):
         self.instance = instance
@@ -351,7 +345,7 @@ class VNSVND:
                 candidate = self._evaluate(candidate_schedule)
                 if candidate is None:
                     continue
-                # _evaluate() records insertion explicitly; look at its latest trace event.
+                # _evaluate() registra a inserção no último evento do histórico.
                 archive_expanded |= self.trace[-1].get("archive_inserted", False)
                 if dominates(candidate.key, current.key):
                     self.trace.append({"event": "vnd_accept", "from": list(current.key),
@@ -434,9 +428,8 @@ class VNSVND:
                     neighborhood = 0
                 else:
                     neighborhood += 1
-            # Empty movement families consume no evaluation budget. Stop if an
-            # entire five-neighborhood sweep had no evaluable candidate, avoiding
-            # an infinite loop on degenerate instances (for example n=1, modes=1).
+            # Famílias vazias não consomem avaliações. Pare se nenhuma candidata
+            # for avaliável na varredura, evitando loop infinito.
             if self.evaluations == sweep_start_evaluations:
                 self.trace.append({"event": "stop", "reason": "no_evaluable_moves"})
                 stop_reason = "no_evaluable_moves"
@@ -469,14 +462,14 @@ def _movement_count(instance: Instance, schedule: Schedule, neighborhood: int) -
 
 
 def _insertion_count(sequence: Sequence) -> int:
-    """Unique nontrivial insertions; empty/singleton sequences have none."""
+    # Conta inserções não triviais; sequências vazias ou unitárias não têm.
     movable = len(sequence) - 1
     return movable * movable if movable > 0 else 0
 
 
 def _candidate_at_rank(instance: Instance, schedule: Schedule, neighborhood: int,
                        rank: int) -> Schedule:
-    """Apply one movement by its rank; used by shaking's bounded random sample."""
+    # Aplica um movimento por posição; usado na amostra aleatória do shaking.
     total = _movement_count(instance, schedule, neighborhood)
     if not 0 <= rank < total:
         raise IndexError(f"Movimento {rank} fora da vizinhança {NEIGHBORHOODS[neighborhood]}")
