@@ -1,93 +1,410 @@
 # MHM — otimização multiobjetivo
 
-Minimização do makespan e do custo de energia em máquinas paralelas não relacionadas, com modos de operação, setups entre tarefas consecutivas e tarifas por horário. O projeto contém métodos exatos, uma infraestrutura comum de representação/avaliação, VNS/VND multiobjetivo manual, SPEA2 incremental e MOEA/D via pymoo.
+Minimização do makespan (`Cmax`, maior término das tarefas) e do custo total de energia (`TEC`) em máquinas paralelas não relacionadas, com modos de operação, setups entre tarefas consecutivas e tarifas por horário.
 
-```
-data/
-  input/set1/               # entradas pequenas e derivadas identificadas
-  input/set2/               # entradas originais grandes
-  baselines/                # fronteiras completas para comparação futura
-  output/
-    moead/                   # MOEA/D, notas de integração e smokes instrumentados
-    spea2/                   # execuções SPEA2
-    custom_exact/           # backtracking, resultado e checkpoint
-    custom_exact_dp/        # DP própria, resultado e desempenho.csv
-    cpsat/                   # OR-Tools
-    plots/                   # gráficos
-    ...                      # relatórios e métricas já calculados
-src/
-  exact_methods/
-    custom_exact.py
-    custom_exact_dp.py
-    cpsat.py
-  schedule.py               # representação, decoder, validação e avaliação comuns
-  heuristics/                # reservado para implementação 2
-  metaheuristics/            # VNS/VND manual, SPEA2, MOEA/D e spike pymoo
-  problem.py                # leitura, regras e custo compartilhados
-  plot_pareto.py
-tests/                       # unittest da infraestrutura e do VNS/VND
-requirements.txt
-```
+Este guia descreve como preparar o ambiente, criar uma entrada, executar os métodos, retomar buscas e consultar os resultados. Execute os comandos a partir da raiz do repositório. Os caminhos com `/` funcionam no PowerShell, Git Bash e terminais Linux/macOS; coloque caminhos com espaços entre aspas.
 
-Instale as dependências uma vez, na raiz do projeto:
+## 1. Preparar o ambiente
 
-```powershell
+Use Python 3.10 ou superior, em uma versão compatível com as dependências de `requirements.txt`. Não é obrigatório criar um ambiente virtual.
+
+```bash
+python --version
 python -m pip install -r requirements.txt
 ```
 
-Execute um método passando o arquivo de entrada. `--restart` substitui a execução anterior daquele método e entrada:
+Use o mesmo executável `python` para instalar e executar. Se o seu sistema usa `python3`, substitua `python` nos comandos. A instalação é feita uma vez; execute-a novamente quando mudar o arquivo de requisitos.
 
-```powershell
-python src/exact_methods/custom_exact_dp.py data/input/set1/6_2_1439_3_S_1-9.dat --restart
-python src/exact_methods/cpsat.py data/input/set1/6_2_1439_3_S_1-9.dat --restart --workers 4 --total-time-limit 300
-python src/exact_methods/custom_exact.py data/input/set1/6_2_1439_3_S_1-9.dat --restart --time-limit 300
-python src/plot_pareto.py
+| Componente | Dependência |
+| --- | --- |
+| Backtracking, DP própria, VNS/VND e NSGA-II manual | Biblioteca padrão do Python |
+| CP-SAT | OR-Tools |
+| NSGA-II com biblioteca, SPEA2 e MOEA/D | pymoo >= 0.6.2 e < 0.7 (instala também NumPy) |
+| Gráficos | Matplotlib |
+
+Os métodos são independentes: não é necessário executar um método exato antes de iniciar uma meta-heurística. As fronteiras exatas são referências para avaliar resultados depois das buscas.
+
+```text
+src/
+  exact_methods/     # custom_exact.py, custom_exact_dp.py e cpsat.py
+  metaheuristics/    # vns_vnd.py, spea2.py, moead.py e experimento pymoo_spike.py
+  heuristics/
+    nsga2/           # NSGA-II via pymoo, decodificador, operadores e plots.py
+    nsga2_manual/    # NSGA-II próprio, avaliação, operadores e grafico.py
+  problem.py         # leitura da entrada e regras/custos compartilhados
+  schedule.py        # representação, decodificação, validação e avaliação
+  plot_pareto.py      # gráficos dos resultados salvos
+data/
+  input/set1/        # instâncias pequenas originais e derivadas identificadas
+  input/set2/        # instâncias originais grandes
+  baselines/         # fronteiras exatas completas
+  output/            # resultados por método, gráficos e relatórios
+tests/               # testes da infraestrutura e das meta-heurísticas
+requirements.txt
 ```
 
-Cada método salva automaticamente em `data/output/<algoritmo>/<entrada>.json`. Os scripts também aceitam uma pasta de entradas; o orçamento é por arquivo. Os métodos próprios usam somente a biblioteca padrão do Python. OR-Tools é a dependência do CP-SAT, Matplotlib desenha os gráficos e pymoo é usado pelo SPEA2 e pelo MOEA/D. Execute `python -m unittest discover -v` para validar a infraestrutura comum, o VNS/VND, o SPEA2 e o MOEA/D.
+## 2. Escolher ou criar uma entrada `.dat`
 
-O VNS/VND multiobjetivo manual está em `src/metaheuristics/vns_vnd.py`. Por padrão, ele usa 10.000 avaliações e seed 1, cria schedules iniciais próprios e se recusa a sobrescrever um resultado anterior. Para uma execução curta:
+Todos os métodos leem o mesmo formato por meio de `src/problem.py`. Você pode usar, por exemplo, `data/input/set1/6_2_1439_3_S_1-9.dat`, ou criar seu próprio arquivo em `data/input/personalizados/`.
 
-```powershell
-python src/metaheuristics/vns_vnd.py data/input/set1/6_2_1439_3_S_1-9.dat --seed 1 --max-evaluations 500
+Salve como texto UTF-8 com extensão `.dat` (não `.dat.txt`). Os nomes dos campos e sua ordem são obrigatórios. Valores podem ser separados por espaços, tabulações e quebras de linha; linhas vazias são permitidas. Use ponto decimal, como `1.2`, e não vírgula. Não inclua comentários, títulos de matrizes, separadores, vírgulas entre colunas ou textos como `&#x9;`: o parser lê todos os tokens como dados.
+
+### Campos, dimensões e ordem
+
+| Campo | Quantidade de valores | Significado e requisitos |
+| --- | --- | --- |
+| `n` | 1 inteiro positivo | Número de tarefas/jobs. |
+| `m` | 1 inteiro positivo | Número de máquinas. |
+| `n_day` | 1 inteiro positivo | Número de dias. |
+| `hl` | 1 inteiro não negativo | Último índice de intervalo de um dia. Há `hl + 1` intervalos por dia. |
+| `o` | 1 inteiro positivo | Número de modos de operação. |
+| `rate_in_peak` | 1 número não negativo | Tarifa de energia durante a ponta. |
+| `rate_off_peak` | 1 número não negativo | Tarifa fora da ponta. |
+| `max_cost` | 1 número positivo | Normalizador de TEC; não é um teto de custo nem uma restrição de viabilidade. |
+| `peak_start` | `n_day` inteiros | Primeiro intervalo de ponta de cada dia, em índices absolutos. |
+| `peak_end` | `n_day` inteiros | Último intervalo de ponta de cada dia, inclusive, em índices absolutos. |
+| `v` | `o` números positivos | Velocidade de cada modo. |
+| `lambda` | `o` números não negativos | Fator de potência/consumo de cada modo; não é peso de otimização multiobjetivo. |
+| `pi` | `m` números não negativos | Potência de cada máquina. |
+| `processing` | `n × m` inteiros positivos | Linha = tarefa; coluna = máquina; duração base em intervalos. |
+| `setup` | `m × n × n` inteiros não negativos | Uma matriz `n × n` por máquina; linha = tarefa anterior; coluna = próxima tarefa. |
+
+A ordem dos modos em `v` e `lambda` deve coincidir. A ordem das máquinas em `pi`, nas colunas de `processing` e nos blocos de `setup` também deve coincidir. Nos resultados, os índices de tarefas, máquinas e modos começam em **zero**.
+
+Em `setup`, escreva primeiro todas as linhas da máquina 0, depois todas as linhas da máquina 1, e assim por diante. Não escreva rótulos entre os blocos. Use zero na diagonal: ela corresponde à transição de uma tarefa para ela mesma, que não ocorre em uma solução. A matriz pode ser assimétrica: `setup[i][j][k]` não precisa ser igual a `setup[i][k][j]`.
+
+### Tempo, energia e horários de ponta
+
+- Horizonte total: `H = n_day * (hl + 1)`.
+- Duração da tarefa `j`, na máquina `i`, no modo `l`: `ceil(processing[j][i] / v[l])`.
+- Um processamento ocupa `[start, end)`, com `end = start + duração` e `end <= H`.
+- O setup exige `start_próxima >= end_anterior + setup[i][anterior][próxima]` entre tarefas consecutivas da mesma máquina.
+- Todas as tarefas estão disponíveis em zero; não há preempção nem setup inicial. Espera e setup não cobram energia no modelo implementado.
+- O custo de um intervalo de processamento é `pi[i] * lambda[l] * tarifa * 24 / (hl + 1)`. Use unidades coerentes, por exemplo potência em kW e tarifa em moeda/kWh. O código mantém os custos como inteiros escalados para comparar valores exatos.
+
+**Como interpretar a unidade de tempo:** o programa divide cada dia de 24 horas em `hl + 1` partes iguais. Os valores de `processing`, `setup`, início e término são expressos em quantidades dessas partes, chamadas de intervalos. Portanto, `hl` define a resolução do dia; ele não é a duração de uma tarefa nem um limite em horas.
+
+| Valor de `hl` | Intervalos em um dia | Duração de um intervalo | Uma tarefa com duração efetiva 3 ocupa |
+| --- | ---: | --- | --- |
+| `1439` | 1440 | 1 minuto | 3 minutos |
+| `143` | 144 | 10 minutos | 30 minutos |
+| `11` | 12 | 2 horas | 6 horas |
+
+O código usa `24 / (hl + 1)` apenas para converter a duração de um intervalo em horas ao calcular energia: potência em kW multiplicada pelo tempo em horas resulta em kWh. Por exemplo, uma máquina de 2 kW, com fator de potência 1, funcionando durante 3 intervalos de 2 horas consome `2 × 1 × 6 = 12 kWh`; o custo depende da tarifa em cada intervalo.
+
+O exemplo pequeno abaixo usa `hl=11` para ter poucos horários possíveis e facilitar o acompanhamento da execução. Isso representa um dia dividido em blocos de duas horas, **não um horizonte de 12 minutos**. Para criar testes com resolução de um minuto, mantenha `hl=1439` e reduza inicialmente o número de tarefas/máquinas. Se mudar a resolução de uma instância existente, converta também processamentos, setups e horários de ponta; copiar os mesmos números muda a duração física do problema, e arredondamentos podem alterar os resultados.
+
+Há uma janela de ponta obrigatória por dia. Para o dia `d`, contado a partir de zero, deve valer:
+
+```text
+d * (hl + 1) <= peak_start[d] <= peak_end[d] < (d + 1) * (hl + 1)
 ```
 
-Os limites de candidatos por vizinhança e de tentativas de shaking também são configuráveis por argumentos CLI. A frente aproximada e os metadados da execução são salvos em `data/output/vns_vnd/<entrada>.json`; use `--overwrite` para substituir esse arquivo explicitamente. Cada ponto contém `tec_exact`, o schedule decodificado compatível com os resultados existentes e a representação por máquina usada pelo algoritmo. A saída não certifica a frente global.
+Exemplo com dois dias de 1440 intervalos: ponta das 18h às 21h corresponde a `peak_start 1080 2520` e `peak_end 1259 2699`. O segundo dia usa índices absolutos, não novamente `1080 1259`. Para simular tarifa constante, mantenha janelas válidas e use tarifas iguais dentro e fora da ponta.
 
-O SPEA2 usa o algoritmo SPEA2 do pymoo com schedules na representação comum. Para executar uma instância:
+### Exemplo completo para copiar
 
-```powershell
-python src/metaheuristics/spea2.py data/input/set1/6_2_1439_3_S_1-9.dat --seed 1 --max-evaluations 500 --population-size 50
+Crie a pasta `data/input/personalizados/` e salve o conteúdo abaixo como `data/input/personalizados/3_2_11_2_demo.dat`. São três tarefas, duas máquinas, dois modos e um dia de 12 intervalos. É uma instância didática local, não uma entrada do artigo.
+
+```text
+n 3
+m 2
+n_day 1
+hl 11
+o 2
+rate_in_peak 3
+rate_off_peak 1
+max_cost 100
+
+peak_start
+6
+
+peak_end
+8
+
+v
+1 2
+
+lambda
+1 3
+
+pi
+2 3
+
+processing
+2 3
+3 2
+2 2
+
+setup
+0 1 2
+2 0 1
+1 2 0
+
+0 2 1
+1 0 2
+2 1 0
 ```
 
-Esta execução é **SPEA2 incremental**: a cada iteração o pymoo produz um descendente, mantendo seus operadores de seleção e survival SPEA2. O regime incremental permite respeitar literalmente o cap de avaliações e não é equivalente ao regime geracional clássico. O survival usa `SPEA2Survival(normalize=False)`, configuração pública do pymoo que evita divisão por amplitude zero; strength, raw fitness, densidade, seleção e truncamento continuam sendo calculados pelo pymoo. Cada schedule completo submetido ao evaluator consome uma unidade, inclusive candidatos inviáveis. A população inicial é avaliada integralmente; por isso `max_evaluations` deve ser pelo menos o tamanho da população. Após o término, os sobreviventes viáveis são reavaliados para validar a frente; essas chamadas aparecem como `post_search_validations` e ficam fora do orçamento da busca. A saída fica em `data/output/spea2/<entrada>.json`, preserva TEC exato e não sobrescreve resultado existente sem `--overwrite`. Os parâmetros dos operadores são provisórios e não foram ajustados.
+Nesse exemplo, `processing[0][1]=3`: a tarefa 0 leva três intervalos na máquina 1 com velocidade 1, ou `ceil(3/2)=2` com velocidade 2. No primeiro bloco de setup, `setup[0][0][2]=2`: se a tarefa 2 sucede imediatamente a tarefa 0 na máquina 0, são necessários dois intervalos de separação.
 
-O MOEA/D executa o algoritmo nativo do **pymoo 0.6.2**, com directions uniformes para dois objetivos, Tchebycheff e escala fixa `Cmax/H`, `TEC/max_cost`:
+Confira a leitura antes de executar uma busca:
 
-```powershell
-python src/metaheuristics/moead.py data/input/set1/6_2_1439_3_S_1-9.dat --seed 11 --max-evaluations 61 --population-size 12 --n-neighbors 4
+```bash
+python -c "import sys; sys.path.insert(0, 'src'); from problem import read_instance; x = read_instance('data/input/personalizados/3_2_11_2_demo.dat'); print('Entrada lida:', x.n, 'tarefas,', x.m, 'maquinas,', x.modes, 'modos, H =', x.horizon)"
 ```
 
-A população tem exatamente o número de directions; configure `2 <= n_neighbors <= population_size`. O driver público `ask/tell` preserva o orçamento literal também em varreduras incompletas. Descendentes inviáveis consomem uma tentativa e são substituídos por uma cópia viável já avaliada, antes de chegar ao MOEA/D, sem constraints `G`, penalidades ou avaliação adicional. Ao final, a população é reavaliada e a frente é filtrada por `(Cmax, tec_units)` exatos; essas chamadas aparecem separadamente como `post_search_validations`. Os resultados ficam em `data/output/moead/<entrada>.json`, sem sobrescrita por padrão. Veja [API, escala, viabilidade e orçamento do MOEA/D](data/output/moead/implementation.md) e [audit dos smokes](data/output/moead/validation/audit.json). Não houve tuning nem piloto experimental nesta implementação.
+A saída esperada é `Entrada lida: 3 tarefas, 2 maquinas, 2 modos, H = 12`. Isso verifica formato e valores básicos; não prova que todas as tarefas cabem juntas respeitando os setups.
 
-Para retomar uma execução existente, substitua `--restart` por `--resume`. O backtracking precisa do resultado e do `.checkpoint.json`; a DP preserva os epsilons já provados e reconstrói suas tabelas. Checkpoints, caches, arquivos temporários, logs e configurações locais do editor são ignorados pelo Git. Os resultados JSON, CSV, Markdown, PDF e PNG são mantidos.
+Para testar seu arquivo, substitua o caminho da entrada nos comandos das próximas seções. O nome é livre: as dimensões vêm do conteúdo. Use nomes distintos para experimentos distintos, pois o nome do JSON de saída deriva do nome do `.dat`.
 
-O output histórico do CP-SAT de seis tarefas é um resumo completo dos pares provados, sem os escalonamentos originais. Ele serve para comparação/plotagem; para recalculá-lo, use `--restart`.
+## 3. Executar os métodos exatos
 
-O `custom_exact_dp.py` incorpora o cálculo do makespan mínimo. Depois minimiza energia com `Cmax <= epsilon`, para cada inteiro do mínimo até `H = n_day * (hl+1)`. No set1, o término máximo é 1440. Duração = `ceil(processing/speed)`; intervalos de processamento são `[start,end)`. Tarefas estão disponíveis em zero, sem preempção ou setup inicial. Espera e setup não cobram energia. `max_cost` só normaliza o custo.
+Os exemplos abaixo usam a entrada oficial de seis tarefas e diretórios `data/output/manual/<método>/`, para manter os relatórios dessas execuções separados dos resultados existentes. Na primeira execução, não use `--resume`. Se o destino já existir, escolha outro `--output-dir`, retome ou use `--restart` para substituir a execução anterior.
 
-Para medir desempenho:
+### 3.1 Programação dinâmica própria
 
-```powershell
-python src/exact_methods/custom_exact_dp.py data/input/set1/12_2_1439_3_S_1-9_derivada.dat --profile --restart --total-time-limit 600 --memory-limit-mb 1024
+```bash
+python src/exact_methods/custom_exact_dp.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/custom_exact_dp --total-time-limit 600 --memory-limit-mb 1024 --profile
 ```
 
-`--profile` acrescenta uma linha por execução ao `desempenho.csv` da DP: tempo, pico de RSS, transições, rótulos e hash do código. Os padrões são **13 tarefas, 600 segundos e 1024 MiB**. `--max-jobs` permite experimentar um teto maior explicitamente. Os limites são cooperativos: tempo/RSS são verificados periodicamente durante a preparação de energia e entre epsilons, podendo ultrapassar o orçamento entre verificações. A etapa inicial de makespan e a geração de opções não são interrompidas por esses limites. `0` desativa um limite de tempo ou memória.
+A DP calcula o makespan mínimo e minimiza TEC sob `Cmax <= epsilon`, para cada inteiro até `H`. Ela reutiliza tabelas de estados e retém alternativas não dominadas de término/energia.
 
-As entradas com `_derivada` foram extraídas de `50_10_1439_5_S_1-9.dat`: primeiras n tarefas, máquinas 0 e 1, modos originais 0, 2 e 4 (velocidades 1,2 / 1 / 0,8). Processamentos, setups, potências, tarifas e horizonte vêm dessa fonte. Não são instâncias publicadas no artigo. O normalizador `max_cost` foi preservado; as medições usam TEC sem normalização. Veja [desempenho da DP](data/output/custom_exact_dp/desempenho_dp.md).
+- `--total-time-limit 600`: orçamento de tempo por execução/instância; `0` desativa.
+- `--memory-limit-mb 1024`: orçamento de RSS em MiB; `0` desativa.
+- `--max-jobs 13`: teto padrão de tarefas. Alterá-lo permite iniciar entradas maiores, sem garantir viabilidade computacional.
+- `--epsilon-max K`: encerra a varredura em `K`. Se `K < H`, não certifica a fronteira completa.
+- `--profile`: registra tempo, memória, transições, rótulos e hash do código em `desempenho.csv`, no diretório de saída.
 
-Uma fronteira completa da DP publica automaticamente um baseline em `data/baselines/<entrada>_custom_exact_dp.json`, com hash da entrada, objetivos exatos e escalonamentos. `status=complete` e `pareto_proven=true` distinguem referências ótimas de resultados provisórios. Para futuras heurísticas, compare apenas resultados da mesma entrada e discretização.
+Os limites de tempo/memória são cooperativos. A preparação de energia os verifica periodicamente e a varredura os verifica entre epsilons. Makespan inicial, geração inicial de opções e uma partição em andamento podem ultrapassar o orçamento antes da próxima verificação.
 
-O [esboço de representação](data/output/representacao_solucao.md) descreve sequências por máquina, modos e esperas. Inclui uma [figura de evolução genética](data/output/plots/representacao_genetico.png), com pais, cruzamento, mutação e seleção Pareto, e explica os valores usados. É uma ilustração, sem implementação das etapas 2 e 3.
+Ao concluir a fronteira, a DP também grava `data/baselines/<entrada>_custom_exact_dp.json`, mesmo com `--output-dir` personalizado. Esse baseline usa o nome da entrada e pode substituir um baseline anterior com esse nome. Inclui hash da entrada, objetivos e escalonamentos.
 
-Os resultados anteriores foram consolidados em [analise_metodos_exatos.json](data/output/analise_metodos_exatos.json), com frontes repetidas armazenadas uma única vez por referência. O [relatório anterior](data/output/relatorio_completo_metodos_exatos.pdf) e a [documentação histórica](data/output/documentacao_anterior.md) preservam a análise original; seus nomes de funções e caminhos descrevem a estrutura da época. Os geradores de análise/PDF, a versão MILP complementar e os logs antigos foram removidos. A comparação com o artigo continua metodológica: seus experimentos exatos usam intervalos de dez minutos e pesos de soma ponderada, enquanto usamos minutos e epsilon-restrição.
+### 3.2 CP-SAT do OR-Tools
+
+```bash
+python src/exact_methods/cpsat.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/cpsat --workers 4 --seed 1 --time-limit 60 --total-time-limit 300
+```
+
+O código externo limita TEC e chama o CP-SAT para provar o menor makespan e, depois, o menor TEC para esse makespan. Após provar um ponto, reduz o teto de TEC em uma unidade inteira escalada.
+
+- `--time-limit 60`: limite de **cada chamada** ao CP-SAT, não da fronteira inteira; `0` desativa.
+- `--total-time-limit 300`: orçamento da execução/instância; `0` desativa. A preparação inicial de opções ocorre antes desse relógio. Construção de modelo e verificações cooperativas podem ultrapassar o orçamento.
+- `--workers 4`: workers de CPU; não ativa GPU.
+- `--seed 1`: semente registrada na execução. Com múltiplos workers, ela não garante trajetória/tempo idênticos entre execuções.
+
+Para rodar sem os limites de tempo, use `--time-limit 0 --total-time-limit 0`. O orçamento de 300 segundos do exemplo pode encerrar com fronteira parcial.
+
+### 3.3 Backtracking próprio
+
+```bash
+python src/exact_methods/custom_exact.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/custom_exact --time-limit 300 --progress-interval 60 --checkpoint-interval 60
+```
+
+O backtracking propaga restrições e usa limites inferiores e dominância. Os pontos encontrados são provisórios até o esgotamento da busca. Se o limite de tempo for atingido antes de esgotar a busca, o resultado será parcial.
+
+- `--time-limit 300`: orçamento da execução por instância; `0` desativa.
+- `--progress-interval 60`: intervalo entre mensagens de progresso, em segundos.
+- `--checkpoint-interval 60`: intervalo entre salvamentos, em segundos.
+- `--max-decisions N`: limite opcional de decisões da chamada atual.
+
+### 3.4 Retomar ou reiniciar
+
+Use o mesmo caminho de entrada e o mesmo diretório de saída da execução anterior:
+
+```bash
+python src/exact_methods/custom_exact_dp.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/custom_exact_dp --resume --total-time-limit 600 --profile
+python src/exact_methods/cpsat.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/cpsat --resume --workers 4 --seed 1 --time-limit 60 --total-time-limit 300
+python src/exact_methods/custom_exact.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/custom_exact --resume --time-limit 300 --progress-interval 60 --checkpoint-interval 60
+```
+
+| Método | Arquivo necessário para retomar | O que é retomado |
+| --- | --- | --- |
+| DP | JSON de resultado compatível | Epsilons já provados; as tabelas internas são reconstruídas. |
+| CP-SAT | JSON de resultado compatível | Pontos provados e próximo teto de custo; a chamada interrompida recomeça. |
+| Backtracking | `.checkpoint.json` compatível | Pilha de decisões e fronteira descoberta; o relatório é gravado novamente. |
+
+`--restart` começa do zero e substitui os arquivos da execução; não use junto com `--resume`. Alterar o conteúdo da entrada torna o resultado/checkpoint anterior incompatível. `Ctrl+C` é tratado pelos métodos exatos nas etapas de busca protegidas; espere o programa encerrar e confirme os arquivos antes de retomar. Uma interrupção durante preparação fora desses trechos pode deixar apenas o último salvamento disponível. Não execute dois processos escrevendo no mesmo destino.
+
+## 4. Executar as duas versões do NSGA-II
+
+O diretório `src/heuristics/` contém duas implementações executáveis do NSGA-II. Embora estejam nessa pasta por organização do projeto, ambas são meta-heurísticas evolutivas multiobjetivo: aproximam a fronteira de `Cmax` e `TEC`, sem provar otimalidade. Usam a entrada da seção 2 e revalidam a frente final com `src/schedule.py`, sem precisar conhecer uma fronteira exata durante a busca.
+
+### 4.1 NSGA-II via pymoo
+
+```bash
+python src/heuristics/nsga2/nsga2.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/nsga2_seed1 --seed 1 --max-evaluations 2000 --population-size 50
+```
+
+Usa seleção e sobrevivência do pymoo com operadores próprios. Cada cromossomo concatena quatro vetores de tamanho `n`: ordem das tarefas, máquina, modo e decisão binária de espera. Máquina, modo e espera correspondem à posição na sequência. Se `avoid=1` e o início cair na ponta, o decodificador adia esse início até o fim da ponta; não impede que uma tarefa iniciada fora dela avance sobre a ponta.
+
+| Opção | Padrão | Significado |
+| --- | ---: | --- |
+| `--seed` | 1 | Semente aleatória. |
+| `--max-evaluations` | 10000 | Orçamento de avaliações, incluindo candidatos inviáveis e população inicial. |
+| `--population-size` | 100 | Tamanho da população; o orçamento deve ser pelo menos esse valor. |
+| `--crossover-probability` | 0.9 | Probabilidade de cruzamento. |
+| `--mutation-probability` | 0.3 | Probabilidade de mutação. |
+
+O último lote é truncado para não exceder o orçamento. A busca pode terminar antes se houver 100 tentativas consecutivas sem novos candidatos após a eliminação de duplicatas. As revalidações finais são registradas em `post_search_validations`, fora desse orçamento. A saída padrão é `data/output/nsga2/<entrada>.json`; os pontos incluem o `chromosome` além dos objetivos e escalonamentos. Consulte a [documentação do NSGA-II via pymoo](src/heuristics/nsga2/heuristica.md).
+
+### 4.2 NSGA-II manual
+
+```bash
+python src/heuristics/nsga2_manual/nsga2_manual.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/nsga2_manual_seed1 --seed 1 --geracoes 200
+```
+
+Implementa ordenação não dominada, crowding distance, seleção, cruzamento e mutação sem pymoo/NumPy. O indivíduo é uma sequência de pares `(tarefa, modo)` por máquina. Não há espera voluntária: cada tarefa começa assim que o processamento anterior e o setup terminam. Portanto, as duas versões diferem também na representação e nos operadores; não são apenas duas implementações do mesmo procedimento com os mesmos parâmetros.
+
+| Opção | Padrão | Significado |
+| --- | ---: | --- |
+| `--seed` | 1 | Semente aleatória. |
+| `--populacao` | 110 | Tamanho da população, pelo menos 2. |
+| `--prob-mutacao` | 0.05 | Probabilidade de mutar cada filho. |
+| `--tempo` | `n * ln(m)` | Limite em segundos de CPU, não tempo de relógio. |
+| `--geracoes` | não definido | Número fixo de gerações; quando informado, substitui o limite de tempo. |
+
+Para usar tempo, retire `--geracoes`:
+
+```bash
+python src/heuristics/nsga2_manual/nsga2_manual.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/nsga2_manual_tempo_seed1 --seed 1 --tempo 10
+```
+
+Sem essas duas opções, seis tarefas e duas máquinas recebem aproximadamente 4,16 segundos de CPU. O limite é cooperativo e pode ser ultrapassado pela inicialização, por uma operação em andamento e pela validação final. Para uma máquina, o padrão resulta em zero; informe um tempo positivo ou um número de gerações.
+
+Gerações fixas e a mesma seed permitem reproduzir a busca na mesma versão do código; por tempo, o número de gerações depende da máquina. `elapsed_seconds` dessa implementação registra **tempo de CPU**, o que deve ser considerado ao comparar tempos. A saída padrão é `data/output/nsga2_manual/<entrada>.json`. Consulte a [documentação do NSGA-II manual](src/heuristics/nsga2_manual/heuristica.md).
+
+### 4.3 Repetir e comparar
+
+Ambas aceitam `--output-dir` e `--overwrite`, mas não `--resume`. Use um diretório diferente para cada seed ou configuração; `--overwrite` substitui o JSON anterior. A versão manual aceita **um arquivo por chamada**; a versão pymoo também aceita uma pasta (seção 6).
+
+O NSGA-II manual não explora esperas voluntárias, e a versão pymoo só explora a regra de espera descrita acima. Suas frentes são aproximações dentro dessas representações, enquanto os métodos exatos admitem outros horários de início. Mesmo uma frente revalidada não tem certificação global. Para comparar as versões, registre representação, operadores, população e critério de parada: 200 gerações, 2000 avaliações e 10 segundos não são orçamentos equivalentes.
+
+## 5. Executar as meta-heurísticas
+
+Os comandos abaixo são execuções curtas de demonstração. Os métodos criam suas próprias soluções iniciais e produzem frentes aproximadas, sem certificação global. Os detalhes da implementação estão em [METAHEURISTICS.md](src/metaheuristics/METAHEURISTICS.md).
+
+### 5.1 VNS/VND manual
+
+```bash
+python src/metaheuristics/vns_vnd.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/vns_vnd_seed1 --seed 1 --max-evaluations 500
+```
+
+O padrão é 10.000 avaliações e seed 1. Também aceita `--initial-solutions`, `--max-candidates-per-neighborhood` e `--shaking-attempts`. O orçamento conta avaliações, não segundos. Uma falha de construção inicial não prova inviabilidade da instância.
+
+### 5.2 SPEA2 via pymoo
+
+```bash
+python src/metaheuristics/spea2.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/spea2_seed1 --seed 1 --max-evaluations 500 --population-size 50
+```
+
+A execução é incremental: o pymoo gera um descendente por iteração; não equivale ao regime geracional clássico. O orçamento deve ser pelo menos o tamanho da população. Candidatos inviáveis também consomem avaliações. O survival usa `SPEA2Survival(normalize=False)` para evitar divisão por amplitude zero. `--crossover-probability` e `--mutation-probability` controlam os operadores.
+
+### 5.3 MOEA/D via pymoo
+
+```bash
+python src/metaheuristics/moead.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/moead_seed1 --seed 1 --max-evaluations 500 --population-size 50 --n-neighbors 10
+```
+
+Usa MOEA/D nativo, directions uniformes, Tchebycheff e escala `Cmax/H`, `TEC/max_cost`. Configure `2 <= n_neighbors <= population_size` e orçamento suficiente para avaliar a população inicial. O driver `ask/tell` respeita o cap de tentativas inclusive em varreduras incompletas. Descendentes inviáveis consomem uma tentativa e são substituídos por cópias viáveis já avaliadas. Também aceita `--prob-neighbor-mating`, `--crossover-probability` e `--mutation-probability`.
+
+### 5.4 Repetições e orçamento
+
+As meta-heurísticas usam `--overwrite` para substituir um resultado existente; não oferecem a retomada `--resume` dos métodos exatos. Para repetir com outra seed, mude **a seed e o diretório de saída**. Apenas mudar a seed não muda automaticamente o nome do arquivo.
+
+```bash
+python src/metaheuristics/spea2.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/spea2_seed2 --seed 2 --max-evaluations 500 --population-size 50
+```
+
+SPEA2 e MOEA/D reavaliam os sobreviventes ao final: `post_search_validations` registra essas verificações fora do orçamento da busca. Encerrar as avaliações não prova que a fronteira aproximada é ótima.
+
+## 6. Executar uma pasta e consultar opções
+
+Os três exatos, VNS/VND, SPEA2, MOEA/D e NSGA-II via pymoo aceitam um arquivo ou uma pasta. Em uma pasta, processam os arquivos `*.dat` diretamente nela, em ordem, sem busca recursiva. O orçamento se aplica a cada arquivo. O NSGA-II manual aceita somente um arquivo: repita seu comando para cada entrada desejada. Exemplo com sua pasta de testes:
+
+```bash
+python src/exact_methods/custom_exact_dp.py data/input/personalizados --output-dir data/output/manual/meus_testes_dp --total-time-limit 60
+```
+
+Uma entrada que exceda limites ou produza erro pode encerrar o lote. Não use a DP em todo o set2: seu teto padrão é 13 tarefas e o set2 começa em 50. Para descobrir todos os parâmetros de cada executável:
+
+```bash
+python src/exact_methods/custom_exact_dp.py --help
+python src/exact_methods/cpsat.py --help
+python src/exact_methods/custom_exact.py --help
+python src/metaheuristics/vns_vnd.py --help
+python src/metaheuristics/spea2.py --help
+python src/metaheuristics/moead.py --help
+python src/heuristics/nsga2/nsga2.py --help
+python src/heuristics/nsga2_manual/nsga2_manual.py --help
+```
+
+## 7. Ler resultados e gerar gráficos
+
+### 7.1 Arquivos de resultado e plotagem geral
+
+Por padrão, cada método grava `data/output/<método>/<nome_da_entrada>.json`; `--output-dir` altera o diretório. O backtracking também grava `<nome_da_entrada>.checkpoint.json`. Esses checkpoints são ignorados pelo Git: um clone normalmente não contém o estado necessário para retomar o backtracking.
+
+| Resultado | Interpretação |
+| --- | --- |
+| Exato com `status=complete` e `pareto_proven=true` | Busca/prova concluída para o modelo e a entrada. Uma instância comprovadamente inviável pode ter fronteira vazia. |
+| Exato com `status=incomplete` | A fronteira global ainda não foi provada. Leia `stop_reason`. |
+| `front` do backtracking incompleto | Pontos provisórios; podem ser dominados posteriormente. |
+| `front` parcial de CP-SAT ou DP | Pontos certificados pelas otimizações já concluídas; a lista completa pode estar faltando. |
+| `candidate` | Solução viável sem a prova necessária para publicá-la como ponto ótimo. |
+| Saída das meta-heurísticas | Frente aproximada; o encerramento do orçamento não é prova de Pareto global. |
+
+`tec_exact` preserva o custo como numerador/denominador; `tec` é a representação decimal. `schedule` descreve tarefa, máquina, modo, início e término. Os arquivos também identificam a entrada por hash. Compare somente a mesma entrada/discretização. `max_cost` não garante que `TEC/max_cost` seja menor ou igual a 1.
+
+Para plotar somente as novas execuções dos exemplos:
+
+```bash
+python src/plot_pareto.py data/output/manual --output-dir data/output/manual/plots
+```
+
+Para escolher dois resultados específicos:
+
+```bash
+python src/plot_pareto.py data/output/manual/custom_exact_dp/6_2_1439_3_S_1-9.json data/output/manual/cpsat/6_2_1439_3_S_1-9.json --output-dir data/output/manual/plots
+```
+
+Acrescente `--show` para abrir os gráficos. Sem caminhos, `python src/plot_pareto.py` procura resultados em `data/baselines/` e `data/output/`. A plotagem não executa solvers. Ela agrupa por nome/hash da entrada e método, preferindo resultado completo; entre resultados de mesma categoria, prefere o mais recente. Para visualizar separadamente várias seeds do mesmo método, passe cada resultado em comandos separados com diretórios de gráficos diferentes.
+
+**Limitação atual da legenda:** o plotador geral lê os JSONs das meta-heurísticas, mas pode rotulá-los como “parcial; pontos provados”. Esse texto não certifica esses pontos: NSGA-II, VNS/VND, SPEA2 e MOEA/D produzem frentes aproximadas. Consulte o método e `pareto_proven` no JSON ao interpretar o gráfico.
+
+### 7.2 Gráficos específicos do NSGA-II
+
+Os dois scripts abaixo **executam uma nova busca** e salvam um PNG, sem salvar o JSON dessa execução. Para visualizar um JSON já salvo, use o plotador geral acima. Os destinos explícitos mantêm os gráficos de demonstração separados dos existentes:
+
+```bash
+python src/heuristics/nsga2/plots.py data/input/set1/6_2_1439_3_S_1-9.dat --seed 1 --max-evaluations 2000 --population-size 50 --output data/output/manual/plots/nsga2_seed1.png
+python src/heuristics/nsga2_manual/grafico.py data/input/set1/6_2_1439_3_S_1-9.dat --seed 1 --geracoes 200 --output data/output/manual/plots/nsga2_manual_seed1.png
+```
+
+Ambos procuram a referência em `data/baselines/<entrada>_custom_exact_dp.json`. Se ela não existir, desenham apenas a frente aproximada; não executam a DP. Confirme que o baseline corresponde ao conteúdo da entrada, pois esses scripts o selecionam pelo nome do arquivo. Sem `--output`, salvam em `data/output/nsga2/pareto_<entrada>.png` e `data/output/nsga2_manual/pareto_<entrada>.png`, respectivamente. Um PNG existente no destino é substituído sem `--overwrite`.
+
+## 8. Validar a instalação e tratar erros comuns
+
+```bash
+python -m unittest discover -v
+```
+
+A suíte atual cobre representação/avaliação, VNS/VND, SPEA2, MOEA/D, as duas versões do NSGA-II e normalização. Não há uma bateria específica de regressão dos três solvers exatos na suíte atual.
+
+Para verificar somente as duas implementações do NSGA-II:
+
+```bash
+python -m unittest tests.test_nsga2 tests.test_nsga2_manual -v
+```
+
+| Mensagem/situação | Como proceder |
+| --- | --- |
+| `can't open file` | Execute na raiz, confira o caminho e use `/` no Git Bash. |
+| `ModuleNotFoundError` | Instale `requirements.txt` com o mesmo Python que executa o script. |
+| `Esperado '...'`, `Faltam valores` ou dados adicionais | Confira a ordem dos campos e as dimensões dos vetores/matrizes; remova comentários. |
+| Ponta fora do respectivo dia | Use índices absolutos e fim inclusivo dentro do dia correspondente. |
+| Job não cabe no horizonte | Revise processamento, velocidades e `H`; nenhuma opção individual coube. |
+| Checkpoint/resultado não encontrado com `--resume` | Inicie uma execução nova ou aponte para o diretório onde está o salvamento compatível. |
+| Resultado já existe | Use outro `--output-dir`, `--resume` nos exatos ou substitua conscientemente com `--restart`/`--overwrite`. |
+| DP limitada a 13 tarefas | Use uma entrada menor; `--max-jobs` é uma ampliação experimental, com custo exponencial. |
+| `incomplete` por tempo/memória | Consulte o motivo, ajuste o orçamento e retome quando suportado. Isso não prova inviabilidade. |
