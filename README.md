@@ -17,9 +17,9 @@ Use o mesmo executável `python` para instalar e executar. Se o seu sistema usa 
 
 | Componente | Dependência |
 | --- | --- |
-| Backtracking, DP própria, VNS/VND e NSGA-II manual | Biblioteca padrão do Python |
+| Backtracking, DP própria, VNS/VND e heurísticas (construtiva e de ociosidade) | Biblioteca padrão do Python |
 | CP-SAT | OR-Tools |
-| NSGA-II com biblioteca, SPEA2 e MOEA/D | pymoo >= 0.6.2 e < 0.7 (instala também NumPy) |
+| SPEA2 e MOEA/D | pymoo >= 0.6.2 e < 0.7 (instala também NumPy) |
 | Gráficos | Matplotlib |
 
 Os métodos são independentes: não é necessário executar um método exato antes de iniciar uma meta-heurística. As fronteiras exatas são referências para avaliar resultados depois das buscas.
@@ -29,8 +29,8 @@ src/
   exact_methods/     # custom_exact.py, custom_exact_dp.py e cpsat.py
   metaheuristics/    # vns_vnd.py, spea2.py, moead.py e experimento pymoo_spike.py
   heuristics/
-    nsga2/           # NSGA-II via pymoo, decodificador, operadores e plots.py
-    nsga2_manual/    # NSGA-II próprio, avaliação, operadores e grafico.py
+    construtiva/     # heurística construtiva ponderada + ajuste de modos e grafico.py
+    ociosidade/      # inserção ótima de ociosidade (DP de tempos e modos) e grafico.py
   problem.py         # leitura da entrada e regras/custos compartilhados
   schedule.py        # representação, decodificação, validação e avaliação
   plot_pareto.py      # gráficos dos resultados salvos
@@ -226,59 +226,50 @@ python src/exact_methods/custom_exact.py data/input/set1/6_2_1439_3_S_1-9.dat --
 
 `--restart` começa do zero e substitui os arquivos da execução; não use junto com `--resume`. Alterar o conteúdo da entrada torna o resultado/checkpoint anterior incompatível. `Ctrl+C` é tratado pelos métodos exatos nas etapas de busca protegidas; espere o programa encerrar e confirme os arquivos antes de retomar. Uma interrupção durante preparação fora desses trechos pode deixar apenas o último salvamento disponível. Não execute dois processos escrevendo no mesmo destino.
 
-## 4. Executar as duas versões do NSGA-II
+## 4. Executar as heurísticas
 
-O diretório `src/heuristics/` contém duas implementações executáveis do NSGA-II. Embora estejam nessa pasta por organização do projeto, ambas são meta-heurísticas evolutivas multiobjetivo: aproximam a fronteira de `Cmax` e `TEC`, sem provar otimalidade. Usam a entrada da seção 2 e revalidam a frente final com `src/schedule.py`, sem precisar conhecer uma fronteira exata durante a busca.
+As duas heurísticas são determinísticas: não têm população, iterações de busca nem aleatoriedade, e a mesma entrada sempre gera a mesma fronteira.
 
-### 4.1 NSGA-II via pymoo
+### 4.1 Heurística construtiva
 
 ```bash
-python src/heuristics/nsga2/nsga2.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/nsga2_seed1 --seed 1 --max-evaluations 2000 --population-size 50
+python src/heuristics/construtiva/construtiva.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/heuristica_construtiva
 ```
 
-Usa seleção e sobrevivência do pymoo com operadores próprios. Cada cromossomo concatena quatro vetores de tamanho `n`: ordem das tarefas, máquina, modo e decisão binária de espera. Máquina, modo e espera correspondem à posição na sequência. Se `avoid=1` e o início cair na ponta, o decodificador adia esse início até o fim da ponta; não impede que uma tarefa iniciada fora dela avance sobre a ponta.
+É uma heurística, não uma meta-heurística: não tem população, iterações de busca nem aleatoriedade, e a mesma entrada sempre produz a mesma fronteira. Usa a modelagem de `src/problem.py` e o formato de solução de `src/schedule.py`, sem espera voluntária. A frente final é revalidada por `evaluate_schedule`. A fronteira sai de três etapas:
+
+1. **Construção gulosa ponderada** (generalização do Algoritmo 3 do artigo): para um peso α, cada tarefa é inserida na combinação máquina × modo × posição que minimiza `α·Cmax/H + (1−α)·TEC/max_cost` na solução parcial, sem ultrapassar o horizonte. As tarefas entram em ordem LPT. Como as máquinas são não relacionadas, são usadas três regras: soma, mínimo e máximo dos tempos da tarefa nas máquinas.
+2. **Varredura de pesos:** α ∈ {0; 0,1; …; 1}, o mesmo conjunto D do método de soma ponderada do artigo (Algoritmo 1). Cada par regra × α gera uma solução.
+3. **Ajuste guloso de modos:** a partir de cada solução construída distinta, troca repetidamente o modo da tarefa com maior economia de TEC por unidade de Cmax acrescentada. Cada passo é registrado, até que nenhuma troca reduza o TEC.
+
+As soluções não dominadas formam a fronteira.
 
 | Opção | Padrão | Significado |
 | --- | ---: | --- |
-| `--seed` | 1 | Semente aleatória. |
-| `--max-evaluations` | 10000 | Orçamento de avaliações, incluindo candidatos inviáveis e população inicial. |
-| `--population-size` | 100 | Tamanho da população; o orçamento deve ser pelo menos esse valor. |
-| `--crossover-probability` | 0.9 | Probabilidade de cruzamento. |
-| `--mutation-probability` | 0.3 | Probabilidade de mutação. |
+| `--pesos` | 11 | Quantidade de valores de α, igualmente espaçados em [0, 1]. |
+| `--output-dir` | `data/output/heuristica_construtiva` | Diretório do JSON. |
+| `--overwrite` | desligado | Substitui um resultado existente. |
 
-O último lote é truncado para não exceder o orçamento. A busca pode terminar antes se houver 100 tentativas consecutivas sem novos candidatos após a eliminação de duplicatas. As revalidações finais são registradas em `post_search_validations`, fora desse orçamento. A saída padrão é `data/output/nsga2/<entrada>.json`; os pontos incluem o `chromosome` além dos objetivos e escalonamentos. Consulte a [documentação do NSGA-II via pymoo](src/heuristics/nsga2/heuristica.md).
+Cada ponto do JSON registra a `origem`: regra, α e passo do ajuste. Tempos de referência: menos de 0,1 s no set1, cerca de 1 s com 50 tarefas, 17 s com 250 tarefas e 20 máquinas e 145 s com 750 tarefas e 20 máquinas. Consulte a [documentação da heurística](src/heuristics/construtiva/heuristica.md).
 
-### 4.2 NSGA-II manual
+### 4.2 Heurística de inserção ótima de ociosidade
 
 ```bash
-python src/heuristics/nsga2_manual/nsga2_manual.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/nsga2_manual_seed1 --seed 1 --geracoes 200
+python src/heuristics/ociosidade/ociosidade.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/heuristica_ociosidade
 ```
 
-Implementa ordenação não dominada, crowding distance, seleção, cruzamento e mutação sem pymoo/NumPy. O indivíduo é uma sequência de pares `(tarefa, modo)` por máquina. Não há espera voluntária: cada tarefa começa assim que o processamento anterior e o setup terminam. Portanto, as duas versões diferem também na representação e nos operadores; não são apenas duas implementações do mesmo procedimento com os mesmos parâmetros.
+É uma heurística de decomposição que primeiro sequencia e depois programa no tempo. A alocação e a ordem das tarefas em cada máquina vêm de soluções de partida e ficam fixas: por padrão, a fronteira da heurística construtiva. Para essa sequência, uma programação dinâmica por máquina escolhe de forma **ótima** os instantes de início e os modos, inclusive com espera voluntária, sem regra gulosa.
+
+A espera compensa quando atrasar uma tarefa para depois da ponta troca slots caros por baratos, porque espera e setup não consomem energia. Para cada limite de Cmax, o menor TEC é a soma das curvas das máquinas. Isso dá a fronteira exata da sequência fixa, e a fronteira final é a união não dominada de todas as sequências.
 
 | Opção | Padrão | Significado |
 | --- | ---: | --- |
-| `--seed` | 1 | Semente aleatória. |
-| `--populacao` | 110 | Tamanho da população, pelo menos 2. |
-| `--prob-mutacao` | 0.05 | Probabilidade de mutar cada filho. |
-| `--tempo` | `n * ln(m)` | Limite em segundos de CPU, não tempo de relógio. |
-| `--geracoes` | não definido | Número fixo de gerações; quando informado, substitui o limite de tempo. |
+| `--base` | heurística construtiva | JSON de resultado de qualquer método do repositório, de onde saem as sequências de partida. |
+| `--modos-fixos` | desligado | Mantém os modos de partida e otimiza só as esperas. |
+| `--output-dir` | `data/output/heuristica_ociosidade` | Diretório do JSON. |
+| `--overwrite` | desligado | Substitui um resultado existente. |
 
-Para usar tempo, retire `--geracoes`:
-
-```bash
-python src/heuristics/nsga2_manual/nsga2_manual.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/nsga2_manual_tempo_seed1 --seed 1 --tempo 10
-```
-
-Sem essas duas opções, seis tarefas e duas máquinas recebem aproximadamente 4,16 segundos de CPU. O limite é cooperativo e pode ser ultrapassado pela inicialização, por uma operação em andamento e pela validação final. Para uma máquina, o padrão resulta em zero; informe um tempo positivo ou um número de gerações.
-
-Gerações fixas e a mesma seed permitem reproduzir a busca na mesma versão do código; por tempo, o número de gerações depende da máquina. `elapsed_seconds` dessa implementação registra **tempo de CPU**, o que deve ser considerado ao comparar tempos. A saída padrão é `data/output/nsga2_manual/<entrada>.json`. Consulte a [documentação do NSGA-II manual](src/heuristics/nsga2_manual/heuristica.md).
-
-### 4.3 Repetir e comparar
-
-Ambas aceitam `--output-dir` e `--overwrite`, mas não `--resume`. Use um diretório diferente para cada seed ou configuração; `--overwrite` substitui o JSON anterior. A versão manual aceita **um arquivo por chamada**; a versão pymoo também aceita uma pasta (seção 6).
-
-O NSGA-II manual não explora esperas voluntárias, e a versão pymoo só explora a regra de espera descrita acima. Suas frentes são aproximações dentro dessas representações, enquanto os métodos exatos admitem outros horários de início. Mesmo uma frente revalidada não tem certificação global. Para comparar as versões, registre representação, operadores, população e critério de parada: 200 gerações, 2000 avaliações e 10 segundos não são orçamentos equivalentes.
+A heurística aceita **um arquivo por chamada**. O custo é proporcional a tarefas × horizonte × modos por máquina. Tempos de referência, sem contar a construtiva que gera as partidas: menos de 0,3 s no set1 e cerca de 20 s com 250 tarefas. Com 750 tarefas e 20 máquinas, são 246 s no total, já incluindo a construtiva. Consulte a [documentação da heurística](src/heuristics/ociosidade/heuristica.md).
 
 ## 5. Executar as meta-heurísticas
 
@@ -320,7 +311,7 @@ SPEA2 e MOEA/D reavaliam os sobreviventes ao final: `post_search_validations` re
 
 ## 6. Executar uma pasta e consultar opções
 
-Os três exatos, VNS/VND, SPEA2, MOEA/D e NSGA-II via pymoo aceitam um arquivo ou uma pasta. Em uma pasta, processam os arquivos `*.dat` diretamente nela, em ordem, sem busca recursiva. O orçamento se aplica a cada arquivo. O NSGA-II manual aceita somente um arquivo: repita seu comando para cada entrada desejada. Exemplo com sua pasta de testes:
+Os três exatos, VNS/VND, SPEA2, MOEA/D e a heurística construtiva aceitam um arquivo ou uma pasta; a heurística de ociosidade aceita um arquivo por chamada. Em uma pasta, processam os arquivos `*.dat` diretamente nela, em ordem, sem busca recursiva. O orçamento se aplica a cada arquivo. Exemplo com sua pasta de testes:
 
 ```bash
 python src/exact_methods/custom_exact_dp.py data/input/personalizados --output-dir data/output/manual/meus_testes_dp --total-time-limit 60
@@ -335,8 +326,8 @@ python src/exact_methods/custom_exact.py --help
 python src/metaheuristics/vns_vnd.py --help
 python src/metaheuristics/spea2.py --help
 python src/metaheuristics/moead.py --help
-python src/heuristics/nsga2/nsga2.py --help
-python src/heuristics/nsga2_manual/nsga2_manual.py --help
+python src/heuristics/construtiva/construtiva.py --help
+python src/heuristics/ociosidade/ociosidade.py --help
 ```
 
 ## 7. Ler resultados e gerar gráficos
@@ -370,18 +361,23 @@ python src/plot_pareto.py data/output/manual/custom_exact_dp/6_2_1439_3_S_1-9.js
 
 Acrescente `--show` para abrir os gráficos. Sem caminhos, `python src/plot_pareto.py` procura resultados em `data/baselines/` e `data/output/`. A plotagem não executa solvers. Ela agrupa por nome/hash da entrada e método, preferindo resultado completo; entre resultados de mesma categoria, prefere o mais recente. Para visualizar separadamente várias seeds do mesmo método, passe cada resultado em comandos separados com diretórios de gráficos diferentes.
 
-**Limitação atual da legenda:** o plotador geral lê os JSONs das meta-heurísticas, mas pode rotulá-los como “parcial; pontos provados”. Esse texto não certifica esses pontos: NSGA-II, VNS/VND, SPEA2 e MOEA/D produzem frentes aproximadas. Consulte o método e `pareto_proven` no JSON ao interpretar o gráfico.
+**Limitação atual da legenda:** o plotador geral lê os JSONs das meta-heurísticas, mas pode rotulá-los como “parcial; pontos provados”. Esse texto não certifica esses pontos: a heurística construtiva, VNS/VND, SPEA2 e MOEA/D produzem frentes aproximadas. Consulte o método e `pareto_proven` no JSON ao interpretar o gráfico.
 
-### 7.2 Gráficos específicos do NSGA-II
+### 7.2 Gráficos das heurísticas
 
-Os dois scripts abaixo **executam uma nova busca** e salvam um PNG, sem salvar o JSON dessa execução. Para visualizar um JSON já salvo, use o plotador geral acima. Os destinos explícitos mantêm os gráficos de demonstração separados dos existentes:
+O script abaixo **executa a heurística** e salva um PNG com a frente obtida (azul) sobre a fronteira exata da DP (vermelho), no formato da Fig. 9A do artigo. Ele não salva o JSON dessa execução.
 
 ```bash
-python src/heuristics/nsga2/plots.py data/input/set1/6_2_1439_3_S_1-9.dat --seed 1 --max-evaluations 2000 --population-size 50 --output data/output/manual/plots/nsga2_seed1.png
-python src/heuristics/nsga2_manual/grafico.py data/input/set1/6_2_1439_3_S_1-9.dat --seed 1 --geracoes 200 --output data/output/manual/plots/nsga2_manual_seed1.png
+python src/heuristics/construtiva/grafico.py data/input/set1/6_2_1439_3_S_1-9.dat --output data/output/manual/plots/heuristica_construtiva.png
 ```
 
-Ambos procuram a referência em `data/baselines/<entrada>_custom_exact_dp.json`. Se ela não existir, desenham apenas a frente aproximada; não executam a DP. Confirme que o baseline corresponde ao conteúdo da entrada, pois esses scripts o selecionam pelo nome do arquivo. Sem `--output`, salvam em `data/output/nsga2/pareto_<entrada>.png` e `data/output/nsga2_manual/pareto_<entrada>.png`, respectivamente. Um PNG existente no destino é substituído sem `--overwrite`.
+A referência é procurada em `data/baselines/<entrada>_custom_exact_dp.json`. Se ela não existir, o gráfico mostra apenas a frente da heurística; a DP não é executada. Confirme que o baseline corresponde ao conteúdo da entrada, pois o script o seleciona pelo nome do arquivo. Sem `--output`, salva em `data/output/heuristica_construtiva/pareto_<entrada>.png`. Um PNG existente no destino é substituído.
+
+Para a heurística de ociosidade, o gráfico mostra três fronteiras: a exata (vermelho), a da construtiva usada como partida (cinza) e a obtida após a inserção de ociosidade (azul). Sem `--output`, salva em `data/output/heuristica_ociosidade/pareto_<entrada>.png`.
+
+```bash
+python src/heuristics/ociosidade/grafico.py data/input/set1/6_2_1439_3_S_1-9.dat --output data/output/manual/plots/heuristica_ociosidade.png
+```
 
 ## 8. Validar a instalação e tratar erros comuns
 
@@ -389,12 +385,12 @@ Ambos procuram a referência em `data/baselines/<entrada>_custom_exact_dp.json`.
 python -m unittest discover -v
 ```
 
-A suíte atual cobre representação/avaliação, VNS/VND, SPEA2, MOEA/D, as duas versões do NSGA-II e normalização. Não há uma bateria específica de regressão dos três solvers exatos na suíte atual.
+A suíte atual cobre representação/avaliação, VNS/VND, SPEA2, MOEA/D, as duas heurísticas e normalização. Não há uma bateria específica de regressão dos três solvers exatos na suíte atual.
 
-Para verificar somente as duas implementações do NSGA-II:
+Para verificar somente as heurísticas:
 
 ```bash
-python -m unittest tests.test_nsga2 tests.test_nsga2_manual -v
+python -m unittest tests.test_heuristica_construtiva tests.test_heuristica_ociosidade -v
 ```
 
 | Mensagem/situação | Como proceder |
