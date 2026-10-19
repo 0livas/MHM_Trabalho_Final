@@ -1,0 +1,46 @@
+{
+  "status": "passed_with_documented_environment_caveat",
+  "tests": {
+    "command": "python -m unittest discover -v",
+    "tests_run": 121,
+    "status": "passed",
+    "new_archive_tests": 4,
+    "output_sha256": "675ff60d9740a116a08e100073493c976a0ad0e71ac489ed5680ffd1849d5aba"
+  },
+  "searches_executed": "No new experimental search; only automated fixture tests",
+  "archive": {
+    "bytes": 2856688,
+    "sha256": "2348a5315d02a55075e489e4e1f35637289878142133111f520e7adda6c48a69",
+    "inventoried_files": 106,
+    "per_member_verification": "passed",
+    "independent_rebuild_identical": true,
+    "storage": "local_only_by_project_decision"
+  },
+  "pilot_original_hashes": "verified before archive construction; 72 raw runs preserved locally",
+  "core_and_historical_sources": "unchanged; frozen source hashes match original pilot",
+  "project_dependency_closure": {
+    "distributions": 34,
+    "status": "all active constraints satisfied"
+  },
+  "global_pip_check": {
+    "status": "unrelated_global_environment_issue",
+    "detail": "pygobject 3.42.1 requires pycairo, not installed; neither belongs to project runtime closure"
+  },
+  "clean_install_verified": false,
+  "versioning": {
+    "ignored_bulk_paths": 74,
+    "tracked_bulk_paths": 0
+  },
+  "publication": {
+    "decision": "no_publication_planned"
+  },
+  "reviewed_files": {
+    "data/output/age/archive_pilot.py": "30c3166bd522d21676a25fc40293e213d8067df5165a2c5c39b9b774ed212be6",
+    "tests/test_age_archive.py": "0a3b72840a3a8e24783cba5e2a5f3ffceae6d0546e21ba62cfc1c02840c3a94f",
+    "data/output/age/frozen_config.json": "5373eadbb6755995d111d441bf64e7f32b4dc48ae546d625800b4015ccb54259",
+    "data/output/age/environment.json": "a9dfa384c5c4beeb97bbfe064efa6210a003d4bac75afac6452b5c30176f1d20",
+    "data/output/age/ARCHIVE.md": "2cf32882ff553cd13a29a0c73fb0187e8cde1aa850b10900f78ddc69083450e4",
+    "requirements.txt": "8dda6e994c7dd4ce632573ce03b4f3546278182e2b59fa03ccb0c9b74a5cf0e7",
+    "requirements-age-repro.txt": "211321119ea92e7cb64fcab2f72646dc131eaba9dc2553111abe5fcab725e60d"
+  }
+}

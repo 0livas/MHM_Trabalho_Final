@@ -1,0 +1,549 @@
+{
+  "seeds": [
+    11,
+    29,
+    47
+  ],
+  "reserved_seeds": [
+    101,
+    211,
+    307,
+    401,
+    503,
+    601,
+    701,
+    809,
+    907,
+    1009
+  ],
+  "instances": [
+    "set1/6_2_1439_3_S_1-9.dat",
+    "set1/14_2_1439_3_S_1-9_derivada.dat",
+    "set2/50_10_1439_5_S_1-9.dat",
+    "set2/250_10_1439_5_S_1-9.dat"
+  ],
+  "populations": [
+    25,
+    50,
+    100
+  ],
+  "mutations": [
+    0.1,
+    0.3
+  ],
+  "crossover": 0.9,
+  "budget": 8000,
+  "expected_runs": 72,
+  "expected_search_evaluations": 576000,
+  "source_sha256": {
+    "src/metaheuristics/age.py": "710338b72bc96fd4f17c5627c1a5da38828081808616f47a595c475e466a0732",
+    "src/metaheuristics/spea2.py": "fb1ad29ebf055c1f8b169142a1c7fb313258a794bc998347972ffe2b97e09fb9",
+    "src/schedule.py": "4bc4a0d930e788cc833706bf2410dc7e39b26b072c657deb6bc0702be1da08b1",
+    "src/problem.py": "abb00ab278658935f8762d081262155e70e65fbab0f32326baf3e60963522e61",
+    "data/output/final_comparison/normalization.py": "96d5852e9468d586310638a8843b2a86c93dc4bb6b89437f30503b37eb2f13c2",
+    "data/output/age/piloto/run_pilot.py": "cf766af318e6617814914ec25d22794b2a1772b60581a1bd19c2bd2d9a6369a0"
+  },
+  "input_sha256": {
+    "set1/6_2_1439_3_S_1-9.dat": "c27aafe109609de23235d989af5593c4ebdf9faaa365649ab21ec4a8c3f07cc4",
+    "set1/14_2_1439_3_S_1-9_derivada.dat": "70ff0f54e92fbb4ee92af0eee49be2de8443a1580da898c97da2959e5253c8bb",
+    "set2/50_10_1439_5_S_1-9.dat": "c9147e6b8b3bcab1863b62202baffbeee4e1fce0791b4e6309397c4037406da7",
+    "set2/250_10_1439_5_S_1-9.dat": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c"
+  },
+  "indicator_bounds": {
+    "set1/6_2_1439_3_S_1-9.dat": {
+      "method": "individual_option_extrema_piecewise_exact_v1",
+      "instance_sha256": "c27aafe109609de23235d989af5593c4ebdf9faaa365649ab21ec4a8c3f07cc4",
+      "C_LB": 74,
+      "C_UB": 1440,
+      "TEC_LB_units": 8045965680,
+      "TEC_UB_units": 42338048565,
+      "tec_scale": 60000000,
+      "TEC_LB_exact": "33524857/250000",
+      "TEC_UB_exact": "2822536571/4000000",
+      "individual_min_duration_sum": 148
+    },
+    "set1/14_2_1439_3_S_1-9_derivada.dat": {
+      "method": "individual_option_extrema_piecewise_exact_v1",
+      "instance_sha256": "70ff0f54e92fbb4ee92af0eee49be2de8443a1580da898c97da2959e5253c8bb",
+      "C_LB": 171,
+      "C_UB": 1440,
+      "TEC_LB_units": 5597246852,
+      "TEC_UB_units": 58006285395,
+      "tec_scale": 60000000,
+      "TEC_LB_exact": "1399311713/15000000",
+      "TEC_UB_exact": "3867085693/4000000",
+      "individual_min_duration_sum": 341
+    },
+    "set2/50_10_1439_5_S_1-9.dat": {
+      "method": "individual_option_extrema_piecewise_exact_v1",
+      "instance_sha256": "c9147e6b8b3bcab1863b62202baffbeee4e1fce0791b4e6309397c4037406da7",
+      "C_LB": 36,
+      "C_UB": 1440,
+      "TEC_LB_units": 18287236488,
+      "TEC_UB_units": 831452314560,
+      "tec_scale": 120000000,
+      "TEC_LB_exact": "761968187/5000000",
+      "TEC_UB_exact": "866096161/125000",
+      "individual_min_duration_sum": 360
+    },
+    "set2/250_10_1439_5_S_1-9.dat": {
+      "method": "individual_option_extrema_piecewise_exact_v1",
+      "instance_sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+      "C_LB": 193,
+      "C_UB": 1440,
+      "TEC_LB_units": 101849193488,
+      "TEC_UB_units": 4096403717010,
+      "tec_scale": 120000000,
+      "TEC_LB_exact": "6365574593/7500000",
+      "TEC_UB_exact": "136546790567/4000000",
+      "individual_min_duration_sum": 1927
+    }
+  },
+  "reference_point": [
+    1.05,
+    1.05
+  ],
+  "reference_policy": "After all searches: exact 6-job baseline, otherwise exact Pareto union of AGE pilot fronts only",
+  "selection_rule": "Mean rank of per-instance median HV; IGD+ mean rank as tie breaker, then smaller population and mutation; report ranges/IQR and seed ranks",
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "numpy": "2.2.6",
+    "pymoo": "0.6.2",
+    "numba": "0.61.2",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35"
+  },
+  "order": [
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      25,
+      0.1,
+      11
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      25,
+      0.3,
+      11
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      50,
+      0.1,
+      11
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      50,
+      0.3,
+      11
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      100,
+      0.1,
+      11
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      100,
+      0.3,
+      11
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      25,
+      0.3,
+      29
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      50,
+      0.1,
+      29
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      50,
+      0.3,
+      29
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      100,
+      0.1,
+      29
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      100,
+      0.3,
+      29
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      25,
+      0.1,
+      29
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      50,
+      0.1,
+      47
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      50,
+      0.3,
+      47
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      100,
+      0.1,
+      47
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      100,
+      0.3,
+      47
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      25,
+      0.1,
+      47
+    ],
+    [
+      "set1/6_2_1439_3_S_1-9.dat",
+      25,
+      0.3,
+      47
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      100,
+      0.3,
+      11
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      100,
+      0.1,
+      11
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      50,
+      0.3,
+      11
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      50,
+      0.1,
+      11
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      25,
+      0.3,
+      11
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      25,
+      0.1,
+      11
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      25,
+      0.1,
+      29
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      100,
+      0.3,
+      29
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      100,
+      0.1,
+      29
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      50,
+      0.3,
+      29
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      50,
+      0.1,
+      29
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      25,
+      0.3,
+      29
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      25,
+      0.3,
+      47
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      25,
+      0.1,
+      47
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      100,
+      0.3,
+      47
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      100,
+      0.1,
+      47
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      50,
+      0.3,
+      47
+    ],
+    [
+      "set1/14_2_1439_3_S_1-9_derivada.dat",
+      50,
+      0.1,
+      47
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      25,
+      0.1,
+      11
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      25,
+      0.3,
+      11
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      50,
+      0.1,
+      11
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      50,
+      0.3,
+      11
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      100,
+      0.1,
+      11
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      100,
+      0.3,
+      11
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      25,
+      0.3,
+      29
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      50,
+      0.1,
+      29
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      50,
+      0.3,
+      29
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      100,
+      0.1,
+      29
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      100,
+      0.3,
+      29
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      25,
+      0.1,
+      29
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      50,
+      0.1,
+      47
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      50,
+      0.3,
+      47
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      100,
+      0.1,
+      47
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      100,
+      0.3,
+      47
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      25,
+      0.1,
+      47
+    ],
+    [
+      "set2/50_10_1439_5_S_1-9.dat",
+      25,
+      0.3,
+      47
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      100,
+      0.3,
+      11
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      100,
+      0.1,
+      11
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      50,
+      0.3,
+      11
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      50,
+      0.1,
+      11
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      25,
+      0.3,
+      11
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      25,
+      0.1,
+      11
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      25,
+      0.1,
+      29
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      100,
+      0.3,
+      29
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      100,
+      0.1,
+      29
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      50,
+      0.3,
+      29
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      50,
+      0.1,
+      29
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      25,
+      0.3,
+      29
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      25,
+      0.3,
+      47
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      25,
+      0.1,
+      47
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      100,
+      0.3,
+      47
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      100,
+      0.1,
+      47
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      50,
+      0.3,
+      47
+    ],
+    [
+      "set2/250_10_1439_5_S_1-9.dat",
+      50,
+      0.1,
+      47
+    ]
+  ]
+}

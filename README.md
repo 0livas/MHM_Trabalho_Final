@@ -19,7 +19,7 @@ Use o mesmo executável `python` para instalar e executar. Se o seu sistema usa 
 | --- | --- |
 | Backtracking, DP própria, VNS/VND e heurísticas (construtiva e de ociosidade) | Biblioteca padrão do Python |
 | CP-SAT | OR-Tools |
-| SPEA2 e MOEA/D | pymoo >= 0.6.2 e < 0.7 (instala também NumPy) |
+| SPEA2, MOEA/D e AGE-MOEA | pymoo 0.6.2 (AGE-MOEA também requer Numba) |
 | Gráficos | Matplotlib |
 
 Os métodos são independentes: não é necessário executar um método exato antes de iniciar uma meta-heurística. As fronteiras exatas são referências para avaliar resultados depois das buscas.
@@ -27,7 +27,7 @@ Os métodos são independentes: não é necessário executar um método exato an
 ```text
 src/
   exact_methods/     # custom_exact.py, custom_exact_dp.py e cpsat.py
-  metaheuristics/    # vns_vnd.py, spea2.py, moead.py e experimento pymoo_spike.py
+  metaheuristics/    # vns_vnd.py, spea2.py, moead.py, age.py e spikes pymoo
   heuristics/
     construtiva/     # heurística construtiva ponderada + ajuste de modos e grafico.py
     ociosidade/      # inserção ótima de ociosidade (DP de tempos e modos) e grafico.py
@@ -299,7 +299,15 @@ python src/metaheuristics/moead.py data/input/set1/6_2_1439_3_S_1-9.dat --output
 
 Usa MOEA/D nativo, directions uniformes, Tchebycheff e escala `Cmax/H`, `TEC/max_cost`. Configure `2 <= n_neighbors <= population_size` e orçamento suficiente para avaliar a população inicial. O driver `ask/tell` respeita o cap de tentativas inclusive em varreduras incompletas. Descendentes inviáveis consomem uma tentativa e são substituídos por cópias viáveis já avaliadas. Também aceita `--prob-neighbor-mating`, `--crossover-probability` e `--mutation-probability`.
 
-### 5.4 Repetições e orçamento
+### 5.4 AGE-MOEA via pymoo
+
+```bash
+python src/metaheuristics/age.py data/input/set1/10_2_1439_3_S_1-9.dat --seed 23 --max-evaluations 41 --population-size 8
+```
+
+O AGE-MOEA usa o algoritmo nativo do pymoo 0.6.2, a representação compartilhada de schedules e os operadores de variação existentes. O orçamento conta tentativas inviáveis e aceita um lote final parcial; duplicatas podem ocorrer durante a busca. A frente exportada é reavaliada e deduplicada por objetivos exatos. A configuração congelada para a próxima comparação é população 50, crossover 0,9, mutação 0,3 e 8.000 avaliações. O crossover ficou fixo no piloto, sem otimização específica. Os resultados brutos do piloto permanecem locais e não serão publicados como GitHub Release. Consulte o [piloto](data/output/age/piloto/relatorio.md), o [congelamento](data/output/age/FREEZE.md) e a [documentação de integração](data/output/age/implementation.md).
+
+### 5.5 Repetições e orçamento
 
 As meta-heurísticas usam `--overwrite` para substituir um resultado existente; não oferecem a retomada `--resume` dos métodos exatos. Para repetir com outra seed, mude **a seed e o diretório de saída**. Apenas mudar a seed não muda automaticamente o nome do arquivo.
 
@@ -307,7 +315,7 @@ As meta-heurísticas usam `--overwrite` para substituir um resultado existente; 
 python src/metaheuristics/spea2.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/spea2_seed2 --seed 2 --max-evaluations 500 --population-size 50
 ```
 
-SPEA2 e MOEA/D reavaliam os sobreviventes ao final: `post_search_validations` registra essas verificações fora do orçamento da busca. Encerrar as avaliações não prova que a fronteira aproximada é ótima.
+SPEA2, MOEA/D e AGE-MOEA reavaliam os sobreviventes ao final: `post_search_validations` registra essas verificações fora do orçamento da busca. Encerrar as avaliações não prova que a fronteira aproximada é ótima.
 
 ## 6. Executar uma pasta e consultar opções
 
@@ -326,6 +334,7 @@ python src/exact_methods/custom_exact.py --help
 python src/metaheuristics/vns_vnd.py --help
 python src/metaheuristics/spea2.py --help
 python src/metaheuristics/moead.py --help
+python src/metaheuristics/age.py --help
 python src/heuristics/construtiva/construtiva.py --help
 python src/heuristics/ociosidade/ociosidade.py --help
 ```
@@ -385,7 +394,7 @@ python src/heuristics/ociosidade/grafico.py data/input/set1/6_2_1439_3_S_1-9.dat
 python -m unittest discover -v
 ```
 
-A suíte atual cobre representação/avaliação, VNS/VND, SPEA2, MOEA/D, as duas heurísticas e normalização. Não há uma bateria específica de regressão dos três solvers exatos na suíte atual.
+A suíte atual cobre representação/avaliação, VNS/VND, SPEA2, MOEA/D, AGE-MOEA, as duas heurísticas e normalização. Não há uma bateria específica de regressão dos três solvers exatos na suíte atual.
 
 Para verificar somente as heurísticas:
 

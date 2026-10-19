@@ -1,3 +1,5 @@
 ortools>=9.15,<10
 matplotlib>=3.7,<4
-pymoo>=0.6.2,<0.7
+pymoo==0.6.2
+# AGE-MOEA importa numba obrigatoriamente (não incluído no pymoo básico).
+numba>=0.61,<1

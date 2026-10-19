@@ -5,13 +5,21 @@ Esta parte do projeto é responsável pela resolução aproximada do problema mu
 - minimização do makespan (`Cmax`);
 - minimização do custo total de energia (`TEC`).
 
-Foram implementadas e avaliadas três meta-heurísticas:
+A campanha histórica implementou e avaliou três meta-heurísticas:
 
 1. VNS/VND multiobjetivo;
 2. SPEA2;
 3. MOEA/D.
 
 Os três métodos utilizam a mesma representação de solução e o mesmo avaliador, permitindo uma comparação consistente entre eles.
+
+O AGE-MOEA foi implementado posteriormente como quarto método, também com a
+representação e o avaliador comuns. Seu [piloto independente](../../data/output/age/piloto/relatorio.md)
+recomenda população 50, crossover 0,9 e mutação 0,3 a 8.000 avaliações; ainda não foi
+incluído na comparação oficial.
+Os resultados e configurações experimentais abaixo referem-se exclusivamente
+à campanha histórica de três métodos. Veja [integração do AGE-MOEA](../../data/output/age/implementation.md)
+e `src/metaheuristics/age.py` para execução, orçamento e limitações.
 
 ---
 
@@ -353,7 +361,7 @@ data/output/final_comparison/figures/
 
 ## Resumo
 
-A parte de meta-heurísticas do projeto está concluída.
+A campanha histórica de três meta-heurísticas está concluída; o AGE-MOEA tem piloto independente concluído e aguarda uma nova comparação.
 
 Foram implementadas três abordagens diferentes:
 

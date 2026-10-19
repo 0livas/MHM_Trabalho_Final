@@ -33,3 +33,9 @@ data/output/final_comparison/checks.json
 data/output/final_comparison/checks_amendment.json
 data/output/final_comparison/execution_failure.json
 data/output/final_comparison/summarize_blocked.py
+
+# AGE-MOEA: preserve bulky pilot evidence and local archive outside Git.
+!/requirements-age-repro.txt
+/data/output/age/piloto/runs/
+/data/output/age/piloto/references.json
+/data/output/age/artifacts/

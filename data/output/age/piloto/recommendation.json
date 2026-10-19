@@ -1,0 +1,62 @@
+{
+  "population_size": 50,
+  "mutation_probability": 0.3,
+  "crossover_probability": 0.9,
+  "max_evaluations": 8000,
+  "regime": "generational_with_partial_final_batch",
+  "eliminate_duplicates": false,
+  "criterion": "Mean rank of per-instance median HV; IGD+ mean rank as tie breaker, then smaller population and mutation; report ranges/IQR and seed ranks",
+  "rankings": [
+    {
+      "population": 50,
+      "mutation": 0.3,
+      "mean_hv_instance_rank": 1.5,
+      "mean_igd_instance_rank": 1.5,
+      "mean_hv_seed_rank": 2.1666666666666665,
+      "median_seconds": 5.476449975999913
+    },
+    {
+      "population": 100,
+      "mutation": 0.3,
+      "mean_hv_instance_rank": 2.5,
+      "mean_igd_instance_rank": 2.25,
+      "mean_hv_seed_rank": 2.25,
+      "median_seconds": 5.608712673499895
+    },
+    {
+      "population": 100,
+      "mutation": 0.1,
+      "mean_hv_instance_rank": 3.5,
+      "mean_igd_instance_rank": 3.5,
+      "mean_hv_seed_rank": 3.6666666666666665,
+      "median_seconds": 5.618295226500095
+    },
+    {
+      "population": 25,
+      "mutation": 0.3,
+      "mean_hv_instance_rank": 4.25,
+      "mean_igd_instance_rank": 4.75,
+      "mean_hv_seed_rank": 4.25,
+      "median_seconds": 5.454922069499958
+    },
+    {
+      "population": 50,
+      "mutation": 0.1,
+      "mean_hv_instance_rank": 4.5,
+      "mean_igd_instance_rank": 4.5,
+      "mean_hv_seed_rank": 3.8333333333333335,
+      "median_seconds": 5.514465832999917
+    },
+    {
+      "population": 25,
+      "mutation": 0.1,
+      "mean_hv_instance_rank": 4.75,
+      "mean_igd_instance_rank": 4.5,
+      "mean_hv_seed_rank": 4.833333333333333,
+      "median_seconds": 5.867527261500072
+    }
+  ],
+  "status": "pilot_recommendation_no_solver_default_changes",
+  "protocol_sha256": "78e513363fffe086113299f7eacf8de18891ae6fbd25c14cf2f2a8724987c225",
+  "summary_sha256": "35867642fe55fecd3c5a2e7ad3d4462b79e9cea8c8e368db7a4b9a79bbee1fce"
+}

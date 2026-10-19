@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "status": "frozen_pre_final_campaign",
+  "algorithm": "AGE-MOEA",
+  "parameters": {
+    "population_size": 50,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.3,
+    "max_evaluations": 8000
+  },
+  "pymoo_version": "0.6.2",
+  "regime": "generational_with_partial_final_batch",
+  "eliminate_duplicates": false,
+  "infeasibility_policy": "native_constraint_filtering",
+  "objective_policy": "raw floats during search; exact integer Pareto filtering after validation",
+  "crossover_selection": "Fixed at 0.9 across all pilot cells; not specifically optimized",
+  "rationale": "Mean median-HV instance rank 1.5; median-HV winner in 3/4 instances; IGD+ instance rank 1.5. Three pilot seeds; not uniformly best.",
+  "pilot_seeds": [
+    11,
+    29,
+    47
+  ],
+  "reserved_final_seeds": [
+    101,
+    211,
+    307,
+    401,
+    503,
+    601,
+    701,
+    809,
+    907,
+    1009
+  ],
+  "runner_defaults": "Unchanged: population 100, budget 10000; pass frozen parameters explicitly.",
+  "source_sha256": {
+    "src/metaheuristics/age.py": "710338b72bc96fd4f17c5627c1a5da38828081808616f47a595c475e466a0732",
+    "src/metaheuristics/spea2.py": "fb1ad29ebf055c1f8b169142a1c7fb313258a794bc998347972ffe2b97e09fb9",
+    "src/schedule.py": "4bc4a0d930e788cc833706bf2410dc7e39b26b072c657deb6bc0702be1da08b1",
+    "src/problem.py": "abb00ab278658935f8762d081262155e70e65fbab0f32326baf3e60963522e61",
+    "data/output/final_comparison/normalization.py": "96d5852e9468d586310638a8843b2a86c93dc4bb6b89437f30503b37eb2f13c2",
+    "data/output/age/piloto/run_pilot.py": "702c47851395656d25f1ca6846dacac14c4fef02a591b0b249c07e35c99367f8"
+  },
+  "analysis_sha256": "5354223180a9169f1d6bcd5979e31a3c38e6eb570a1c1d553e4aba14a4e66f32",
+  "evidence_sha256": {
+    "data/output/age/piloto/protocol.json": "78e513363fffe086113299f7eacf8de18891ae6fbd25c14cf2f2a8724987c225",
+    "data/output/age/piloto/audit.json": "c89bf04ba2eefbaaa4b8ed80c9b098cd2583e2571207caf6a09cad479ca54a71",
+    "data/output/age/piloto/recommendation.json": "bffccf31b7b6191c144a35f6d48b6dfd5b14742b493c737909c4878d50c656d0",
+    "data/output/age/environment.json": "a9dfa384c5c4beeb97bbfe064efa6210a003d4bac75afac6452b5c30176f1d20",
+    "requirements-age-repro.txt": "211321119ea92e7cb64fcab2f72646dc131eaba9dc2553111abe5fcab725e60d",
+    "requirements.txt": "8dda6e994c7dd4ce632573ce03b4f3546278182e2b59fa03ccb0c9b74a5cf0e7"
+  },
+  "review": {
+    "verdict": "approved_with_caveats_no_material_issues",
+    "provenance": "User-provided release-check summary",
+    "standalone_report_found": false,
+    "remaining_caveats": [
+      "Crossover was fixed, not tuned",
+      "Small pilot and empirical references",
+      "Float selection and duplicate schedules",
+      "Clean environment installation not verified"
+    ]
+  }
+}

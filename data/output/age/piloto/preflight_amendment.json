@@ -1,0 +1,10 @@
+{
+  "stage": "before_any_full_pilot_search",
+  "change": "Operational envelope increased from 3600 to 5400 seconds; matrix and measured_run unchanged",
+  "reason": "400-evaluation conservative extrapolation was 2510s; doubled allowance 5021s. Matrix retained as requested.",
+  "preserved_evidence": [
+    "protocol_initial.json",
+    "preflight_initial.json"
+  ],
+  "new_protocol_sha256": "78e513363fffe086113299f7eacf8de18891ae6fbd25c14cf2f2a8724987c225"
+}
