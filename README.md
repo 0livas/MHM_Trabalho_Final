@@ -4,6 +4,29 @@ Minimização do makespan (`Cmax`, maior término das tarefas) e do custo total 
 
 Este guia descreve como preparar o ambiente, criar uma entrada, executar os métodos, retomar buscas e consultar os resultados. Execute os comandos a partir da raiz do repositório. Os caminhos com `/` funcionam no PowerShell, Git Bash e terminais Linux/macOS; coloque caminhos com espaços entre aspas.
 
+## Organização e regras do repositório
+
+Este README é a única documentação mantida do código. Instruções de instalação, execução, parâmetros, formatos e limitações devem ser atualizadas aqui; não criar guias `.md` separados por método ou campanha.
+
+**Os algoritmos estão congelados para conferência.** Não alterar suas implementações, operadores, critérios, avaliação, restrições ou parâmetros internos sem autorização explícita para isso. Uma tarefa de organização não autoriza modificar, remover ou deslocar código. Ajustes experimentais usam exclusivamente as opções já expostas pelos executáveis.
+
+| Local | Responsabilidade |
+| --- | --- |
+| `src/` | Implementações e infraestrutura compartilhada. |
+| `tests/` | Verificações automatizadas, incluindo calibração. |
+| `data/input/` | Entradas `.dat`, com instâncias derivadas identificadas pelo nome. |
+| `data/baselines/` | Referências exatas produzidas pelos solvers. |
+| `data/output/<método>/` | Resultados e evidências de execução do método. |
+| `data/output/hyperparameters_tuning/<algoritmo>/<estudo>/` | Protocolo, trials e parâmetros escolhidos de uma calibração. |
+| `requirements.txt` | Dependências da execução atual. |
+| `requirements-age-repro.txt` | Versões específicas para reprodução do ambiente do piloto AGE; não substitui os requisitos atuais. |
+
+Preservar JSONs, CSVs, hashes e protocolos como evidências das execuções. Eles não atualizam automaticamente os padrões dos algoritmos. Usar uma pasta própria para cada estudo e evitar resultados soltos na raiz. Logs, caches, checkpoints e bancos locais seguem as exclusões de `.gitignore`.
+
+Alguns scripts auxiliares de experimentos permanecem em `data/output/` porque testes e protocolos referenciam seus caminhos. Seus arquivos e as evidências numéricas não devem ser reorganizados como se fossem documentos descartáveis. Ferramentas de reconstrução de pacotes antigos que exigem documentos e hashes originais precisam do checkout correspondente ao experimento; a consolidação deste README não redefine esses hashes. Relatórios Markdown que esses scripts gerarem são saídas auxiliares locais, ignoradas pelo Git, e não documentação adicional do projeto.
+
+**Navegação:** [ambiente](#1-preparar-o-ambiente) · [entradas](#2-escolher-ou-criar-uma-entrada-dat) · [exatos](#3-executar-os-métodos-exatos) · [heurísticas](#4-executar-as-heurísticas) · [meta-heurísticas](#5-executar-as-meta-heurísticas) · [calibração](#56-calibrar-as-meta-heurísticas-com-optuna) · [lotes e opções](#6-executar-uma-pasta-e-consultar-opções) · [resultados](#7-ler-resultados-e-gerar-gráficos) · [testes](#8-validar-a-instalação-e-tratar-erros-comuns)
+
 ## 1. Preparar o ambiente
 
 Use Python 3.10 ou superior, em uma versão compatível com as dependências de `requirements.txt`. Não é obrigatório criar um ambiente virtual.
@@ -15,11 +38,14 @@ python -m pip install -r requirements.txt
 
 Use o mesmo executável `python` para instalar e executar. Se o seu sistema usa `python3`, substitua `python` nos comandos. A instalação é feita uma vez; execute-a novamente quando mudar o arquivo de requisitos.
 
+`requirements-age-repro.txt` registra o ambiente específico do piloto AGE (Python 3.10.12/Linux), descrito em [environment.json](data/output/age/environment.json). Ele não é um comando nem substitui a instalação acima. Reproduzir aquele ambiente exige uma instalação separada e compatível; as versões fixadas não garantem os mesmos tempos ou bytes em outra plataforma.
+
 | Componente | Dependência |
 | --- | --- |
 | Backtracking, DP própria, VNS/VND e heurísticas (construtiva e de ociosidade) | Biblioteca padrão do Python |
 | CP-SAT | OR-Tools |
 | SPEA2, MOEA/D e AGE-MOEA | pymoo 0.6.2 (AGE-MOEA também requer Numba) |
+| Calibração | Optuna/TPE e threadpoolctl |
 | Gráficos | Matplotlib |
 
 Os métodos são independentes: não é necessário executar um método exato antes de iniciar uma meta-heurística. As fronteiras exatas são referências para avaliar resultados depois das buscas.
@@ -27,6 +53,7 @@ Os métodos são independentes: não é necessário executar um método exato an
 ```text
 src/
   exact_methods/     # custom_exact.py, custom_exact_dp.py e cpsat.py
+  hyperparameters_tuning/ # main.py, common.py e adaptadores dos quatro métodos
   metaheuristics/    # vns_vnd.py, spea2.py, moead.py, age.py e spikes pymoo
   heuristics/
     construtiva/     # heurística construtiva ponderada + ajuste de modos e grafico.py
@@ -39,13 +66,15 @@ data/
   input/set2/        # instâncias originais grandes
   baselines/         # fronteiras exatas completas
   output/            # resultados por método, gráficos e relatórios
-tests/               # testes da infraestrutura e das meta-heurísticas
+tests/               # infraestrutura, heurísticas, meta-heurísticas e calibração
 requirements.txt
 ```
 
 ## 2. Escolher ou criar uma entrada `.dat`
 
 Todos os métodos leem o mesmo formato por meio de `src/problem.py`. Você pode usar, por exemplo, `data/input/set1/6_2_1439_3_S_1-9.dat`, ou criar seu próprio arquivo em `data/input/personalizados/`.
+
+A família `10…14_2_1439_3_S_1-9_derivada.dat` foi extraída de `set2/50_10_1439_5_S_1-9.dat`: primeiras n tarefas, máquinas 0 e 1 e modos originais 0, 2 e 4. Tarifas, horizonte, potências e normalizador foram preservados. São entradas locais derivadas, não instâncias originais publicadas; a de dez tarefas derivada é diferente da original de dez tarefas.
 
 Salve como texto UTF-8 com extensão `.dat` (não `.dat.txt`). Os nomes dos campos e sua ordem são obrigatórios. Valores podem ser separados por espaços, tabulações e quebras de linha; linhas vazias são permitidas. Use ponto decimal, como `1.2`, e não vírgula. Não inclua comentários, títulos de matrizes, separadores, vírgulas entre colunas ou textos como `&#x9;`: o parser lê todos os tokens como dados.
 
@@ -91,6 +120,8 @@ Em `setup`, escreva primeiro todas as linhas da máquina 0, depois todas as linh
 | `11` | 12 | 2 horas | 6 horas |
 
 O código usa `24 / (hl + 1)` apenas para converter a duração de um intervalo em horas ao calcular energia: potência em kW multiplicada pelo tempo em horas resulta em kWh. Por exemplo, uma máquina de 2 kW, com fator de potência 1, funcionando durante 3 intervalos de 2 horas consome `2 × 1 × 6 = 12 kWh`; o custo depende da tarifa em cada intervalo.
+
+Os certificados dos métodos exatos se referem a essas regras e à discretização da entrada. Para comparar com tabelas do artigo, iguale também discretização, convenção de setup, unidades, normalização e procedimento de construção da frente; nomes de instâncias semelhantes e um gráfico no mesmo formato não demonstram reprodução numérica equivalente.
 
 O exemplo pequeno abaixo usa `hl=11` para ter poucos horários possíveis e facilitar o acompanhamento da execução. Isso representa um dia dividido em blocos de duas horas, **não um horizonte de 12 minutos**. Para criar testes com resolução de um minuto, mantenha `hl=1439` e reduza inicialmente o número de tarefas/máquinas. Se mudar a resolução de uma instância existente, converta também processamentos, setups e horários de ponta; copiar os mesmos números muda a duração física do problema, e arredondamentos podem alterar os resultados.
 
@@ -158,6 +189,25 @@ A saída esperada é `Entrada lida: 3 tarefas, 2 maquinas, 2 modos, H = 12`. Iss
 
 Para testar seu arquivo, substitua o caminho da entrada nos comandos das próximas seções. O nome é livre: as dimensões vêm do conteúdo. Use nomes distintos para experimentos distintos, pois o nome do JSON de saída deriva do nome do `.dat`.
 
+### Representação computacional de uma solução
+
+Em `src/schedule.py`, `Schedule` é uma tupla de sequências, uma por máquina; cada operação é a tripla `(job, modo, espera)`. A lista externa tem exatamente `m` posições, inclusive para máquinas vazias. Cada job deve aparecer exatamente uma vez; modo e job devem pertencer aos domínios da entrada, e espera deve ser inteira e não negativa.
+
+Para a entrada didática acima, uma representação possível é:
+
+```python
+schedule = (
+    ((0, 0, 0), (2, 1, 2)),  # máquina 0: tarefa 0, depois tarefa 2
+    ((1, 0, 0),),             # máquina 1: tarefa 1
+)
+```
+
+Na máquina 0, a tarefa 0 começa em 0 e termina em 2. A tarefa 2 começa em `2 + setup[0][0][2] + 2 = 6` e termina em 7, pois seu modo 1 tem velocidade 2. Na máquina 1, a tarefa 1 ocupa `[0,2)`. Portanto, `Cmax=7`. A espera 2 é **adicional ao setup**, não um instante absoluto. Para a primeira tarefa, início = espera; para as demais, início = término anterior + setup + espera.
+
+`evaluate_schedule` decodifica e valida a representação, retornando `cmax`, `tec_units`, `tec_scale` e as operações. `schedule_from_result_rows` converte as linhas `schedule` de um resultado: ordena por máquina/início e recupera a espera residual. O campo `x_nonzero` representa as posições ativas de `X[i,j,h,l]`, com máquina `i`, job `j`, início `h` e modo `l`; não é necessário construir um tensor denso.
+
+A representação permite reconstruir qualquer escalonamento viável do modelo, inclusive com ociosidade. Ela não garante que um operador produza uma solução viável: uma alteração pode ultrapassar `H` e precisa ser reavaliada. Dois schedules com os mesmos objetivos representam um único ponto da frente; o filtro guarda um representante, não todas as soluções equivalentes.
+
 ## 3. Executar os métodos exatos
 
 Os exemplos abaixo usam a entrada oficial de seis tarefas e diretórios `data/output/manual/<método>/`, para manter os relatórios dessas execuções separados dos resultados existentes. Na primeira execução, não use `--resume`. Se o destino já existir, escolha outro `--output-dir`, retome ou use `--restart` para substituir a execução anterior.
@@ -180,6 +230,12 @@ Os limites de tempo/memória são cooperativos. A preparação de energia os ver
 
 Ao concluir a fronteira, a DP também grava `data/baselines/<entrada>_custom_exact_dp.json`, mesmo com `--output-dir` personalizado. Esse baseline usa o nome da entrada e pode substituir um baseline anterior com esse nome. Inclui hash da entrada, objetivos e escalonamentos.
 
+**Por que a redução de estados preserva a solução:** a etapa inicial de makespan usa modos de menor duração e ausência de espera, suficientes para minimizar somente esse objetivo. A etapa de energia considera modos e esperas. Seu estado é `(máquina, subconjunto de tarefas, última tarefa)`; cada rótulo guarda término, energia e predecessor para reconstrução. Dentro do mesmo estado, um rótulo que termina antes e custa menos ou igual pode esperar e imitar qualquer continuação do outro. Por isso o outro pode ser descartado. Rótulos de estados com últimas tarefas diferentes não são intercambiáveis durante as extensões, pois seus setups futuros diferem.
+
+`next_cheaper` considera o primeiro início permitido e salta, para a mesma tarefa/modo, para horários de custo estritamente menor. Um horário posterior de custo igual ou maior já é dominado pelo anterior. Após preparar as máquinas, outra DP combina todas as partições disjuntas de tarefas para cada epsilon, minimizando TEC e desempatando pelo menor makespan. O teto é `Cmax <= epsilon`, não uma obrigação de terminar exatamente nele. Reutilizar estados evita repetir continuações equivalentes; não significa enumerar previamente todos os schedules viáveis.
+
+No perfil, `transitions` conta extensões efetivamente examinadas na preparação de energia; `inserted_labels` conta inserções acumuladas, `rejected_labels` as recusadas e `removed_labels` rótulos substituídos por melhores. `peak_active_state_labels` é o pico por máquina antes da fusão dos estados; `retained_subset_labels` conta as listas finais após essa fusão. Esses contadores não são quantidades de schedules completos nem medem sozinhos a memória: referências a predecessores também mantêm objetos vivos. Consulte RSS e os limites registrados. `elapsed_seconds` pode acumular retomadas; `run_metrics` descreve a chamada atual.
+
 ### 3.2 CP-SAT do OR-Tools
 
 ```bash
@@ -187,6 +243,10 @@ python src/exact_methods/cpsat.py data/input/set1/6_2_1439_3_S_1-9.dat --output-
 ```
 
 O código externo limita TEC e chama o CP-SAT para provar o menor makespan e, depois, o menor TEC para esse makespan. Após provar um ponto, reduz o teto de TEC em uma unidade inteira escalada.
+
+O modelo usa intervalos opcionais por tarefa/máquina/modo, `AddExactlyOne` para a escolha única, `AddNoOverlap` por máquina e `AddCircuit` para definir os sucessores imediatos e seus setups. `AddElement` consulta a tabela de custo por início. A primeira minimização de makespan sem teto de energia pode omitir essa tabela; o custo publicado é recalculado do schedule.
+
+O tratamento multiobjetivo é uma sequência de otimizações lexicográficas com epsilon-restrição, implementada no driver. As duas etapas precisam retornar `OPTIMAL` para publicar o ponto. Depois, `TEC_units - 1` exige melhora estrita: uma unidade escalada não significa uma unidade monetária inteira. `INFEASIBLE` no teto seguinte encerra a fronteira; `FEASIBLE` ou `UNKNOWN` não certificam a etapa. A preparação e a busca são CPU; o modelo recusa custo escalado acima de int64.
 
 - `--time-limit 60`: limite de **cada chamada** ao CP-SAT, não da fronteira inteira; `0` desativa.
 - `--total-time-limit 300`: orçamento da execução/instância; `0` desativa. A preparação inicial de opções ocorre antes desse relógio. Construção de modelo e verificações cooperativas podem ultrapassar o orçamento.
@@ -202,6 +262,12 @@ python src/exact_methods/custom_exact.py data/input/set1/6_2_1439_3_S_1-9.dat --
 ```
 
 O backtracking propaga restrições e usa limites inferiores e dominância. Os pontos encontrados são provisórios até o esgotamento da busca. Se o limite de tempo for atingido antes de esgotar a busca, o resultado será parcial.
+
+Uma execução nova começa com frente vazia, sem carregar baselines ou soluções de outro método. Cada tarefa escolhe uma opção `(máquina, início, modo)`, já com término dentro de `H`. Máscaras de bits representam os horários ainda permitidos. A busca escolhe a tarefa com menos opções e prioriza términos mais cedo; isso ordena a exploração sem excluir alternativas.
+
+A propagação usa uma separação mínima otimista, calculada por Floyd–Warshall com a menor duração dos possíveis intermediários. Assim, não exige prematuramente o setup direto entre tarefas que ainda podem deixar de ser consecutivas. Uma lacuna com setup incompatível só é eliminada antecipadamente quando não cabe tarefa intermediária; a folha verifica os setups consecutivos completos. Limites inferiores de custo, término e carga permitem podar um ramo se um ponto viável já descoberto for não pior nos dois objetivos, mesmo perante esses limites otimistas. A dominância também filtra candidatos em blocos quando a frente muda.
+
+O progresso mede cobertura de subárvores do produto de opções, incluindo combinações descartadas sem execução. A razão é atribuída à primeira poda aplicada; não é uma decomposição causal das melhorias. Cobertura não é percentual da fronteira descoberta e não permite extrapolar linearmente o tempo restante. Podas por inviabilidade eliminam schedules impossíveis; podas por dominância também podem eliminar schedules viáveis que não melhorariam a frente.
 
 - `--time-limit 300`: orçamento da execução por instância; `0` desativa.
 - `--progress-interval 60`: intervalo entre mensagens de progresso, em segundos.
@@ -250,7 +316,9 @@ As soluções não dominadas formam a fronteira.
 | `--output-dir` | `data/output/heuristica_construtiva` | Diretório do JSON. |
 | `--overwrite` | desligado | Substitui um resultado existente. |
 
-Cada ponto do JSON registra a `origem`: regra, α e passo do ajuste. Tempos de referência: menos de 0,1 s no set1, cerca de 1 s com 50 tarefas, 17 s com 250 tarefas e 20 máquinas e 145 s com 750 tarefas e 20 máquinas. Consulte a [documentação da heurística](src/heuristics/construtiva/heuristica.md).
+Cada ponto do JSON registra a `origem`: regra, α e passo do ajuste. Em empate na construção ponderada, prevalecem o menor término da máquina e depois o menor TEC. No ajuste, uma redução de TEC sem aumento de Cmax tem prioridade. Cada troca aceita reduz estritamente o custo, e o procedimento termina quando não há troca admissível que economize energia.
+
+A construção não realoca tarefas já inseridas para outra máquina; o ajuste posterior revê somente os modos e reduz TEC. Sem espera voluntária, soluções que dependem de adiar tarefas ficam fora de seu alcance. A varredura de pesos é gulosa e não garante os ótimos ponderados nem todos os pontos da fronteira. A implementação mantém custos/términos por máquina e prefixos de tarifa para evitar recálculos completos a cada sondagem.
 
 ### 4.2 Heurística de inserção ótima de ociosidade
 
@@ -269,11 +337,23 @@ A espera compensa quando atrasar uma tarefa para depois da ponta troca slots car
 | `--output-dir` | `data/output/heuristica_ociosidade` | Diretório do JSON. |
 | `--overwrite` | desligado | Substitui um resultado existente. |
 
-A heurística aceita **um arquivo por chamada**. O custo é proporcional a tarefas × horizonte × modos por máquina. Tempos de referência, sem contar a construtiva que gera as partidas: menos de 0,3 s no set1 e cerca de 20 s com 250 tarefas. Com 750 tarefas e 20 máquinas, são 246 s no total, já incluindo a construtiva. Consulte a [documentação da heurística](src/heuristics/ociosidade/heuristica.md).
+A heurística aceita **um arquivo por chamada**. Para cada sequência de partida, a DP custa O(tarefas × horizonte × modos) por máquina; várias sequências distintas repetem esse trabalho. Com modos livres, partidas que diferem apenas nos modos são deduplicadas.
+
+Para a sequência fixa de uma máquina, `f_i(t)` é o menor custo até a tarefa `i` terminando exatamente em `t`, e `g_i(t)` é o menor custo terminando até `t`. A transição combina o custo do processamento com `g_{i-1}(t - duração - setup)`, minimizando sobre os modos permitidos. Esse mínimo acumulado admite espera. As curvas das máquinas são somadas para cada limite de Cmax; as sequências de partida são unidas pelo filtro de Pareto. A certificação vale para as sequências consideradas, não para todas as alocações e ordens do problema.
+
+As configurações principais das heurísticas são as descritas acima: 11 pesos e três ordens na construtiva; partidas da construtiva e modos livres na ociosidade. `--pesos`, `--base` e `--modos-fixos` permitem estudos de sensibilidade ou variantes, que devem ser identificados nos resultados. As heurísticas são determinísticas e não precisam de replicações por seed.
+
+Para usar o resultado da seção 4.1 como partida e isolar apenas o efeito da espera:
+
+```bash
+python src/heuristics/ociosidade/ociosidade.py data/input/set1/6_2_1439_3_S_1-9.dat --base data/output/manual/heuristica_construtiva/6_2_1439_3_S_1-9.json --modos-fixos --output-dir data/output/manual/ociosidade_modos_fixos
+```
+
+O JSON de partida precisa ter `front` e um `schedule` completo em cada ponto; um resumo apenas com pares de objetivos não serve. O código confere o hash quando ele está presente e revalida os schedules; se o hash estiver ausente, confira a procedência. Ganhos com modos livres não podem ser atribuídos exclusivamente à espera, pois a DP também pode melhorar os modos.
 
 ## 5. Executar as meta-heurísticas
 
-Os comandos abaixo são execuções curtas de demonstração. Os métodos criam suas próprias soluções iniciais e produzem frentes aproximadas, sem certificação global. Os detalhes da implementação estão em [METAHEURISTICS.md](src/metaheuristics/METAHEURISTICS.md).
+Os comandos abaixo são execuções curtas de demonstração. Os métodos criam suas próprias soluções iniciais e produzem frentes aproximadas, sem certificação global. Usam sequências por máquina no formato `(tarefa, modo, espera)`. A posição define a ordem, e a espera é acrescentada após o setup. O avaliador compartilhado verifica tarefas, máquinas, modos, setups e horizonte e calcula os dois objetivos.
 
 ### 5.1 VNS/VND manual
 
@@ -281,7 +361,11 @@ Os comandos abaixo são execuções curtas de demonstração. Os métodos criam 
 python src/metaheuristics/vns_vnd.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/vns_vnd_seed1 --seed 1 --max-evaluations 500
 ```
 
+O método combina busca local VND e perturbações VNS, mantendo uma frente não dominada. As cinco vizinhanças alteram modo, espera, posição na mesma máquina, alocação entre máquinas e troca de tarefas. Uma melhoria por dominância faz o VND voltar à primeira vizinhança.
+
 O padrão é 10.000 avaliações e seed 1. Também aceita `--initial-solutions`, `--max-candidates-per-neighborhood` e `--shaking-attempts`. O orçamento conta avaliações, não segundos. Uma falha de construção inicial não prova inviabilidade da instância.
+
+Os padrões dessas três opções são, respectivamente, 4, 100 e 20. O arquivo Pareto mantém alternativas incomparáveis encontradas, embora o avanço local do VND exija melhoria por dominância. O limite de candidatos vale por chamada à vizinhança; não equivale a explorar todos os vizinhos possíveis.
 
 ### 5.2 SPEA2 via pymoo
 
@@ -289,7 +373,9 @@ O padrão é 10.000 avaliações e seed 1. Também aceita `--initial-solutions`,
 python src/metaheuristics/spea2.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/spea2_seed1 --seed 1 --max-evaluations 500 --population-size 50
 ```
 
-A execução é incremental: o pymoo gera um descendente por iteração; não equivale ao regime geracional clássico. O orçamento deve ser pelo menos o tamanho da população. Candidatos inviáveis também consomem avaliações. O survival usa `SPEA2Survival(normalize=False)` para evitar divisão por amplitude zero. `--crossover-probability` e `--mutation-probability` controlam os operadores.
+A seleção do SPEA2 usa dominância, força das soluções e densidade. Os operadores próprios recombinam e alteram máquina, sequência, modo e espera. A execução é incremental: o pymoo gera um descendente por iteração; não equivale ao regime geracional clássico. O orçamento deve ser pelo menos o tamanho da população. Candidatos inviáveis também consomem avaliações. O survival usa `SPEA2Survival(normalize=False)` para evitar divisão por amplitude zero. `--crossover-probability` e `--mutation-probability` controlam os operadores.
+
+Essa escolha mantém a densidade sensível às unidades brutas de Cmax e TEC. Candidatos inviáveis recebem `G=1` e viáveis `G=-1`; os objetivos fictícios dos rejeitados não são exportados como soluções. Duplicatas são permitidas e contam como tentativas. Os padrões são população 100, 10.000 avaliações, crossover 0,9, mutação 0,3 e seed 1.
 
 ### 5.3 MOEA/D via pymoo
 
@@ -299,15 +385,21 @@ python src/metaheuristics/moead.py data/input/set1/6_2_1439_3_S_1-9.dat --output
 
 Usa MOEA/D nativo, directions uniformes, Tchebycheff e escala `Cmax/H`, `TEC/max_cost`. Configure `2 <= n_neighbors <= population_size` e orçamento suficiente para avaliar a população inicial. O driver `ask/tell` respeita o cap de tentativas inclusive em varreduras incompletas. Descendentes inviáveis consomem uma tentativa e são substituídos por cópias viáveis já avaliadas. Também aceita `--prob-neighbor-mating`, `--crossover-probability` e `--mutation-probability`.
 
+Há uma direção por indivíduo; direções uniformes distribuem pesos, sem garantir distribuição uniforme de pontos na frente. O ideal é atualizado com soluções avaliadas pela própria busca. O fallback copia um indivíduo da população corrente, sem nova avaliação; não é reparo nem uma tentativa viável adicional, e pode reduzir diversidade. A inicialização precisa produzir uma população viável. Os padrões são população 100, vizinhos 20, probabilidade local 0,9, crossover 0,9, mutação 0,3, 10.000 avaliações e seed 1. AGE e MOEA/D exigem pymoo 0.6.2 em suas verificações de versão.
+
 ### 5.4 AGE-MOEA via pymoo
 
 ```bash
-python src/metaheuristics/age.py data/input/set1/10_2_1439_3_S_1-9.dat --seed 23 --max-evaluations 41 --population-size 8
+python src/metaheuristics/age.py data/input/set1/6_2_1439_3_S_1-9.dat --output-dir data/output/manual/age_seed1 --seed 1 --max-evaluations 500 --population-size 50
 ```
 
-O AGE-MOEA usa o algoritmo nativo do pymoo 0.6.2, a representação compartilhada de schedules e os operadores de variação existentes. O orçamento conta tentativas inviáveis e aceita um lote final parcial; duplicatas podem ocorrer durante a busca. A frente exportada é reavaliada e deduplicada por objetivos exatos. A configuração congelada para a próxima comparação é população 50, crossover 0,9, mutação 0,3 e 8.000 avaliações. O crossover ficou fixo no piloto, sem otimização específica. Os resultados brutos do piloto permanecem locais e não serão publicados como GitHub Release. Consulte o [piloto](data/output/age/piloto/relatorio.md), o [congelamento](data/output/age/FREEZE.md) e a [documentação de integração](data/output/age/implementation.md).
+O AGE-MOEA usa `AGEMOEA` do pymoo 0.6.2, com seleção, normalização geométrica e sobrevivência nativas. Reutiliza o amostrador e os operadores de schedules de `spea2.py`; isso não executa a seleção do SPEA2. A busca é geracional, com descendentes em lotes do tamanho da população e último lote reduzido ao saldo do orçamento. Duplicatas são permitidas e cada tentativa, inclusive inviável, consome avaliação. Não há reparo ou fallback de descendentes. A população inicial precisa ser viável.
+
+Os padrões do solver são seed 1, população 100, 10.000 avaliações, crossover 0,9 e mutação 0,3. A frente final é reavaliada e filtrada por objetivos inteiros exatos, embora a seleção interna da biblioteca use floats. O executável aceita um arquivo por chamada. Parâmetros recomendados por uma calibração precisam ser passados explicitamente; não substituem esses padrões automaticamente.
 
 ### 5.5 Repetições e orçamento
+
+A seed inicializa a sequência pseudoaleatória usada na construção inicial e nas decisões posteriores da busca. Seeds são replicações experimentais, não soluções prontas nem parâmetros a otimizar.
 
 As meta-heurísticas usam `--overwrite` para substituir um resultado existente; não oferecem a retomada `--resume` dos métodos exatos. Para repetir com outra seed, mude **a seed e o diretório de saída**. Apenas mudar a seed não muda automaticamente o nome do arquivo.
 
@@ -316,6 +408,8 @@ python src/metaheuristics/spea2.py data/input/set1/6_2_1439_3_S_1-9.dat --output
 ```
 
 SPEA2, MOEA/D e AGE-MOEA reavaliam os sobreviventes ao final: `post_search_validations` registra essas verificações fora do orçamento da busca. Encerrar as avaliações não prova que a fronteira aproximada é ótima.
+
+Nesses três métodos, a frente exportada vem da população final, não de um arquivo ilimitado com todos os pontos já visitados. A filtragem inteira final garante não dominância entre os sobreviventes, mas não recupera soluções perdidas pela seleção em float. Duplicatas na população podem reduzir diversidade. Os timers de busca desses runners incluem inicialização e busca, excluindo validação final e escrita; no AGE, a compilação inicial do Numba pode afetar a primeira execução. Compare tempos com o mesmo protocolo, ambiente e tratamento desse custo.
 
 ### 5.6 Calibrar as meta-heurísticas com Optuna
 
@@ -426,8 +520,7 @@ python src/hyperparameters_tuning/main.py --algorithm moead --workers 4 --trials
 ```
 
 `--trials` é o total desejado, incluindo configurações completas ou falhas. O
-protocolo v4 e o nome padrão `<algoritmo>_tpe_v4` preservam os estudos anteriores;
-os estudos v3 com operadores adicionais não são compatíveis com esta calibração.
+protocolo é v4 e o nome padrão é `<algoritmo>_tpe_v4`.
 Código, dados, seeds, grade, workers e dependências precisam coincidir para
 retomar; escolha outro estudo ao mudar o protocolo. O checkpoint é por trial:
 a população ou busca dentro de uma tentativa interrompida não é salva. Trials
@@ -445,15 +538,17 @@ Os algoritmos usam objetos Python e avaliação CPU. Optuna ou Ray não converte
 operadores para CUDA. O paralelismo oferecido é entre configurações, com possível
 aumento de memória; buscas muito curtas podem não acelerar.
 
-O artigo base usa irace para população e mutação; Optuna/TPE e esta grade são
-escolhas do projeto. A imagem da disciplina apresenta exemplos de categorias de
-calibração. A calibração atual respeita as opções realmente implementadas.
-As três rodadas de revisão e evidências estão em
-[avaliacao_implementacao.md](data/output/hyperparameters_tuning/avaliacao_implementacao.md).
+### 5.7 Consultar e aplicar uma calibração salva
+
+A evidência de cada estudo está no próprio diretório de resultados: `protocol.json` define o experimento; `trials.csv` resume os trials; `trials/trial_*.json` contém as frentes e métricas; `best_parameters.json` identifica a configuração selecionada, seu score e o trial correspondente.
+
+Há estudos salvos de [AGE-MOEA](data/output/hyperparameters_tuning/age/age_tpe/best_parameters.json) e [MOEA/D](data/output/hyperparameters_tuning/moead/moead_tpe/best_parameters.json). Consulte os arquivos para obter os valores, sem tratar recomendações de estudos diferentes como defaults do código. Ambos registram calibração provisória em modo `effort`.
+
+Para aplicar uma configuração, copie os campos de `solver_config` para as opções do solver: por exemplo, `population_size` corresponde a `--population-size`, e `max_evaluations` a `--max-evaluations`. Acrescente a entrada, uma seed de avaliação e um diretório de saída próprio. Os solvers não leem `best_parameters.json` automaticamente. A retomada da calibração também precisa do banco SQLite local; os JSONs e CSVs, sozinhos, não reconstituem o histórico Optuna.
 
 ## 6. Executar uma pasta e consultar opções
 
-Os três exatos, VNS/VND, SPEA2, MOEA/D e a heurística construtiva aceitam um arquivo ou uma pasta; a heurística de ociosidade aceita um arquivo por chamada. Em uma pasta, processam os arquivos `*.dat` diretamente nela, em ordem, sem busca recursiva. O orçamento se aplica a cada arquivo. Exemplo com sua pasta de testes:
+Os três exatos, VNS/VND, SPEA2, MOEA/D e a heurística construtiva aceitam um arquivo ou uma pasta; AGE-MOEA e a heurística de ociosidade aceitam um arquivo por chamada. Em uma pasta, processam os arquivos `*.dat` diretamente nela, em ordem, sem busca recursiva. O orçamento se aplica a cada arquivo. Exemplo com sua pasta de testes:
 
 ```bash
 python src/exact_methods/custom_exact_dp.py data/input/personalizados --output-dir data/output/manual/meus_testes_dp --total-time-limit 60
@@ -471,6 +566,7 @@ python src/metaheuristics/moead.py --help
 python src/metaheuristics/age.py --help
 python src/heuristics/construtiva/construtiva.py --help
 python src/heuristics/ociosidade/ociosidade.py --help
+python src/hyperparameters_tuning/main.py --help
 ```
 
 ## 7. Ler resultados e gerar gráficos
@@ -504,7 +600,7 @@ python src/plot_pareto.py data/output/manual/custom_exact_dp/6_2_1439_3_S_1-9.js
 
 Acrescente `--show` para abrir os gráficos. Sem caminhos, `python src/plot_pareto.py` procura resultados em `data/baselines/` e `data/output/`. A plotagem não executa solvers. Ela agrupa por nome/hash da entrada e método, preferindo resultado completo; entre resultados de mesma categoria, prefere o mais recente. Para visualizar separadamente várias seeds do mesmo método, passe cada resultado em comandos separados com diretórios de gráficos diferentes.
 
-**Limitação atual da legenda:** o plotador geral lê os JSONs das meta-heurísticas, mas pode rotulá-los como “parcial; pontos provados”. Esse texto não certifica esses pontos: a heurística construtiva, VNS/VND, SPEA2 e MOEA/D produzem frentes aproximadas. Consulte o método e `pareto_proven` no JSON ao interpretar o gráfico.
+**Limitação atual da legenda:** o plotador geral lê os JSONs das meta-heurísticas, mas pode rotulá-los como “parcial; pontos provados”. Esse texto não certifica esses pontos: as duas heurísticas, VNS/VND, SPEA2, MOEA/D e AGE-MOEA produzem frentes aproximadas. Consulte o método e `pareto_proven` no JSON ao interpretar o gráfico.
 
 ### 7.2 Gráficos das heurísticas
 
@@ -522,13 +618,58 @@ Para a heurística de ociosidade, o gráfico mostra três fronteiras: a exata (v
 python src/heuristics/ociosidade/grafico.py data/input/set1/6_2_1439_3_S_1-9.dat --output data/output/manual/plots/heuristica_ociosidade.png
 ```
 
+### 7.3 Consultar experimentos e interpretar indicadores
+
+Os diretórios abaixo contêm evidências de execuções específicas. Seus parâmetros, versões e tempos pertencem aos respectivos protocolos; não redefinem os padrões dos executáveis nem substituem uma nova execução.
+
+| Evidência existente | Onde consultar |
+| --- | --- |
+| Medições da DP, limites, memória e rótulos | [desempenho.csv](data/output/custom_exact_dp/desempenho.csv) e `run_metrics` dos resultados da DP. |
+| Piloto VNS/VND | [manifest.json](data/output/vns_vnd/piloto/manifest.json), [summary.csv](data/output/vns_vnd/piloto/summary.csv), `paired_coverage.csv`, `profiles.json` e `neighborhood_diagnostics.json` no mesmo diretório. |
+| Piloto SPEA2 | [manifest.json](data/output/spea2/piloto/manifest.json), [summary.csv](data/output/spea2/piloto/summary.csv), `operator_sensitivity.csv` e `baseline_6_jobs.csv`. |
+| Piloto MOEA/D | [manifest.json](data/output/moead/piloto/manifest.json), [summary.csv](data/output/moead/piloto/summary.csv), `sensitivity_paired.csv` e `confirmation_paired.csv`. |
+| Piloto e configuração congelada AGE | [protocol.json](data/output/age/piloto/protocol.json), [recommendation.json](data/output/age/piloto/recommendation.json), [frozen_config.json](data/output/age/frozen_config.json) e [summary.csv](data/output/age/piloto/summary.csv). |
+| Comparação salva de VNS/VND, SPEA2 e MOEA/D | [manifest.json](data/output/final_comparison/manifest.json), [summary.csv](data/output/final_comparison/summary.csv), [run_outcomes.csv](data/output/final_comparison/run_outcomes.csv), [statistical_tests.json](data/output/final_comparison/statistical_tests.json) e `figures/`. |
+| Calibração Optuna | Diretórios e aplicação descritos na seção 5.7; não confundir esses estudos com os pilotos. |
+
+Os pilotos usam quatro entradas (6 original, 14 derivada, 50 e 250 originais) e seeds 11/29/47. Isso é diferente da grade padrão atual de doze entradas do calibrador. A comparação salva em `final_comparison` abrange somente VNS/VND, SPEA2 e MOEA/D; não inclui AGE. Seu experimento A usa 13 entradas originais, dez seeds e 8.000 tentativas; B usa quatro entradas de 750 tarefas, cinco seeds e 2.000 tentativas; C usa uma entrada de 250 tarefas, cinco seeds e 20.000 tentativas. B e C são análises separadas de escala e orçamento. Consulte os outcomes de falha de inicialização; ausência de frente nessas células não prova inviabilidade.
+
+**Indicadores:** HV maior indica maior área dominada até o ponto de referência, desde que escala e referência sejam as mesmas. IGD+ menor indica menor distância à frente de referência, que pode ser apenas uma união empírica de soluções encontradas, sem prova de ótimo. Coverage `C(A,B)` é a fração de pontos de B dominados ou igualados por A; não é simétrica. Menores Cmax e TEC de uma frente podem pertencer a schedules diferentes. Cardinalidade da frente, rapidez e um extremo isolado não determinam qualidade multiobjetivo.
+
+A normalização externa dos indicadores é distinta das escalas internas dos solvers. Em `final_comparison/normalization.py`, seja `dmin_j` a menor duração individual admissível da tarefa j:
+
+```text
+C_LB = max(max_j dmin_j, ceil(sum_j dmin_j / m))
+C_UB = H
+TEC_LB = soma dos menores custos individuais admissíveis de cada tarefa
+TEC_UB = soma dos maiores custos individuais admissíveis de cada tarefa
+C_normalizado = (Cmax - C_LB) / (C_UB - C_LB)
+TEC_normalizado = (TEC - TEC_LB) / (TEC_UB - TEC_LB)
+```
+
+Os custos e limites energéticos usam a mesma escala inteira. As opções individuais consideram máquina, modo e início; ignorar conflitos entre tarefas produz limites válidos, mas possivelmente frouxos. Extremos temporais são calculados nas bordas das tarifas e do domínio. A referência é `(1,05; 1,05)` e valores fora de `[0,1]²` causam erro, sem truncamento. O normalizador da comparação recusa denominadores degenerados; o calibrador em `src/hyperparameters_tuning/common.py` trata eixos constantes como zero. O calibrador ainda divide HV por `1,05²`; portanto seu score não é diretamente o HV bruto das tabelas dos pilotos/comparação. As validações e os limites por entrada estão em [normalization_validation.json](data/output/final_comparison/normalization_validation.json).
+
+Compare resultados com a mesma entrada/hash, discretização, orçamento e definição de métrica. Baselines completos podem verificar pares exatos após a busca; resumos sem schedules não permitem validar escalonamentos. Referências empíricas favorecem os métodos que contribuíram para sua construção e não certificam convergência global. Limites frouxos podem comprimir diferenças geométricas. Nas análises estatísticas da comparação, a unidade é a instância (mediana entre seeds), não cada seed como problema independente; as conclusões se restringem à campanha correspondente.
+
+**Reprodução dos auxiliares:** os scripts `run_pilot.py`/`summarize*.py` nas pastas de pilotos e `run_final.py`/`analyze_final.py` em `final_comparison` usam destinos e protocolos próprios. Não são substitutos genéricos das CLIs das seções 3–6. Exigem os brutos, versões e hashes compatíveis; um clone pode não conter os arquivos ignorados. `analyze_final.py --publish` substitui análises após arquivar as anteriores. Repetições dessas campanhas devem ocorrer em uma cópia compatível, preservando as evidências existentes.
+
+O pacote local AGE é identificado por [archive_manifest.json](data/output/age/archive_manifest.json), [archive_inventory.json](data/output/age/archive_inventory.json) e `archive.sha256`. Quando o pacote estiver disponível, sua verificação é:
+
+```bash
+python data/output/age/archive_pilot.py verify
+```
+
+O pacote e os brutos AGE são locais, não publicados como Release, e não são necessários para executar o solver. O comando `build` exige também os documentos originais removidos na consolidação e seus hashes: **não funciona diretamente neste checkout sem recuperar o snapshot correspondente**. Ao restaurar um pacote, verifique hash/inventário e extraia primeiro fora do repositório; não sobreponha fontes atuais. Manifestos preservam hashes de documentos da época e não foram reescritos para ocultar essa dependência.
+
 ## 8. Validar a instalação e tratar erros comuns
 
 ```bash
 python -m unittest discover -v
 ```
 
-A suíte atual cobre representação/avaliação, VNS/VND, SPEA2, MOEA/D, AGE-MOEA, as duas heurísticas e normalização. Não há uma bateria específica de regressão dos três solvers exatos na suíte atual.
+A suíte atual cobre representação/avaliação, VNS/VND, SPEA2, MOEA/D, AGE-MOEA, as duas heurísticas, normalização e calibração. Não há uma bateria específica de regressão dos três solvers exatos na suíte atual.
+
+Alguns testes da campanha em `data/output/final_comparison/` dependem de `fcntl` (Unix); o Windows não fornece esse módulo. Verificações de arquivo congelado também exigem os hashes do snapshot correspondente. Essas limitações são distintas dos testes dos solvers atuais.
 
 Para verificar somente as heurísticas:
 
@@ -536,10 +677,21 @@ Para verificar somente as heurísticas:
 python -m unittest tests.test_heuristica_construtiva tests.test_heuristica_ociosidade -v
 ```
 
+Os protótipos de integração ainda presentes em `src/metaheuristics/` podem ser exercitados separadamente:
+
+```bash
+python src/metaheuristics/pymoo_spike.py data/input/set1/6_2_1439_3_S_1-9.dat
+python src/metaheuristics/age_spike.py data/input/set1/10_2_1439_3_S_1-9.dat --seed 23 --population-size 8 --budget 41 --offspring-size 8
+python -m unittest tests.test_age_spike tests.test_age tests.test_moead tests.test_spea2 -v
+```
+
+Esses spikes verificam a integração e imprimem diagnósticos; não são execuções de qualidade dos solvers finais. Em particular, o crossover de passagem do spike pymoo não descreve a recombinação dos runners atuais. Números de testes aprovados em manifestos antigos correspondem àquele snapshot; execute a suíte atual para verificar seu ambiente.
+
 | Mensagem/situação | Como proceder |
 | --- | --- |
 | `can't open file` | Execute na raiz, confira o caminho e use `/` no Git Bash. |
-| `ModuleNotFoundError` | Instale `requirements.txt` com o mesmo Python que executa o script. |
+| `ModuleNotFoundError` de dependência externa | Instale `requirements.txt` com o mesmo Python que executa o script. |
+| `ModuleNotFoundError: fcntl` em scripts de campanha | Esse módulo é de Unix; execute a ferramenta correspondente em ambiente compatível. |
 | `Esperado '...'`, `Faltam valores` ou dados adicionais | Confira a ordem dos campos e as dimensões dos vetores/matrizes; remova comentários. |
 | Ponta fora do respectivo dia | Use índices absolutos e fim inclusivo dentro do dia correspondente. |
 | Job não cabe no horizonte | Revise processamento, velocidades e `H`; nenhuma opção individual coube. |
