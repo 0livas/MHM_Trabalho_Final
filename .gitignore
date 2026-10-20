@@ -39,3 +39,7 @@ data/output/final_comparison/summarize_blocked.py
 /data/output/age/piloto/runs/
 /data/output/age/piloto/references.json
 /data/output/age/artifacts/
+
+# Banco local de calibração; CSV, protocolo e resultados JSON ficam versionáveis.
+/data/output/hyperparameters_tuning/**/study.sqlite3*
+/data/output/hyperparameters_tuning/**/study.lock

@@ -317,6 +317,140 @@ python src/metaheuristics/spea2.py data/input/set1/6_2_1439_3_S_1-9.dat --output
 
 SPEA2, MOEA/D e AGE-MOEA reavaliam os sobreviventes ao final: `post_search_validations` registra essas verificações fora do orçamento da busca. Encerrar as avaliações não prova que a fronteira aproximada é ótima.
 
+### 5.6 Calibrar as meta-heurísticas com Optuna
+
+O calibrador varia somente os parâmetros que os arquivos atuais de
+`src/metaheuristics/` já aceitam. As implementações, operadores, avaliação de
+makespan/energia, setups e horizonte permanecem intactos. Abra o menu:
+
+```bash
+python src/hyperparameters_tuning/main.py
+```
+
+Escolha MOEA/D, SPEA2 incremental, AGE-MOEA ou VNS/VND e CPU sequencial ou paralela.
+`main.py` centraliza a interface; há um arquivo de calibração por algoritmo e
+`common.py` compartilha métrica, Optuna/TPE, processos e persistência. As
+bibliotecas estão no `requirements.txt` da raiz.
+
+| Parâmetro nativo | Algoritmos | Valores padrão |
+|---|---|---|
+| `population_size` | MOEA/D, SPEA2, AGE | 20, 50, 100, 150, 200 |
+| `max_evaluations` | Todos | 2000, 4000, 8000, 12000, 20000 |
+| `n_neighbors` | MOEA/D | 2, 5, 10, 15, 20 |
+| `prob_neighbor_mating` | MOEA/D | 0; 0,25; 0,5; 0,75; 0,9; 1 |
+| `crossover_probability` | MOEA/D, SPEA2, AGE | 0,2; 0,4; 0,6; 0,7; 0,9; 1 |
+| `mutation_probability` | MOEA/D, SPEA2, AGE | 0,01; 0,05; 0,1; 0,2; 0,3; 0,5 |
+| `initial_solutions` | VNS/VND | 1, 2, 4, 8, 16 |
+| `max_candidates_per_neighborhood` | VNS/VND | 10, 25, 50, 100, 200 |
+| `shaking_attempts` | VNS/VND | 1, 5, 10, 20, 40 |
+
+Cada campo tem pelo menos cinco valores. A grade cobre exatamente os campos dos
+Config atuais, exceto `seed`: seeds são replicações, mantidas iguais para todas
+as configurações. O número de vizinhos é passado diretamente em `n_neighbors`,
+sem converter uma fração. A grade padrão é compatível com todas as populações.
+Método de crossover, método de mutação, movimentos por mutação, passo de espera e
+gerações não são opções expostas pelas implementações atuais e não são calibrados.
+Escolhas fixas de cada variante estão registradas no protocolo.
+
+Existem dois regimes para os quatro algoritmos:
+
+- `--budget-mode effort` (padrão): varia todos os campos da tabela aplicáveis ao
+  algoritmo, incluindo `max_evaluations`. O score mede qualidade da frente e não
+  penaliza tempo; configurações com mais avaliações podem ser favorecidas.
+- `--budget-mode evaluations --max-evaluations 8000`: mantém esse limite igual
+  para todas as configurações e varia os demais parâmetros. Prefira este regime
+  ao comparar qualidade com o mesmo orçamento de tentativas, registrando também
+  tempo e consumo real.
+
+```bash
+python src/hyperparameters_tuning/main.py --algorithm moead --workers 4 --trials 30
+python src/hyperparameters_tuning/main.py --algorithm spea2 --budget-mode evaluations --max-evaluations 8000 --workers 4
+python src/hyperparameters_tuning/main.py --algorithm age --budget-mode effort --workers 4
+python src/hyperparameters_tuning/main.py --algorithm vns_vnd --budget-mode effort --workers 4
+python src/hyperparameters_tuning/main.py --algorithm moead --list-space
+```
+
+`--list-space` mostra os valores sem iniciar uma campanha. `--search-space
+minha_grade.json` aceita um objeto JSON com exatamente as chaves da grade do
+algoritmo e listas de valores. Grades focadas podem ter menos de cinco níveis.
+Todas as populações precisam caber no menor limite da grade no modo effort; em
+avaliações fixas, populações maiores que o limite são removidas. Todo valor de
+`n_neighbors` deve caber na menor população restante. Para testar mais de 20
+vizinhos, aumente também a menor população da grade personalizada. Combinações
+incompatíveis são recusadas antes de criar um estudo, sem truncar valores.
+
+O limite de avaliações é um controle de esforço já existente nos métodos. Não
+se impõe uma quantidade de gerações por fora: SPEA2 mantém um descendente por
+passo depois da inicialização; AGE usa lotes de tamanho P e MOEA/D percorre os P
+subproblemas. O último lote/varredura pode ser parcial. Gerações registradas nos
+resultados são apenas métricas derivadas do consumo. VNS pode terminar antes do
+limite quando não há movimentos avaliáveis. Rejeições contam como tentativas.
+
+Os padrões atuais usam doze entradas: originais de 6–10 tarefas, derivadas de
+10–14 e originais de 50 e 250 tarefas, com seeds 11/29/47. Use `--inputs arquivo.dat
+pasta` e `--seeds 11,29,47` para selecionar outros casos. Caminhos relativos são
+resolvidos na raiz do projeto; conteúdos idênticos duplicados são recusados.
+Cada trial avalia uma configuração em todas as entradas e seeds. Com os padrões,
+30 × 12 × 3 = 1080 buscas por algoritmo; até 21.600.000 tentativas no maior limite,
+além das validações finais. A primeira proposta usa valores de referência compatíveis com a grade: P=100, E=8000, n_neighbors=20, acasalamento/crossover=0,9,
+mutação=0,3; VNS começa com 4 soluções, 100 candidatos e 20 tentativas de shaking.
+O TPE possui dez trials iniciais antes da modelagem adaptativa e explora somente
+uma parte da grade, sem garantir a melhor configuração global.
+
+A configuração escolhida é generalista para o conjunto da campanha: maximiza a
+média entre instâncias do hipervolume mediano entre seeds. Os objetivos são
+normalizados em [0,1] com limites individuais exatos derivados somente da entrada,
+relaxando setups e conflitos para obter esses limites. Extremos de custo por
+horário são calculados nas bordas das tarifas e do domínio. Eixos constantes
+viram zero e valores fora dos limites causam erro. A referência é (1,05;1,05),
+com HV dividido por 1,05². Cada instância recebe o mesmo peso. Esse escore não
+altera o avaliador nem a normalização interna dos algoritmos.
+
+Não há leitura de baselines ou resultados da comparação final, nem pruning.
+Falha conhecida da construção inicial recebe HV zero naquele par instância/seed;
+é registrada e não prova inviabilidade da entrada. Erro técnico falha o trial e
+encerra a campanha. A recomendação é provisória: valide em seeds e instâncias
+reservadas, preferencialmente com orçamento comum. As entradas padrão já
+participaram de análises anteriores e não são um conjunto de teste independente.
+
+Resultados em `data/output/hyperparameters_tuning/<algoritmo>/<nome>/`:
+
+- `protocol.json`: entradas, hashes, grade, escolhas fixas e versões.
+- `study.sqlite3`: histórico Optuna para retomada, ignorado pelo Git.
+- `trials.csv`: parâmetros, esforço, score e estados COMPLETE/FAIL.
+- `best_parameters.json`: campos diretamente reutilizáveis no Config nativo.
+- `trials/trial_*.json`: evidência por entrada/seed, tempo, avaliações e frente.
+
+```bash
+python src/hyperparameters_tuning/main.py --algorithm moead --workers 4 --trials 50 --study-name moead_tpe_v4 --resume
+```
+
+`--trials` é o total desejado, incluindo configurações completas ou falhas. O
+protocolo v4 e o nome padrão `<algoritmo>_tpe_v4` preservam os estudos anteriores;
+os estudos v3 com operadores adicionais não são compatíveis com esta calibração.
+Código, dados, seeds, grade, workers e dependências precisam coincidir para
+retomar; escolha outro estudo ao mudar o protocolo. O checkpoint é por trial:
+a população ou busca dentro de uma tentativa interrompida não é salva. Trials
+órfãos viram FAIL na retomada. Faça backup da pasta inteira do estudo.
+
+O coordenador é o único escritor SQLite e uma trava impede duas campanhas na
+mesma pasta. Workers executam trials em processos CPU, limitando threads numéricas.
+Resultados de cada lote são entregues ao Optuna na ordem do trial. A RNG do TPE
+usa sampler_seed + número do trial, sem reiniciar a sequência na retomada.
+Alterar workers ou interromper um lote pode mudar a sequência adaptativa;
+processos já iniciados podem precisar concluir antes do programa fechar.
+
+A opção GPU informa que está indisponível; `--device gpu` recusa a execução.
+Os algoritmos usam objetos Python e avaliação CPU. Optuna ou Ray não convertem
+operadores para CUDA. O paralelismo oferecido é entre configurações, com possível
+aumento de memória; buscas muito curtas podem não acelerar.
+
+O artigo base usa irace para população e mutação; Optuna/TPE e esta grade são
+escolhas do projeto. A imagem da disciplina apresenta exemplos de categorias de
+calibração. A calibração atual respeita as opções realmente implementadas.
+As três rodadas de revisão e evidências estão em
+[avaliacao_implementacao.md](data/output/hyperparameters_tuning/avaliacao_implementacao.md).
+
 ## 6. Executar uma pasta e consultar opções
 
 Os três exatos, VNS/VND, SPEA2, MOEA/D e a heurística construtiva aceitam um arquivo ou uma pasta; a heurística de ociosidade aceita um arquivo por chamada. Em uma pasta, processam os arquivos `*.dat` diretamente nela, em ordem, sem busca recursiva. O orçamento se aplica a cada arquivo. Exemplo com sua pasta de testes:

@@ -3,3 +3,6 @@ matplotlib>=3.7,<4
 pymoo==0.6.2
 # AGE-MOEA importa numba obrigatoriamente (não incluído no pymoo básico).
 numba>=0.61,<1
+# Calibração local por TPE, com histórico persistente e workers por processo.
+optuna>=4.6,<5
+threadpoolctl>=3.1,<4
