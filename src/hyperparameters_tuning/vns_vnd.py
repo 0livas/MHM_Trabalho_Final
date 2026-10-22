@@ -1,15 +1,15 @@
 """Controles nativos do VNS/VND: soluções iniciais, vizinhança e shaking.
 
 VNS não tem população evolutiva, gerações, crossover ou mutação. O regime
-``effort`` calibra o limite de avaliações; ``evaluations`` mantém esse limite
-fixo entre trials. Ambos preservam o VNS/VND original e o avaliador comum.
+padrão ``evaluations`` mantém o limite de avaliações fixo entre trials;
+``effort`` também calibra esse limite. Ambos preservam o VNS/VND original e o avaliador comum.
 """
 from __future__ import annotations
 
 from metaheuristics.vns_vnd import VNSConfig, VNSVND
 
 ALGORITHM_ID = "vns_vnd"
-SUPPORTED_BUDGET_MODES = ("effort", "evaluations")
+SUPPORTED_BUDGET_MODES = ("evaluations", "effort")
 SEARCH_SPACE = {
     "initial_solutions": [1, 2, 4, 8, 16],
     "max_candidates_per_neighborhood": [10, 25, 50, 100, 200],
@@ -69,7 +69,7 @@ def resolve_parameters(parameters, budget, budget_mode):
     return result
 
 
-def suggest_parameters(trial, budget, budget_mode="effort", search_space=None):
+def suggest_parameters(trial, budget, budget_mode="evaluations", search_space=None):
     space = validate_space(SEARCH_SPACE if search_space is None else search_space, budget, budget_mode)
     selected = {name: trial.suggest_categorical(name, values)
                 for name, values in space.items()
@@ -91,11 +91,11 @@ def generation_metrics(parameters, attempts):
 
 def calibrate(paths, **kwargs):
     from hyperparameters_tuning.common import calibrate as shared_calibrate
-    kwargs.setdefault("budget_mode", "effort")
-    kwargs.setdefault("study_name", "vns_vnd_tpe_v4")
+    kwargs.setdefault("budget_mode", "evaluations")
+    kwargs.setdefault("study_name", "vns_vnd_tpe_v5")
     return shared_calibrate(paths, algorithm=ALGORITHM_ID, **kwargs)
 
 
-def evaluate_parameters(parameters, cases, seeds, budget):
+def evaluate_parameters(parameters, cases, seeds, budget, **kwargs):
     from hyperparameters_tuning.common import evaluate_parameters as shared_evaluate
-    return shared_evaluate(parameters, cases, seeds, budget, algorithm=ALGORITHM_ID)
+    return shared_evaluate(parameters, cases, seeds, budget, algorithm=ALGORITHM_ID, **kwargs)

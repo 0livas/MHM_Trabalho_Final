@@ -1,4 +1,7 @@
-"""Menu e CLI de calibração. Execute sem argumentos para abrir o menu."""
+"""Menu e CLI de calibração. Execute sem argumentos para abrir o menu.
+
+Fase 2 (confirmação em vários orçamentos): ``main.py confirm --help``.
+"""
 from __future__ import annotations
 
 import argparse
@@ -17,20 +20,18 @@ GPU_MESSAGE = (
     "Escolha CPU sequencial ou CPU paralela."
 )
 ALGORITHMS = {"moead": "MOEA/D", "spea2": "SPEA2 incremental", "age": "AGE-MOEA", "vns_vnd": "VNS/VND"}
+# Duas entradas por porte; as pequenas saturam o HV e pesam pouco na escolha.
 DEFAULT_INPUTS = (
     "data/input/set1/6_2_1439_3_S_1-9.dat",
-    "data/input/set1/7_2_1439_3_S_1-9.dat",
-    "data/input/set1/8_2_1439_3_S_1-9.dat",
-    "data/input/set1/9_2_1439_3_S_1-9.dat",
-    "data/input/set1/10_2_1439_3_S_1-9.dat",
-    "data/input/set1/10_2_1439_3_S_1-9_derivada.dat",
-    "data/input/set1/11_2_1439_3_S_1-9_derivada.dat",
-    "data/input/set1/12_2_1439_3_S_1-9_derivada.dat",
-    "data/input/set1/13_2_1439_3_S_1-9_derivada.dat",
     "data/input/set1/14_2_1439_3_S_1-9_derivada.dat",
     "data/input/set2/50_10_1439_5_S_1-9.dat",
+    "data/input/set2/50_20_1439_5_S_1-9.dat",
     "data/input/set2/250_10_1439_5_S_1-9.dat",
+    "data/input/set2/250_20_1439_5_S_1-9.dat",
 )
+DEFAULT_TRIALS = 60
+DEFAULT_EVALUATIONS = 8000
+DEFAULT_CONFIRM_BUDGETS = "8000,20000,50000"
 
 
 def positive_int(value):
@@ -55,6 +56,23 @@ def resolve_inputs(values):
             if entry not in paths:
                 paths.append(entry)
     return paths
+
+
+def non_negative_float(value):
+    result = float(value)
+    if not result >= 0 or result == float("inf"):
+        raise argparse.ArgumentTypeError("Informe um número finito >= 0")
+    return result
+
+
+def budget_list(value):
+    try:
+        result = tuple(positive_int(item.strip()) for item in value.split(","))
+    except ValueError as error:
+        raise argparse.ArgumentTypeError("Informe inteiros positivos separados por vírgula") from error
+    if len(set(result)) != len(result):
+        raise argparse.ArgumentTypeError("Orçamentos repetidos")
+    return result
 
 
 def prompt(label, default, convert=str):
@@ -123,25 +141,27 @@ def menu():
     text = input("Outros arquivos/pastas separados por ; (Enter mantém padrão): ").strip()
     inputs = [entry.strip().strip('"') for entry in text.split(";") if entry.strip()] if text else DEFAULT_INPUTS
     seeds = prompt("Seeds separadas por vírgula", "11,29,47")
-    trials = prompt("Total desejado de configurações (trials)", 30, positive_int)
+    trials = prompt("Total desejado de configurações (trials)", DEFAULT_TRIALS, positive_int)
     while True:
-        mode = prompt("Esforço: 1=calibrar limite de avaliações; 2=avaliações fixas", "1")
+        mode = prompt("Esforço: 1=calibrar limite de avaliações; 2=avaliações fixas", "2")
         if mode in ("1", "2"):
             break
         print("Escolha 1 ou 2.")
-    budget_mode = get_plugin(algorithm).SUPPORTED_BUDGET_MODES[0] if mode == "1" else "evaluations"
-    budget = prompt("Cap de avaliações por instância e seed", 8000, positive_int) if mode == "2" else 8000
+    budget_mode = "effort" if mode == "1" else "evaluations"
+    budget = (prompt("Cap de avaliações por instância e seed", DEFAULT_EVALUATIONS, positive_int)
+              if mode == "2" else DEFAULT_EVALUATIONS)
+    timeout = prompt("Limite de segurança por trial em segundos (0 = sem limite)", 900, non_negative_float)
     space_path = input("Arquivo JSON de grade personalizada (Enter usa padrões): ").strip().strip('"')
     show_space(load_space(space_path or None, algorithm), algorithm, budget_mode)
     if budget_mode != "evaluations":
         print("O esforço varia entre configurações. Confirme depois com orçamento comum.")
-    study_name = prompt("Nome do estudo", f"{algorithm}_tpe_v4")
+    study_name = prompt("Nome do estudo", f"{algorithm}_tpe_v5")
     resume = prompt("Retomar estudo existente? s/n", "n").lower()
     if resume not in ("s", "n"):
         raise ValueError("Retomada deve ser s ou n")
     return argparse.Namespace(algorithm=algorithm, inputs=inputs, seeds=seeds,
         trials=trials, max_evaluations=budget, workers=workers, study_name=study_name,
-        sampler_seed=42, resume=resume == "s", device="cpu", output_dir=None,
+        sampler_seed=42, resume=resume == "s", device="cpu", output_dir=None, trial_timeout=timeout or None,
         budget_mode=budget_mode, search_space=Path(space_path) if space_path else None, list_space=False)
 
 
@@ -151,17 +171,19 @@ def parser():
     result.add_argument("--inputs", nargs="+", default=DEFAULT_INPUTS,
                         help="arquivos/pastas de calibração; caminhos relativos à raiz")
     result.add_argument("--seeds", default="11,29,47", help="seeds do algoritmo separadas por vírgula")
-    result.add_argument("--trials", type=positive_int, default=30,
+    result.add_argument("--trials", type=positive_int, default=DEFAULT_TRIALS,
                         help="total desejado, incluindo trials anteriores em --resume")
     result.add_argument("--budget-mode", choices=["effort", "evaluations"],
-                        help="padrão: effort calibra o limite nativo; evaluations fixa esforço")
-    result.add_argument("--max-evaluations", type=positive_int, default=8000,
+                        help="padrão: evaluations fixa o esforço; effort também calibra o limite")
+    result.add_argument("--max-evaluations", type=positive_int, default=DEFAULT_EVALUATIONS,
                         help="cap por busca em evaluations; não se aplica a effort")
     result.add_argument("--search-space", type=Path, help="JSON com listas de valores; padrão tem >=5 níveis numéricos")
     result.add_argument("--list-space", action="store_true", help="mostrar grade e sair")
     result.add_argument("--workers", type=positive_int, default=1,
                         help="configurações simultâneas em processos CPU separados")
-    result.add_argument("--study-name", help="padrão <algoritmo>_tpe_v4")
+    result.add_argument("--trial-timeout", type=float,
+                        help="limite de segurança em segundos por trial; excedido vira FAIL (padrão: sem limite)")
+    result.add_argument("--study-name", help="padrão <algoritmo>_tpe_v5")
     result.add_argument("--sampler-seed", type=int, default=42)
     result.add_argument("--resume", action="store_true")
     result.add_argument("--device", choices=["cpu", "gpu"], default="cpu")
@@ -170,9 +192,43 @@ def parser():
     return result
 
 
+def confirm_parser():
+    result = argparse.ArgumentParser(prog="main.py confirm",
+        description="Reavalia as melhores configurações de um estudo em vários orçamentos fixos.")
+    result.add_argument("--algorithm", choices=ALGORITHMS, default="moead")
+    result.add_argument("--study-name", help="padrão <algoritmo>_tpe_v5")
+    result.add_argument("--output-dir", type=Path, help="pasta exata do estudo; substitui --algorithm/--study-name")
+    result.add_argument("--top", type=positive_int, default=5, help="configurações distintas reavaliadas")
+    result.add_argument("--budgets", type=budget_list, default=budget_list(DEFAULT_CONFIRM_BUDGETS),
+                        help=f"orçamentos separados por vírgula (padrão {DEFAULT_CONFIRM_BUDGETS})")
+    result.add_argument("--workers", type=positive_int, default=1)
+    return result
+
+
+def main_confirm(argv):
+    cli = confirm_parser()
+    args = cli.parse_args(argv)
+    output = args.output_dir or Path("data/output/hyperparameters_tuning") / args.algorithm / (
+        args.study_name or f"{args.algorithm}_tpe_v5")
+    output = ROOT / output if not output.is_absolute() else output
+    try:
+        from hyperparameters_tuning.confirm import confirm
+        report = confirm(output, top=args.top, budgets=args.budgets, workers=args.workers)
+    except (ValueError, OSError, RuntimeError, ImportError) as error:
+        cli.exit(2, f"Erro: {error}\n")
+    except (KeyboardInterrupt, EOFError):
+        print("\nInterrompido. Execuções concluídas foram salvas; repita o comando para continuar.")
+        return 130
+    print(f"\nConcluído. Ranking por orçamento: {report['ranking']}")
+    print(f"Recomendado: trial {report['recommended']['trial']} -> {report['recommended']['solver_config']}")
+    return 0
+
+
 def main(argv=None):
-    cli = parser()
     argv = sys.argv[1:] if argv is None else argv
+    if argv and argv[0] == "confirm":
+        return main_confirm(argv[1:])
+    cli = parser()
     try:
         args = cli.parse_args(argv) if argv else menu()
         if args is None:
@@ -183,7 +239,7 @@ def main(argv=None):
         args.budget_mode = args.budget_mode or plugin.SUPPORTED_BUDGET_MODES[0]
         if args.budget_mode not in plugin.SUPPORTED_BUDGET_MODES:
             raise ValueError(f"{args.algorithm} admite apenas {plugin.SUPPORTED_BUDGET_MODES}")
-        args.study_name = args.study_name or f"{args.algorithm}_tpe_v4"
+        args.study_name = args.study_name or f"{args.algorithm}_tpe_v5"
         space = load_space(args.search_space, args.algorithm)
         if args.list_space:
             show_space(space, args.algorithm, args.budget_mode)
@@ -197,9 +253,10 @@ def main(argv=None):
         report = plugin.calibrate(paths, seeds=seeds, n_trials=args.trials,
             budget=args.max_evaluations, workers=args.workers, study_name=args.study_name,
             sampler_seed=args.sampler_seed, resume=args.resume, output_dir=args.output_dir,
-            budget_mode=args.budget_mode, search_space=space)
+            budget_mode=args.budget_mode, search_space=space, trial_timeout=args.trial_timeout)
         print(f"\nConcluído: {report['completed_trials']} trials completos; "
               f"melhor score={report['best_score']}. Saída: {report['output_dir']}")
+        print("Próximo passo: main.py confirm reavalia os melhores em outros orçamentos.")
         return 0
     except (ValueError, OSError, RuntimeError, ImportError) as error:
         cli.exit(2, f"Erro: {error}\n")

@@ -22,6 +22,11 @@ from optuna.trial import TrialState
 from pymoo.indicators.hv import HV
 from problem import PROJECT_ROOT, atomic_json, energy_scale, interval_cost_units, read_instance
 REFERENCE = (1.05, 1.05)
+PROTOCOL_VERSION = 5
+
+
+class TrialTimeout(RuntimeError):
+    """Trial excedeu o limite de segurança; vira FAIL sem abortar o estudo."""
 
 
 def validate_native_space(space, defaults, config_type, budget, budget_mode):
@@ -137,8 +142,12 @@ def normalized_hv(points, bounds):
     return float(HV(ref_point=np.asarray(REFERENCE))(np.asarray(normalized))) / math.prod(REFERENCE) if normalized else 0.0
 
 
-def evaluate_parameters(parameters, cases, seeds, budget, *, algorithm):
-    """Worker sem acesso ao armazenamento Optuna; cada trial usa os mesmos casos."""
+def evaluate_parameters(parameters, cases, seeds, budget, *, algorithm, trial_timeout=None):
+    """Worker sem acesso ao armazenamento Optuna; cada trial usa os mesmos casos.
+
+    trial_timeout é verificado antes de cada execução (instância × seed);
+    uma execução já iniciada nunca é interrompida.
+    """
     plugin = algorithm_module(algorithm)
     parameters = {**parameters, "max_evaluations": parameters.get("max_evaluations", budget)}
     target = parameters["max_evaluations"]
@@ -150,6 +159,8 @@ def evaluate_parameters(parameters, cases, seeds, budget, *, algorithm):
         scores = []
         for seed in seeds:
             tick = time.monotonic()
+            if trial_timeout is not None and tick-started > trial_timeout:
+                raise TrialTimeout(f"limite de {trial_timeout} s excedido após {len(rows)} execuções")
             row = dict(instance=instance.path.name, instance_sha256=instance.digest, seed=seed,
                        target_evaluations=target)
             row.update(plugin.generation_metrics(parameters, 0))
@@ -251,16 +262,24 @@ def export_study(study, output, budget, budget_mode="evaluations", *, algorithm)
     return report
 
 
-def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
+def source_fingerprint():
+    """SHA-256 das fontes que determinam o resultado de uma avaliação."""
+    source_paths = [*sorted(Path(__file__).parent.glob("*.py")),
+        *sorted((PROJECT_ROOT / "src/metaheuristics").glob("*.py")),
+        PROJECT_ROOT / "src/problem.py", PROJECT_ROOT / "src/schedule.py"]
+    return {str(path.relative_to(PROJECT_ROOT)): sha256(path.read_bytes()).hexdigest() for path in source_paths}
+
+
+def calibrate(paths, *, seeds=(11, 29, 47), n_trials=60, budget=8000, workers=1,
               study_name=None, sampler_seed=42, resume=False, output_dir=None,
-              budget_mode=None, search_space=None, algorithm):
+              budget_mode=None, search_space=None, trial_timeout=None, algorithm):
     """TPE ask/tell coordenado; workers só calculam, SQLite recebe um escritor.
 
     n_trials é o total desejado de tentativas (COMPLETE/FAIL), inclusive retomadas.
     Batches são reportados na ordem do trial, não na ordem de término dos processos.
     """
     plugin = algorithm_module(algorithm)
-    study_name = study_name or f"{algorithm}_tpe_v4"
+    study_name = study_name or f"{algorithm}_tpe_v5"
     budget_mode = budget_mode or plugin.SUPPORTED_BUDGET_MODES[0]
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,79}", study_name):
         raise ValueError("Nome do estudo: 1–80 letras ASCII, números, _ ou -, começando por letra/número")
@@ -268,6 +287,8 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
         raise ValueError("Trials/workers/avaliações positivos; sampler-seed entre 0 e 2^32-1")
     if not seeds or any(not isinstance(seed, int) or seed < 0 for seed in seeds) or len(set(seeds)) != len(seeds):
         raise ValueError("Seeds devem ser inteiros não negativos distintos")
+    if trial_timeout is not None and (isinstance(trial_timeout, bool) or not trial_timeout > 0):
+        raise ValueError("Limite por trial deve ser positivo, em segundos")
     space = plugin.validate_space(plugin.SEARCH_SPACE if search_space is None else search_space, budget, budget_mode)
     paths = list(dict.fromkeys(Path(path).resolve() for path in paths))
     if not paths:
@@ -279,10 +300,7 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
             raise ValueError("Entradas com conteúdo idêntico duplicariam o peso de uma instância")
         cases.append(dict(path=str(path), sha256=instance.digest, bounds=calculate_bounds(instance)))
     output = Path(output_dir or PROJECT_ROOT / "data/output/hyperparameters_tuning" / algorithm / study_name).resolve()
-    source_paths = [*sorted(Path(__file__).parent.glob("*.py")),
-        *sorted((PROJECT_ROOT / "src/metaheuristics").glob("*.py")),
-        PROJECT_ROOT / "src/problem.py", PROJECT_ROOT / "src/schedule.py"]
-    protocol = dict(version=4, algorithm=algorithm, tuner="Optuna TPE", cases=cases,
+    protocol = dict(version=PROTOCOL_VERSION, algorithm=algorithm, tuner="Optuna TPE", cases=cases,
         seeds=list(seeds), budget_mode=budget_mode,
         budget_per_run=budget if budget_mode == "evaluations" else None, workers=workers, sampler_seed=sampler_seed,
         study_name=study_name, search_space=space, reference=list(REFERENCE),
@@ -291,12 +309,12 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
         fixed_choices=plugin.FIXED_CHOICES,
         aggregation="mean(instance median(seed normalized_HV / 1.05^2))",
         normalization="input_only_individual_option_extrema_v1; constant_axis=0",
-        pruning=False, backend="CPU processes; fixed ordered batches; single SQLite writer",
+        pruning=False, trial_timeout=trial_timeout, backend="CPU processes; fixed ordered batches; single SQLite writer",
         sampler_rng="TPESampler seed=(sampler_seed + trial_number) modulo 2^32",
         python=platform.python_version(),
         packages={name: importlib.metadata.version(name) for name in (
             "optuna", "pymoo", "numpy", "scipy", "moocore", "threadpoolctl", *(("numba", "llvmlite") if algorithm == "age" else ()))},
-        source_sha256={str(path.relative_to(PROJECT_ROOT)): sha256(path.read_bytes()).hexdigest() for path in source_paths})
+        source_sha256=source_fingerprint())
     output.mkdir(parents=True, exist_ok=True)
     with study_lock(output / "study.lock"):
         protocol_file, database = output / "protocol.json", output / "study.sqlite3"
@@ -335,6 +353,8 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
         effort = f"cap {budget} avaliações/busca" if budget_mode == "evaluations" else plugin.GENERATION_DEFINITION
         print(f"{remaining} trials novos; {len(cases)} entradas × {len(seeds)} seeds; {effort}.", flush=True)
         print("GPU indisponível. Paralelismo CPU entre configurações; sem pruning.", flush=True)
+        if trial_timeout is not None:
+            print(f"Limite de segurança: {trial_timeout} s por trial; excedido vira FAIL.", flush=True)
         pool = ProcessPoolExecutor(max_workers=min(workers, remaining),
             mp_context=multiprocessing.get_context("spawn"), initializer=_worker_setup) if workers > 1 and remaining else None
         try:
@@ -351,10 +371,19 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
                         batch.append((trial, None, None))
                         parameters = plugin.suggest_parameters(trial, budget, budget_mode, space)
                         trial.set_user_attr("effective_parameters", parameters)
-                        future = pool.submit(evaluate_parameters, parameters, cases, seeds, budget, algorithm=algorithm) if pool else None
+                        future = pool.submit(evaluate_parameters, parameters, cases, seeds, budget,
+                            algorithm=algorithm, trial_timeout=trial_timeout) if pool else None
                         batch[-1] = trial, future, parameters
                     for trial, future, parameters in batch:
-                        payload = future.result() if future else evaluate_parameters(parameters, cases, seeds, budget, algorithm=algorithm)
+                        try:
+                            payload = future.result() if future else evaluate_parameters(
+                                parameters, cases, seeds, budget, algorithm=algorithm, trial_timeout=trial_timeout)
+                        except TrialTimeout as error:
+                            # Só o trial lento falha; o estudo segue com os demais.
+                            trial.set_user_attr("error", f"timeout: {error}")
+                            study.tell(trial, state=TrialState.FAIL)
+                            print(f"Trial {trial.number}: FAIL por timeout ({error}); {trial.params}", flush=True)
+                            continue
                         atomic_json(output / "trials" / f"trial_{trial.number:06d}.json", dict(trial=trial.number, **payload))
                         trial.set_user_attr("wall_seconds", payload["wall_seconds"])
                         study.tell(trial, payload["score"])

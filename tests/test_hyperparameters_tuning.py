@@ -13,7 +13,9 @@ import optuna
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from hyperparameters_tuning.main import main, menu, resolve_inputs, load_space
+from hyperparameters_tuning.main import main, menu, parser, resolve_inputs, load_space, DEFAULT_INPUTS
+from hyperparameters_tuning.common import TrialTimeout
+from hyperparameters_tuning.confirm import confirm
 from hyperparameters_tuning.moead import (
     calculate_bounds, calibrate, evaluate_parameters, normalized_hv, study_lock, suggest_parameters,
     SEARCH_SPACE, validate_space, resolve_parameters,
@@ -122,11 +124,12 @@ class TuningTests(unittest.TestCase):
             self.assertFalse(path.exists())
 
     def test_menu_gpu_explanation_then_parallel_choice(self):
-        answers = ["1", "3", "2", "2", str(self.path), "11,29", "2", "2", "40", "", "menu_test", "n"]
+        answers = ["1", "3", "2", "2", str(self.path), "11,29", "2", "2", "40", "0", "", "menu_test", "n"]
         with patch("builtins.input", side_effect=answers):
             args = menu()
         self.assertEqual((args.algorithm, args.workers, args.trials, args.max_evaluations),
                          ("moead", 2, 2, 40))
+        self.assertIsNone(args.trial_timeout)
         self.assertEqual(args.device, "cpu")
 
     def test_default_grid_covers_exact_native_fields_and_five_levels(self):
@@ -148,7 +151,7 @@ class TuningTests(unittest.TestCase):
         space.update(population_size=[4], max_evaluations=[12], n_neighbors=[2])
         with tempfile.TemporaryDirectory() as folder:
             report = calibrate([self.path], seeds=(11,), n_trials=1, output_dir=folder,
-                               study_name="native_test", search_space=space)
+                               study_name="native_test", search_space=space, budget_mode="effort")
             config = report["moead_config"]
             self.assertEqual((config["population_size"], config["max_evaluations"], config["n_neighbors"]), (4, 12, 2))
             self.assertEqual(set(config), set(SEARCH_SPACE))
@@ -157,7 +160,7 @@ class TuningTests(unittest.TestCase):
             self.assertEqual(data["runs"][0]["full_generations"], 3)
             with self.assertRaises(ValueError):
                 calibrate([self.path], seeds=(11,), n_trials=2, output_dir=folder, resume=True,
-                    study_name="native_test", search_space={**space, "max_evaluations": [16]})
+                    study_name="native_test", search_space={**space, "max_evaluations": [16]}, budget_mode="effort")
 
     def test_invalid_spaces_and_json_customization(self):
         for change in ({"mutation_method": ["bitflip"]}, {"n_neighbors": [21]},
@@ -194,9 +197,10 @@ class TuningTests(unittest.TestCase):
                 resumed = plugin.calibrate([self.path], n_trials=3, resume=True, **args)
                 self.assertEqual(resumed["completed_trials"], 3)
 
-    def test_all_algorithms_default_to_native_effort_and_run_custom_caps(self):
+    def test_all_algorithms_default_to_fixed_evaluations_and_effort_runs_custom_caps(self):
         for algorithm in ("moead", "spea2", "age", "vns_vnd"):
             plugin = importlib.import_module("hyperparameters_tuning."+algorithm)
+            self.assertEqual(plugin.SUPPORTED_BUDGET_MODES[0], "evaluations")
             space = {name: [values[0]] for name, values in plugin.SEARCH_SPACE.items()}
             space["max_evaluations"] = [25]
             if "population_size" in space:
@@ -204,10 +208,10 @@ class TuningTests(unittest.TestCase):
             if "n_neighbors" in space:
                 space["n_neighbors"] = [2]
             trial = optuna.create_study().ask()
-            parameters = plugin.suggest_parameters(trial, 8000, search_space=space)
+            parameters = plugin.suggest_parameters(trial, 8000, "effort", search_space=space)
             self.assertEqual(set(trial.params), set(plugin.SEARCH_SPACE))
             with self.subTest(algorithm=algorithm), tempfile.TemporaryDirectory() as folder:
-                report = plugin.calibrate([self.path], seeds=(11,), n_trials=1,
+                report = plugin.calibrate([self.path], seeds=(11,), n_trials=1, budget_mode="effort",
                     search_space=space, output_dir=folder, study_name="effort_"+algorithm)
                 self.assertEqual(report["budget_mode"], "effort")
                 self.assertEqual(report["solver_config"]["max_evaluations"], 25)
@@ -215,6 +219,54 @@ class TuningTests(unittest.TestCase):
                 data = json.loads((Path(folder) / "trials/trial_000000.json").read_text())
                 self.assertEqual(data["parameters"], report["solver_config"])
                 self.assertLessEqual(data["runs"][0]["attempts"], 25)
+
+    def test_protocol_defaults_follow_group_decision(self):
+        args = parser().parse_args([])
+        self.assertEqual((args.trials, args.max_evaluations, args.seeds, args.trial_timeout),
+                         (60, 8000, "11,29,47", None))
+        self.assertEqual(len(DEFAULT_INPUTS), 6)
+        sizes = sorted(read_instance(path).n for path in resolve_inputs(DEFAULT_INPUTS))
+        self.assertEqual(sizes, [6, 14, 50, 50, 250, 250])
+
+    def test_timeout_fails_only_the_slow_trial(self):
+        instance = read_instance(self.path)
+        cases = [dict(path=str(self.path), sha256=instance.digest, bounds=calculate_bounds(instance))]
+        params = dict(population_size=20, n_neighbors=5, prob_neighbor_mating=.9,
+                      crossover_probability=.9, mutation_probability=.3)
+        with self.assertRaises(TrialTimeout):
+            evaluate_parameters(params, cases, (11, 29), 40, trial_timeout=1e-9)
+        with tempfile.TemporaryDirectory() as folder:
+            report = calibrate([self.path], seeds=(11, 29), n_trials=2, budget=40, output_dir=folder,
+                               study_name="timeout_test", budget_mode="evaluations", trial_timeout=1e-9)
+            self.assertEqual((report["completed_trials"], report["failed_trials"]), (0, 2))
+            protocol = json.loads((Path(folder) / "protocol.json").read_text())
+            self.assertEqual((protocol["version"], protocol["trial_timeout"]), (5, 1e-9))
+            with self.assertRaises(ValueError):
+                calibrate([self.path], seeds=(11, 29), n_trials=3, budget=40, output_dir=folder, resume=True,
+                          study_name="timeout_test", budget_mode="evaluations", trial_timeout=60)
+
+    def test_confirm_reruns_top_configs_per_budget_and_resumes(self):
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder)
+            calibrate([self.path], seeds=(11,), n_trials=3, budget=40, output_dir=output,
+                      study_name="confirm_test", budget_mode="evaluations")
+            report = confirm(output, top=2, budgets=(40, 60))
+            self.assertEqual(len(report["configurations"]), 2)
+            self.assertEqual(set(report["ranking"]), {"40", "60"})
+            self.assertEqual(report["recommended"]["budget"], 60)
+            self.assertEqual(report["recommended"]["solver_config"]["max_evaluations"], 60)
+            for config in report["configurations"]:
+                data = json.loads((output / f"confirmation/trial_{config['trial']:06d}_E60.json").read_text())
+                self.assertEqual(data["runs"][0]["attempts"], 60)
+            self.assertEqual(len(list((output / "confirmation").glob("*.json"))), 4)
+            with patch("hyperparameters_tuning.confirm.evaluate_parameters",
+                       side_effect=AssertionError("reexecutou")):
+                self.assertEqual(confirm(output, top=2, budgets=(40, 60))["ranking"], report["ranking"])
+            protocol = json.loads((output / "protocol.json").read_text())
+            protocol["source_sha256"] = {}
+            (output / "protocol.json").write_text(json.dumps(protocol))
+            with self.assertRaises(ValueError):
+                confirm(output, top=2, budgets=(40, 60))
 
     def test_list_space_does_not_create_output(self):
         with tempfile.TemporaryDirectory() as folder:
