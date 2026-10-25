@@ -1,0 +1,38 @@
+{
+  "algorithm": "age",
+  "study_name": "age_tpe_v5",
+  "output_dir": "C:\\Users\\Jader\\Documents\\GitHub\\MHM_Trabalho_Final\\data\\output\\hyperparameters_tuning\\age\\age_tpe_v5",
+  "completed_trials": 60,
+  "failed_trials": 0,
+  "best_score": 0.9472779428050012,
+  "best_parameters": {
+    "population_size": 50,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.5,
+    "max_evaluations": 8000
+  },
+  "budget_mode": "evaluations",
+  "fixed_evaluations": 8000,
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "best_trial": 38,
+  "search_parameters": {
+    "population_size": 50,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.5
+  },
+  "solver_config": {
+    "population_size": 50,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.5,
+    "max_evaluations": 8000
+  },
+  "evidence": "trials/trial_000038.json",
+  "age_config": {
+    "population_size": 50,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.5,
+    "max_evaluations": 8000
+  }
+}

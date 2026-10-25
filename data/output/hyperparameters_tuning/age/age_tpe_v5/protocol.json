@@ -1,0 +1,168 @@
+{
+  "version": 5,
+  "algorithm": "age",
+  "tuner": "Optuna TPE",
+  "cases": [
+    {
+      "path": "C:\\Users\\Jader\\Documents\\GitHub\\MHM_Trabalho_Final\\data\\input\\set1\\6_2_1439_3_S_1-9.dat",
+      "sha256": "c27aafe109609de23235d989af5593c4ebdf9faaa365649ab21ec4a8c3f07cc4",
+      "bounds": {
+        "cmax_lower": 74,
+        "cmax_upper": 1440,
+        "tec_lower": 8045965680,
+        "tec_upper": 42338048565,
+        "cost_scale": 60000000
+      }
+    },
+    {
+      "path": "C:\\Users\\Jader\\Documents\\GitHub\\MHM_Trabalho_Final\\data\\input\\set1\\14_2_1439_3_S_1-9_derivada.dat",
+      "sha256": "70ff0f54e92fbb4ee92af0eee49be2de8443a1580da898c97da2959e5253c8bb",
+      "bounds": {
+        "cmax_lower": 171,
+        "cmax_upper": 1440,
+        "tec_lower": 5597246852,
+        "tec_upper": 58006285395,
+        "cost_scale": 60000000
+      }
+    },
+    {
+      "path": "C:\\Users\\Jader\\Documents\\GitHub\\MHM_Trabalho_Final\\data\\input\\set2\\50_10_1439_5_S_1-9.dat",
+      "sha256": "c9147e6b8b3bcab1863b62202baffbeee4e1fce0791b4e6309397c4037406da7",
+      "bounds": {
+        "cmax_lower": 36,
+        "cmax_upper": 1440,
+        "tec_lower": 18287236488,
+        "tec_upper": 831452314560,
+        "cost_scale": 120000000
+      }
+    },
+    {
+      "path": "C:\\Users\\Jader\\Documents\\GitHub\\MHM_Trabalho_Final\\data\\input\\set2\\50_20_1439_5_S_1-9.dat",
+      "sha256": "2bdc3d261c489bf075e20b58f8bfc3e34f6acd79d054775a7f5b6e23c644cc36",
+      "bounds": {
+        "cmax_lower": 17,
+        "cmax_upper": 1440,
+        "tec_lower": 11342087008,
+        "tec_upper": 907206241170,
+        "cost_scale": 120000000
+      }
+    },
+    {
+      "path": "C:\\Users\\Jader\\Documents\\GitHub\\MHM_Trabalho_Final\\data\\input\\set2\\250_10_1439_5_S_1-9.dat",
+      "sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+      "bounds": {
+        "cmax_lower": 193,
+        "cmax_upper": 1440,
+        "tec_lower": 101849193488,
+        "tec_upper": 4096403717010,
+        "cost_scale": 120000000
+      }
+    },
+    {
+      "path": "C:\\Users\\Jader\\Documents\\GitHub\\MHM_Trabalho_Final\\data\\input\\set2\\250_20_1439_5_S_1-9.dat",
+      "sha256": "c1e763d8e1b3db40d839a92ae0cd5a1894f988f7225ba850a4f007607df47af6",
+      "bounds": {
+        "cmax_lower": 57,
+        "cmax_upper": 1440,
+        "tec_lower": 77558408896,
+        "tec_upper": 4728280486080,
+        "cost_scale": 120000000
+      }
+    }
+  ],
+  "seeds": [
+    11,
+    29,
+    47
+  ],
+  "budget_mode": "evaluations",
+  "budget_per_run": 8000,
+  "workers": 4,
+  "sampler_seed": 42,
+  "study_name": "age_tpe_v5",
+  "search_space": {
+    "population_size": [
+      20,
+      50,
+      100,
+      150,
+      200,
+      300
+    ],
+    "max_evaluations": [
+      2000,
+      4000,
+      8000,
+      12000,
+      20000
+    ],
+    "crossover_probability": [
+      0.2,
+      0.4,
+      0.6,
+      0.7,
+      0.9,
+      1.0
+    ],
+    "mutation_probability": [
+      0.01,
+      0.05,
+      0.1,
+      0.2,
+      0.3,
+      0.5,
+      0.7
+    ]
+  },
+  "reference": [
+    1.05,
+    1.05
+  ],
+  "generation_definition": "Inicialização P; depois lotes/varreduras P, com última etapa parcial se necessário.",
+  "cost_policy": "mesmo cap por busca; esforço real registrado",
+  "fixed_choices": {
+    "survival": "AGE-MOEA nativo pymoo 0.6.2",
+    "sampling": "LPT aleatório",
+    "scaling": "Cmax e TEC brutos; normalização nativa AGE",
+    "constraints": "filtragem nativa",
+    "eliminate_duplicates": false,
+    "crossover": "ScheduleCrossover original; método fixo",
+    "mutation": "ScheduleMutation original; método fixo",
+    "seeds": "replicações; não calibradas",
+    "implementation_policy": "somente campos Config atuais; fontes preservadas"
+  },
+  "aggregation": "mean(instance median(seed normalized_HV / 1.05^2))",
+  "normalization": "input_only_individual_option_extrema_v1; constant_axis=0",
+  "pruning": false,
+  "trial_timeout": null,
+  "backend": "CPU processes; fixed ordered batches; single SQLite writer",
+  "sampler_rng": "TPESampler seed=(sampler_seed + trial_number) modulo 2^32",
+  "python": "3.14.4",
+  "packages": {
+    "optuna": "4.9.0",
+    "pymoo": "0.6.2",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "moocore": "0.3.2",
+    "threadpoolctl": "3.6.0",
+    "numba": "0.68.0",
+    "llvmlite": "0.50.0"
+  },
+  "source_sha256": {
+    "src\\hyperparameters_tuning\\age.py": "a42f5bbb5e9c2fe8a4f4ed4b13e4b15643b80802169149dc2c40b7786de42cda",
+    "src\\hyperparameters_tuning\\common.py": "9aab56dbd2c6e3ccfa4fffd6d0842e38e82ade8a05106411bd5278873ea4a4e8",
+    "src\\hyperparameters_tuning\\confirm.py": "4e35d4981d96ad95f6f645e403d3ecb760e837a43cc6b670b540fcd5e68bdcad",
+    "src\\hyperparameters_tuning\\main.py": "e8796ff90234ce6ea3d638b6c7b37ee16cff60fcd19ecbc84c2c4c934d09b00f",
+    "src\\hyperparameters_tuning\\moead.py": "a76aba7bb86f21752c0f40ee3526afdb9454c2887ec6b40e4bc2e909855eb59c",
+    "src\\hyperparameters_tuning\\spea2.py": "9ed5e78b03e3143103d8f9d18f7f754b9415b3ad9c33dc7d04e4d5d18fc35129",
+    "src\\hyperparameters_tuning\\vns_vnd.py": "d7b4c37f13e07bc99870c57cab8c45e438b2e9a9c4ace25b068820115378290c",
+    "src\\metaheuristics\\age.py": "3abc6496a26986626dff136dfc7cea120e857ec5c3df67b70e51906cb911ed59",
+    "src\\metaheuristics\\age_spike.py": "999b19f6a18e527bcb840bad4b27b80326dbabade0993070e8b9749d774a1fed",
+    "src\\metaheuristics\\moead.py": "de61294fe419f7ae11d11a5ac6efa67069e754f07d3a95f7276a750d62a715b7",
+    "src\\metaheuristics\\pymoo_spike.py": "c1d930e6300e9aec4a0927a372c2c0102eb0d6cb0640f285f8c3ddcfbc80c7f8",
+    "src\\metaheuristics\\spea2.py": "2ba3364c8f266b7dac633327c68458a27d8a26929ede2f3c0191cfaecebff457",
+    "src\\metaheuristics\\vns_vnd.py": "1e35d6a95db7ef2124273311db4a599f3d5f689285a6f382a55b48249764c0ed",
+    "src\\problem.py": "66f07126313eba35d3c1eaad0ea870c982d93a8b01b28c3ecff0f5663cc4ca4b",
+    "src\\schedule.py": "2457a3b0960176303773a81cf975da0e4cec60af254806aee175f1a3c65f0a16"
+  }
+}
