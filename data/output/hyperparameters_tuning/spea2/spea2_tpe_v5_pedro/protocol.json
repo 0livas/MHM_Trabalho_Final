@@ -1,0 +1,166 @@
+{
+  "version": 5,
+  "algorithm": "spea2",
+  "tuner": "Optuna TPE",
+  "cases": [
+    {
+      "path": "/home/pedro/vscode_ubuntu/MHM_Trabalho_Final_v5_review/data/input/set1/6_2_1439_3_S_1-9.dat",
+      "sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "bounds": {
+        "cmax_lower": 74,
+        "cmax_upper": 1440,
+        "tec_lower": 8045965680,
+        "tec_upper": 42338048565,
+        "cost_scale": 60000000
+      }
+    },
+    {
+      "path": "/home/pedro/vscode_ubuntu/MHM_Trabalho_Final_v5_review/data/input/set1/14_2_1439_3_S_1-9_derivada.dat",
+      "sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "bounds": {
+        "cmax_lower": 171,
+        "cmax_upper": 1440,
+        "tec_lower": 5597246852,
+        "tec_upper": 58006285395,
+        "cost_scale": 60000000
+      }
+    },
+    {
+      "path": "/home/pedro/vscode_ubuntu/MHM_Trabalho_Final_v5_review/data/input/set2/50_10_1439_5_S_1-9.dat",
+      "sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "bounds": {
+        "cmax_lower": 36,
+        "cmax_upper": 1440,
+        "tec_lower": 18287236488,
+        "tec_upper": 831452314560,
+        "cost_scale": 120000000
+      }
+    },
+    {
+      "path": "/home/pedro/vscode_ubuntu/MHM_Trabalho_Final_v5_review/data/input/set2/50_20_1439_5_S_1-9.dat",
+      "sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "bounds": {
+        "cmax_lower": 17,
+        "cmax_upper": 1440,
+        "tec_lower": 11342087008,
+        "tec_upper": 907206241170,
+        "cost_scale": 120000000
+      }
+    },
+    {
+      "path": "/home/pedro/vscode_ubuntu/MHM_Trabalho_Final_v5_review/data/input/set2/250_10_1439_5_S_1-9.dat",
+      "sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "bounds": {
+        "cmax_lower": 193,
+        "cmax_upper": 1440,
+        "tec_lower": 101849193488,
+        "tec_upper": 4096403717010,
+        "cost_scale": 120000000
+      }
+    },
+    {
+      "path": "/home/pedro/vscode_ubuntu/MHM_Trabalho_Final_v5_review/data/input/set2/250_20_1439_5_S_1-9.dat",
+      "sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "bounds": {
+        "cmax_lower": 57,
+        "cmax_upper": 1440,
+        "tec_lower": 77558408896,
+        "tec_upper": 4728280486080,
+        "cost_scale": 120000000
+      }
+    }
+  ],
+  "seeds": [
+    11,
+    29,
+    47
+  ],
+  "budget_mode": "evaluations",
+  "budget_per_run": 8000,
+  "workers": 4,
+  "sampler_seed": 42,
+  "study_name": "spea2_tpe_v5_pedro",
+  "search_space": {
+    "population_size": [
+      20,
+      50,
+      100,
+      150,
+      200,
+      300
+    ],
+    "max_evaluations": [
+      2000,
+      4000,
+      8000,
+      12000,
+      20000
+    ],
+    "crossover_probability": [
+      0.2,
+      0.4,
+      0.6,
+      0.7,
+      0.9,
+      1.0
+    ],
+    "mutation_probability": [
+      0.01,
+      0.05,
+      0.1,
+      0.2,
+      0.3,
+      0.5,
+      0.7
+    ]
+  },
+  "reference": [
+    1.05,
+    1.05
+  ],
+  "generation_definition": "SPEA2 incremental: inicialização P; depois 1 descendente por passo.",
+  "cost_policy": "mesmo cap por busca; esforço real registrado",
+  "fixed_choices": {
+    "n_offsprings": 1,
+    "survival_normalize": false,
+    "sampling": "LPT aleatório",
+    "eliminate_duplicates": false,
+    "constraints": "filtragem nativa",
+    "crossover": "ScheduleCrossover original; método fixo",
+    "mutation": "ScheduleMutation original; método fixo",
+    "seeds": "replicações; não calibradas",
+    "implementation_policy": "somente campos Config atuais; fontes preservadas"
+  },
+  "aggregation": "mean(instance median(seed normalized_HV / 1.05^2))",
+  "normalization": "input_only_individual_option_extrema_v1; constant_axis=0",
+  "pruning": false,
+  "trial_timeout": 900.0,
+  "backend": "CPU processes; fixed ordered batches; single SQLite writer",
+  "sampler_rng": "TPESampler seed=(sampler_seed + trial_number) modulo 2^32",
+  "python": "3.10.12",
+  "packages": {
+    "optuna": "4.9.0",
+    "pymoo": "0.6.2",
+    "numpy": "2.2.6",
+    "scipy": "1.15.1",
+    "moocore": "0.3.2",
+    "threadpoolctl": "3.5.0"
+  },
+  "source_sha256": {
+    "src/hyperparameters_tuning/age.py": "c699ca8a98d2e92f1078c238f4081a120d8f1a16a8f8daf304b4b98cfa9dcfab",
+    "src/hyperparameters_tuning/common.py": "0487a401bac71109e9004c39144fa19a0bb2d8837cfa96a1e8c58bf44e8be769",
+    "src/hyperparameters_tuning/confirm.py": "c2773c5c48f3ad86980fdbdd9883cc62eeedead2b3268bc2e04628a19b43fba4",
+    "src/hyperparameters_tuning/main.py": "15c32a4057709b4d67cbc1990c215feca1f65a24802968201bcd14b8b4b3fde0",
+    "src/hyperparameters_tuning/moead.py": "53e584ada060615666fc4c1224b6175ca7a54168ef0996ad5cbe3e870425afc3",
+    "src/hyperparameters_tuning/spea2.py": "4029a781a11f513556134eff7f227450900d1f977685cf591923b519f2e926c7",
+    "src/hyperparameters_tuning/vns_vnd.py": "332a8937be8dc654d60e3deb9d5a65a28288dc857dcc35d9fd6f79ccb9c3ad42",
+    "src/metaheuristics/age.py": "710338b72bc96fd4f17c5627c1a5da38828081808616f47a595c475e466a0732",
+    "src/metaheuristics/age_spike.py": "42c2d9ad04c4bd56f1bcb62545263668130e67c4ec70e9905c978055abda7f9a",
+    "src/metaheuristics/moead.py": "6eaefb363b4b6038e8fbcf8b201fc276c26be62cd291ae49c46936674edd9294",
+    "src/metaheuristics/pymoo_spike.py": "38bf90f2f3edb6eca142e4a7d8881ade6aa9caeab41b8b33c2591411aaabb935",
+    "src/metaheuristics/spea2.py": "fb1ad29ebf055c1f8b169142a1c7fb313258a794bc998347972ffe2b97e09fb9",
+    "src/metaheuristics/vns_vnd.py": "c9f363c00b7b6a11804863fd5e985f737bc1be410109768c32dfe58c2baf2097",
+    "src/problem.py": "37f61cdcce558a6e50e1ff348d51a90729a88b3b5943e6b58fe84480dc3c0c7c",
+    "src/schedule.py": "4bc4a0d930e788cc833706bf2410dc7e39b26b072c657deb6bc0702be1da08b1"
+  }
+}
