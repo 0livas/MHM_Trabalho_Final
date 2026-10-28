@@ -329,6 +329,19 @@ def source_fingerprint():
     return {str(path.relative_to(PROJECT_ROOT)): sha256(path.read_bytes()).hexdigest() for path in source_paths}
 
 
+def protocol_differences(saved, current):
+    """Compara conteúdo das entradas; caminhos absolutos podem mudar de máquina."""
+    differences = []
+    for key in sorted(set(saved) | set(current)):
+        left, right = saved.get(key), current.get(key)
+        if key == "cases" and isinstance(left, list) and isinstance(right, list):
+            left = [{k: v for k, v in case.items() if k != "path"} for case in left]
+            right = [{k: v for k, v in case.items() if k != "path"} for case in right]
+        if left != right:
+            differences.append(key)
+    return differences
+
+
 def calibrate(paths, *, seeds=(11, 29, 47), n_trials=60, budget=8000, workers=1,
               study_name=None, sampler_seed=42, resume=False, output_dir=None,
               budget_mode=None, search_space=None, trial_timeout=None, startup_trials=20, algorithm):
@@ -383,8 +396,11 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=60, budget=8000, workers=1,
         if protocol_file.exists():
             if not resume:
                 raise ValueError("Estudo já existe; use --resume ou escolha outro nome/pasta")
-            if json.loads(protocol_file.read_text(encoding="utf-8")) != protocol:
-                raise ValueError("Protocolo, código, dados ou dependências mudaram; use outro estudo")
+            saved = json.loads(protocol_file.read_text(encoding="utf-8"))
+            changed = protocol_differences(saved, protocol)
+            if changed:
+                raise ValueError(f"Estudo incompatível; campos diferentes: {', '.join(changed)}. "
+                                 "Preserve o estudo e confira ambiente, código e opções")
             if not database.exists():
                 raise ValueError("Banco do estudo ausente; não é possível retomar")
         elif resume:

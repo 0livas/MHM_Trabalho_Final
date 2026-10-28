@@ -550,6 +550,11 @@ Código, dados, seeds, grade, workers e dependências precisam coincidir para
 retomar; escolha outro estudo ao mudar o protocolo. O checkpoint é por trial:
 a população ou busca dentro de uma tentativa interrompida não é salva. Trials
 órfãos viram FAIL na retomada. Faça backup da pasta inteira do estudo.
+Ao mudar de computador, copie também `study.sqlite3` e `protocol.json` na mesma
+pasta. Caminhos absolutos diferentes para as entradas são aceitos quando a ordem,
+os hashes SHA-256 e os limites calculados coincidirem. A mensagem de erro lista
+os demais campos divergentes. A versão do Python e as versões das dependências
+continuam parte do protocolo; instale as mesmas versões para retomar.
 
 O coordenador é o único escritor SQLite e uma trava impede duas campanhas na
 mesma pasta. Workers executam trials em processos CPU, limitando threads numéricas.
