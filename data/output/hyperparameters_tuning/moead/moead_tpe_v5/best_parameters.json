@@ -1,0 +1,46 @@
+{
+  "algorithm": "moead",
+  "study_name": "moead_tpe_v5",
+  "output_dir": "/home/alvarengazv/Documents/mhm/MHM_Trabalho_Final/data/output/hyperparameters_tuning/moead/moead_tpe_v5",
+  "completed_trials": 60,
+  "failed_trials": 0,
+  "best_score": 0.9424218731366485,
+  "best_parameters": {
+    "population_size": 50,
+    "n_neighbors": 5,
+    "prob_neighbor_mating": 0.75,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 8000
+  },
+  "budget_mode": "evaluations",
+  "fixed_evaluations": 8000,
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "best_trial": 38,
+  "search_parameters": {
+    "population_size": 50,
+    "n_neighbors": 5,
+    "prob_neighbor_mating": 0.75,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7
+  },
+  "solver_config": {
+    "population_size": 50,
+    "n_neighbors": 5,
+    "prob_neighbor_mating": 0.75,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 8000
+  },
+  "evidence": "trials/trial_000038.json",
+  "moead_config": {
+    "population_size": 50,
+    "n_neighbors": 5,
+    "prob_neighbor_mating": 0.75,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 8000
+  }
+}

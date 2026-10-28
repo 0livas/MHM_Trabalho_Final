@@ -1,0 +1,180 @@
+{
+  "algorithm": "moead",
+  "study_name": "moead_tpe_v5",
+  "budgets": [
+    8000,
+    20000,
+    50000
+  ],
+  "seeds": [
+    11,
+    29,
+    47
+  ],
+  "configurations": [
+    {
+      "trial": 38,
+      "search_score": 0.9424218731366485,
+      "parameters": {
+        "population_size": 50,
+        "n_neighbors": 5,
+        "prob_neighbor_mating": 0.75,
+        "crossover_probability": 0.9,
+        "mutation_probability": 0.7
+      },
+      "scores": {
+        "8000": 0.9424218731366485,
+        "20000": 0.9459531603302629,
+        "50000": 0.9478016056617953
+      },
+      "ranks": {
+        "8000": 1,
+        "20000": 3,
+        "50000": 5
+      },
+      "gains": {
+        "8000->20000": 0.0035312871936143964,
+        "20000->50000": 0.001848445331532389
+      }
+    },
+    {
+      "trial": 42,
+      "search_score": 0.9421373637516549,
+      "parameters": {
+        "population_size": 50,
+        "n_neighbors": 10,
+        "prob_neighbor_mating": 0.75,
+        "crossover_probability": 0.6,
+        "mutation_probability": 0.7
+      },
+      "scores": {
+        "8000": 0.9421373637516549,
+        "20000": 0.9453168568814836,
+        "50000": 0.948426912996936
+      },
+      "ranks": {
+        "8000": 2,
+        "20000": 4,
+        "50000": 3
+      },
+      "gains": {
+        "8000->20000": 0.003179493129828681,
+        "20000->50000": 0.003110056115452453
+      }
+    },
+    {
+      "trial": 21,
+      "search_score": 0.9419586752535388,
+      "parameters": {
+        "population_size": 100,
+        "n_neighbors": 5,
+        "prob_neighbor_mating": 0.9,
+        "crossover_probability": 0.9,
+        "mutation_probability": 0.5
+      },
+      "scores": {
+        "8000": 0.9419586752535388,
+        "20000": 0.9473804067469854,
+        "50000": 0.9499925696245586
+      },
+      "ranks": {
+        "8000": 3,
+        "20000": 1,
+        "50000": 1
+      },
+      "gains": {
+        "8000->20000": 0.005421731493446602,
+        "20000->50000": 0.0026121628775731542
+      }
+    },
+    {
+      "trial": 20,
+      "search_score": 0.9415935853261166,
+      "parameters": {
+        "population_size": 100,
+        "n_neighbors": 15,
+        "prob_neighbor_mating": 0.9,
+        "crossover_probability": 0.9,
+        "mutation_probability": 0.3
+      },
+      "scores": {
+        "8000": 0.9415935853261166,
+        "20000": 0.9448804449285809,
+        "50000": 0.9480454916042196
+      },
+      "ranks": {
+        "8000": 4,
+        "20000": 5,
+        "50000": 4
+      },
+      "gains": {
+        "8000->20000": 0.0032868596024643315,
+        "20000->50000": 0.003165046675638661
+      }
+    },
+    {
+      "trial": 28,
+      "search_score": 0.9413536617936609,
+      "parameters": {
+        "population_size": 100,
+        "n_neighbors": 5,
+        "prob_neighbor_mating": 0.9,
+        "crossover_probability": 0.6,
+        "mutation_probability": 0.5
+      },
+      "scores": {
+        "8000": 0.9413536617936609,
+        "20000": 0.9460208856745161,
+        "50000": 0.948934098212036
+      },
+      "ranks": {
+        "8000": 5,
+        "20000": 2,
+        "50000": 2
+      },
+      "gains": {
+        "8000->20000": 0.004667223880855276,
+        "20000->50000": 0.0029132125375198603
+      }
+    }
+  ],
+  "ranking": {
+    "8000": [
+      38,
+      42,
+      21,
+      20,
+      28
+    ],
+    "20000": [
+      21,
+      28,
+      38,
+      42,
+      20
+    ],
+    "50000": [
+      21,
+      28,
+      42,
+      20,
+      38
+    ]
+  },
+  "recommended": {
+    "trial": 21,
+    "budget": 50000,
+    "solver_config": {
+      "population_size": 100,
+      "n_neighbors": 5,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5,
+      "max_evaluations": 50000
+    }
+  },
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "evidence": "confirmation/trial_<n>_E<orçamento>.json"
+}
