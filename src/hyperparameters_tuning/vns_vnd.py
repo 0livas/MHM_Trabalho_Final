@@ -92,7 +92,7 @@ def generation_metrics(parameters, attempts):
 def calibrate(paths, **kwargs):
     from hyperparameters_tuning.common import calibrate as shared_calibrate
     kwargs.setdefault("budget_mode", "evaluations")
-    kwargs.setdefault("study_name", "vns_vnd_tpe_v5")
+    kwargs.setdefault("study_name", "vns_vnd_tpe_v6")
     return shared_calibrate(paths, algorithm=ALGORITHM_ID, **kwargs)
 
 

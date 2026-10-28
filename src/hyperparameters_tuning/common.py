@@ -1,6 +1,6 @@
 """Infraestrutura comum de calibração: HV, TPE, persistência e processos CPU."""
 from __future__ import annotations
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from contextlib import contextmanager
 from fractions import Fraction
 from hashlib import sha256
@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import platform
 import re
+import random
 import statistics
 import time
 import numpy as np
@@ -22,7 +23,51 @@ from optuna.trial import TrialState
 from pymoo.indicators.hv import HV
 from problem import PROJECT_ROOT, atomic_json, energy_scale, interval_cost_units, read_instance
 REFERENCE = (1.05, 1.05)
-PROTOCOL_VERSION = 5
+PROTOCOL_VERSION = 6
+
+
+def _unseen_parameters(space, budget_mode, seen, rng):
+    """Sorteia uniformemente uma posição livre da grade sem materializá-la."""
+    active = {k: v for k, v in space.items() if k != "max_evaluations" or budget_mode == "effort"}
+    total = math.prod(map(len, active.values()))
+    used = set()
+    for key in seen:
+        values = dict(key)
+        index = 0
+        for name, choices in active.items():
+            index = index * len(choices) + choices.index(values[name])
+        used.add(index)
+    if len(used) == total:
+        return None
+    index = rng.randrange(total - len(used))
+    for occupied in sorted(used):
+        if occupied > index:
+            break
+        index += 1
+    selected = {}
+    for name, choices in reversed(list(active.items())):
+        index, digit = divmod(index, len(choices))
+        selected[name] = choices[digit]
+    return selected
+
+
+def _save_sampler_state(study, rng):
+    # Estados numéricos em JSON; não carrega objetos executáveis de pickle.
+    states = []
+    for generator in (study.sampler._rng.rng, study.sampler._random_sampler._rng.rng):
+        name, keys, pos, gaussian, cached = generator.get_state()
+        states.append([name, keys.tolist(), pos, gaussian, cached])
+    study.set_user_attr("rng_checkpoint", dict(tpe=states, exploration=rng.getstate()))
+
+
+def _restore_sampler_state(study, rng):
+    checkpoint = study.user_attrs.get("rng_checkpoint")
+    if checkpoint:
+        for generator, state in zip((study.sampler._rng.rng, study.sampler._random_sampler._rng.rng), checkpoint["tpe"]):
+            generator.set_state((state[0], np.asarray(state[1], dtype=np.uint32), *state[2:]))
+        def tuples(value):
+            return tuple(map(tuples, value)) if isinstance(value, list) else value
+        rng.setstate(tuples(checkpoint["exploration"]))
 
 
 class TrialTimeout(RuntimeError):
@@ -192,7 +237,7 @@ def evaluate_parameters(parameters, cases, seeds, budget, *, algorithm, trial_ti
             scores.append(row["score"])
             rows.append(row)
         instance_scores.append(dict(instance=instance.path.name, median_score=statistics.median(scores)))
-    return dict(parameters=parameters, score=statistics.mean(r["median_score"] for r in instance_scores),
+    return dict(parameters=parameters, worker_pid=os.getpid(), score=statistics.mean(r["median_score"] for r in instance_scores),
                 instance_scores=instance_scores, runs=rows, wall_seconds=time.monotonic()-started)
 
 
@@ -235,7 +280,7 @@ def export_study(study, output, budget, budget_mode="evaluations", *, algorithm)
     plugin = algorithm_module(algorithm)
     trials = study.get_trials(deepcopy=False)
     with (output / "trials.csv").open("w", newline="", encoding="utf-8") as stream:
-        fields = ["trial", "state", "score", *plugin.SEARCH_SPACE, "target_evaluations", "wall_seconds", "error"]
+        fields = ["trial", "state", "score", *plugin.SEARCH_SPACE, "target_evaluations", "wall_seconds", "error", "duplicate_of", "proposal_source"]
         writer = csv.DictWriter(stream, fieldnames=fields)
         writer.writeheader()
         for trial in trials:
@@ -243,7 +288,8 @@ def export_study(study, output, budget, budget_mode="evaluations", *, algorithm)
             writer.writerow(dict(trial=trial.number, state=trial.state.name, score=trial.value,
                 **trial.params,
                 target_evaluations=effective.get("max_evaluations"), wall_seconds=trial.user_attrs.get("wall_seconds"),
-                error=trial.user_attrs.get("error")))
+                error=trial.user_attrs.get("error"), duplicate_of=trial.user_attrs.get("duplicate_parameters"),
+                proposal_source=trial.user_attrs.get("proposal_source")))
     completed = [trial for trial in trials if trial.state == TrialState.COMPLETE]
     report = dict(algorithm=algorithm, study_name=study.study_name, output_dir=str(output),
         completed_trials=len(completed), failed_trials=sum(t.state == TrialState.FAIL for t in trials),
@@ -258,6 +304,19 @@ def export_study(study, output, budget, budget_mode="evaluations", *, algorithm)
             search_parameters=best.params, solver_config=resolved,
             evidence=f"trials/trial_{best.number:06d}.json")
         report[f"{algorithm}_config"] = resolved
+    active = study.user_attrs.get("active_space", {})
+    report.update(search_space_size=math.prod(map(len, active.values())) if active else None,
+        rejected_duplicate_suggestions=sum("duplicate_parameters" in t.user_attrs for t in trials),
+        total_evaluation_seconds=sum(t.user_attrs.get("wall_seconds", 0) for t in trials),
+        search_exhausted=study.user_attrs.get("search_exhausted", False))
+    report["worker_pids"] = sorted({t.user_attrs["worker_pid"] for t in completed if "worker_pid" in t.user_attrs})
+    per_instance = {}
+    for trial in completed:
+        for name, seconds in trial.user_attrs.get("run_seconds", {}).items():
+            per_instance.setdefault(name, []).extend(seconds)
+    report["median_seconds_per_instance"] = {name: statistics.median(seconds) for name, seconds in per_instance.items()}
+    report["estimated_30_runs_serial_seconds"] = 30 * sum(report["median_seconds_per_instance"].values())
+    report["timing_estimate_scope"] = "calibration configurations and budgets only; remeasure frozen configuration at final budget"
     atomic_json(output / "best_parameters.json", report)
     return report
 
@@ -272,14 +331,16 @@ def source_fingerprint():
 
 def calibrate(paths, *, seeds=(11, 29, 47), n_trials=60, budget=8000, workers=1,
               study_name=None, sampler_seed=42, resume=False, output_dir=None,
-              budget_mode=None, search_space=None, trial_timeout=None, algorithm):
+              budget_mode=None, search_space=None, trial_timeout=None, startup_trials=20, algorithm):
     """TPE ask/tell coordenado; workers só calculam, SQLite recebe um escritor.
 
     n_trials é o total desejado de tentativas (COMPLETE/FAIL), inclusive retomadas.
-    Batches são reportados na ordem do trial, não na ordem de término dos processos.
+    Propostas usam lotes fixos; resultados são salvos assim que cada processo termina.
     """
     plugin = algorithm_module(algorithm)
-    study_name = study_name or f"{algorithm}_tpe_v5"
+    study_name = study_name or f"{algorithm}_tpe_v6"
+    if type(startup_trials) is not int or startup_trials < 0:
+        raise ValueError("startup_trials deve ser inteiro não negativo")
     budget_mode = budget_mode or plugin.SUPPORTED_BUDGET_MODES[0]
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,79}", study_name):
         raise ValueError("Nome do estudo: 1–80 letras ASCII, números, _ ou -, começando por letra/número")
@@ -310,7 +371,8 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=60, budget=8000, workers=1,
         aggregation="mean(instance median(seed normalized_HV / 1.05^2))",
         normalization="input_only_individual_option_extrema_v1; constant_axis=0",
         pruning=False, trial_timeout=trial_timeout, backend="CPU processes; fixed ordered batches; single SQLite writer",
-        sampler_rng="TPESampler seed=(sampler_seed + trial_number) modulo 2^32",
+        sampler_rng="JSON checkpoint after batch proposals; orphan RUNNING trials become FAIL",
+        startup_trials=startup_trials, multivariate=True, duplicate_policy="reject then uniform unseen fallback",
         python=platform.python_version(),
         packages={name: importlib.metadata.version(name) for name in (
             "optuna", "pymoo", "numpy", "scipy", "moocore", "threadpoolctl", *(("numba", "llvmlite") if algorithm == "age" else ()))},
@@ -332,9 +394,14 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=60, budget=8000, workers=1,
                 raise ValueError("Banco sem protocolo; escolha outra pasta para preservar os dados")
             atomic_json(protocol_file, protocol)
         storage = optuna.storages.RDBStorage(url="sqlite:///" + database.as_posix())
-        sampler = optuna.samplers.TPESampler(seed=sampler_seed, constant_liar=True)
+        sampler = optuna.samplers.TPESampler(seed=sampler_seed, constant_liar=True, multivariate=True,
+                                           n_startup_trials=startup_trials)
         study = optuna.create_study(storage=storage, study_name=study_name, sampler=sampler,
                                     direction="maximize", load_if_exists=resume)
+        rng = random.Random(sampler_seed)
+        _restore_sampler_state(study, rng)
+        active_space = {k: v for k, v in space.items() if k != "max_evaluations" or budget_mode == "effort"}
+        study.set_user_attr("active_space", active_space)
         (output / "trials").mkdir(exist_ok=True)
         # Só este coordenador escreve; após interrupção abrupta, trials órfãos viram FAIL.
         for stale in study.get_trials(states=(TrialState.RUNNING,)):
@@ -348,33 +415,56 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=60, budget=8000, workers=1,
             if budget_mode == "evaluations":
                 control.pop("max_evaluations", None)
             study.enqueue_trial(control)
-        total_before = sum(t.state.is_finished() for t in study.trials)
+        total_before = sum(t.state in (TrialState.COMPLETE, TrialState.FAIL) for t in study.trials)
         remaining = max(0, n_trials-total_before)
         effort = f"cap {budget} avaliações/busca" if budget_mode == "evaluations" else plugin.GENERATION_DEFINITION
         print(f"{remaining} trials novos; {len(cases)} entradas × {len(seeds)} seeds; {effort}.", flush=True)
-        print("GPU indisponível. Paralelismo CPU entre configurações; sem pruning.", flush=True)
+        print(f"CPU: até {min(workers, remaining)} processos entre configurações; BLAS limitado a 1 thread/processo.", flush=True)
         if trial_timeout is not None:
             print(f"Limite de segurança: {trial_timeout} s por trial; excedido vira FAIL.", flush=True)
         pool = ProcessPoolExecutor(max_workers=min(workers, remaining),
             mp_context=multiprocessing.get_context("spawn"), initializer=_worker_setup) if workers > 1 and remaining else None
+        if pool is None:
+            _worker_setup()
         try:
             while remaining:
                 batch = []
                 try:
                     for _ in range(min(workers, remaining)):
-                        # O modelo TPE lê o histórico; RNG derivada do número evita
-                        # reiniciar a sequência aleatória anterior em cada --resume.
-                        next_number = max((t.number for t in study.trials if t.state != TrialState.WAITING), default=-1)+1
-                        study.sampler = optuna.samplers.TPESampler(
-                            seed=(sampler_seed+next_number) % 2**32, constant_liar=True)
-                        trial = study.ask()
-                        batch.append((trial, None, None))
-                        parameters = plugin.suggest_parameters(trial, budget, budget_mode, space)
+                        seen = {tuple(sorted(t.params.items())) for t in study.get_trials(deepcopy=False)
+                                if t.state in (TrialState.COMPLETE, TrialState.RUNNING, TrialState.FAIL)
+                                and set(t.params) == set(active_space)}
+                        unseen = _unseen_parameters(space, budget_mode, seen, rng)
+                        if unseen is None:
+                            study.set_user_attr("search_exhausted", True)
+                            break
+                        explore = n_trials - remaining + len(batch) < startup_trials
+                        if explore and not study.get_trials(states=(TrialState.WAITING,)):
+                            study.enqueue_trial(unseen)
+                        for attempt in range(11):
+                            if attempt == 10:
+                                study.enqueue_trial(unseen)
+                            trial = study.ask()
+                            batch.append((trial, None, None))
+                            parameters = plugin.suggest_parameters(trial, budget, budget_mode, space)
+                            if tuple(sorted(trial.params.items())) not in seen:
+                                break
+                            previous = next(t.number for t in study.get_trials(deepcopy=False)
+                                            if t.number != trial.number and t.params == trial.params)
+                            trial.set_user_attr("duplicate_parameters", previous)
+                            study.tell(trial, state=TrialState.PRUNED)
+                            _save_sampler_state(study, rng)
+                            batch.pop()
+                        trial.set_user_attr("proposal_source", "exploration" if explore else "fallback" if attempt == 10 else "tpe")
                         trial.set_user_attr("effective_parameters", parameters)
+                        _save_sampler_state(study, rng)
                         future = pool.submit(evaluate_parameters, parameters, cases, seeds, budget,
                             algorithm=algorithm, trial_timeout=trial_timeout) if pool else None
                         batch[-1] = trial, future, parameters
-                    for trial, future, parameters in batch:
+                    _save_sampler_state(study, rng)
+                    pending = {future: (trial, future, parameters) for trial, future, parameters in batch} if pool else {}
+                    ordered_results = (pending[future] for future in as_completed(pending)) if pool else batch
+                    for trial, future, parameters in ordered_results:
                         try:
                             payload = future.result() if future else evaluate_parameters(
                                 parameters, cases, seeds, budget, algorithm=algorithm, trial_timeout=trial_timeout)
@@ -386,6 +476,11 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=60, budget=8000, workers=1,
                             continue
                         atomic_json(output / "trials" / f"trial_{trial.number:06d}.json", dict(trial=trial.number, **payload))
                         trial.set_user_attr("wall_seconds", payload["wall_seconds"])
+                        trial.set_user_attr("worker_pid", payload["worker_pid"])
+                        run_seconds = {}
+                        for row in payload["runs"]:
+                            run_seconds.setdefault(row["instance"], []).append(row["wall_seconds"])
+                        trial.set_user_attr("run_seconds", run_seconds)
                         study.tell(trial, payload["score"])
                         print(f"Trial {trial.number}: score={payload['score']:.6f}; {trial.params}", flush=True)
                 except BaseException as error:
@@ -399,6 +494,8 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=60, budget=8000, workers=1,
                     raise
                 remaining -= len(batch)
                 export_study(study, output, budget, budget_mode, algorithm=algorithm)
+                if not batch or study.user_attrs.get("search_exhausted"):
+                    break
         finally:
             if pool:
                 pool.shutdown(wait=True, cancel_futures=True)

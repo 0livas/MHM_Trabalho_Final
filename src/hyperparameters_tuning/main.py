@@ -14,11 +14,6 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
-GPU_MESSAGE = (
-    "GPU indisponível: os algoritmos e o avaliador atuais executam na CPU. "
-    "Optuna/Ray não convertem esses operadores para CUDA. "
-    "Escolha CPU sequencial ou CPU paralela."
-)
 ALGORITHMS = {"moead": "MOEA/D", "spea2": "SPEA2 incremental", "age": "AGE-MOEA", "vns_vnd": "VNS/VND"}
 # Duas entradas por porte; as pequenas saturam o HV e pesam pouco na escolha.
 DEFAULT_INPUTS = (
@@ -38,6 +33,13 @@ def positive_int(value):
     result = int(value)
     if result < 1:
         raise argparse.ArgumentTypeError("Informe um inteiro positivo")
+    return result
+
+
+def non_negative_int(value):
+    result = int(value)
+    if result < 0:
+        raise argparse.ArgumentTypeError("Informe um inteiro >= 0")
     return result
 
 
@@ -125,14 +127,11 @@ def menu():
         print("Escolha 1 a 4, ou 0 para sair.")
     while True:
         print("\n1 - CPU sequencial\n2 - CPU paralela (processos)")
-        print("3 - GPU (indisponível nesta implementação)")
         choice = input("Execução: ").strip()
-        if choice == "3":
-            print(GPU_MESSAGE)
-        elif choice in ("1", "2"):
+        if choice in ("1", "2"):
             break
         else:
-            print("Escolha 1, 2 ou 3.")
+            print("Escolha 1 ou 2.")
     workers = 1 if choice == "1" else prompt(
         "Processos simultâneos", min(4, max(1, (os.cpu_count() or 1) - 1)), positive_int)
     print("\nEntradas padrão de calibração:")
@@ -142,6 +141,8 @@ def menu():
     inputs = [entry.strip().strip('"') for entry in text.split(";") if entry.strip()] if text else DEFAULT_INPUTS
     seeds = prompt("Seeds separadas por vírgula", "11,29,47")
     trials = prompt("Total desejado de configurações (trials)", DEFAULT_TRIALS, positive_int)
+    startup_trials = prompt("Configurações iniciais de exploração", 20, non_negative_int)
+    sampler_seed = prompt("Seed do sampler (trajetória da calibração)", 42, int)
     while True:
         mode = prompt("Esforço: 1=calibrar limite de avaliações; 2=avaliações fixas", "2")
         if mode in ("1", "2"):
@@ -155,13 +156,13 @@ def menu():
     show_space(load_space(space_path or None, algorithm), algorithm, budget_mode)
     if budget_mode != "evaluations":
         print("O esforço varia entre configurações. Confirme depois com orçamento comum.")
-    study_name = prompt("Nome do estudo", f"{algorithm}_tpe_v5")
+    study_name = prompt("Nome do estudo", f"{algorithm}_tpe_v6")
     resume = prompt("Retomar estudo existente? s/n", "n").lower()
     if resume not in ("s", "n"):
         raise ValueError("Retomada deve ser s ou n")
     return argparse.Namespace(algorithm=algorithm, inputs=inputs, seeds=seeds,
         trials=trials, max_evaluations=budget, workers=workers, study_name=study_name,
-        sampler_seed=42, resume=resume == "s", device="cpu", output_dir=None, trial_timeout=timeout or None,
+        sampler_seed=sampler_seed, startup_trials=startup_trials, resume=resume == "s", output_dir=None, trial_timeout=timeout or None,
         budget_mode=budget_mode, search_space=Path(space_path) if space_path else None, list_space=False)
 
 
@@ -183,10 +184,11 @@ def parser():
                         help="configurações simultâneas em processos CPU separados")
     result.add_argument("--trial-timeout", type=float,
                         help="limite de segurança em segundos por trial; excedido vira FAIL (padrão: sem limite)")
-    result.add_argument("--study-name", help="padrão <algoritmo>_tpe_v5")
+    result.add_argument("--study-name", help="padrão <algoritmo>_tpe_v6")
     result.add_argument("--sampler-seed", type=int, default=42)
+    result.add_argument("--startup-trials", type=non_negative_int, default=20,
+                        help="configurações de exploração inicial antes do TPE (padrão: 20)")
     result.add_argument("--resume", action="store_true")
-    result.add_argument("--device", choices=["cpu", "gpu"], default="cpu")
     result.add_argument("--output-dir", type=Path,
                         help="pasta exata do estudo; padrão data/output/hyperparameters_tuning/<algoritmo>/<nome>")
     return result
@@ -196,12 +198,17 @@ def confirm_parser():
     result = argparse.ArgumentParser(prog="main.py confirm",
         description="Reavalia as melhores configurações de um estudo em vários orçamentos fixos.")
     result.add_argument("--algorithm", choices=ALGORITHMS, default="moead")
-    result.add_argument("--study-name", help="padrão <algoritmo>_tpe_v5")
+    result.add_argument("--study-name", help="padrão <algoritmo>_tpe_v6")
     result.add_argument("--output-dir", type=Path, help="pasta exata do estudo; substitui --algorithm/--study-name")
     result.add_argument("--top", type=positive_int, default=5, help="configurações distintas reavaliadas")
     result.add_argument("--budgets", type=budget_list, default=budget_list(DEFAULT_CONFIRM_BUDGETS),
                         help=f"orçamentos separados por vírgula (padrão {DEFAULT_CONFIRM_BUDGETS})")
     result.add_argument("--workers", type=positive_int, default=1)
+    result.add_argument("--seeds", help="seeds novas separadas por vírgula; padrão: 5 seeds fora da calibração")
+    result.add_argument("--promote-fraction", type=float, default=0.5,
+                        help="fração promovida para o próximo orçamento (0 < fração <= 1; padrão: 0.5)")
+    result.add_argument("--diversity-slots", type=int, default=1,
+                        help="vagas de diversidade na promoção (padrão: 1)")
     return result
 
 
@@ -209,11 +216,14 @@ def main_confirm(argv):
     cli = confirm_parser()
     args = cli.parse_args(argv)
     output = args.output_dir or Path("data/output/hyperparameters_tuning") / args.algorithm / (
-        args.study_name or f"{args.algorithm}_tpe_v5")
+        args.study_name or f"{args.algorithm}_tpe_v6")
     output = ROOT / output if not output.is_absolute() else output
     try:
         from hyperparameters_tuning.confirm import confirm
-        report = confirm(output, top=args.top, budgets=args.budgets, workers=args.workers)
+        seeds = tuple(int(value.strip()) for value in args.seeds.split(",")) if args.seeds else None
+        report = confirm(output, top=args.top, budgets=args.budgets, workers=args.workers,
+                         seeds=seeds, promote_fraction=args.promote_fraction,
+                         diversity_slots=args.diversity_slots)
     except (ValueError, OSError, RuntimeError, ImportError) as error:
         cli.exit(2, f"Erro: {error}\n")
     except (KeyboardInterrupt, EOFError):
@@ -224,8 +234,28 @@ def main_confirm(argv):
     return 0
 
 
+def main_refine(argv):
+    cli = argparse.ArgumentParser(prog="main.py refine-space",
+        description="Gera uma nova grade com valores intermediários próximos aos melhores trials.")
+    cli.add_argument("--output-dir", type=Path, required=True, help="pasta do estudo de origem")
+    cli.add_argument("--output", type=Path, required=True, help="novo JSON da grade; não substitui arquivo existente")
+    cli.add_argument("--top", type=positive_int, default=5)
+    args = cli.parse_args(argv)
+    try:
+        from hyperparameters_tuning.refine import refine
+        source = args.output_dir if args.output_dir.is_absolute() else ROOT / args.output_dir
+        destination = args.output if args.output.is_absolute() else ROOT / args.output
+        space = refine(source, destination, top=args.top)
+    except (ValueError, OSError, RuntimeError, ImportError) as error:
+        cli.exit(2, f"Erro: {error}\n")
+    print(f"Grade ampliada salva em {destination}. Use --search-space com um novo estudo.")
+    return 0
+
+
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
+    if argv and argv[0] == "refine-space":
+        return main_refine(argv[1:])
     if argv and argv[0] == "confirm":
         return main_confirm(argv[1:])
     cli = parser()
@@ -233,13 +263,11 @@ def main(argv=None):
         args = cli.parse_args(argv) if argv else menu()
         if args is None:
             return 0
-        if args.device == "gpu":
-            raise ValueError(GPU_MESSAGE)
         plugin = get_plugin(args.algorithm)
         args.budget_mode = args.budget_mode or plugin.SUPPORTED_BUDGET_MODES[0]
         if args.budget_mode not in plugin.SUPPORTED_BUDGET_MODES:
             raise ValueError(f"{args.algorithm} admite apenas {plugin.SUPPORTED_BUDGET_MODES}")
-        args.study_name = args.study_name or f"{args.algorithm}_tpe_v5"
+        args.study_name = args.study_name or f"{args.algorithm}_tpe_v6"
         space = load_space(args.search_space, args.algorithm)
         if args.list_space:
             show_space(space, args.algorithm, args.budget_mode)
@@ -252,7 +280,8 @@ def main(argv=None):
             args.output_dir = ROOT / args.output_dir
         report = plugin.calibrate(paths, seeds=seeds, n_trials=args.trials,
             budget=args.max_evaluations, workers=args.workers, study_name=args.study_name,
-            sampler_seed=args.sampler_seed, resume=args.resume, output_dir=args.output_dir,
+            sampler_seed=args.sampler_seed, startup_trials=args.startup_trials,
+            resume=args.resume, output_dir=args.output_dir,
             budget_mode=args.budget_mode, search_space=space, trial_timeout=args.trial_timeout)
         print(f"\nConcluído: {report['completed_trials']} trials completos; "
               f"melhor score={report['best_score']}. Saída: {report['output_dir']}")

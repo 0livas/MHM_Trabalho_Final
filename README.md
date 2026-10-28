@@ -29,7 +29,7 @@ Alguns scripts auxiliares de experimentos permanecem em `data/output/` porque te
 
 ## 1. Preparar o ambiente
 
-Use Python 3.10 ou superior, em uma versão compatível com as dependências de `requirements.txt`. Não é obrigatório criar um ambiente virtual.
+Use **CPython 3.12 de 64 bits**, versão utilizada nos testes atuais. Python 3.15 não é adequado a este ambiente: o OR-Tools exigido não oferece um pacote compatível para essa versão. Não é obrigatório criar um ambiente virtual. Se houver várias versões instaladas no Windows, use `py -3.12 -m pip install -r requirements.txt` e `py -3.12` para executar os scripts; o comando `python` pode continuar apontando para outra versão.
 
 ```bash
 python --version
@@ -250,7 +250,7 @@ O tratamento multiobjetivo é uma sequência de otimizações lexicográficas co
 
 - `--time-limit 60`: limite de **cada chamada** ao CP-SAT, não da fronteira inteira; `0` desativa.
 - `--total-time-limit 300`: orçamento da execução/instância; `0` desativa. A preparação inicial de opções ocorre antes desse relógio. Construção de modelo e verificações cooperativas podem ultrapassar o orçamento.
-- `--workers 4`: workers de CPU; não ativa GPU.
+- `--workers 4`: quatro workers de CPU.
 - `--seed 1`: semente registrada na execução. Com múltiplos workers, ela não garante trajetória/tempo idênticos entre execuções.
 
 Para rodar sem os limites de tempo, use `--time-limit 0 --total-time-limit 0`. O orçamento de 300 segundos do exemplo pode encerrar com fronteira parcial.
@@ -455,7 +455,7 @@ Existem dois regimes para os quatro algoritmos:
   tempo, então o TPE tende a escolher o maior limite. Foi o que aconteceu nos
   estudos v4: o MOEA/D escolheu 20000. Use apenas por opção explícita.
 
-O protocolo v5 segue a decisão do grupo após a orientação do professor:
+O protocolo de calibração segue a decisão do grupo após a orientação do professor:
 **60 trials, 6 entradas (duas por porte), 8000 avaliações fixas e 3 seeds**,
 seguido de uma **fase de confirmação** em orçamentos maiores (abaixo). Nos
 estudos v4, as dez entradas de 6–14 tarefas davam HV entre 0,95 e 0,98 para
@@ -503,8 +503,10 @@ e seeds. Com os padrões, são 60 × 6 × 3 = 1080 buscas por algoritmo, com
 8000 tentativas cada, além das validações finais. Pelos tempos dos estudos v4,
 isso dá cerca de 7–9 min por trial e 2–2,5 h com 4 workers. A primeira proposta usa valores de referência compatíveis com a grade: P=100, E=8000, n_neighbors=20, acasalamento/crossover=0,9,
 mutação=0,3; VNS começa com 4 soluções, 100 candidatos e 20 tentativas de shaking.
-O TPE possui dez trials iniciais antes da modelagem adaptativa e explora somente
-uma parte da grade, sem garantir a melhor configuração global.
+`--startup-trials 20` reserva a exploração inicial antes da modelagem adaptativa.
+Configurações concluídas ou em avaliação não são executadas novamente; sugestões
+repetidas dão lugar a combinações inéditas. O TPE explora somente uma parte da
+grade, sem garantir a melhor configuração global.
 
 A configuração escolhida é generalista para o conjunto da campanha: maximiza a
 média entre instâncias do hipervolume mediano entre seeds. Os objetivos são
@@ -531,12 +533,19 @@ Resultados em `data/output/hyperparameters_tuning/<algoritmo>/<nome>/`:
 - `trials/trial_*.json`: evidência por entrada/seed, tempo, avaliações e frente.
 - `confirmation/`, `confirmation.csv` e `confirmation.json`: fase de confirmação.
 
+Os relatórios incluem `median_seconds_per_instance` e
+`estimated_30_runs_serial_seconds`: a estimativa serial de 30 execuções usa os
+tempos observados na calibração. Ela muda com os parâmetros, o orçamento final e
+a máquina; não é uma previsão garantida de tempo de parede nem deve ser dividida
+automaticamente pelo número de workers. `worker_pids` registra os processos que
+realmente executaram as avaliações, permitindo verificar o uso da CPU.
+
 ```bash
 python src/hyperparameters_tuning/main.py --algorithm moead --workers 4 --trials 80 --resume
 ```
 
 `--trials` é o total desejado, incluindo configurações completas ou falhas. O
-protocolo é v5 e o nome padrão é `<algoritmo>_tpe_v5`.
+protocolo atual é v6 e o nome padrão é `<algoritmo>_tpe_v6`.
 Código, dados, seeds, grade, workers e dependências precisam coincidir para
 retomar; escolha outro estudo ao mudar o protocolo. O checkpoint é por trial:
 a população ou busca dentro de uma tentativa interrompida não é salva. Trials
@@ -544,40 +553,84 @@ a população ou busca dentro de uma tentativa interrompida não é salva. Trial
 
 O coordenador é o único escritor SQLite e uma trava impede duas campanhas na
 mesma pasta. Workers executam trials em processos CPU, limitando threads numéricas.
-Resultados de cada lote são entregues ao Optuna na ordem do trial. A RNG do TPE
-usa sampler_seed + número do trial, sem reiniciar a sequência na retomada.
+As propostas usam lotes fixos; resultados são salvos assim que cada processo
+termina e o próximo lote é proposto depois de concluir o atual. O sampler
+permanece ativo, usa TPE multivariado para considerar relações entre parâmetros,
+e seu estado aleatório é salvo nos limites entre lotes para a retomada.
 Alterar workers ou interromper um lote pode mudar a sequência adaptativa;
 processos já iniciados podem precisar concluir antes do programa fechar.
 
 **Fase 2: confirmação em vários orçamentos.** O TPE compara configurações sob
 um único limite (8000). Para verificar se a escolha se mantém com mais esforço e
 quanto o HV ainda cresce (convergência), reavalie as melhores configurações
-distintas nas mesmas entradas e seeds do protocolo:
+distintas nas mesmas entradas, com cinco seeds novas por padrão:
 
 ```bash
-python src/hyperparameters_tuning/main.py confirm --algorithm moead --top 5 --budgets 8000,20000,50000 --workers 4
+python src/hyperparameters_tuning/main.py confirm --algorithm moead --top 5 --budgets 8000,20000,50000 --workers 4 --promote-fraction 0.5 --diversity-slots 1
 ```
 
+`--seeds 101,103,107,109,113` permite escolher as seeds da confirmação; elas
+precisam ser diferentes das usadas na calibração. A confirmação promove uma
+fração dos candidatos a cada orçamento; `--promote-fraction 1` reavalia todos em
+todos os orçamentos. `--diversity-slots 1` reserva diversidade na promoção.
+O plano de confirmação é salvo e precisa coincidir ao retomar; resultados são
+persistidos assim que terminam, mesmo se outro processo ainda estiver ocupado.
 O banco Optuna é apenas lido. O comando recusa rodar se o código ou as entradas
 mudaram desde a calibração. Cada par configuração × orçamento é salvo em
 `confirmation/trial_<n>_E<orçamento>.json`; repetir o comando continua de onde
 parou. `confirmation.json` traz o score por orçamento, o ranking em cada
 orçamento, o ganho de HV entre orçamentos consecutivos e `recommended`: o
-primeiro colocado no maior orçamento. Com os padrões, custa cerca de 1,5 h com
-4 workers, porque 50000 avaliações custam cerca de 6× o de 8000.
+primeiro colocado no maior orçamento. As estimativas históricas de duração não
+incluem as novas seeds nem a promoção em etapas; meça os tempos na máquina da
+campanha antes de reservar a janela final.
 
-A opção GPU informa que está indisponível; `--device gpu` recusa a execução.
-Os algoritmos usam objetos Python e avaliação CPU. Optuna ou Ray não convertem
-operadores para CUDA. O paralelismo oferecido é entre configurações, com possível
-aumento de memória; buscas muito curtas podem não acelerar.
+O paralelismo usa processos CPU separados entre configurações, com possível
+aumento de memória; buscas muito curtas podem não acelerar. Compare uma execução
+curta com `--workers 1`, `2` e `4` antes da campanha. Threads de bibliotecas
+numéricas são limitadas por processo para evitar multiplicar o paralelismo.
+
+**Campanha até 06/11/2026.** Reserve 28–29/10 para validar o fluxo e medir os
+tempos nas oito entradas; 30/10–02/11 para busca e confirmação; 03/11 para
+congelar os parâmetros; 04–05/11 para as execuções finais; 06/11 como margem de
+recuperação. São 4 algoritmos × 8 entradas × 30 seeds = **960 execuções finais**.
+A disponibilidade de tempo deve ser estimada com as entradas grandes e a máquina
+da campanha, incluindo confirmação e validações. Os tempos dos estudos antigos
+acima são referências históricas e não garantem conclusão nesse prazo.
+
+Para ampliar a busca, copie todos os campos da grade para um JSON e acrescente
+valores intermediários somente às regiões promissoras, mantendo as restrições
+descritas acima. Inicie um novo estudo com `--search-space minha_grade.json`
+ao mudar a grade. Probabilidades continuam sendo listas discretas, não intervalos
+contínuos. O comando abaixo gera, em outro arquivo, pontos médios dos intervalos
+vizinhos aos valores dos melhores trials. Preserva todos os valores originais,
+arredonda campos inteiros e valida a grade resultante. Ele apenas prepara a grade;
+não altera o estudo de origem nem inicia nova calibração.
+
+```bash
+python src/hyperparameters_tuning/main.py refine-space --output-dir data/output/hyperparameters_tuning/moead/moead_tpe_v6 --top 5 --output data/moead_grade_refinada.json
+python src/hyperparameters_tuning/main.py --algorithm moead --study-name moead_refinado_v6 --search-space data/moead_grade_refinada.json --workers 4
+```
+
+Uma triagem com orçamento baixo pode favorecer populações pequenas;
+na confirmação preserve candidatos com tamanhos de população diferentes antes
+de decidir o vencedor no orçamento comum final.
+
+`--seeds 11,29,47` controla as replicações do algoritmo: mantém as mesmas seeds
+para comparar todas as configurações. `--sampler-seed 42` controla a trajetória
+das sugestões do Optuna e deve permanecer fixo durante o estudo. Aumentar o
+valor de uma seed não melhora a qualidade. Outra seed do sampler serve para
+uma campanha independente de estabilidade, com outro nome. Na confirmação use
+seeds novas; para a avaliação final defina previamente 30 seeds distintas,
+preferencialmente diferentes das usadas na seleção dos parâmetros, e aplique a
+mesma lista aos quatro algoritmos.
 
 ### 5.7 Consultar e aplicar uma calibração salva
 
 A evidência de cada estudo está no próprio diretório de resultados: `protocol.json` define o experimento; `trials.csv` resume os trials; `trials/trial_*.json` contém as frentes e métricas; `best_parameters.json` identifica a configuração selecionada, seu score e o trial correspondente.
 
-Há estudos salvos de [AGE-MOEA](data/output/hyperparameters_tuning/age/age_tpe/best_parameters.json) e [MOEA/D](data/output/hyperparameters_tuning/moead/moead_tpe/best_parameters.json). Eles usam o **protocolo v4 antigo**: 30 trials, 12 entradas e modo `effort`. Ficam como histórico e foram substituídos pelo protocolo v5 (seção 5.6). Não os trate como defaults do código.
+Há estudos salvos de [AGE-MOEA](data/output/hyperparameters_tuning/age/age_tpe/best_parameters.json) e [MOEA/D](data/output/hyperparameters_tuning/moead/moead_tpe/best_parameters.json). Eles usam o **protocolo v4 antigo**: 30 trials, 12 entradas e modo `effort`. Estudos v4 e v5 ficam como histórico; o protocolo atual é v6 (seção 5.6). Não os trate como defaults do código.
 
-Em um estudo v5 com confirmação, prefira `recommended.solver_config` de `confirmation.json` ao `best_parameters.json` da busca. Verifique em `ranking` se o primeiro colocado muda com o orçamento.
+Em um estudo com confirmação, prefira `recommended.solver_config` de `confirmation.json` ao `best_parameters.json` da busca. Verifique em `ranking` se o primeiro colocado muda com o orçamento.
 
 Para aplicar uma configuração, copie os campos de `solver_config` para as opções do solver: por exemplo, `population_size` corresponde a `--population-size`, e `max_evaluations` a `--max-evaluations`. Acrescente a entrada, uma seed de avaliação e um diretório de saída próprio. Os solvers não leem `best_parameters.json` automaticamente. A retomada da calibração também precisa do banco SQLite local; os JSONs e CSVs, sozinhos, não reconstituem o histórico Optuna.
 

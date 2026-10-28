@@ -2,6 +2,7 @@
 from dataclasses import replace
 from fractions import Fraction
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -97,6 +98,7 @@ class TuningTests(unittest.TestCase):
                 data = json.loads((output / "trials" / f"trial_{number:06d}.json").read_text())
                 self.assertEqual(data["runs"][0]["attempts"], 40)
                 self.assertTrue(0 <= data["score"] <= 1)
+                self.assertNotEqual(data["worker_pid"], os.getpid())
             resumed = calibrate([self.path], n_trials=3, resume=True, **args)
             self.assertEqual(resumed["completed_trials"], 3)
             unchanged = calibrate([self.path], n_trials=3, resume=True, **args)
@@ -123,14 +125,15 @@ class TuningTests(unittest.TestCase):
             self.assertEqual(result.exception.code, 2)
             self.assertFalse(path.exists())
 
-    def test_menu_gpu_explanation_then_parallel_choice(self):
-        answers = ["1", "3", "2", "2", str(self.path), "11,29", "2", "2", "40", "0", "", "menu_test", "n"]
+    def test_menu_parallel_cpu_choice(self):
+        answers = ["1", "2", "2", str(self.path), "11,29", "2", "20", "42", "2", "40", "0", "", "menu_test", "n"]
         with patch("builtins.input", side_effect=answers):
             args = menu()
         self.assertEqual((args.algorithm, args.workers, args.trials, args.max_evaluations),
                          ("moead", 2, 2, 40))
         self.assertIsNone(args.trial_timeout)
-        self.assertEqual(args.device, "cpu")
+        self.assertEqual(args.startup_trials, 20)
+        self.assertEqual(args.sampler_seed, 42)
 
     def test_default_grid_covers_exact_native_fields_and_five_levels(self):
         from dataclasses import fields
@@ -240,7 +243,7 @@ class TuningTests(unittest.TestCase):
                                study_name="timeout_test", budget_mode="evaluations", trial_timeout=1e-9)
             self.assertEqual((report["completed_trials"], report["failed_trials"]), (0, 2))
             protocol = json.loads((Path(folder) / "protocol.json").read_text())
-            self.assertEqual((protocol["version"], protocol["trial_timeout"]), (5, 1e-9))
+            self.assertEqual((protocol["version"], protocol["trial_timeout"]), (6, 1e-9))
             with self.assertRaises(ValueError):
                 calibrate([self.path], seeds=(11, 29), n_trials=3, budget=40, output_dir=folder, resume=True,
                           study_name="timeout_test", budget_mode="evaluations", trial_timeout=60)
@@ -258,7 +261,7 @@ class TuningTests(unittest.TestCase):
             for config in report["configurations"]:
                 data = json.loads((output / f"confirmation/trial_{config['trial']:06d}_E60.json").read_text())
                 self.assertEqual(data["runs"][0]["attempts"], 60)
-            self.assertEqual(len(list((output / "confirmation").glob("*.json"))), 4)
+            self.assertEqual(len(list((output / "confirmation").glob("trial_*.json"))), 4)
             with patch("hyperparameters_tuning.confirm.evaluate_parameters",
                        side_effect=AssertionError("reexecutou")):
                 self.assertEqual(confirm(output, top=2, budgets=(40, 60))["ranking"], report["ranking"])

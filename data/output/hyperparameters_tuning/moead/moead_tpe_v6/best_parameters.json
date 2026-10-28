@@ -1,0 +1,22 @@
+{
+  "algorithm": "moead",
+  "study_name": "moead_tpe_v6",
+  "output_dir": "E:\\geral\\MHM\\MHM_Trabalho_Final\\data\\output\\hyperparameters_tuning\\moead\\moead_tpe_v6",
+  "completed_trials": 0,
+  "failed_trials": 6,
+  "best_score": null,
+  "best_parameters": null,
+  "budget_mode": "evaluations",
+  "fixed_evaluations": 8000,
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "search_space_size": 7560,
+  "rejected_duplicate_suggestions": 0,
+  "total_evaluation_seconds": 0,
+  "search_exhausted": false,
+  "worker_pids": [],
+  "median_seconds_per_instance": {},
+  "estimated_30_runs_serial_seconds": 0,
+  "timing_estimate_scope": "calibration configurations and budgets only; remeasure frozen configuration at final budget"
+}
