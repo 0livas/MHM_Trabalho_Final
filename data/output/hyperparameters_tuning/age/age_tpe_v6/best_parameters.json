@@ -1,0 +1,58 @@
+{
+  "algorithm": "age",
+  "study_name": "age_tpe_v6",
+  "output_dir": "C:\\Users\\Jader\\Documents\\GitHub\\MHM_Trabalho_Final\\data\\output\\hyperparameters_tuning\\age\\age_tpe_v6",
+  "completed_trials": 60,
+  "failed_trials": 0,
+  "best_score": 0.9477792732687746,
+  "best_parameters": {
+    "population_size": 100,
+    "crossover_probability": 1.0,
+    "mutation_probability": 0.5,
+    "max_evaluations": 8000
+  },
+  "budget_mode": "evaluations",
+  "fixed_evaluations": 8000,
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "best_trial": 55,
+  "search_parameters": {
+    "population_size": 100,
+    "crossover_probability": 1.0,
+    "mutation_probability": 0.5
+  },
+  "solver_config": {
+    "population_size": 100,
+    "crossover_probability": 1.0,
+    "mutation_probability": 0.5,
+    "max_evaluations": 8000
+  },
+  "evidence": "trials/trial_000055.json",
+  "age_config": {
+    "population_size": 100,
+    "crossover_probability": 1.0,
+    "mutation_probability": 0.5,
+    "max_evaluations": 8000
+  },
+  "search_space_size": 252,
+  "rejected_duplicate_suggestions": 13,
+  "total_evaluation_seconds": 77620.60956310108,
+  "search_exhausted": false,
+  "worker_pids": [
+    11580,
+    26252,
+    35092,
+    40824
+  ],
+  "median_seconds_per_instance": {
+    "6_2_1439_3_S_1-9.dat": 14.246521249995567,
+    "14_2_1439_3_S_1-9_derivada.dat": 13.383158899960108,
+    "50_10_1439_5_S_1-9.dat": 31.970993799972348,
+    "50_20_1439_5_S_1-9.dat": 42.42757299996447,
+    "250_10_1439_5_S_1-9.dat": 137.66061704989988,
+    "250_20_1439_5_S_1-9.dat": 148.8489666999085
+  },
+  "estimated_30_runs_serial_seconds": 11656.134920991026,
+  "timing_estimate_scope": "calibration configurations and budgets only; remeasure frozen configuration at final budget"
+}
