@@ -1,0 +1,62 @@
+{
+  "algorithm": "spea2",
+  "study_name": "spea2_tpe_v6_pedro",
+  "output_dir": "/home/pedro/vscode_ubuntu/MHM_Trabalho_Final_v5_review/data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro",
+  "completed_trials": 46,
+  "failed_trials": 14,
+  "best_score": 0.9481268351735872,
+  "best_parameters": {
+    "population_size": 150,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 8000
+  },
+  "budget_mode": "evaluations",
+  "fixed_evaluations": 8000,
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "best_trial": 51,
+  "search_parameters": {
+    "population_size": 150,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7
+  },
+  "solver_config": {
+    "population_size": 150,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 8000
+  },
+  "evidence": "trials/trial_000051.json",
+  "spea2_config": {
+    "population_size": 150,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 8000
+  },
+  "search_space_size": 252,
+  "rejected_duplicate_suggestions": 16,
+  "total_evaluation_seconds": 28766.749441464002,
+  "search_exhausted": false,
+  "worker_pids": [
+    4078,
+    4096,
+    4113,
+    4114,
+    6970,
+    6988,
+    7006,
+    7035
+  ],
+  "median_seconds_per_instance": {
+    "6_2_1439_3_S_1-9.dat": 15.088289056500344,
+    "14_2_1439_3_S_1-9_derivada.dat": 15.710085257500054,
+    "50_10_1439_5_S_1-9.dat": 23.542795283999567,
+    "50_20_1439_5_S_1-9.dat": 28.23186392599996,
+    "250_10_1439_5_S_1-9.dat": 54.78551287150003,
+    "250_20_1439_5_S_1-9.dat": 60.57736565949995
+  },
+  "estimated_30_runs_serial_seconds": 5938.077361649997,
+  "timing_estimate_scope": "calibration configurations and budgets only; remeasure frozen configuration at final budget"
+}

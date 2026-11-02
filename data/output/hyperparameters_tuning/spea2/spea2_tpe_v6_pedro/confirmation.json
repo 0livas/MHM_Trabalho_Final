@@ -1,0 +1,132 @@
+{
+  "algorithm": "spea2",
+  "study_name": "spea2_tpe_v6_pedro",
+  "budgets": [
+    20000,
+    50000
+  ],
+  "seeds": [
+    101,
+    103,
+    107,
+    109,
+    113
+  ],
+  "configurations": [
+    {
+      "trial": 51,
+      "search_score": 0.9481268351735872,
+      "parameters": {
+        "population_size": 150,
+        "crossover_probability": 0.9,
+        "mutation_probability": 0.7
+      },
+      "scores": {
+        "20000": 0.9515012109834258,
+        "50000": 0.9536951165499128
+      },
+      "ranks": {
+        "20000": 1,
+        "50000": 2
+      },
+      "gains": {
+        "20000->50000": 0.00219390556648702
+      }
+    },
+    {
+      "trial": 37,
+      "search_score": 0.9474889452476098,
+      "parameters": {
+        "population_size": 100,
+        "crossover_probability": 1.0,
+        "mutation_probability": 0.7
+      },
+      "scores": {
+        "20000": 0.9511642547044593
+      },
+      "ranks": {
+        "20000": 3
+      },
+      "gains": {}
+    },
+    {
+      "trial": 61,
+      "search_score": 0.9471729098535925,
+      "parameters": {
+        "population_size": 100,
+        "crossover_probability": 0.9,
+        "mutation_probability": 0.7
+      },
+      "scores": {
+        "20000": 0.9504350705620533
+      },
+      "ranks": {
+        "20000": 4
+      },
+      "gains": {}
+    },
+    {
+      "trial": 75,
+      "search_score": 0.9469747493131841,
+      "parameters": {
+        "population_size": 150,
+        "crossover_probability": 0.9,
+        "mutation_probability": 0.3
+      },
+      "scores": {
+        "20000": 0.9502660406438016
+      },
+      "ranks": {
+        "20000": 5
+      },
+      "gains": {}
+    },
+    {
+      "trial": 66,
+      "search_score": 0.9448813631828125,
+      "parameters": {
+        "population_size": 200,
+        "crossover_probability": 0.7,
+        "mutation_probability": 0.5
+      },
+      "scores": {
+        "20000": 0.9514026501331125,
+        "50000": 0.9538295712563617
+      },
+      "ranks": {
+        "20000": 2,
+        "50000": 1
+      },
+      "gains": {
+        "20000->50000": 0.0024269211232491594
+      }
+    }
+  ],
+  "ranking": {
+    "20000": [
+      51,
+      66,
+      37,
+      61,
+      75
+    ],
+    "50000": [
+      66,
+      51
+    ]
+  },
+  "recommended": {
+    "trial": 66,
+    "budget": 50000,
+    "solver_config": {
+      "population_size": 200,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.5,
+      "max_evaluations": 50000
+    }
+  },
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "evidence": "confirmation/trial_<n>_E<orçamento>.json"
+}
