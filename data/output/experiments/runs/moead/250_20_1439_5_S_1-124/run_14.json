@@ -1,0 +1,113 @@
+{
+  "algorithm": "moead",
+  "instance": "250_20_1439_5_S_1-124.dat",
+  "tier": "large",
+  "run_id": 14,
+  "seed": 1014,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T08:37:36.418-03:00",
+  "end_timestamp": "2026-11-03T08:39:17.174-03:00",
+  "wall_seconds": 100.503713,
+  "cpu_seconds": 99.578125,
+  "peak_rss_mib": 122.00390625,
+  "peak_rss_delta_mib": 85.3828125,
+  "nds": 18,
+  "evaluations": 10000,
+  "raw_size": 18,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 100.75347639998654,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      692,
+      619461848278
+    ],
+    [
+      693,
+      532970719444
+    ],
+    [
+      695,
+      528004650256
+    ],
+    [
+      704,
+      527722828396
+    ],
+    [
+      708,
+      525438037564
+    ],
+    [
+      725,
+      513406213344
+    ],
+    [
+      726,
+      509096566344
+    ],
+    [
+      744,
+      503624444524
+    ],
+    [
+      763,
+      503022417506
+    ],
+    [
+      769,
+      500558171036
+    ],
+    [
+      802,
+      497272928742
+    ],
+    [
+      828,
+      488442155360
+    ],
+    [
+      941,
+      479310868840
+    ],
+    [
+      965,
+      477536391864
+    ],
+    [
+      1019,
+      448241961836
+    ],
+    [
+      1026,
+      444773196372
+    ],
+    [
+      1223,
+      435522576969
+    ],
+    [
+      1291,
+      415865403214
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 18,
+  "instance_sha256": "eaf520eb58ef7fe37ad006c84ea868969b8f9c2cc53e519a2bf0054ffa96a702",
+  "cpu_seconds_child": 99.578125,
+  "peak_private_mib": 391.81640625,
+  "baseline_rss_mib": 36.62109375,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 100.503713099999
+}

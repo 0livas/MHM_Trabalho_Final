@@ -1,0 +1,113 @@
+{
+  "algorithm": "moead",
+  "instance": "250_20_1439_5_S_1-124.dat",
+  "tier": "large",
+  "run_id": 13,
+  "seed": 1013,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T08:31:28.206-03:00",
+  "end_timestamp": "2026-11-03T08:33:37.929-03:00",
+  "wall_seconds": 129.444362,
+  "cpu_seconds": 106.984375,
+  "peak_rss_mib": 122.08203125,
+  "peak_rss_delta_mib": 85.26171875,
+  "nds": 18,
+  "evaluations": 10000,
+  "raw_size": 18,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 129.7241412000003,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      689,
+      565949365004
+    ],
+    [
+      706,
+      542819731670
+    ],
+    [
+      712,
+      524375669226
+    ],
+    [
+      716,
+      516656978462
+    ],
+    [
+      726,
+      509664116186
+    ],
+    [
+      750,
+      506843185898
+    ],
+    [
+      767,
+      504587836250
+    ],
+    [
+      771,
+      500457999990
+    ],
+    [
+      795,
+      497860913090
+    ],
+    [
+      986,
+      495089083724
+    ],
+    [
+      997,
+      486310542618
+    ],
+    [
+      1017,
+      483945886118
+    ],
+    [
+      1022,
+      482496230626
+    ],
+    [
+      1182,
+      472053193215
+    ],
+    [
+      1203,
+      466293983125
+    ],
+    [
+      1222,
+      455351543065
+    ],
+    [
+      1268,
+      436524703400
+    ],
+    [
+      1269,
+      436454879252
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 18,
+  "instance_sha256": "eaf520eb58ef7fe37ad006c84ea868969b8f9c2cc53e519a2bf0054ffa96a702",
+  "cpu_seconds_child": 106.984375,
+  "peak_private_mib": 391.76953125,
+  "baseline_rss_mib": 36.8203125,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 129.44436249999853
+}

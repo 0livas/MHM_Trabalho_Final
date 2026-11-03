@@ -1,0 +1,117 @@
+{
+  "algorithm": "moead",
+  "instance": "250_10_1439_5_S_1-9.dat",
+  "tier": "large",
+  "run_id": 30,
+  "seed": 1030,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T07:14:14.152-03:00",
+  "end_timestamp": "2026-11-03T07:15:35.544-03:00",
+  "wall_seconds": 81.14975,
+  "cpu_seconds": 80.53125,
+  "peak_rss_mib": 83.921875,
+  "peak_rss_delta_mib": 54.0390625,
+  "nds": 19,
+  "evaluations": 10000,
+  "raw_size": 19,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 81.39244900000631,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      361,
+      240771616852
+    ],
+    [
+      363,
+      240174012468
+    ],
+    [
+      368,
+      238873112432
+    ],
+    [
+      369,
+      233572408032
+    ],
+    [
+      371,
+      231985844578
+    ],
+    [
+      377,
+      231869306558
+    ],
+    [
+      382,
+      225660315806
+    ],
+    [
+      384,
+      225146612340
+    ],
+    [
+      387,
+      222397089836
+    ],
+    [
+      389,
+      222373911360
+    ],
+    [
+      390,
+      216442513526
+    ],
+    [
+      393,
+      215954829352
+    ],
+    [
+      395,
+      215260508096
+    ],
+    [
+      396,
+      213123956208
+    ],
+    [
+      404,
+      209255087636
+    ],
+    [
+      427,
+      207376146108
+    ],
+    [
+      430,
+      206903634474
+    ],
+    [
+      431,
+      203926911254
+    ],
+    [
+      442,
+      203172480914
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 19,
+  "instance_sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+  "cpu_seconds_child": 80.53125,
+  "peak_private_mib": 385.87890625,
+  "baseline_rss_mib": 29.8828125,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 81.14975019999838
+}

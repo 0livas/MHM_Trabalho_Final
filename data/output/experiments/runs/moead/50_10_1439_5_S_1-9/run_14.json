@@ -1,0 +1,125 @@
+{
+  "algorithm": "moead",
+  "instance": "50_10_1439_5_S_1-9.dat",
+  "tier": "medium",
+  "run_id": 14,
+  "seed": 1014,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T03:22:01.411-03:00",
+  "end_timestamp": "2026-11-03T03:22:19.714-03:00",
+  "wall_seconds": 18.082554,
+  "cpu_seconds": 17.859375,
+  "peak_rss_mib": 74.92578125,
+  "peak_rss_delta_mib": 49.796875,
+  "nds": 21,
+  "evaluations": 10000,
+  "raw_size": 21,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 18.303154799999902,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      72,
+      46168941632
+    ],
+    [
+      75,
+      46096145722
+    ],
+    [
+      76,
+      34771587840
+    ],
+    [
+      77,
+      34153355258
+    ],
+    [
+      78,
+      34023743028
+    ],
+    [
+      82,
+      33518206908
+    ],
+    [
+      83,
+      30529377938
+    ],
+    [
+      84,
+      29717679330
+    ],
+    [
+      85,
+      29534640390
+    ],
+    [
+      87,
+      28875441950
+    ],
+    [
+      92,
+      28595040498
+    ],
+    [
+      94,
+      27700022048
+    ],
+    [
+      99,
+      27524472532
+    ],
+    [
+      101,
+      27464363448
+    ],
+    [
+      103,
+      26984943466
+    ],
+    [
+      114,
+      26620156866
+    ],
+    [
+      116,
+      26079433366
+    ],
+    [
+      118,
+      25990335046
+    ],
+    [
+      120,
+      25829312430
+    ],
+    [
+      175,
+      24776693256
+    ],
+    [
+      194,
+      24766621272
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 21,
+  "instance_sha256": "c9147e6b8b3bcab1863b62202baffbeee4e1fce0791b4e6309397c4037406da7",
+  "cpu_seconds_child": 17.859375,
+  "peak_private_mib": 377.1015625,
+  "baseline_rss_mib": 25.12890625,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 18.082554400003573
+}

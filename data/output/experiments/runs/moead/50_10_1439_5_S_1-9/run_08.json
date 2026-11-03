@@ -1,0 +1,121 @@
+{
+  "algorithm": "moead",
+  "instance": "50_10_1439_5_S_1-9.dat",
+  "tier": "medium",
+  "run_id": 8,
+  "seed": 1008,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T03:11:14.683-03:00",
+  "end_timestamp": "2026-11-03T03:11:33.043-03:00",
+  "wall_seconds": 18.13386,
+  "cpu_seconds": 17.734375,
+  "peak_rss_mib": 74.984375,
+  "peak_rss_delta_mib": 49.92578125,
+  "nds": 20,
+  "evaluations": 10000,
+  "raw_size": 20,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 18.359804200001236,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      72,
+      45871495284
+    ],
+    [
+      73,
+      45077487212
+    ],
+    [
+      76,
+      41698853092
+    ],
+    [
+      81,
+      38210589300
+    ],
+    [
+      82,
+      36688041052
+    ],
+    [
+      83,
+      34169786796
+    ],
+    [
+      84,
+      30747894796
+    ],
+    [
+      85,
+      30684105564
+    ],
+    [
+      87,
+      29848776532
+    ],
+    [
+      88,
+      29570537974
+    ],
+    [
+      91,
+      29157489784
+    ],
+    [
+      96,
+      27847841326
+    ],
+    [
+      99,
+      27478632092
+    ],
+    [
+      100,
+      27381721528
+    ],
+    [
+      102,
+      27205042142
+    ],
+    [
+      103,
+      27050572772
+    ],
+    [
+      106,
+      26715033664
+    ],
+    [
+      116,
+      26658281908
+    ],
+    [
+      213,
+      26481505676
+    ],
+    [
+      227,
+      26390341308
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 20,
+  "instance_sha256": "c9147e6b8b3bcab1863b62202baffbeee4e1fce0791b4e6309397c4037406da7",
+  "cpu_seconds_child": 17.734375,
+  "peak_private_mib": 376.4609375,
+  "baseline_rss_mib": 25.05859375,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 18.133859599998686
+}

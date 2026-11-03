@@ -1,0 +1,117 @@
+{
+  "algorithm": "moead",
+  "instance": "50_10_1439_5_S_1-9.dat",
+  "tier": "medium",
+  "run_id": 30,
+  "seed": 1030,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T03:50:47.552-03:00",
+  "end_timestamp": "2026-11-03T03:51:05.958-03:00",
+  "wall_seconds": 18.189222,
+  "cpu_seconds": 17.796875,
+  "peak_rss_mib": 74.94140625,
+  "peak_rss_delta_mib": 49.84765625,
+  "nds": 19,
+  "evaluations": 10000,
+  "raw_size": 19,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 18.40671000000293,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      69,
+      47869944776
+    ],
+    [
+      70,
+      46008274118
+    ],
+    [
+      73,
+      45272793312
+    ],
+    [
+      74,
+      37988650550
+    ],
+    [
+      75,
+      37023063648
+    ],
+    [
+      76,
+      36981097048
+    ],
+    [
+      78,
+      33287100070
+    ],
+    [
+      79,
+      33018513830
+    ],
+    [
+      80,
+      32820463760
+    ],
+    [
+      82,
+      31314347050
+    ],
+    [
+      86,
+      30338074806
+    ],
+    [
+      87,
+      29757805856
+    ],
+    [
+      88,
+      29701247792
+    ],
+    [
+      92,
+      28945493890
+    ],
+    [
+      95,
+      28435857956
+    ],
+    [
+      97,
+      27825243926
+    ],
+    [
+      109,
+      26851683370
+    ],
+    [
+      121,
+      26306214416
+    ],
+    [
+      124,
+      26295109408
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 19,
+  "instance_sha256": "c9147e6b8b3bcab1863b62202baffbeee4e1fce0791b4e6309397c4037406da7",
+  "cpu_seconds_child": 17.796875,
+  "peak_private_mib": 376.48046875,
+  "baseline_rss_mib": 25.09375,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 18.189221599997836
+}

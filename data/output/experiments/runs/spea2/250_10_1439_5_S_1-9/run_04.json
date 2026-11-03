@@ -1,0 +1,119 @@
+{
+  "algorithm": "spea2",
+  "instance": "250_10_1439_5_S_1-9.dat",
+  "tier": "large",
+  "run_id": 4,
+  "seed": 1004,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T05:09:01.884-03:00",
+  "end_timestamp": "2026-11-03T05:11:13.836-03:00",
+  "wall_seconds": 131.733699,
+  "cpu_seconds": 131.109375,
+  "peak_rss_mib": 64.83203125,
+  "peak_rss_delta_mib": 35.015625,
+  "nds": 20,
+  "evaluations": 10000,
+  "raw_size": 20,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 131.95455430000584,
+  "parameters": {
+    "population_size": 200,
+    "crossover_probability": 0.7,
+    "mutation_probability": 0.5,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      343,
+      226750059280
+    ],
+    [
+      348,
+      226101610746
+    ],
+    [
+      349,
+      214787835052
+    ],
+    [
+      357,
+      213300441902
+    ],
+    [
+      362,
+      211363231364
+    ],
+    [
+      366,
+      207880939742
+    ],
+    [
+      368,
+      206567223752
+    ],
+    [
+      376,
+      204807273676
+    ],
+    [
+      380,
+      204141618836
+    ],
+    [
+      384,
+      202448137398
+    ],
+    [
+      386,
+      201580300392
+    ],
+    [
+      390,
+      198860154508
+    ],
+    [
+      396,
+      198734512964
+    ],
+    [
+      399,
+      198079446620
+    ],
+    [
+      400,
+      194944961266
+    ],
+    [
+      424,
+      194055624448
+    ],
+    [
+      430,
+      193445107264
+    ],
+    [
+      438,
+      192139655466
+    ],
+    [
+      450,
+      189199733726
+    ],
+    [
+      479,
+      188725898530
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 20,
+  "instance_sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+  "cpu_seconds_child": 131.109375,
+  "peak_private_mib": 211.76953125,
+  "baseline_rss_mib": 29.81640625,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 131.73369850000017
+}

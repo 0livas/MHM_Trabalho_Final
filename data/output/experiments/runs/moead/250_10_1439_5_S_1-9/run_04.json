@@ -1,0 +1,117 @@
+{
+  "algorithm": "moead",
+  "instance": "250_10_1439_5_S_1-9.dat",
+  "tier": "large",
+  "run_id": 4,
+  "seed": 1004,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T05:11:13.902-03:00",
+  "end_timestamp": "2026-11-03T05:12:34.983-03:00",
+  "wall_seconds": 80.836404,
+  "cpu_seconds": 80.171875,
+  "peak_rss_mib": 83.38671875,
+  "peak_rss_delta_mib": 53.46484375,
+  "nds": 19,
+  "evaluations": 10000,
+  "raw_size": 19,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 81.0792505999998,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      371,
+      275478576128
+    ],
+    [
+      373,
+      263874972638
+    ],
+    [
+      377,
+      260862061296
+    ],
+    [
+      380,
+      247864908430
+    ],
+    [
+      383,
+      247802023094
+    ],
+    [
+      384,
+      246268950914
+    ],
+    [
+      386,
+      244435139622
+    ],
+    [
+      388,
+      243940450254
+    ],
+    [
+      391,
+      243139888936
+    ],
+    [
+      396,
+      239268599214
+    ],
+    [
+      398,
+      239129528358
+    ],
+    [
+      400,
+      238450444206
+    ],
+    [
+      404,
+      235392305782
+    ],
+    [
+      405,
+      233623252182
+    ],
+    [
+      417,
+      232961923130
+    ],
+    [
+      418,
+      232468234504
+    ],
+    [
+      422,
+      228623771124
+    ],
+    [
+      425,
+      228153131846
+    ],
+    [
+      427,
+      228022389746
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 19,
+  "instance_sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+  "cpu_seconds_child": 80.171875,
+  "peak_private_mib": 385.30859375,
+  "baseline_rss_mib": 29.921875,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 80.83640359999845
+}

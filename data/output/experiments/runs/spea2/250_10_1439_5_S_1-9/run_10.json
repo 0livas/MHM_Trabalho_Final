@@ -1,0 +1,115 @@
+{
+  "algorithm": "spea2",
+  "instance": "250_10_1439_5_S_1-9.dat",
+  "tier": "large",
+  "run_id": 10,
+  "seed": 1010,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T05:37:25.205-03:00",
+  "end_timestamp": "2026-11-03T05:39:34.105-03:00",
+  "wall_seconds": 128.684346,
+  "cpu_seconds": 128.15625,
+  "peak_rss_mib": 63.86328125,
+  "peak_rss_delta_mib": 34.078125,
+  "nds": 19,
+  "evaluations": 10000,
+  "raw_size": 19,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 128.90195710000262,
+  "parameters": {
+    "population_size": 200,
+    "crossover_probability": 0.7,
+    "mutation_probability": 0.5,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      359,
+      216925484528
+    ],
+    [
+      360,
+      213782799546
+    ],
+    [
+      361,
+      208263997954
+    ],
+    [
+      370,
+      205955867236
+    ],
+    [
+      376,
+      204266679304
+    ],
+    [
+      379,
+      203416145450
+    ],
+    [
+      385,
+      202951736598
+    ],
+    [
+      390,
+      201868417242
+    ],
+    [
+      392,
+      201233042918
+    ],
+    [
+      393,
+      200641539832
+    ],
+    [
+      398,
+      199833715064
+    ],
+    [
+      402,
+      199397456116
+    ],
+    [
+      411,
+      198936081772
+    ],
+    [
+      416,
+      198085806174
+    ],
+    [
+      417,
+      198081093002
+    ],
+    [
+      419,
+      196474998938
+    ],
+    [
+      423,
+      196324919920
+    ],
+    [
+      447,
+      194948835106
+    ],
+    [
+      463,
+      194560837748
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 19,
+  "instance_sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+  "cpu_seconds_child": 128.15625,
+  "peak_private_mib": 211.015625,
+  "baseline_rss_mib": 29.78515625,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 128.68434599999455
+}

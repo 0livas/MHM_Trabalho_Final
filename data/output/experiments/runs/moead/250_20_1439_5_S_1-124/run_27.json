@@ -1,0 +1,117 @@
+{
+  "algorithm": "moead",
+  "instance": "250_20_1439_5_S_1-124.dat",
+  "tier": "large",
+  "run_id": 27,
+  "seed": 1027,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T09:49:38.923-03:00",
+  "end_timestamp": "2026-11-03T09:51:19.482-03:00",
+  "wall_seconds": 100.319793,
+  "cpu_seconds": 99.5,
+  "peak_rss_mib": 122.0,
+  "peak_rss_delta_mib": 85.328125,
+  "nds": 19,
+  "evaluations": 10000,
+  "raw_size": 19,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 100.55930140000419,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      687,
+      581198445626
+    ],
+    [
+      694,
+      564508974446
+    ],
+    [
+      696,
+      562784986518
+    ],
+    [
+      703,
+      539830902700
+    ],
+    [
+      710,
+      535368303584
+    ],
+    [
+      830,
+      526357461206
+    ],
+    [
+      831,
+      515902580404
+    ],
+    [
+      832,
+      513858355036
+    ],
+    [
+      833,
+      510798860768
+    ],
+    [
+      834,
+      509509194868
+    ],
+    [
+      835,
+      507230473052
+    ],
+    [
+      921,
+      505817037964
+    ],
+    [
+      954,
+      505340587926
+    ],
+    [
+      964,
+      498773073282
+    ],
+    [
+      1102,
+      480073431224
+    ],
+    [
+      1107,
+      478855505792
+    ],
+    [
+      1118,
+      477485385884
+    ],
+    [
+      1153,
+      469182646900
+    ],
+    [
+      1176,
+      467505125520
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 19,
+  "instance_sha256": "eaf520eb58ef7fe37ad006c84ea868969b8f9c2cc53e519a2bf0054ffa96a702",
+  "cpu_seconds_child": 99.5,
+  "peak_private_mib": 391.43359375,
+  "baseline_rss_mib": 36.671875,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 100.31979329999012
+}
