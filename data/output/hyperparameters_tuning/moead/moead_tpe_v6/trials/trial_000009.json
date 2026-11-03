@@ -1,0 +1,898 @@
+{
+  "trial": 9,
+  "parameters": {
+    "population_size": 20,
+    "n_neighbors": 15,
+    "prob_neighbor_mating": 0.5,
+    "crossover_probability": 0.2,
+    "mutation_probability": 0.01,
+    "max_evaluations": 8000
+  },
+  "worker_pid": 5632,
+  "score": 0.9127366148955902,
+  "instance_scores": [
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "median_score": 0.9260846798402619
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "median_score": 0.8942998634975902
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "median_score": 0.9399275586466359
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "median_score": 0.9705112197016195
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "median_score": 0.8253757367593305
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "median_score": 0.9202206309281037
+    }
+  ],
+  "runs": [
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9740502775559176,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          96,
+          14522541930
+        ],
+        [
+          105,
+          13942918620
+        ],
+        [
+          116,
+          11208471810
+        ],
+        [
+          121,
+          10628848500
+        ],
+        [
+          123,
+          10523706026
+        ],
+        [
+          130,
+          10128542064
+        ],
+        [
+          132,
+          9945503124
+        ],
+        [
+          135,
+          9443776280
+        ],
+        [
+          147,
+          9164536980
+        ],
+        [
+          149,
+          8981498040
+        ],
+        [
+          201,
+          8740093244
+        ],
+        [
+          213,
+          8460853944
+        ],
+        [
+          215,
+          8277815004
+        ]
+      ],
+      "wall_seconds": 4.296966524000027
+    },
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9052033060163915,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          94,
+          15159304380
+        ],
+        [
+          100,
+          13551919036
+        ],
+        [
+          103,
+          12752358460
+        ],
+        [
+          105,
+          12703548076
+        ],
+        [
+          118,
+          11794454674
+        ],
+        [
+          120,
+          11745644290
+        ],
+        [
+          123,
+          11214831364
+        ],
+        [
+          125,
+          11166020980
+        ],
+        [
+          181,
+          10992892614
+        ],
+        [
+          183,
+          10944082230
+        ]
+      ],
+      "wall_seconds": 4.4786054820000345
+    },
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9260846798402619,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          94,
+          15311836830
+        ],
+        [
+          101,
+          13952603220
+        ],
+        [
+          104,
+          12807560680
+        ],
+        [
+          109,
+          12227937370
+        ],
+        [
+          110,
+          11869607170
+        ],
+        [
+          113,
+          11600859520
+        ],
+        [
+          118,
+          11100553084
+        ],
+        [
+          162,
+          10650154620
+        ],
+        [
+          171,
+          10149848184
+        ]
+      ],
+      "wall_seconds": 4.391183990000059
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8942998634975902,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          204,
+          16090962900
+        ],
+        [
+          208,
+          15767820080
+        ],
+        [
+          213,
+          15375432370
+        ],
+        [
+          218,
+          13917577250
+        ],
+        [
+          222,
+          12939916880
+        ],
+        [
+          229,
+          12399193380
+        ],
+        [
+          246,
+          12161275040
+        ],
+        [
+          253,
+          11620551540
+        ],
+        [
+          288,
+          11534358600
+        ],
+        [
+          300,
+          10731505260
+        ],
+        [
+          329,
+          9952863420
+        ]
+      ],
+      "wall_seconds": 5.0740524039999855
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8934764111400569,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          209,
+          16237684590
+        ],
+        [
+          214,
+          15678721760
+        ],
+        [
+          221,
+          14907343370
+        ],
+        [
+          227,
+          14486386090
+        ],
+        [
+          233,
+          14143389840
+        ],
+        [
+          239,
+          13856564270
+        ],
+        [
+          247,
+          13786996560
+        ],
+        [
+          251,
+          13038376980
+        ],
+        [
+          254,
+          12802556970
+        ],
+        [
+          259,
+          12336082070
+        ],
+        [
+          263,
+          12246983750
+        ],
+        [
+          276,
+          11964839070
+        ],
+        [
+          284,
+          11853466170
+        ],
+        [
+          297,
+          11748065440
+        ],
+        [
+          309,
+          11451071040
+        ],
+        [
+          310,
+          10753457020
+        ],
+        [
+          320,
+          10212733520
+        ],
+        [
+          332,
+          10027112020
+        ],
+        [
+          347,
+          9730117620
+        ]
+      ],
+      "wall_seconds": 5.153657391000024
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.906960992760099,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          209,
+          15753131770
+        ],
+        [
+          213,
+          14663097758
+        ],
+        [
+          221,
+          13789611402
+        ],
+        [
+          225,
+          13678238502
+        ],
+        [
+          230,
+          12954153242
+        ],
+        [
+          235,
+          12827930622
+        ],
+        [
+          239,
+          12716557722
+        ],
+        [
+          246,
+          11726339654
+        ],
+        [
+          248,
+          11600117034
+        ],
+        [
+          255,
+          11488744134
+        ],
+        [
+          261,
+          11218350102
+        ],
+        [
+          265,
+          11106977202
+        ],
+        [
+          294,
+          10767047742
+        ],
+        [
+          299,
+          10511503430
+        ],
+        [
+          309,
+          10207148734
+        ],
+        [
+          315,
+          9936754702
+        ],
+        [
+          344,
+          9596825242
+        ],
+        [
+          355,
+          9215058310
+        ],
+        [
+          366,
+          8977462790
+        ]
+      ],
+      "wall_seconds": 5.36136878100001
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9399275586466359,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          69,
+          52530981346
+        ],
+        [
+          70,
+          52153927586
+        ],
+        [
+          72,
+          51218814892
+        ],
+        [
+          75,
+          51200155896
+        ]
+      ],
+      "wall_seconds": 11.947478036000007
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9394966639994342,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          72,
+          50025736736
+        ],
+        [
+          73,
+          49930827656
+        ],
+        [
+          74,
+          49867038424
+        ]
+      ],
+      "wall_seconds": 11.96552409200001
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9463700735169149,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          71,
+          56302067740
+        ],
+        [
+          72,
+          49751630274
+        ],
+        [
+          76,
+          46712828768
+        ],
+        [
+          77,
+          44402373746
+        ]
+      ],
+      "wall_seconds": 11.982113294999976
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.969168774438815,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          31,
+          31720809712
+        ]
+      ],
+      "wall_seconds": 16.111389099999997
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9718619528851108,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          31,
+          36846674800
+        ],
+        [
+          32,
+          30214241054
+        ],
+        [
+          36,
+          30186413970
+        ],
+        [
+          40,
+          30165753490
+        ],
+        [
+          51,
+          29144996650
+        ]
+      ],
+      "wall_seconds": 16.628210857
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9705112197016195,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          33,
+          33574668126
+        ],
+        [
+          35,
+          31057963406
+        ],
+        [
+          39,
+          30923347466
+        ],
+        [
+          45,
+          29181087926
+        ]
+      ],
+      "wall_seconds": 15.874306259000036
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8253757367593305,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          381,
+          292839222370
+        ],
+        [
+          383,
+          260510704008
+        ],
+        [
+          387,
+          260270138544
+        ],
+        [
+          388,
+          259448949028
+        ],
+        [
+          391,
+          259182816220
+        ],
+        [
+          392,
+          258880656700
+        ],
+        [
+          394,
+          258640091236
+        ],
+        [
+          401,
+          256431550488
+        ],
+        [
+          407,
+          256190985024
+        ],
+        [
+          413,
+          255851313820
+        ],
+        [
+          426,
+          253659688840
+        ]
+      ],
+      "wall_seconds": 40.66765810300001
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8222396437756332,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          378,
+          280607152904
+        ],
+        [
+          391,
+          279970680992
+        ]
+      ],
+      "wall_seconds": 40.679258079999954
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8275550845532826,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          375,
+          265879684838
+        ],
+        [
+          379,
+          265315653734
+        ],
+        [
+          384,
+          264765374762
+        ]
+      ],
+      "wall_seconds": 40.41909919099999
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9228434923597904,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          140,
+          199219162630
+        ],
+        [
+          143,
+          182132106338
+        ],
+        [
+          144,
+          181749564638
+        ],
+        [
+          145,
+          181102633358
+        ]
+      ],
+      "wall_seconds": 43.68521396699998
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9192096204492174,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          143,
+          204238045170
+        ],
+        [
+          144,
+          196045131826
+        ],
+        [
+          145,
+          194332119778
+        ],
+        [
+          147,
+          193901477898
+        ],
+        [
+          152,
+          192934147768
+        ],
+        [
+          155,
+          192683639448
+        ],
+        [
+          158,
+          190600643398
+        ],
+        [
+          164,
+          189681252038
+        ],
+        [
+          166,
+          189450597148
+        ]
+      ],
+      "wall_seconds": 43.531436837
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9202206309281037,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          140,
+          195001777586
+        ],
+        [
+          143,
+          194727509714
+        ]
+      ],
+      "wall_seconds": 43.980916068000056
+    }
+  ],
+  "wall_seconds": 366.468741678
+}

@@ -1,0 +1,160 @@
+{
+  "algorithm": "moead",
+  "study_name": "moead_tpe_v6",
+  "budgets": [
+    8000,
+    20000,
+    50000
+  ],
+  "seeds": [
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "configurations": [
+    {
+      "trial": 41,
+      "search_score": 0.9440878010766427,
+      "parameters": {
+        "population_size": 300,
+        "n_neighbors": 15,
+        "prob_neighbor_mating": 0.9,
+        "crossover_probability": 0.9,
+        "mutation_probability": 0.7
+      },
+      "scores": {
+        "8000": 0.9425322784561992
+      },
+      "ranks": {
+        "8000": 3
+      },
+      "gains": {}
+    },
+    {
+      "trial": 32,
+      "search_score": 0.9436161048325504,
+      "parameters": {
+        "population_size": 300,
+        "n_neighbors": 15,
+        "prob_neighbor_mating": 0.75,
+        "crossover_probability": 0.7,
+        "mutation_probability": 0.7
+      },
+      "scores": {
+        "8000": 0.9421126371883122
+      },
+      "ranks": {
+        "8000": 4
+      },
+      "gains": {}
+    },
+    {
+      "trial": 44,
+      "search_score": 0.9435179820615123,
+      "parameters": {
+        "population_size": 300,
+        "n_neighbors": 10,
+        "prob_neighbor_mating": 0.9,
+        "crossover_probability": 0.9,
+        "mutation_probability": 0.7
+      },
+      "scores": {
+        "8000": 0.9427710184717811,
+        "20000": 0.9470149453662526,
+        "50000": 0.9498581187202262
+      },
+      "ranks": {
+        "8000": 2,
+        "20000": 1,
+        "50000": 1
+      },
+      "gains": {
+        "8000->20000": 0.004243926894471506,
+        "20000->50000": 0.0028431733539735493
+      }
+    },
+    {
+      "trial": 25,
+      "search_score": 0.943473107372966,
+      "parameters": {
+        "population_size": 100,
+        "n_neighbors": 15,
+        "prob_neighbor_mating": 0.9,
+        "crossover_probability": 0.9,
+        "mutation_probability": 0.7
+      },
+      "scores": {
+        "8000": 0.9429383627083162,
+        "20000": 0.9456059326579238
+      },
+      "ranks": {
+        "8000": 1,
+        "20000": 2
+      },
+      "gains": {
+        "8000->20000": 0.0026675699496075955
+      }
+    },
+    {
+      "trial": 15,
+      "search_score": 0.9372625077253234,
+      "parameters": {
+        "population_size": 150,
+        "n_neighbors": 20,
+        "prob_neighbor_mating": 0.25,
+        "crossover_probability": 0.6,
+        "mutation_probability": 0.2
+      },
+      "scores": {
+        "8000": 0.9365373059241686,
+        "20000": 0.9421193226743533,
+        "50000": 0.9456774560753405
+      },
+      "ranks": {
+        "8000": 5,
+        "20000": 3,
+        "50000": 2
+      },
+      "gains": {
+        "8000->20000": 0.00558201675018466,
+        "20000->50000": 0.0035581334009872068
+      }
+    }
+  ],
+  "ranking": {
+    "8000": [
+      25,
+      44,
+      41,
+      32,
+      15
+    ],
+    "20000": [
+      44,
+      25,
+      15
+    ],
+    "50000": [
+      44,
+      15
+    ]
+  },
+  "recommended": {
+    "trial": 44,
+    "budget": 50000,
+    "solver_config": {
+      "population_size": 300,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7,
+      "max_evaluations": 50000
+    }
+  },
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "evidence": "confirmation/trial_<n>_E<orçamento>.json"
+}

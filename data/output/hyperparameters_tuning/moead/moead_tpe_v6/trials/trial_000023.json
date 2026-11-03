@@ -1,0 +1,1462 @@
+{
+  "trial": 23,
+  "parameters": {
+    "population_size": 200,
+    "n_neighbors": 2,
+    "prob_neighbor_mating": 0.75,
+    "crossover_probability": 1.0,
+    "mutation_probability": 0.5,
+    "max_evaluations": 8000
+  },
+  "worker_pid": 5632,
+  "score": 0.9355305819179593,
+  "instance_scores": [
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "median_score": 0.9806301815607763
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "median_score": 0.9254053983588864
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "median_score": 0.9614500385513547
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "median_score": 0.983011825932171
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "median_score": 0.83356092299031
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "median_score": 0.929125124114258
+    }
+  ],
+  "runs": [
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9800677024671988,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          95,
+          14562087380
+        ],
+        [
+          102,
+          14101907470
+        ],
+        [
+          104,
+          13079536530
+        ],
+        [
+          107,
+          12276198960
+        ],
+        [
+          116,
+          11464726326
+        ],
+        [
+          119,
+          10413753534
+        ],
+        [
+          122,
+          10169701614
+        ],
+        [
+          125,
+          9900953964
+        ],
+        [
+          128,
+          9798006666
+        ],
+        [
+          133,
+          9520090928
+        ],
+        [
+          134,
+          9034569648
+        ],
+        [
+          137,
+          8985759264
+        ],
+        [
+          151,
+          8981498040
+        ],
+        [
+          155,
+          8917902500
+        ],
+        [
+          156,
+          8749648716
+        ],
+        [
+          201,
+          8560928144
+        ],
+        [
+          203,
+          8441484744
+        ],
+        [
+          218,
+          8214219464
+        ],
+        [
+          222,
+          8094776064
+        ]
+      ],
+      "wall_seconds": 5.403217165000115
+    },
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.981822393954003,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          94,
+          14705580870
+        ],
+        [
+          96,
+          14681530780
+        ],
+        [
+          97,
+          13551919036
+        ],
+        [
+          109,
+          12544946610
+        ],
+        [
+          112,
+          12227388576
+        ],
+        [
+          113,
+          12117855750
+        ],
+        [
+          115,
+          11696575650
+        ],
+        [
+          117,
+          11513536710
+        ],
+        [
+          119,
+          11025432870
+        ],
+        [
+          121,
+          10852175376
+        ],
+        [
+          122,
+          10628848500
+        ],
+        [
+          125,
+          10225097526
+        ],
+        [
+          126,
+          9645474216
+        ],
+        [
+          130,
+          9534876084
+        ],
+        [
+          134,
+          9217608588
+        ],
+        [
+          137,
+          9145167780
+        ],
+        [
+          138,
+          9034569648
+        ],
+        [
+          151,
+          8981498040
+        ],
+        [
+          153,
+          8798459100
+        ],
+        [
+          156,
+          8749648716
+        ],
+        [
+          202,
+          8560928144
+        ],
+        [
+          204,
+          8441484744
+        ],
+        [
+          215,
+          8277815004
+        ],
+        [
+          221,
+          8214219464
+        ],
+        [
+          225,
+          8094776064
+        ],
+        [
+          227,
+          8045965680
+        ]
+      ],
+      "wall_seconds": 4.936055211000166
+    },
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9806301815607763,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          96,
+          15010000130
+        ],
+        [
+          97,
+          14681530780
+        ],
+        [
+          102,
+          12965903890
+        ],
+        [
+          106,
+          12658256430
+        ],
+        [
+          113,
+          12306963706
+        ],
+        [
+          116,
+          12123924766
+        ],
+        [
+          119,
+          10731021030
+        ],
+        [
+          120,
+          10081410344
+        ],
+        [
+          121,
+          9898371404
+        ],
+        [
+          128,
+          9803623734
+        ],
+        [
+          129,
+          9400647528
+        ],
+        [
+          132,
+          9217608588
+        ],
+        [
+          134,
+          9154013048
+        ],
+        [
+          135,
+          9034569648
+        ],
+        [
+          154,
+          8798459100
+        ],
+        [
+          163,
+          8749648716
+        ],
+        [
+          202,
+          8740093244
+        ],
+        [
+          205,
+          8713460594
+        ],
+        [
+          214,
+          8595082500
+        ],
+        [
+          218,
+          8366751914
+        ],
+        [
+          220,
+          8229004620
+        ],
+        [
+          221,
+          8045965680
+        ]
+      ],
+      "wall_seconds": 4.9998423150000235
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9254053983588864,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          208,
+          16489807010
+        ],
+        [
+          210,
+          16448808870
+        ],
+        [
+          215,
+          15768949950
+        ],
+        [
+          218,
+          14882453948
+        ],
+        [
+          219,
+          14348509668
+        ],
+        [
+          222,
+          14023978722
+        ],
+        [
+          225,
+          13807786168
+        ],
+        [
+          229,
+          13547109018
+        ],
+        [
+          231,
+          13123633742
+        ],
+        [
+          235,
+          12097550372
+        ],
+        [
+          237,
+          11251761972
+        ],
+        [
+          246,
+          10904052550
+        ],
+        [
+          250,
+          10787030300
+        ],
+        [
+          252,
+          10644472988
+        ],
+        [
+          254,
+          10487969852
+        ],
+        [
+          261,
+          10190329812
+        ],
+        [
+          277,
+          9907507210
+        ],
+        [
+          281,
+          9686536920
+        ],
+        [
+          301,
+          9295472772
+        ],
+        [
+          339,
+          9212669442
+        ],
+        [
+          346,
+          8769114762
+        ],
+        [
+          386,
+          8430153762
+        ],
+        [
+          387,
+          8055650280
+        ],
+        [
+          489,
+          7892690744
+        ]
+      ],
+      "wall_seconds": 6.340146268999888
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9180318157459025,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          207,
+          16189648974
+        ],
+        [
+          218,
+          15692764430
+        ],
+        [
+          223,
+          15294404550
+        ],
+        [
+          224,
+          14524801670
+        ],
+        [
+          228,
+          13985434014
+        ],
+        [
+          229,
+          12373722882
+        ],
+        [
+          240,
+          12117597494
+        ],
+        [
+          244,
+          11703258024
+        ],
+        [
+          253,
+          11541073256
+        ],
+        [
+          259,
+          11306060296
+        ],
+        [
+          260,
+          11119405772
+        ],
+        [
+          264,
+          9929620380
+        ],
+        [
+          266,
+          9774021140
+        ],
+        [
+          288,
+          9699611130
+        ],
+        [
+          329,
+          9116501364
+        ],
+        [
+          339,
+          8883715862
+        ],
+        [
+          350,
+          8677595292
+        ],
+        [
+          360,
+          8641568580
+        ],
+        [
+          361,
+          8468214240
+        ],
+        [
+          458,
+          8406491056
+        ]
+      ],
+      "wall_seconds": 6.718708228999958
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9260148228641636,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          205,
+          16406680860
+        ],
+        [
+          206,
+          16252534310
+        ],
+        [
+          208,
+          16120662340
+        ],
+        [
+          209,
+          16046413740
+        ],
+        [
+          215,
+          15632719910
+        ],
+        [
+          217,
+          15269063180
+        ],
+        [
+          221,
+          13549497886
+        ],
+        [
+          222,
+          13420240758
+        ],
+        [
+          227,
+          13275391424
+        ],
+        [
+          228,
+          11309966418
+        ],
+        [
+          240,
+          11269226534
+        ],
+        [
+          259,
+          10566447394
+        ],
+        [
+          263,
+          10464662248
+        ],
+        [
+          265,
+          10307319780
+        ],
+        [
+          276,
+          10074082330
+        ],
+        [
+          291,
+          10052066006
+        ],
+        [
+          317,
+          9642116888
+        ],
+        [
+          321,
+          9464146222
+        ],
+        [
+          333,
+          9368365528
+        ],
+        [
+          335,
+          9264417488
+        ],
+        [
+          348,
+          9172316942
+        ],
+        [
+          349,
+          8979173736
+        ],
+        [
+          350,
+          8797200102
+        ],
+        [
+          367,
+          8066432468
+        ],
+        [
+          417,
+          7985404648
+        ],
+        [
+          434,
+          7982692960
+        ]
+      ],
+      "wall_seconds": 5.983756097999958
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9620700258112334,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          69,
+          52734099690
+        ],
+        [
+          70,
+          50662240930
+        ],
+        [
+          73,
+          46259266668
+        ],
+        [
+          79,
+          38188185592
+        ],
+        [
+          83,
+          36707829918
+        ],
+        [
+          84,
+          35979063768
+        ],
+        [
+          85,
+          35078395968
+        ],
+        [
+          88,
+          33658891864
+        ],
+        [
+          102,
+          32649401442
+        ],
+        [
+          120,
+          32476628178
+        ],
+        [
+          149,
+          31977128792
+        ],
+        [
+          185,
+          31661055730
+        ]
+      ],
+      "wall_seconds": 15.54393069699995
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9612502504657742,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          70,
+          54796919490
+        ],
+        [
+          72,
+          53937734060
+        ],
+        [
+          75,
+          49158900472
+        ],
+        [
+          76,
+          44357566330
+        ],
+        [
+          79,
+          40807611636
+        ],
+        [
+          85,
+          38608077566
+        ],
+        [
+          91,
+          37411835774
+        ],
+        [
+          99,
+          36650077420
+        ],
+        [
+          101,
+          35242323964
+        ],
+        [
+          113,
+          33579930092
+        ],
+        [
+          123,
+          33214433288
+        ],
+        [
+          131,
+          33197001008
+        ],
+        [
+          135,
+          32510233740
+        ],
+        [
+          149,
+          32269345456
+        ],
+        [
+          153,
+          31710640882
+        ]
+      ],
+      "wall_seconds": 15.60588000000007
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9614500385513547,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          70,
+          55357819240
+        ],
+        [
+          72,
+          43325123406
+        ],
+        [
+          81,
+          43116904506
+        ],
+        [
+          85,
+          42490601424
+        ],
+        [
+          86,
+          40627090692
+        ],
+        [
+          87,
+          40421906300
+        ],
+        [
+          90,
+          39921825838
+        ],
+        [
+          91,
+          37368125946
+        ],
+        [
+          94,
+          36432335330
+        ],
+        [
+          97,
+          35003082062
+        ],
+        [
+          99,
+          34866852022
+        ],
+        [
+          105,
+          34760999344
+        ],
+        [
+          106,
+          34072973078
+        ],
+        [
+          109,
+          32115424880
+        ],
+        [
+          112,
+          31911467204
+        ],
+        [
+          159,
+          31586129208
+        ]
+      ],
+      "wall_seconds": 15.567468362
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.983011825932171,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          31,
+          39237156900
+        ],
+        [
+          32,
+          34300109230
+        ],
+        [
+          37,
+          24127502236
+        ],
+        [
+          40,
+          24013030264
+        ],
+        [
+          44,
+          21965415286
+        ],
+        [
+          45,
+          20323875586
+        ],
+        [
+          48,
+          19698960630
+        ],
+        [
+          49,
+          19442351012
+        ],
+        [
+          53,
+          19400545822
+        ],
+        [
+          57,
+          19232421166
+        ],
+        [
+          58,
+          19160238614
+        ],
+        [
+          67,
+          19051609684
+        ],
+        [
+          68,
+          18817242364
+        ],
+        [
+          72,
+          18463819028
+        ]
+      ],
+      "wall_seconds": 21.142201442999976
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.980816158704321,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          34,
+          41054794910
+        ],
+        [
+          35,
+          39490409190
+        ],
+        [
+          37,
+          38443826750
+        ],
+        [
+          38,
+          26018646360
+        ],
+        [
+          39,
+          26016386620
+        ],
+        [
+          44,
+          23053899762
+        ],
+        [
+          45,
+          21097513716
+        ],
+        [
+          47,
+          20316160188
+        ],
+        [
+          51,
+          20179123098
+        ],
+        [
+          56,
+          19938105686
+        ],
+        [
+          57,
+          19650150246
+        ],
+        [
+          65,
+          19490451192
+        ],
+        [
+          73,
+          18656122902
+        ]
+      ],
+      "wall_seconds": 21.08574584400003
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9830602897082132,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          32,
+          38642683870
+        ],
+        [
+          40,
+          35176694658
+        ],
+        [
+          41,
+          26208884186
+        ],
+        [
+          42,
+          22455649738
+        ],
+        [
+          43,
+          22100128072
+        ],
+        [
+          44,
+          21665289532
+        ],
+        [
+          45,
+          20433021028
+        ],
+        [
+          47,
+          19929518674
+        ],
+        [
+          48,
+          19555370294
+        ],
+        [
+          49,
+          18870152562
+        ],
+        [
+          53,
+          18315321828
+        ],
+        [
+          57,
+          17748805010
+        ]
+      ],
+      "wall_seconds": 20.95970141199996
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8292550116418848,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          380,
+          294181185110
+        ],
+        [
+          382,
+          287306248980
+        ],
+        [
+          398,
+          271309549520
+        ],
+        [
+          408,
+          256973758960
+        ],
+        [
+          416,
+          252276566550
+        ],
+        [
+          420,
+          251688065690
+        ],
+        [
+          435,
+          249258522370
+        ],
+        [
+          440,
+          246185082278
+        ],
+        [
+          446,
+          245791274160
+        ],
+        [
+          450,
+          238079524026
+        ],
+        [
+          479,
+          236795539758
+        ]
+      ],
+      "wall_seconds": 57.77679296799988
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8363380874183881,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          372,
+          285340113770
+        ],
+        [
+          377,
+          276734862440
+        ],
+        [
+          396,
+          253140206896
+        ],
+        [
+          398,
+          252156897176
+        ],
+        [
+          400,
+          241755023418
+        ],
+        [
+          403,
+          239870271130
+        ],
+        [
+          446,
+          235759093866
+        ],
+        [
+          463,
+          234108579770
+        ],
+        [
+          490,
+          234100315578
+        ],
+        [
+          526,
+          231119072878
+        ]
+      ],
+      "wall_seconds": 57.91883011599998
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.83356092299031,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          375,
+          280371752560
+        ],
+        [
+          386,
+          254139754462
+        ],
+        [
+          400,
+          248311045670
+        ],
+        [
+          401,
+          247136626510
+        ],
+        [
+          410,
+          244919337340
+        ],
+        [
+          417,
+          243820135240
+        ],
+        [
+          428,
+          242750793990
+        ],
+        [
+          429,
+          240320605030
+        ],
+        [
+          465,
+          234349403490
+        ]
+      ],
+      "wall_seconds": 57.78709165300006
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9303031711040426,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          137,
+          199125060600
+        ],
+        [
+          156,
+          176081039130
+        ],
+        [
+          158,
+          162752156432
+        ],
+        [
+          162,
+          160971933260
+        ],
+        [
+          165,
+          160860463514
+        ],
+        [
+          166,
+          157671389298
+        ],
+        [
+          170,
+          153280940452
+        ],
+        [
+          172,
+          152539584322
+        ],
+        [
+          186,
+          152283394370
+        ]
+      ],
+      "wall_seconds": 68.948488279
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.927465990761385,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          140,
+          198948639470
+        ],
+        [
+          154,
+          168513847792
+        ],
+        [
+          156,
+          162039305308
+        ],
+        [
+          178,
+          158923995462
+        ],
+        [
+          184,
+          158826181002
+        ],
+        [
+          187,
+          157710999312
+        ],
+        [
+          201,
+          156639817988
+        ]
+      ],
+      "wall_seconds": 61.95600324500015
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 40,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.929125124114258,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 200,
+      "points": [
+        [
+          137,
+          198230203560
+        ],
+        [
+          161,
+          191160606970
+        ],
+        [
+          163,
+          189541180440
+        ],
+        [
+          165,
+          189360885470
+        ],
+        [
+          166,
+          177142503572
+        ],
+        [
+          167,
+          172739045080
+        ],
+        [
+          168,
+          172629350844
+        ],
+        [
+          170,
+          161743828162
+        ],
+        [
+          182,
+          158238584038
+        ]
+      ],
+      "wall_seconds": 50.8202496739998
+    }
+  ],
+  "wall_seconds": 499.74028872099984
+}
