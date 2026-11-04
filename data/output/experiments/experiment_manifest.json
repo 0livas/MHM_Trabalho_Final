@@ -129,9 +129,121 @@
           "budget_override": 10000
         }
       }
+    },
+    {
+      "session": 3,
+      "at": "2026-11-04T00:16:50.448-03:00",
+      "algorithms": [
+        "exact_dp",
+        "ociosidade",
+        "spea2",
+        "moead",
+        "vns_vnd",
+        "age"
+      ],
+      "runs": 30,
+      "instances": [
+        "6_2_1439_3_S_1-9.dat",
+        "10_2_1439_3_S_1-9.dat",
+        "14_2_1439_3_S_1-9_derivada.dat",
+        "50_10_1439_5_S_1-9.dat",
+        "50_20_1439_5_S_1-124.dat",
+        "250_10_1439_5_S_1-9.dat",
+        "250_20_1439_5_S_1-124.dat",
+        "750_10_1439_5_S_1-9.dat",
+        "750_20_1439_5_S_1-124.dat"
+      ],
+      "configurations": {
+        "exact_dp": {
+          "parameters": {
+            "total_seconds": 3600,
+            "memory_limit_mib": 4096,
+            "max_jobs": 13,
+            "grace_seconds": 300
+          },
+          "source": "CLI (salvaguardas de tempo/memória)",
+          "selection": "exact_options",
+          "status": "deterministic"
+        },
+        "ociosidade": {
+          "parameters": {
+            "bases": "construtiva",
+            "modos": "livres"
+          },
+          "source": "ociosidade.executar defaults",
+          "selection": "defaults",
+          "status": "deterministic"
+        },
+        "spea2": {
+          "parameters": {
+            "population_size": 200,
+            "crossover_probability": 0.7,
+            "mutation_probability": 0.5,
+            "max_evaluations": 10000
+          },
+          "study": "spea2_tpe_v6_pedro",
+          "source": "data\\output\\hyperparameters_tuning\\spea2\\spea2_tpe_v6_pedro\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 66,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "moead": {
+          "parameters": {
+            "population_size": 300,
+            "n_neighbors": 10,
+            "prob_neighbor_mating": 0.9,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "moead_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\moead\\moead_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 44,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "vns_vnd": {
+          "parameters": {
+            "initial_solutions": 16,
+            "max_candidates_per_neighborhood": 10,
+            "shaking_attempts": 20,
+            "max_evaluations": 10000
+          },
+          "study": "vns_vnd_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\vns_vnd\\vns_vnd_tpe_v6\\best_parameters.json",
+          "selection": "best_parameters.solver_config",
+          "trial": 35,
+          "budget": 8000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 8000,
+          "budget_override": 10000
+        },
+        "age": {
+          "parameters": {
+            "population_size": 100,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "age_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\age\\age_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 43,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        }
+      }
     }
   ],
-  "updated": "2026-11-03T15:10:47.733-03:00",
+  "updated": "2026-11-04T00:16:50.403-03:00",
   "base_seed": 1000,
   "seed_rule": "SEED_k = BASE_SEED + k (k = 1..R), compartilhada entre MHs",
   "configurations": {
@@ -234,13 +346,13 @@
   },
   "source_sha256": {
     "src\\exact_methods\\custom_exact_dp.py": "aee35f5f71362a4529d84ebf78e94d3a71e0c025905757ce0dc0c1a5ccc473d9",
-    "src\\experiments\\__init__.py": "33276b9029807d654f773bdb1a68f2b9864d0ab4b6547f52a96644c63c18f76c",
+    "src\\experiments\\__init__.py": "3c7e45ba3548d29ba1014d429dfe25b964601881e4ac567d58c38e744387eb22",
     "src\\experiments\\adapters.py": "79155694630096a67ee06da06a5f1f1ebd8d7764f4e5f55a5541d1de19595d81",
     "src\\experiments\\campaign.py": "7cf113e1c37308307fae3868ef7425347b1200d368444bcadd277e12e2f55adf",
-    "src\\experiments\\config.py": "ffa8286458dd2f6f38d13cda4b63f24074848b3ab297eece71ca977046f89cfb",
+    "src\\experiments\\config.py": "3e6a1f3411e364ce9a957870bb6b10e99b795e402842a8b5cfe49a4788f40062",
     "src\\experiments\\ledger.py": "5b03b38137521336d8fec7a889490386a5d6ca20f51a70262ecb140ef0e9b141",
     "src\\experiments\\metrics.py": "986fb54149e28f435de36bbccae731ed153e93771dd45cb742df295d4cccedb8",
-    "src\\experiments\\runner.py": "2103955b5111561b01f5755d0ad8d9ab15adcbd93831985119625f845a6a1b6c",
+    "src\\experiments\\runner.py": "959ba5c718465f9bc0dd8b8e8d299de7ac11d53c7b2e16afa5620ad34689ee0e",
     "src\\heuristics\\ociosidade\\ociosidade.py": "944029d25c596ace2c1835c64ea351356ed545e8790aa49c1bb1ca300384b4e2",
     "src\\metaheuristics\\age.py": "3abc6496a26986626dff136dfc7cea120e857ec5c3df67b70e51906cb911ed59",
     "src\\metaheuristics\\age_spike.py": "999b19f6a18e527bcb840bad4b27b80326dbabade0993070e8b9749d774a1fed",
