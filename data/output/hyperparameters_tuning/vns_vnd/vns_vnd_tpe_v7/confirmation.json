@@ -1,0 +1,148 @@
+{
+  "algorithm": "vns_vnd",
+  "study_name": "vns_vnd_tpe_v7",
+  "budgets": [
+    8000,
+    20000,
+    50000
+  ],
+  "seeds": [
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "configurations": [
+    {
+      "trial": 32,
+      "search_score": 0.9407661119668475,
+      "parameters": {
+        "initial_solutions": 16,
+        "max_candidates_per_neighborhood": 10,
+        "shaking_attempts": 1
+      },
+      "scores": {
+        "8000": 0.9385898588949795,
+        "20000": 0.9421887514532526
+      },
+      "ranks": {
+        "8000": 1,
+        "20000": 2
+      },
+      "gains": {
+        "8000->20000": 0.00359889255827317
+      }
+    },
+    {
+      "trial": 65,
+      "search_score": 0.9404342811022397,
+      "parameters": {
+        "initial_solutions": 16,
+        "max_candidates_per_neighborhood": 25,
+        "shaking_attempts": 20
+      },
+      "scores": {
+        "8000": 0.9367709422250563,
+        "20000": 0.9422250750416863,
+        "50000": 0.9457408332362389
+      },
+      "ranks": {
+        "8000": 2,
+        "20000": 1,
+        "50000": 1
+      },
+      "gains": {
+        "8000->20000": 0.005454132816629986,
+        "20000->50000": 0.0035157581945526317
+      }
+    },
+    {
+      "trial": 38,
+      "search_score": 0.940271287472076,
+      "parameters": {
+        "initial_solutions": 16,
+        "max_candidates_per_neighborhood": 50,
+        "shaking_attempts": 5
+      },
+      "scores": {
+        "8000": 0.9354609279144349
+      },
+      "ranks": {
+        "8000": 4
+      },
+      "gains": {}
+    },
+    {
+      "trial": 31,
+      "search_score": 0.9399429631656179,
+      "parameters": {
+        "initial_solutions": 16,
+        "max_candidates_per_neighborhood": 25,
+        "shaking_attempts": 10
+      },
+      "scores": {
+        "8000": 0.9365581134146237
+      },
+      "ranks": {
+        "8000": 3
+      },
+      "gains": {}
+    },
+    {
+      "trial": 10,
+      "search_score": 0.9312397307637788,
+      "parameters": {
+        "initial_solutions": 8,
+        "max_candidates_per_neighborhood": 100,
+        "shaking_attempts": 40
+      },
+      "scores": {
+        "8000": 0.9315587217836854,
+        "20000": 0.9376525026096212,
+        "50000": 0.9430609223497377
+      },
+      "ranks": {
+        "8000": 5,
+        "20000": 3,
+        "50000": 2
+      },
+      "gains": {
+        "8000->20000": 0.006093780825935813,
+        "20000->50000": 0.005408419740116521
+      }
+    }
+  ],
+  "ranking": {
+    "8000": [
+      32,
+      65,
+      31,
+      38,
+      10
+    ],
+    "20000": [
+      65,
+      32,
+      10
+    ],
+    "50000": [
+      65,
+      10
+    ]
+  },
+  "recommended": {
+    "trial": 65,
+    "budget": 50000,
+    "solver_config": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 20,
+      "max_evaluations": 50000
+    }
+  },
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "evidence": "confirmation/trial_<n>_E<orçamento>.json"
+}

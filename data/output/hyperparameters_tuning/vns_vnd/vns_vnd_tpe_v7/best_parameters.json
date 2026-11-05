@@ -1,0 +1,60 @@
+{
+  "algorithm": "vns_vnd",
+  "study_name": "vns_vnd_tpe_v7",
+  "output_dir": "/home/alvarengazv/Documents/mhm/MHM_Trabalho_Final/data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7",
+  "completed_trials": 60,
+  "failed_trials": 0,
+  "best_score": 0.9407661119668475,
+  "best_parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 10,
+    "shaking_attempts": 1,
+    "max_evaluations": 8000
+  },
+  "budget_mode": "evaluations",
+  "fixed_evaluations": 8000,
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "best_trial": 32,
+  "search_parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 10,
+    "shaking_attempts": 1
+  },
+  "solver_config": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 10,
+    "shaking_attempts": 1,
+    "max_evaluations": 8000
+  },
+  "evidence": "trials/trial_000032.json",
+  "vns_vnd_config": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 10,
+    "shaking_attempts": 1,
+    "max_evaluations": 8000
+  },
+  "search_space_size": 125,
+  "rejected_duplicate_suggestions": 9,
+  "total_evaluation_seconds": 21527.918916111994,
+  "search_exhausted": false,
+  "worker_pids": [
+    17956,
+    17959,
+    17971,
+    17983,
+    17995,
+    18007
+  ],
+  "median_seconds_per_instance": {
+    "6_2_1439_3_S_1-9.dat": 1.3340760334999686,
+    "14_2_1439_3_S_1-9_derivada.dat": 2.0646578844998658,
+    "50_10_1439_5_S_1-9.dat": 9.750950986499902,
+    "50_20_1439_5_S_1-9.dat": 14.34425479149968,
+    "250_10_1439_5_S_1-9.dat": 43.65033418299981,
+    "250_20_1439_5_S_1-9.dat": 48.619683076
+  },
+  "estimated_30_runs_serial_seconds": 3592.918708649977,
+  "timing_estimate_scope": "calibration configurations and budgets only; remeasure frozen configuration at final budget"
+}

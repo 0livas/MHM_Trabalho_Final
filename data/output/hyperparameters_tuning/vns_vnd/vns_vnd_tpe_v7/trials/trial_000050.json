@@ -1,0 +1,2138 @@
+{
+  "trial": 50,
+  "parameters": {
+    "initial_solutions": 8,
+    "max_candidates_per_neighborhood": 10,
+    "shaking_attempts": 5,
+    "max_evaluations": 8000
+  },
+  "worker_pid": 17995,
+  "score": 0.9370665964703676,
+  "instance_scores": [
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "median_score": 0.9821177853932616
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "median_score": 0.9457359818654046
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "median_score": 0.9606639305694155
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "median_score": 0.9783962268207737
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "median_score": 0.8280855001035149
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "median_score": 0.9274001540698356
+    }
+  ],
+  "runs": [
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9821177853932616,
+      "attempts": 8000,
+      "rejected": 613,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          94,
+          14562087380
+        ],
+        [
+          95,
+          14532226530
+        ],
+        [
+          96,
+          14334111896
+        ],
+        [
+          98,
+          14214668496
+        ],
+        [
+          99,
+          13683855570
+        ],
+        [
+          101,
+          13564412170
+        ],
+        [
+          102,
+          13415107920
+        ],
+        [
+          104,
+          12807560680
+        ],
+        [
+          106,
+          12276198960
+        ],
+        [
+          108,
+          12093160020
+        ],
+        [
+          110,
+          12044349636
+        ],
+        [
+          111,
+          11696575650
+        ],
+        [
+          113,
+          11513536710
+        ],
+        [
+          114,
+          11456494416
+        ],
+        [
+          115,
+          11307190166
+        ],
+        [
+          116,
+          11208471810
+        ],
+        [
+          117,
+          11128025066
+        ],
+        [
+          118,
+          11025432870
+        ],
+        [
+          120,
+          10358970980
+        ],
+        [
+          123,
+          10344540926
+        ],
+        [
+          125,
+          10060362480
+        ],
+        [
+          126,
+          9645474216
+        ],
+        [
+          128,
+          9596663832
+        ],
+        [
+          135,
+          9034569648
+        ],
+        [
+          136,
+          8985759264
+        ],
+        [
+          149,
+          8981498040
+        ],
+        [
+          151,
+          8932687656
+        ],
+        [
+          152,
+          8798459100
+        ],
+        [
+          154,
+          8749648716
+        ],
+        [
+          201,
+          8441484744
+        ],
+        [
+          203,
+          8392674360
+        ],
+        [
+          218,
+          8094776064
+        ],
+        [
+          223,
+          8045965680
+        ]
+      ],
+      "wall_seconds": 1.3790126200001396
+    },
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9812933935948158,
+      "attempts": 8000,
+      "rejected": 632,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          94,
+          14532226530
+        ],
+        [
+          95,
+          14382922280
+        ],
+        [
+          96,
+          14334111896
+        ],
+        [
+          97,
+          14263478880
+        ],
+        [
+          99,
+          13683855570
+        ],
+        [
+          103,
+          13515601786
+        ],
+        [
+          104,
+          13195751730
+        ],
+        [
+          105,
+          12888523936
+        ],
+        [
+          106,
+          12276198960
+        ],
+        [
+          108,
+          12168280234
+        ],
+        [
+          109,
+          12093160020
+        ],
+        [
+          111,
+          11696575650
+        ],
+        [
+          114,
+          11456494416
+        ],
+        [
+          115,
+          11307190166
+        ],
+        [
+          116,
+          11208471810
+        ],
+        [
+          117,
+          11128025066
+        ],
+        [
+          120,
+          10736250714
+        ],
+        [
+          121,
+          10523706026
+        ],
+        [
+          122,
+          10329110130
+        ],
+        [
+          123,
+          10179805880
+        ],
+        [
+          125,
+          10060362480
+        ],
+        [
+          126,
+          9645474216
+        ],
+        [
+          128,
+          9596663832
+        ],
+        [
+          135,
+          9034569648
+        ],
+        [
+          149,
+          8981498040
+        ],
+        [
+          152,
+          8798459100
+        ],
+        [
+          154,
+          8749648716
+        ],
+        [
+          201,
+          8441484744
+        ],
+        [
+          205,
+          8392674360
+        ],
+        [
+          223,
+          8094776064
+        ],
+        [
+          1019,
+          8045965680
+        ]
+      ],
+      "wall_seconds": 1.45498455500001
+    },
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9823538477616096,
+      "attempts": 8000,
+      "rejected": 752,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          94,
+          14705580870
+        ],
+        [
+          96,
+          14522541930
+        ],
+        [
+          97,
+          13417690480
+        ],
+        [
+          98,
+          13219575846
+        ],
+        [
+          99,
+          12871801860
+        ],
+        [
+          100,
+          12752358460
+        ],
+        [
+          101,
+          12569319520
+        ],
+        [
+          102,
+          12538813030
+        ],
+        [
+          104,
+          12355774090
+        ],
+        [
+          106,
+          12306963706
+        ],
+        [
+          107,
+          11959189720
+        ],
+        [
+          109,
+          11776150780
+        ],
+        [
+          116,
+          11458883284
+        ],
+        [
+          118,
+          11275844344
+        ],
+        [
+          119,
+          10499171706
+        ],
+        [
+          120,
+          10032599960
+        ],
+        [
+          122,
+          9778928004
+        ],
+        [
+          123,
+          9730117620
+        ],
+        [
+          124,
+          9669104640
+        ],
+        [
+          125,
+          9534876084
+        ],
+        [
+          127,
+          9486065700
+        ],
+        [
+          129,
+          9400647528
+        ],
+        [
+          131,
+          9217608588
+        ],
+        [
+          133,
+          9168798204
+        ],
+        [
+          134,
+          9034569648
+        ],
+        [
+          136,
+          8985759264
+        ],
+        [
+          152,
+          8798459100
+        ],
+        [
+          155,
+          8749648716
+        ],
+        [
+          201,
+          8441484744
+        ],
+        [
+          204,
+          8392674360
+        ],
+        [
+          215,
+          8277815004
+        ],
+        [
+          218,
+          8094776064
+        ],
+        [
+          220,
+          8045965680
+        ]
+      ],
+      "wall_seconds": 1.4056967699998495
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9578244990394621,
+      "attempts": 8000,
+      "rejected": 785,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          201,
+          16136125418
+        ],
+        [
+          202,
+          15792515810
+        ],
+        [
+          203,
+          15680335860
+        ],
+        [
+          204,
+          15518764450
+        ],
+        [
+          207,
+          15330883210
+        ],
+        [
+          208,
+          15246788600
+        ],
+        [
+          209,
+          15223706970
+        ],
+        [
+          210,
+          15192199738
+        ],
+        [
+          211,
+          15145229428
+        ],
+        [
+          212,
+          15001058016
+        ],
+        [
+          213,
+          14938301808
+        ],
+        [
+          214,
+          14851818330
+        ],
+        [
+          216,
+          14705032076
+        ],
+        [
+          217,
+          14539425416
+        ],
+        [
+          220,
+          14283622848
+        ],
+        [
+          225,
+          14189004306
+        ],
+        [
+          226,
+          14142421380
+        ],
+        [
+          227,
+          13973586520
+        ],
+        [
+          229,
+          13905503782
+        ],
+        [
+          230,
+          13767272258
+        ],
+        [
+          232,
+          13532614400
+        ],
+        [
+          233,
+          13276327602
+        ],
+        [
+          234,
+          13099906472
+        ],
+        [
+          235,
+          13053743212
+        ],
+        [
+          236,
+          12961416692
+        ],
+        [
+          238,
+          12916673840
+        ],
+        [
+          239,
+          12638273872
+        ],
+        [
+          241,
+          12606960332
+        ],
+        [
+          243,
+          12416431968
+        ],
+        [
+          244,
+          12296020108
+        ],
+        [
+          245,
+          11473829850
+        ],
+        [
+          252,
+          11312258440
+        ],
+        [
+          263,
+          11232973848
+        ],
+        [
+          274,
+          10745644776
+        ],
+        [
+          290,
+          10720658508
+        ],
+        [
+          291,
+          10705808788
+        ],
+        [
+          294,
+          10609285608
+        ],
+        [
+          299,
+          10591465944
+        ],
+        [
+          300,
+          10542461868
+        ],
+        [
+          301,
+          10460788408
+        ],
+        [
+          310,
+          10364265228
+        ],
+        [
+          318,
+          10226162832
+        ],
+        [
+          320,
+          9615645648
+        ],
+        [
+          332,
+          9066593392
+        ],
+        [
+          351,
+          9039347384
+        ],
+        [
+          353,
+          8978592660
+        ],
+        [
+          354,
+          8832613456
+        ],
+        [
+          357,
+          8777217544
+        ],
+        [
+          369,
+          8067723748
+        ],
+        [
+          403,
+          7576133452
+        ],
+        [
+          418,
+          7524805072
+        ],
+        [
+          433,
+          7153562072
+        ],
+        [
+          440,
+          7055553920
+        ],
+        [
+          444,
+          7048129060
+        ],
+        [
+          447,
+          6985760236
+        ],
+        [
+          449,
+          6945665992
+        ],
+        [
+          450,
+          6901116832
+        ],
+        [
+          457,
+          6803108680
+        ],
+        [
+          499,
+          6754879372
+        ],
+        [
+          512,
+          6578942472
+        ],
+        [
+          518,
+          6152626380
+        ],
+        [
+          530,
+          6004129180
+        ],
+        [
+          585,
+          5998899496
+        ],
+        [
+          592,
+          5894951456
+        ],
+        [
+          593,
+          5880101736
+        ],
+        [
+          633,
+          5831872428
+        ]
+      ],
+      "wall_seconds": 2.1950925880000796
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9457359818654046,
+      "attempts": 8000,
+      "rejected": 795,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          204,
+          16252534310
+        ],
+        [
+          205,
+          16076113180
+        ],
+        [
+          206,
+          16029949920
+        ],
+        [
+          208,
+          15974554008
+        ],
+        [
+          209,
+          15964740280
+        ],
+        [
+          210,
+          15614480580
+        ],
+        [
+          211,
+          15545235690
+        ],
+        [
+          214,
+          15404163350
+        ],
+        [
+          217,
+          15356385990
+        ],
+        [
+          218,
+          15287141100
+        ],
+        [
+          219,
+          15241042404
+        ],
+        [
+          220,
+          14988694010
+        ],
+        [
+          223,
+          12656739176
+        ],
+        [
+          226,
+          12480931404
+        ],
+        [
+          227,
+          12453233448
+        ],
+        [
+          228,
+          12407070188
+        ],
+        [
+          229,
+          12397837536
+        ],
+        [
+          230,
+          12277167420
+        ],
+        [
+          232,
+          12190102866
+        ],
+        [
+          234,
+          12111625324
+        ],
+        [
+          235,
+          11060458840
+        ],
+        [
+          238,
+          10993635100
+        ],
+        [
+          243,
+          10882262200
+        ],
+        [
+          246,
+          10851077788
+        ],
+        [
+          256,
+          10670363152
+        ],
+        [
+          259,
+          10603539412
+        ],
+        [
+          261,
+          10544140532
+        ],
+        [
+          264,
+          10294148724
+        ],
+        [
+          266,
+          10273359116
+        ],
+        [
+          269,
+          10099165444
+        ],
+        [
+          271,
+          9922905724
+        ],
+        [
+          280,
+          9624813736
+        ],
+        [
+          295,
+          9572452332
+        ],
+        [
+          300,
+          9446229712
+        ],
+        [
+          305,
+          9368688348
+        ],
+        [
+          307,
+          9081313984
+        ],
+        [
+          318,
+          8917967064
+        ],
+        [
+          319,
+          8903117344
+        ],
+        [
+          326,
+          8816988968
+        ],
+        [
+          330,
+          8611158936
+        ],
+        [
+          356,
+          8245533004
+        ],
+        [
+          358,
+          8081346752
+        ],
+        [
+          372,
+          7819216912
+        ],
+        [
+          409,
+          7638502276
+        ],
+        [
+          965,
+          6844461922
+        ],
+        [
+          977,
+          5974784842
+        ],
+        [
+          980,
+          5850144040
+        ]
+      ],
+      "wall_seconds": 2.2119249769993985
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9304468037395532,
+      "attempts": 8000,
+      "rejected": 937,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          210,
+          16277230040
+        ],
+        [
+          214,
+          13866216588
+        ],
+        [
+          216,
+          13704645178
+        ],
+        [
+          217,
+          13508564310
+        ],
+        [
+          220,
+          13434315710
+        ],
+        [
+          222,
+          13192814068
+        ],
+        [
+          223,
+          13146650808
+        ],
+        [
+          225,
+          12793033780
+        ],
+        [
+          227,
+          12649088342
+        ],
+        [
+          228,
+          12522865722
+        ],
+        [
+          231,
+          12326784854
+        ],
+        [
+          232,
+          12099745548
+        ],
+        [
+          233,
+          11938174138
+        ],
+        [
+          236,
+          11933557812
+        ],
+        [
+          237,
+          11337728938
+        ],
+        [
+          238,
+          11148846956
+        ],
+        [
+          243,
+          11022624336
+        ],
+        [
+          245,
+          10862634744
+        ],
+        [
+          247,
+          10665133468
+        ],
+        [
+          250,
+          10608123456
+        ],
+        [
+          253,
+          10491327180
+        ],
+        [
+          256,
+          10140873788
+        ],
+        [
+          259,
+          10066625188
+        ],
+        [
+          260,
+          10029500888
+        ],
+        [
+          261,
+          10014651168
+        ],
+        [
+          264,
+          9962677148
+        ],
+        [
+          268,
+          9714557696
+        ],
+        [
+          286,
+          9643601860
+        ],
+        [
+          301,
+          9179580392
+        ],
+        [
+          342,
+          8876258720
+        ],
+        [
+          1001,
+          8121279586
+        ],
+        [
+          1048,
+          6563092010
+        ],
+        [
+          1055,
+          5954770002
+        ],
+        [
+          1056,
+          5908606742
+        ],
+        [
+          1057,
+          5747035332
+        ],
+        [
+          1060,
+          5645476160
+        ]
+      ],
+      "wall_seconds": 2.152959547000137
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9629022825761897,
+      "attempts": 8000,
+      "rejected": 298,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          68,
+          47700206020
+        ],
+        [
+          69,
+          47592287294
+        ],
+        [
+          70,
+          47291193080
+        ],
+        [
+          71,
+          44669442732
+        ],
+        [
+          72,
+          44498025312
+        ],
+        [
+          74,
+          43781623168
+        ],
+        [
+          75,
+          43633351942
+        ],
+        [
+          77,
+          43354984256
+        ],
+        [
+          78,
+          43255749388
+        ],
+        [
+          82,
+          43158612850
+        ],
+        [
+          83,
+          42364572496
+        ],
+        [
+          95,
+          41106833494
+        ],
+        [
+          96,
+          41011924414
+        ],
+        [
+          101,
+          34456999750
+        ],
+        [
+          103,
+          34341430190
+        ],
+        [
+          139,
+          31988492056
+        ],
+        [
+          145,
+          31760193752
+        ],
+        [
+          147,
+          31691368528
+        ],
+        [
+          209,
+          31445767072
+        ],
+        [
+          1314,
+          30846935972
+        ]
+      ],
+      "wall_seconds": 10.108591209000224
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9574162155925815,
+      "attempts": 8000,
+      "rejected": 307,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          70,
+          49342455924
+        ],
+        [
+          71,
+          48645907210
+        ],
+        [
+          72,
+          48345684610
+        ],
+        [
+          73,
+          47635545174
+        ],
+        [
+          74,
+          46465968314
+        ],
+        [
+          75,
+          46245062588
+        ],
+        [
+          76,
+          44639775574
+        ],
+        [
+          77,
+          44585477250
+        ],
+        [
+          78,
+          44254134802
+        ],
+        [
+          80,
+          43429652522
+        ],
+        [
+          82,
+          41882569954
+        ],
+        [
+          83,
+          40521560834
+        ],
+        [
+          84,
+          40462097390
+        ],
+        [
+          86,
+          40046208384
+        ],
+        [
+          88,
+          38871627814
+        ],
+        [
+          89,
+          38090661670
+        ],
+        [
+          91,
+          37185926338
+        ],
+        [
+          93,
+          36974511520
+        ],
+        [
+          94,
+          36474463340
+        ],
+        [
+          96,
+          36257334608
+        ],
+        [
+          152,
+          35609628560
+        ],
+        [
+          1079,
+          34418067658
+        ],
+        [
+          1081,
+          34259901712
+        ]
+      ],
+      "wall_seconds": 10.159476627999538
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9606639305694155,
+      "attempts": 8000,
+      "rejected": 277,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          69,
+          45593966930
+        ],
+        [
+          70,
+          45552775098
+        ],
+        [
+          71,
+          44054793452
+        ],
+        [
+          72,
+          43869462490
+        ],
+        [
+          73,
+          43755184210
+        ],
+        [
+          74,
+          40966309948
+        ],
+        [
+          75,
+          40735106264
+        ],
+        [
+          77,
+          40652851728
+        ],
+        [
+          79,
+          39664699708
+        ],
+        [
+          84,
+          37493315542
+        ],
+        [
+          85,
+          35520723932
+        ],
+        [
+          86,
+          33162717524
+        ],
+        [
+          87,
+          33160780604
+        ],
+        [
+          119,
+          32992914204
+        ]
+      ],
+      "wall_seconds": 10.026089054000295
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9772699634880604,
+      "attempts": 8000,
+      "rejected": 357,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          33,
+          29295140232
+        ],
+        [
+          34,
+          29152905740
+        ],
+        [
+          35,
+          28809974054
+        ],
+        [
+          36,
+          26951208776
+        ],
+        [
+          38,
+          26579094162
+        ],
+        [
+          39,
+          26023133558
+        ],
+        [
+          40,
+          25967640800
+        ],
+        [
+          41,
+          25026781910
+        ],
+        [
+          43,
+          24889906230
+        ],
+        [
+          48,
+          24233161222
+        ],
+        [
+          1047,
+          19758650048
+        ],
+        [
+          1071,
+          19543264544
+        ],
+        [
+          1092,
+          19541944056
+        ],
+        [
+          1093,
+          19500545136
+        ]
+      ],
+      "wall_seconds": 14.705089879999832
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9795412588535449,
+      "attempts": 8000,
+      "rejected": 334,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          33,
+          40779752270
+        ],
+        [
+          34,
+          26711288952
+        ],
+        [
+          35,
+          26574413272
+        ],
+        [
+          36,
+          23711451820
+        ],
+        [
+          42,
+          23545651468
+        ],
+        [
+          43,
+          21989077992
+        ],
+        [
+          49,
+          21666161146
+        ],
+        [
+          68,
+          20973098888
+        ],
+        [
+          77,
+          20638399112
+        ],
+        [
+          78,
+          20553562016
+        ]
+      ],
+      "wall_seconds": 14.795695232000071
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9783962268207737,
+      "attempts": 8000,
+      "rejected": 353,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          33,
+          40806384920
+        ],
+        [
+          35,
+          29211207032
+        ],
+        [
+          36,
+          29187963992
+        ],
+        [
+          37,
+          27383529320
+        ],
+        [
+          38,
+          25409129918
+        ],
+        [
+          39,
+          25095187468
+        ],
+        [
+          40,
+          24363548220
+        ],
+        [
+          41,
+          23606341628
+        ],
+        [
+          55,
+          22763781428
+        ],
+        [
+          59,
+          21668453168
+        ],
+        [
+          1272,
+          21547177626
+        ],
+        [
+          1273,
+          21454294380
+        ]
+      ],
+      "wall_seconds": 14.82655173799958
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.8405720682586914,
+      "attempts": 8000,
+      "rejected": 203,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          371,
+          260300193086
+        ],
+        [
+          372,
+          260053235786
+        ],
+        [
+          374,
+          259819094440
+        ],
+        [
+          379,
+          259440781682
+        ],
+        [
+          394,
+          244723643856
+        ],
+        [
+          395,
+          244646167056
+        ],
+        [
+          396,
+          244613239416
+        ],
+        [
+          397,
+          244587316970
+        ],
+        [
+          398,
+          244340133696
+        ],
+        [
+          401,
+          243404213952
+        ],
+        [
+          419,
+          228165883236
+        ],
+        [
+          426,
+          225951015216
+        ],
+        [
+          1101,
+          222443463366
+        ],
+        [
+          1110,
+          210453453546
+        ],
+        [
+          1113,
+          210206453630
+        ],
+        [
+          1181,
+          199632585186
+        ],
+        [
+          1197,
+          195367666542
+        ],
+        [
+          1200,
+          194159220946
+        ],
+        [
+          1202,
+          190077229026
+        ],
+        [
+          1204,
+          189870234426
+        ],
+        [
+          1380,
+          188943179008
+        ]
+      ],
+      "wall_seconds": 45.32479779999994
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.8221601709315649,
+      "attempts": 8000,
+      "rejected": 227,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          388,
+          304466068900
+        ],
+        [
+          391,
+          285127375390
+        ],
+        [
+          393,
+          284781635170
+        ],
+        [
+          395,
+          282566638022
+        ],
+        [
+          396,
+          282374560122
+        ],
+        [
+          398,
+          281914670750
+        ],
+        [
+          400,
+          281556857062
+        ],
+        [
+          412,
+          268200599228
+        ],
+        [
+          413,
+          267979015580
+        ],
+        [
+          418,
+          267828710588
+        ],
+        [
+          424,
+          267700325074
+        ],
+        [
+          425,
+          267696451234
+        ],
+        [
+          426,
+          267591857554
+        ],
+        [
+          428,
+          267146365954
+        ],
+        [
+          429,
+          266472317794
+        ],
+        [
+          451,
+          257719763698
+        ],
+        [
+          452,
+          257692517690
+        ],
+        [
+          453,
+          257659331794
+        ],
+        [
+          459,
+          256591701490
+        ],
+        [
+          1168,
+          219435846334
+        ],
+        [
+          1169,
+          217940544094
+        ],
+        [
+          1174,
+          212883221622
+        ],
+        [
+          1176,
+          212692204782
+        ],
+        [
+          1178,
+          212317062054
+        ]
+      ],
+      "wall_seconds": 45.51999469800012
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.8280855001035149,
+      "attempts": 8000,
+      "rejected": 217,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          385,
+          285821567518
+        ],
+        [
+          386,
+          285418688158
+        ],
+        [
+          389,
+          280904276432
+        ],
+        [
+          390,
+          280753196672
+        ],
+        [
+          391,
+          280671846032
+        ],
+        [
+          393,
+          280454265352
+        ],
+        [
+          394,
+          279947437952
+        ],
+        [
+          398,
+          279584846528
+        ],
+        [
+          438,
+          263045583494
+        ],
+        [
+          439,
+          232792152092
+        ],
+        [
+          440,
+          232411547312
+        ],
+        [
+          443,
+          232098347348
+        ],
+        [
+          445,
+          231416293252
+        ],
+        [
+          1163,
+          207868935406
+        ],
+        [
+          1174,
+          207808676526
+        ],
+        [
+          1179,
+          207801079922
+        ],
+        [
+          1302,
+          207740452682
+        ],
+        [
+          1334,
+          204457967346
+        ]
+      ],
+      "wall_seconds": 45.900164407000375
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9255633916140905,
+      "attempts": 8000,
+      "rejected": 78,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          144,
+          178717768326
+        ],
+        [
+          145,
+          178645714902
+        ],
+        [
+          146,
+          178557649606
+        ],
+        [
+          148,
+          177976573606
+        ],
+        [
+          188,
+          156738278088
+        ],
+        [
+          1069,
+          154166855378
+        ],
+        [
+          1081,
+          144669506213
+        ],
+        [
+          1086,
+          144663240458
+        ],
+        [
+          1159,
+          142700169994
+        ],
+        [
+          1162,
+          142356348394
+        ],
+        [
+          1166,
+          142301500714
+        ]
+      ],
+      "wall_seconds": 50.29291765000016
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9274001540698356,
+      "attempts": 8000,
+      "rejected": 102,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          141,
+          203809824440
+        ],
+        [
+          142,
+          178021962098
+        ],
+        [
+          143,
+          176329158582
+        ],
+        [
+          144,
+          176172268062
+        ],
+        [
+          146,
+          176098148590
+        ],
+        [
+          147,
+          175660146414
+        ],
+        [
+          160,
+          161486572904
+        ],
+        [
+          191,
+          157768654964
+        ],
+        [
+          1088,
+          145314616927
+        ],
+        [
+          1368,
+          143226325544
+        ],
+        [
+          1370,
+          142797525556
+        ]
+      ],
+      "wall_seconds": 50.11968350400002
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": null,
+      "offspring_in_partial_generation": null,
+      "effort_definition": "Não há gerações no VNS/VND. effort calibra o cap de avaliações; evaluations fixa esse cap. Famílias vazias podem encerrar a busca antes do cap.",
+      "status": "complete",
+      "score": 0.9274727444599746,
+      "attempts": 8000,
+      "rejected": 101,
+      "stop_reason": "budget_reached",
+      "post_search_validations": null,
+      "points": [
+        [
+          142,
+          209805076070
+        ],
+        [
+          144,
+          165901652916
+        ],
+        [
+          145,
+          165564628836
+        ],
+        [
+          148,
+          162472755722
+        ],
+        [
+          149,
+          162178989522
+        ],
+        [
+          150,
+          158573380660
+        ],
+        [
+          151,
+          158493966940
+        ],
+        [
+          152,
+          157480570396
+        ],
+        [
+          168,
+          153977392320
+        ],
+        [
+          169,
+          153921221640
+        ],
+        [
+          1081,
+          145834207278
+        ],
+        [
+          1092,
+          144286608198
+        ],
+        [
+          1109,
+          142159692840
+        ],
+        [
+          1135,
+          142108639908
+        ],
+        [
+          1136,
+          140948540520
+        ]
+      ],
+      "wall_seconds": 46.4896850060004
+    }
+  ],
+  "wall_seconds": 369.5132990959992
+}
