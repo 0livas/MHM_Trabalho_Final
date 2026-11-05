@@ -1,0 +1,103 @@
+{
+  "algorithm": "spea2",
+  "instance": "50_20_1439_5_S_1-124.dat",
+  "tier": "medium",
+  "run_id": 21,
+  "seed": 1021,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T04:33:15.109-03:00",
+  "end_timestamp": "2026-11-03T04:34:32.784-03:00",
+  "wall_seconds": 77.474076,
+  "cpu_seconds": 77.265625,
+  "peak_rss_mib": 55.57421875,
+  "peak_rss_delta_mib": 28.17578125,
+  "nds": 16,
+  "evaluations": 10000,
+  "raw_size": 16,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 77.67486150000332,
+  "parameters": {
+    "population_size": 200,
+    "crossover_probability": 0.7,
+    "mutation_probability": 0.5,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      117,
+      81308963938
+    ],
+    [
+      120,
+      77858696060
+    ],
+    [
+      121,
+      77130995216
+    ],
+    [
+      126,
+      75205309352
+    ],
+    [
+      129,
+      68529972828
+    ],
+    [
+      131,
+      67876649712
+    ],
+    [
+      133,
+      67693610772
+    ],
+    [
+      140,
+      64431546954
+    ],
+    [
+      148,
+      64275947714
+    ],
+    [
+      153,
+      62005554654
+    ],
+    [
+      155,
+      58132198884
+    ],
+    [
+      170,
+      54308557394
+    ],
+    [
+      175,
+      45486564716
+    ],
+    [
+      189,
+      31041209048
+    ],
+    [
+      242,
+      30029523450
+    ],
+    [
+      251,
+      28479826040
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 16,
+  "instance_sha256": "68dc887344623bd8ccb0f79cd3d024d5c0650eb2449e9e9696dc3f0bb023d780",
+  "cpu_seconds_child": 77.265625,
+  "peak_private_mib": 202.94140625,
+  "baseline_rss_mib": 27.3984375,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 77.47407550000207
+}

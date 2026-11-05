@@ -1,0 +1,662 @@
+{
+  "trial": 18,
+  "parameters": {
+    "population_size": 20,
+    "n_neighbors": 2,
+    "prob_neighbor_mating": 1.0,
+    "crossover_probability": 1.0,
+    "mutation_probability": 0.01,
+    "max_evaluations": 8000
+  },
+  "worker_pid": 5655,
+  "score": 0.8955484632791079,
+  "instance_scores": [
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "median_score": 0.8787028132956004
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "median_score": 0.8507704175212497
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "median_score": 0.9362725530690561
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "median_score": 0.9679834099331173
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "median_score": 0.8207633341839289
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "median_score": 0.9187982516716946
+    }
+  ],
+  "runs": [
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9368002918006866,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          97,
+          15311836830
+        ],
+        [
+          98,
+          15126860970
+        ],
+        [
+          101,
+          14532226530
+        ],
+        [
+          112,
+          13894398774
+        ],
+        [
+          115,
+          12130058346
+        ],
+        [
+          206,
+          9540783690
+        ]
+      ],
+      "wall_seconds": 6.017430602000104
+    },
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8552760093727296,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          97,
+          15010000130
+        ],
+        [
+          98,
+          14974328520
+        ],
+        [
+          99,
+          14825024270
+        ],
+        [
+          110,
+          12735636384
+        ]
+      ],
+      "wall_seconds": 4.853576415999896
+    },
+    {
+      "instance": "6_2_1439_3_S_1-9.dat",
+      "instance_sha256": "bb697d0d98f109f01e72866651c07b8fbf1a513e7f23109beb3c21d8f68dc83f",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8787028132956004,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          96,
+          15159304380
+        ],
+        [
+          98,
+          14532226530
+        ],
+        [
+          100,
+          13331981770
+        ],
+        [
+          118,
+          13103844876
+        ],
+        [
+          156,
+          12742835270
+        ],
+        [
+          184,
+          11841263574
+        ]
+      ],
+      "wall_seconds": 4.916995940999868
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8507704175212497,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          212,
+          16425727240
+        ],
+        [
+          213,
+          16379563980
+        ],
+        [
+          217,
+          16056421160
+        ],
+        [
+          219,
+          15676623430
+        ],
+        [
+          228,
+          15415978562
+        ],
+        [
+          242,
+          14492196850
+        ],
+        [
+          243,
+          13957510084
+        ],
+        [
+          322,
+          12126087660
+        ]
+      ],
+      "wall_seconds": 6.12044806300014
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8519544405124237,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          212,
+          16282233750
+        ],
+        [
+          218,
+          15464046460
+        ],
+        [
+          223,
+          15345248700
+        ],
+        [
+          229,
+          14995763768
+        ],
+        [
+          284,
+          13583200294
+        ],
+        [
+          345,
+          12005030160
+        ]
+      ],
+      "wall_seconds": 6.611069152000027
+    },
+    {
+      "instance": "14_2_1439_3_S_1-9_derivada.dat",
+      "instance_sha256": "459a0911d81ca820530e7cb490516dd996bcadb309ec1a9b128fd9b00cd190f6",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8289156871085496,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          209,
+          15753131770
+        ],
+        [
+          212,
+          15517311760
+        ],
+        [
+          216,
+          15405938860
+        ],
+        [
+          225,
+          14974328520
+        ],
+        [
+          232,
+          14437801680
+        ],
+        [
+          263,
+          13622842590
+        ]
+      ],
+      "wall_seconds": 5.825914835000049
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9374922096246683,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          78,
+          56018308960
+        ],
+        [
+          90,
+          55103598490
+        ],
+        [
+          97,
+          54823390730
+        ],
+        [
+          111,
+          48015923980
+        ]
+      ],
+      "wall_seconds": 13.841208447999861
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9362725530690561,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          75,
+          53442043950
+        ],
+        [
+          77,
+          51330639740
+        ],
+        [
+          92,
+          50968855366
+        ]
+      ],
+      "wall_seconds": 13.691511112999933
+    },
+    {
+      "instance": "50_10_1439_5_S_1-9.dat",
+      "instance_sha256": "c1f5ceb23693144ae6d6b2ebeefbded853f627a2df95aedb8b6bbf86e5e09fdb",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9344283500424633,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          78,
+          57395588208
+        ],
+        [
+          80,
+          53795209030
+        ],
+        [
+          95,
+          50836725140
+        ]
+      ],
+      "wall_seconds": 13.791973324999844
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9691921736152614,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          34,
+          39358214400
+        ],
+        [
+          38,
+          33765745284
+        ],
+        [
+          44,
+          29787440732
+        ]
+      ],
+      "wall_seconds": 17.78514942599986
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9623758367627618,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          34,
+          43427521910
+        ],
+        [
+          35,
+          40080362740
+        ],
+        [
+          39,
+          38094955176
+        ],
+        [
+          49,
+          36793764602
+        ],
+        [
+          53,
+          36286420690
+        ]
+      ],
+      "wall_seconds": 17.714623454000048
+    },
+    {
+      "instance": "50_20_1439_5_S_1-9.dat",
+      "instance_sha256": "e4974a6e36855a18065b6d312856e053767365717dc1f749001b928f371a9092",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9679834099331173,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          32,
+          41108705850
+        ],
+        [
+          37,
+          37987682090
+        ],
+        [
+          38,
+          37572212750
+        ],
+        [
+          39,
+          32187252330
+        ]
+      ],
+      "wall_seconds": 17.761738384999944
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8207633341839289,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          381,
+          292839222370
+        ],
+        [
+          393,
+          290246009310
+        ],
+        [
+          404,
+          276146684400
+        ]
+      ],
+      "wall_seconds": 49.06748397899992
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8227242059015318,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          378,
+          282990468400
+        ],
+        [
+          485,
+          277045479844
+        ]
+      ],
+      "wall_seconds": 49.079663352000125
+    },
+    {
+      "instance": "250_10_1439_5_S_1-9.dat",
+      "instance_sha256": "e3c35bdd182c29ba8f3f13162ce4c5eee73b155b2b112f6f9ff80fc66e7683eb",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.8200329712343344,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          383,
+          288148809180
+        ],
+        [
+          390,
+          284050447870
+        ],
+        [
+          401,
+          278638370570
+        ],
+        [
+          478,
+          272206246634
+        ]
+      ],
+      "wall_seconds": 49.1416397160001
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 11,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9187982516716946,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          142,
+          199065823130
+        ],
+        [
+          144,
+          195127741950
+        ]
+      ],
+      "wall_seconds": 52.67819004800003
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 29,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9179738723916435,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          144,
+          211471957140
+        ],
+        [
+          145,
+          208033117090
+        ],
+        [
+          157,
+          199487910280
+        ],
+        [
+          175,
+          192184043216
+        ]
+      ],
+      "wall_seconds": 52.80515561099992
+    },
+    {
+      "instance": "250_20_1439_5_S_1-9.dat",
+      "instance_sha256": "3afdceaccd820393cd442ba6fcc7f0684f2587f1ab4f00ee0137cd93a2347142",
+      "seed": 47,
+      "target_evaluations": 8000,
+      "target_generations": null,
+      "full_generations": 400,
+      "offspring_in_partial_generation": 0,
+      "status": "complete",
+      "score": 0.9195007034217915,
+      "attempts": 8000,
+      "rejected": 0,
+      "stop_reason": "target_reached",
+      "post_search_validations": 20,
+      "points": [
+        [
+          140,
+          198456823200
+        ]
+      ],
+      "wall_seconds": 50.700276152000015
+    }
+  ],
+  "wall_seconds": 432.656143854
+}

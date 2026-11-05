@@ -1,0 +1,68 @@
+{
+  "algorithm": "moead",
+  "study_name": "moead_tpe_v6",
+  "output_dir": "/home/alvarengazv/Documents/mhm/MHM_Trabalho_Final/data/output/hyperparameters_tuning/moead/moead_tpe_v6",
+  "completed_trials": 60,
+  "failed_trials": 0,
+  "best_score": 0.9440878010766427,
+  "best_parameters": {
+    "population_size": 300,
+    "n_neighbors": 15,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 8000
+  },
+  "budget_mode": "evaluations",
+  "fixed_evaluations": 8000,
+  "status": "provisional_calibration",
+  "pareto_proven": false,
+  "criterion": "mean_over_instances(median_over_seeds(normalized_HV / 1.05^2))",
+  "best_trial": 41,
+  "search_parameters": {
+    "population_size": 300,
+    "n_neighbors": 15,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7
+  },
+  "solver_config": {
+    "population_size": 300,
+    "n_neighbors": 15,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 8000
+  },
+  "evidence": "trials/trial_000041.json",
+  "moead_config": {
+    "population_size": 300,
+    "n_neighbors": 15,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 8000
+  },
+  "search_space_size": 7560,
+  "rejected_duplicate_suggestions": 4,
+  "total_evaluation_seconds": 28474.79136226,
+  "search_exhausted": false,
+  "worker_pids": [
+    5570,
+    5573,
+    5596,
+    5619,
+    5632,
+    5655
+  ],
+  "median_seconds_per_instance": {
+    "6_2_1439_3_S_1-9.dat": 4.880090204499766,
+    "14_2_1439_3_S_1-9_derivada.dat": 5.872041501999547,
+    "50_10_1439_5_S_1-9.dat": 14.62884492650005,
+    "50_20_1439_5_S_1-9.dat": 19.603725064999935,
+    "250_10_1439_5_S_1-9.dat": 52.823872433500014,
+    "250_20_1439_5_S_1-9.dat": 58.61575017199971
+  },
+  "estimated_30_runs_serial_seconds": 4692.729729104971,
+  "timing_estimate_scope": "calibration configurations and budgets only; remeasure frozen configuration at final budget"
+}

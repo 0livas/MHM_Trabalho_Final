@@ -1,0 +1,113 @@
+{
+  "algorithm": "moead",
+  "instance": "250_10_1439_5_S_1-9.dat",
+  "tier": "large",
+  "run_id": 13,
+  "seed": 1013,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T05:53:38.938-03:00",
+  "end_timestamp": "2026-11-03T05:55:00.162-03:00",
+  "wall_seconds": 80.985539,
+  "cpu_seconds": 80.328125,
+  "peak_rss_mib": 84.15234375,
+  "peak_rss_delta_mib": 54.1796875,
+  "nds": 18,
+  "evaluations": 10000,
+  "raw_size": 18,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 81.22409280000284,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      366,
+      234934417894
+    ],
+    [
+      372,
+      233859039910
+    ],
+    [
+      374,
+      231453127014
+    ],
+    [
+      386,
+      230490768312
+    ],
+    [
+      389,
+      229434049324
+    ],
+    [
+      395,
+      229369840426
+    ],
+    [
+      398,
+      228116330366
+    ],
+    [
+      399,
+      228066809778
+    ],
+    [
+      400,
+      226048345446
+    ],
+    [
+      401,
+      225776014494
+    ],
+    [
+      402,
+      225163754082
+    ],
+    [
+      406,
+      223150842254
+    ],
+    [
+      409,
+      223076593654
+    ],
+    [
+      411,
+      219784313884
+    ],
+    [
+      418,
+      218496132956
+    ],
+    [
+      422,
+      214198333450
+    ],
+    [
+      423,
+      214176704510
+    ],
+    [
+      429,
+      213540103470
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 18,
+  "instance_sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+  "cpu_seconds_child": 80.328125,
+  "peak_private_mib": 386.015625,
+  "baseline_rss_mib": 29.97265625,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 80.98553900000115
+}

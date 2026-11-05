@@ -1,6 +1,6 @@
 """Infraestrutura comum de calibração: HV, TPE, persistência e processos CPU."""
 from __future__ import annotations
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from contextlib import contextmanager
 from fractions import Fraction
 from hashlib import sha256
@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import platform
 import re
+import random
 import statistics
 import time
 import numpy as np
@@ -22,6 +23,55 @@ from optuna.trial import TrialState
 from pymoo.indicators.hv import HV
 from problem import PROJECT_ROOT, atomic_json, energy_scale, interval_cost_units, read_instance
 REFERENCE = (1.05, 1.05)
+PROTOCOL_VERSION = 6
+
+
+def _unseen_parameters(space, budget_mode, seen, rng):
+    """Sorteia uniformemente uma posição livre da grade sem materializá-la."""
+    active = {k: v for k, v in space.items() if k != "max_evaluations" or budget_mode == "effort"}
+    total = math.prod(map(len, active.values()))
+    used = set()
+    for key in seen:
+        values = dict(key)
+        index = 0
+        for name, choices in active.items():
+            index = index * len(choices) + choices.index(values[name])
+        used.add(index)
+    if len(used) == total:
+        return None
+    index = rng.randrange(total - len(used))
+    for occupied in sorted(used):
+        if occupied > index:
+            break
+        index += 1
+    selected = {}
+    for name, choices in reversed(list(active.items())):
+        index, digit = divmod(index, len(choices))
+        selected[name] = choices[digit]
+    return selected
+
+
+def _save_sampler_state(study, rng):
+    # Estados numéricos em JSON; não carrega objetos executáveis de pickle.
+    states = []
+    for generator in (study.sampler._rng.rng, study.sampler._random_sampler._rng.rng):
+        name, keys, pos, gaussian, cached = generator.get_state()
+        states.append([name, keys.tolist(), pos, gaussian, cached])
+    study.set_user_attr("rng_checkpoint", dict(tpe=states, exploration=rng.getstate()))
+
+
+def _restore_sampler_state(study, rng):
+    checkpoint = study.user_attrs.get("rng_checkpoint")
+    if checkpoint:
+        for generator, state in zip((study.sampler._rng.rng, study.sampler._random_sampler._rng.rng), checkpoint["tpe"]):
+            generator.set_state((state[0], np.asarray(state[1], dtype=np.uint32), *state[2:]))
+        def tuples(value):
+            return tuple(map(tuples, value)) if isinstance(value, list) else value
+        rng.setstate(tuples(checkpoint["exploration"]))
+
+
+class TrialTimeout(RuntimeError):
+    """Trial excedeu o limite de segurança; vira FAIL sem abortar o estudo."""
 
 
 def validate_native_space(space, defaults, config_type, budget, budget_mode):
@@ -137,8 +187,12 @@ def normalized_hv(points, bounds):
     return float(HV(ref_point=np.asarray(REFERENCE))(np.asarray(normalized))) / math.prod(REFERENCE) if normalized else 0.0
 
 
-def evaluate_parameters(parameters, cases, seeds, budget, *, algorithm):
-    """Worker sem acesso ao armazenamento Optuna; cada trial usa os mesmos casos."""
+def evaluate_parameters(parameters, cases, seeds, budget, *, algorithm, trial_timeout=None):
+    """Worker sem acesso ao armazenamento Optuna; cada trial usa os mesmos casos.
+
+    trial_timeout é verificado antes de cada execução (instância × seed);
+    uma execução já iniciada nunca é interrompida.
+    """
     plugin = algorithm_module(algorithm)
     parameters = {**parameters, "max_evaluations": parameters.get("max_evaluations", budget)}
     target = parameters["max_evaluations"]
@@ -150,6 +204,8 @@ def evaluate_parameters(parameters, cases, seeds, budget, *, algorithm):
         scores = []
         for seed in seeds:
             tick = time.monotonic()
+            if trial_timeout is not None and tick-started > trial_timeout:
+                raise TrialTimeout(f"limite de {trial_timeout} s excedido após {len(rows)} execuções")
             row = dict(instance=instance.path.name, instance_sha256=instance.digest, seed=seed,
                        target_evaluations=target)
             row.update(plugin.generation_metrics(parameters, 0))
@@ -181,7 +237,7 @@ def evaluate_parameters(parameters, cases, seeds, budget, *, algorithm):
             scores.append(row["score"])
             rows.append(row)
         instance_scores.append(dict(instance=instance.path.name, median_score=statistics.median(scores)))
-    return dict(parameters=parameters, score=statistics.mean(r["median_score"] for r in instance_scores),
+    return dict(parameters=parameters, worker_pid=os.getpid(), score=statistics.mean(r["median_score"] for r in instance_scores),
                 instance_scores=instance_scores, runs=rows, wall_seconds=time.monotonic()-started)
 
 
@@ -224,7 +280,7 @@ def export_study(study, output, budget, budget_mode="evaluations", *, algorithm)
     plugin = algorithm_module(algorithm)
     trials = study.get_trials(deepcopy=False)
     with (output / "trials.csv").open("w", newline="", encoding="utf-8") as stream:
-        fields = ["trial", "state", "score", *plugin.SEARCH_SPACE, "target_evaluations", "wall_seconds", "error"]
+        fields = ["trial", "state", "score", *plugin.SEARCH_SPACE, "target_evaluations", "wall_seconds", "error", "duplicate_of", "proposal_source"]
         writer = csv.DictWriter(stream, fieldnames=fields)
         writer.writeheader()
         for trial in trials:
@@ -232,7 +288,8 @@ def export_study(study, output, budget, budget_mode="evaluations", *, algorithm)
             writer.writerow(dict(trial=trial.number, state=trial.state.name, score=trial.value,
                 **trial.params,
                 target_evaluations=effective.get("max_evaluations"), wall_seconds=trial.user_attrs.get("wall_seconds"),
-                error=trial.user_attrs.get("error")))
+                error=trial.user_attrs.get("error"), duplicate_of=trial.user_attrs.get("duplicate_parameters"),
+                proposal_source=trial.user_attrs.get("proposal_source")))
     completed = [trial for trial in trials if trial.state == TrialState.COMPLETE]
     report = dict(algorithm=algorithm, study_name=study.study_name, output_dir=str(output),
         completed_trials=len(completed), failed_trials=sum(t.state == TrialState.FAIL for t in trials),
@@ -247,20 +304,56 @@ def export_study(study, output, budget, budget_mode="evaluations", *, algorithm)
             search_parameters=best.params, solver_config=resolved,
             evidence=f"trials/trial_{best.number:06d}.json")
         report[f"{algorithm}_config"] = resolved
+    active = study.user_attrs.get("active_space", {})
+    report.update(search_space_size=math.prod(map(len, active.values())) if active else None,
+        rejected_duplicate_suggestions=sum("duplicate_parameters" in t.user_attrs for t in trials),
+        total_evaluation_seconds=sum(t.user_attrs.get("wall_seconds", 0) for t in trials),
+        search_exhausted=study.user_attrs.get("search_exhausted", False))
+    report["worker_pids"] = sorted({t.user_attrs["worker_pid"] for t in completed if "worker_pid" in t.user_attrs})
+    per_instance = {}
+    for trial in completed:
+        for name, seconds in trial.user_attrs.get("run_seconds", {}).items():
+            per_instance.setdefault(name, []).extend(seconds)
+    report["median_seconds_per_instance"] = {name: statistics.median(seconds) for name, seconds in per_instance.items()}
+    report["estimated_30_runs_serial_seconds"] = 30 * sum(report["median_seconds_per_instance"].values())
+    report["timing_estimate_scope"] = "calibration configurations and budgets only; remeasure frozen configuration at final budget"
     atomic_json(output / "best_parameters.json", report)
     return report
 
 
-def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
+def source_fingerprint():
+    """SHA-256 das fontes que determinam o resultado de uma avaliação."""
+    source_paths = [*sorted(Path(__file__).parent.glob("*.py")),
+        *sorted((PROJECT_ROOT / "src/metaheuristics").glob("*.py")),
+        PROJECT_ROOT / "src/problem.py", PROJECT_ROOT / "src/schedule.py"]
+    return {str(path.relative_to(PROJECT_ROOT)): sha256(path.read_bytes()).hexdigest() for path in source_paths}
+
+
+def protocol_differences(saved, current):
+    """Compara conteúdo das entradas; caminhos absolutos podem mudar de máquina."""
+    differences = []
+    for key in sorted(set(saved) | set(current)):
+        left, right = saved.get(key), current.get(key)
+        if key == "cases" and isinstance(left, list) and isinstance(right, list):
+            left = [{k: v for k, v in case.items() if k != "path"} for case in left]
+            right = [{k: v for k, v in case.items() if k != "path"} for case in right]
+        if left != right:
+            differences.append(key)
+    return differences
+
+
+def calibrate(paths, *, seeds=(11, 29, 47), n_trials=60, budget=8000, workers=1,
               study_name=None, sampler_seed=42, resume=False, output_dir=None,
-              budget_mode=None, search_space=None, algorithm):
+              budget_mode=None, search_space=None, trial_timeout=None, startup_trials=20, algorithm):
     """TPE ask/tell coordenado; workers só calculam, SQLite recebe um escritor.
 
     n_trials é o total desejado de tentativas (COMPLETE/FAIL), inclusive retomadas.
-    Batches são reportados na ordem do trial, não na ordem de término dos processos.
+    Propostas usam lotes fixos; resultados são salvos assim que cada processo termina.
     """
     plugin = algorithm_module(algorithm)
-    study_name = study_name or f"{algorithm}_tpe_v4"
+    study_name = study_name or f"{algorithm}_tpe_v6"
+    if type(startup_trials) is not int or startup_trials < 0:
+        raise ValueError("startup_trials deve ser inteiro não negativo")
     budget_mode = budget_mode or plugin.SUPPORTED_BUDGET_MODES[0]
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,79}", study_name):
         raise ValueError("Nome do estudo: 1–80 letras ASCII, números, _ ou -, começando por letra/número")
@@ -268,6 +361,8 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
         raise ValueError("Trials/workers/avaliações positivos; sampler-seed entre 0 e 2^32-1")
     if not seeds or any(not isinstance(seed, int) or seed < 0 for seed in seeds) or len(set(seeds)) != len(seeds):
         raise ValueError("Seeds devem ser inteiros não negativos distintos")
+    if trial_timeout is not None and (isinstance(trial_timeout, bool) or not trial_timeout > 0):
+        raise ValueError("Limite por trial deve ser positivo, em segundos")
     space = plugin.validate_space(plugin.SEARCH_SPACE if search_space is None else search_space, budget, budget_mode)
     paths = list(dict.fromkeys(Path(path).resolve() for path in paths))
     if not paths:
@@ -279,10 +374,7 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
             raise ValueError("Entradas com conteúdo idêntico duplicariam o peso de uma instância")
         cases.append(dict(path=str(path), sha256=instance.digest, bounds=calculate_bounds(instance)))
     output = Path(output_dir or PROJECT_ROOT / "data/output/hyperparameters_tuning" / algorithm / study_name).resolve()
-    source_paths = [*sorted(Path(__file__).parent.glob("*.py")),
-        *sorted((PROJECT_ROOT / "src/metaheuristics").glob("*.py")),
-        PROJECT_ROOT / "src/problem.py", PROJECT_ROOT / "src/schedule.py"]
-    protocol = dict(version=4, algorithm=algorithm, tuner="Optuna TPE", cases=cases,
+    protocol = dict(version=PROTOCOL_VERSION, algorithm=algorithm, tuner="Optuna TPE", cases=cases,
         seeds=list(seeds), budget_mode=budget_mode,
         budget_per_run=budget if budget_mode == "evaluations" else None, workers=workers, sampler_seed=sampler_seed,
         study_name=study_name, search_space=space, reference=list(REFERENCE),
@@ -291,20 +383,24 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
         fixed_choices=plugin.FIXED_CHOICES,
         aggregation="mean(instance median(seed normalized_HV / 1.05^2))",
         normalization="input_only_individual_option_extrema_v1; constant_axis=0",
-        pruning=False, backend="CPU processes; fixed ordered batches; single SQLite writer",
-        sampler_rng="TPESampler seed=(sampler_seed + trial_number) modulo 2^32",
+        pruning=False, trial_timeout=trial_timeout, backend="CPU processes; fixed ordered batches; single SQLite writer",
+        sampler_rng="JSON checkpoint after batch proposals; orphan RUNNING trials become FAIL",
+        startup_trials=startup_trials, multivariate=True, duplicate_policy="reject then uniform unseen fallback",
         python=platform.python_version(),
         packages={name: importlib.metadata.version(name) for name in (
             "optuna", "pymoo", "numpy", "scipy", "moocore", "threadpoolctl", *(("numba", "llvmlite") if algorithm == "age" else ()))},
-        source_sha256={str(path.relative_to(PROJECT_ROOT)): sha256(path.read_bytes()).hexdigest() for path in source_paths})
+        source_sha256=source_fingerprint())
     output.mkdir(parents=True, exist_ok=True)
     with study_lock(output / "study.lock"):
         protocol_file, database = output / "protocol.json", output / "study.sqlite3"
         if protocol_file.exists():
             if not resume:
                 raise ValueError("Estudo já existe; use --resume ou escolha outro nome/pasta")
-            if json.loads(protocol_file.read_text(encoding="utf-8")) != protocol:
-                raise ValueError("Protocolo, código, dados ou dependências mudaram; use outro estudo")
+            saved = json.loads(protocol_file.read_text(encoding="utf-8"))
+            changed = protocol_differences(saved, protocol)
+            if changed:
+                raise ValueError(f"Estudo incompatível; campos diferentes: {', '.join(changed)}. "
+                                 "Preserve o estudo e confira ambiente, código e opções")
             if not database.exists():
                 raise ValueError("Banco do estudo ausente; não é possível retomar")
         elif resume:
@@ -314,9 +410,14 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
                 raise ValueError("Banco sem protocolo; escolha outra pasta para preservar os dados")
             atomic_json(protocol_file, protocol)
         storage = optuna.storages.RDBStorage(url="sqlite:///" + database.as_posix())
-        sampler = optuna.samplers.TPESampler(seed=sampler_seed, constant_liar=True)
+        sampler = optuna.samplers.TPESampler(seed=sampler_seed, constant_liar=True, multivariate=True,
+                                           n_startup_trials=startup_trials)
         study = optuna.create_study(storage=storage, study_name=study_name, sampler=sampler,
                                     direction="maximize", load_if_exists=resume)
+        rng = random.Random(sampler_seed)
+        _restore_sampler_state(study, rng)
+        active_space = {k: v for k, v in space.items() if k != "max_evaluations" or budget_mode == "effort"}
+        study.set_user_attr("active_space", active_space)
         (output / "trials").mkdir(exist_ok=True)
         # Só este coordenador escreve; após interrupção abrupta, trials órfãos viram FAIL.
         for stale in study.get_trials(states=(TrialState.RUNNING,)):
@@ -330,33 +431,72 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
             if budget_mode == "evaluations":
                 control.pop("max_evaluations", None)
             study.enqueue_trial(control)
-        total_before = sum(t.state.is_finished() for t in study.trials)
+        total_before = sum(t.state in (TrialState.COMPLETE, TrialState.FAIL) for t in study.trials)
         remaining = max(0, n_trials-total_before)
         effort = f"cap {budget} avaliações/busca" if budget_mode == "evaluations" else plugin.GENERATION_DEFINITION
         print(f"{remaining} trials novos; {len(cases)} entradas × {len(seeds)} seeds; {effort}.", flush=True)
-        print("GPU indisponível. Paralelismo CPU entre configurações; sem pruning.", flush=True)
+        print(f"CPU: até {min(workers, remaining)} processos entre configurações; BLAS limitado a 1 thread/processo.", flush=True)
+        if trial_timeout is not None:
+            print(f"Limite de segurança: {trial_timeout} s por trial; excedido vira FAIL.", flush=True)
         pool = ProcessPoolExecutor(max_workers=min(workers, remaining),
             mp_context=multiprocessing.get_context("spawn"), initializer=_worker_setup) if workers > 1 and remaining else None
+        if pool is None:
+            _worker_setup()
         try:
             while remaining:
                 batch = []
                 try:
                     for _ in range(min(workers, remaining)):
-                        # O modelo TPE lê o histórico; RNG derivada do número evita
-                        # reiniciar a sequência aleatória anterior em cada --resume.
-                        next_number = max((t.number for t in study.trials if t.state != TrialState.WAITING), default=-1)+1
-                        study.sampler = optuna.samplers.TPESampler(
-                            seed=(sampler_seed+next_number) % 2**32, constant_liar=True)
-                        trial = study.ask()
-                        batch.append((trial, None, None))
-                        parameters = plugin.suggest_parameters(trial, budget, budget_mode, space)
+                        seen = {tuple(sorted(t.params.items())) for t in study.get_trials(deepcopy=False)
+                                if t.state in (TrialState.COMPLETE, TrialState.RUNNING, TrialState.FAIL)
+                                and set(t.params) == set(active_space)}
+                        unseen = _unseen_parameters(space, budget_mode, seen, rng)
+                        if unseen is None:
+                            study.set_user_attr("search_exhausted", True)
+                            break
+                        explore = n_trials - remaining + len(batch) < startup_trials
+                        if explore and not study.get_trials(states=(TrialState.WAITING,)):
+                            study.enqueue_trial(unseen)
+                        for attempt in range(11):
+                            if attempt == 10:
+                                study.enqueue_trial(unseen)
+                            trial = study.ask()
+                            batch.append((trial, None, None))
+                            parameters = plugin.suggest_parameters(trial, budget, budget_mode, space)
+                            if tuple(sorted(trial.params.items())) not in seen:
+                                break
+                            previous = next(t.number for t in study.get_trials(deepcopy=False)
+                                            if t.number != trial.number and t.params == trial.params)
+                            trial.set_user_attr("duplicate_parameters", previous)
+                            study.tell(trial, state=TrialState.PRUNED)
+                            _save_sampler_state(study, rng)
+                            batch.pop()
+                        trial.set_user_attr("proposal_source", "exploration" if explore else "fallback" if attempt == 10 else "tpe")
                         trial.set_user_attr("effective_parameters", parameters)
-                        future = pool.submit(evaluate_parameters, parameters, cases, seeds, budget, algorithm=algorithm) if pool else None
+                        _save_sampler_state(study, rng)
+                        future = pool.submit(evaluate_parameters, parameters, cases, seeds, budget,
+                            algorithm=algorithm, trial_timeout=trial_timeout) if pool else None
                         batch[-1] = trial, future, parameters
-                    for trial, future, parameters in batch:
-                        payload = future.result() if future else evaluate_parameters(parameters, cases, seeds, budget, algorithm=algorithm)
+                    _save_sampler_state(study, rng)
+                    pending = {future: (trial, future, parameters) for trial, future, parameters in batch} if pool else {}
+                    ordered_results = (pending[future] for future in as_completed(pending)) if pool else batch
+                    for trial, future, parameters in ordered_results:
+                        try:
+                            payload = future.result() if future else evaluate_parameters(
+                                parameters, cases, seeds, budget, algorithm=algorithm, trial_timeout=trial_timeout)
+                        except TrialTimeout as error:
+                            # Só o trial lento falha; o estudo segue com os demais.
+                            trial.set_user_attr("error", f"timeout: {error}")
+                            study.tell(trial, state=TrialState.FAIL)
+                            print(f"Trial {trial.number}: FAIL por timeout ({error}); {trial.params}", flush=True)
+                            continue
                         atomic_json(output / "trials" / f"trial_{trial.number:06d}.json", dict(trial=trial.number, **payload))
                         trial.set_user_attr("wall_seconds", payload["wall_seconds"])
+                        trial.set_user_attr("worker_pid", payload["worker_pid"])
+                        run_seconds = {}
+                        for row in payload["runs"]:
+                            run_seconds.setdefault(row["instance"], []).append(row["wall_seconds"])
+                        trial.set_user_attr("run_seconds", run_seconds)
                         study.tell(trial, payload["score"])
                         print(f"Trial {trial.number}: score={payload['score']:.6f}; {trial.params}", flush=True)
                 except BaseException as error:
@@ -370,6 +510,8 @@ def calibrate(paths, *, seeds=(11, 29, 47), n_trials=30, budget=8000, workers=1,
                     raise
                 remaining -= len(batch)
                 export_study(study, output, budget, budget_mode, algorithm=algorithm)
+                if not batch or study.user_attrs.get("search_exhausted"):
+                    break
         finally:
             if pool:
                 pool.shutdown(wait=True, cancel_futures=True)

@@ -1,0 +1,113 @@
+{
+  "algorithm": "moead",
+  "instance": "750_10_1439_5_S_1-9.dat",
+  "tier": "giant",
+  "run_id": 30,
+  "seed": 1030,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-04T11:55:41.228-03:00",
+  "end_timestamp": "2026-11-04T12:04:45.924-03:00",
+  "wall_seconds": 544.387938,
+  "cpu_seconds": 541.390625,
+  "peak_rss_mib": 201.73828125,
+  "peak_rss_delta_mib": 131.765625,
+  "nds": 18,
+  "evaluations": 10000,
+  "raw_size": 18,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 544.6964338999824,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      1123,
+      794321152733
+    ],
+    [
+      1128,
+      786371807152
+    ],
+    [
+      1129,
+      785855940792
+    ],
+    [
+      1131,
+      785630472504
+    ],
+    [
+      1132,
+      783334351194
+    ],
+    [
+      1133,
+      782837517854
+    ],
+    [
+      1134,
+      782353380450
+    ],
+    [
+      1140,
+      780413776211
+    ],
+    [
+      1142,
+      780235221195
+    ],
+    [
+      1144,
+      768895265388
+    ],
+    [
+      1148,
+      767418111087
+    ],
+    [
+      1152,
+      747121527608
+    ],
+    [
+      1153,
+      740983175288
+    ],
+    [
+      1154,
+      740179804228
+    ],
+    [
+      1160,
+      725807258578
+    ],
+    [
+      1167,
+      725571278377
+    ],
+    [
+      1168,
+      718771605042
+    ],
+    [
+      1206,
+      716599780027
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 18,
+  "instance_sha256": "7cc354aca0759ff365f677fe6a90fbe84cfb925eb6357eceea4aaf70f14b5297",
+  "cpu_seconds_child": 541.390625,
+  "peak_private_mib": 443.609375,
+  "baseline_rss_mib": 69.97265625,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 544.3879377999983
+}

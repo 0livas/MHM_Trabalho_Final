@@ -1,0 +1,119 @@
+{
+  "algorithm": "spea2",
+  "instance": "50_10_1439_5_S_1-9.dat",
+  "tier": "medium",
+  "run_id": 11,
+  "seed": 1011,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T03:15:25.036-03:00",
+  "end_timestamp": "2026-11-03T03:16:35.677-03:00",
+  "wall_seconds": 70.442403,
+  "cpu_seconds": 70.125,
+  "peak_rss_mib": 55.30078125,
+  "peak_rss_delta_mib": 30.14453125,
+  "nds": 20,
+  "evaluations": 10000,
+  "raw_size": 20,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 70.64026020000165,
+  "parameters": {
+    "population_size": 200,
+    "crossover_probability": 0.7,
+    "mutation_probability": 0.5,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      64,
+      37569597908
+    ],
+    [
+      65,
+      37058638412
+    ],
+    [
+      66,
+      36600685960
+    ],
+    [
+      70,
+      35563465300
+    ],
+    [
+      71,
+      35456773290
+    ],
+    [
+      72,
+      35222890200
+    ],
+    [
+      73,
+      35166267572
+    ],
+    [
+      76,
+      33743890370
+    ],
+    [
+      80,
+      33653113386
+    ],
+    [
+      81,
+      33358152752
+    ],
+    [
+      82,
+      31207558194
+    ],
+    [
+      83,
+      30049990238
+    ],
+    [
+      85,
+      29155811120
+    ],
+    [
+      91,
+      28667997818
+    ],
+    [
+      93,
+      28545649038
+    ],
+    [
+      94,
+      27885578984
+    ],
+    [
+      98,
+      27554462510
+    ],
+    [
+      101,
+      27545423550
+    ],
+    [
+      122,
+      27333524502
+    ],
+    [
+      124,
+      27195551234
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 20,
+  "instance_sha256": "c9147e6b8b3bcab1863b62202baffbeee4e1fce0791b4e6309397c4037406da7",
+  "cpu_seconds_child": 70.125,
+  "peak_private_mib": 202.62109375,
+  "baseline_rss_mib": 25.15625,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 70.44240309999441
+}

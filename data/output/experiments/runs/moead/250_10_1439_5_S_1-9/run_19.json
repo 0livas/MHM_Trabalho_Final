@@ -1,0 +1,97 @@
+{
+  "algorithm": "moead",
+  "instance": "250_10_1439_5_S_1-9.dat",
+  "tier": "large",
+  "run_id": 19,
+  "seed": 1019,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T06:22:10.257-03:00",
+  "end_timestamp": "2026-11-03T06:23:31.537-03:00",
+  "wall_seconds": 81.04787,
+  "cpu_seconds": 80.5,
+  "peak_rss_mib": 83.9765625,
+  "peak_rss_delta_mib": 54.171875,
+  "nds": 14,
+  "evaluations": 10000,
+  "raw_size": 14,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 81.28032190000522,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      372,
+      266431674756
+    ],
+    [
+      373,
+      237390916684
+    ],
+    [
+      377,
+      234911271700
+    ],
+    [
+      378,
+      234780077652
+    ],
+    [
+      398,
+      234684167830
+    ],
+    [
+      400,
+      231159489942
+    ],
+    [
+      401,
+      229821723862
+    ],
+    [
+      404,
+      227055769820
+    ],
+    [
+      408,
+      226257500524
+    ],
+    [
+      410,
+      225340368904
+    ],
+    [
+      417,
+      222225962954
+    ],
+    [
+      431,
+      222143450162
+    ],
+    [
+      444,
+      220916798726
+    ],
+    [
+      458,
+      219872863410
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 14,
+  "instance_sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+  "cpu_seconds_child": 80.5,
+  "peak_private_mib": 385.95703125,
+  "baseline_rss_mib": 29.8046875,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 81.0478701999964
+}

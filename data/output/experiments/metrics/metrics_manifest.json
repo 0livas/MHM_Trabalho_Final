@@ -1,0 +1,23 @@
+{
+  "hv_reference": [
+    1.1,
+    1.1
+  ],
+  "normalization": "(f - ideal(PF*)) / (nadir(PF*) - ideal(PF*)); eixo constante → divisor 1",
+  "indicators": {
+    "GD": "p=1, euclidiana",
+    "IGD": "p=1, euclidiana",
+    "IGD_plus": "Ishibuchi 2015",
+    "EPS_add": "I_eps+(A, PF*)",
+    "Spacing": "Schott, L1",
+    "Spread": "Deb 2002 Δ",
+    "C": "Zitzler, dominância fraca"
+  },
+  "statistics": {
+    "alpha": 0.05,
+    "pairwise": "Wilcoxon rank-sum (scipy.stats.ranksums) + signed-rank pareado por seed; Holm",
+    "omnibus": "Friedman por instância, blocos = seeds comuns (MHs)"
+  },
+  "runs": 861,
+  "instances": 8
+}

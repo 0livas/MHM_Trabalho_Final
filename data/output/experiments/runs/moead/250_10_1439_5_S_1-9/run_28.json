@@ -1,0 +1,113 @@
+{
+  "algorithm": "moead",
+  "instance": "250_10_1439_5_S_1-9.dat",
+  "tier": "large",
+  "run_id": 28,
+  "seed": 1028,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-03T07:04:43.227-03:00",
+  "end_timestamp": "2026-11-03T07:06:04.491-03:00",
+  "wall_seconds": 81.028709,
+  "cpu_seconds": 80.515625,
+  "peak_rss_mib": 83.9375,
+  "peak_rss_delta_mib": 54.0078125,
+  "nds": 18,
+  "evaluations": 10000,
+  "raw_size": 18,
+  "infeasible": 0,
+  "stop_reason": "target_reached",
+  "error": null,
+  "process_wall_seconds": 81.26333909999812,
+  "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 0,
+  "pareto_proven": false,
+  "points": [
+    [
+      371,
+      279871316996
+    ],
+    [
+      372,
+      278345346856
+    ],
+    [
+      373,
+      240498801670
+    ],
+    [
+      374,
+      232050795962
+    ],
+    [
+      376,
+      231685460568
+    ],
+    [
+      378,
+      230927802028
+    ],
+    [
+      380,
+      230696501498
+    ],
+    [
+      388,
+      230675485916
+    ],
+    [
+      395,
+      229049925806
+    ],
+    [
+      398,
+      228397377458
+    ],
+    [
+      406,
+      226487929440
+    ],
+    [
+      413,
+      223485606594
+    ],
+    [
+      415,
+      220115075256
+    ],
+    [
+      422,
+      219071559606
+    ],
+    [
+      427,
+      217603987604
+    ],
+    [
+      449,
+      216533161382
+    ],
+    [
+      455,
+      216286204082
+    ],
+    [
+      456,
+      215997280182
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 18,
+  "instance_sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+  "cpu_seconds_child": 80.515625,
+  "peak_private_mib": 385.78515625,
+  "baseline_rss_mib": 29.9296875,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 81.02870919999259
+}

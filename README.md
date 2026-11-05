@@ -29,7 +29,7 @@ Alguns scripts auxiliares de experimentos permanecem em `data/output/` porque te
 
 ## 1. Preparar o ambiente
 
-Use Python 3.10 ou superior, em uma versão compatível com as dependências de `requirements.txt`. Não é obrigatório criar um ambiente virtual.
+Use **CPython 3.12 de 64 bits**, versão utilizada nos testes atuais. Python 3.15 não é adequado a este ambiente: o OR-Tools exigido não oferece um pacote compatível para essa versão. Não é obrigatório criar um ambiente virtual. Se houver várias versões instaladas no Windows, use `py -3.12 -m pip install -r requirements.txt` e `py -3.12` para executar os scripts; o comando `python` pode continuar apontando para outra versão.
 
 ```bash
 python --version
@@ -250,7 +250,7 @@ O tratamento multiobjetivo é uma sequência de otimizações lexicográficas co
 
 - `--time-limit 60`: limite de **cada chamada** ao CP-SAT, não da fronteira inteira; `0` desativa.
 - `--total-time-limit 300`: orçamento da execução/instância; `0` desativa. A preparação inicial de opções ocorre antes desse relógio. Construção de modelo e verificações cooperativas podem ultrapassar o orçamento.
-- `--workers 4`: workers de CPU; não ativa GPU.
+- `--workers 4`: quatro workers de CPU.
 - `--seed 1`: semente registrada na execução. Com múltiplos workers, ela não garante trajetória/tempo idênticos entre execuções.
 
 Para rodar sem os limites de tempo, use `--time-limit 0 --total-time-limit 0`. O orçamento de 300 segundos do exemplo pode encerrar com fronteira parcial.
@@ -363,6 +363,54 @@ python src/metaheuristics/vns_vnd.py data/input/set1/6_2_1439_3_S_1-9.dat --outp
 
 O método combina busca local VND e perturbações VNS, mantendo uma frente não dominada. As cinco vizinhanças alteram modo, espera, posição na mesma máquina, alocação entre máquinas e troca de tarefas. Uma melhoria por dominância faz o VND voltar à primeira vizinhança.
 
+A inicialização foi alterada, com autorização explícita, para LPT aleatório com
+extensões de menor término (`randomized_lpt_earliest_end_v1`). Ordena tarefas pela
+menor duração possível (decrescente), sorteia entre as primeiras
+`ceil(sqrt(tarefas restantes))` e escolhe máquina/modo pelo menor término viável,
+com desempate aleatório. Usa somente `random.Random(seed)` e a biblioteca padrão.
+A mesma seed reproduz a nova versão; trajetórias antigas não são preservadas.
+
+Há no máximo `max(20, initial_solutions * 50)` construções. Uma tentativa sem
+extensão viável falha sem consumir avaliação. Se nenhuma construção completar,
+a execução lança erro explícito; se obtiver menos partidas que a meta, prossegue
+com elas e registra a insuficiência. Não há garantia de viabilidade universal.
+Cada partida avaliada, inclusive duplicada, consome o orçamento de busca.
+`initial_schedules` continua permitindo fornecer partidas sem construção interna.
+O resultado exporta `initialization` com estratégia, meta, tentativas, falhas,
+quantidade obtida, representações válidas distintas, meta atingida e tempo de
+construção. `initial_evaluations`, `accepted_initial_solutions` e
+`rejected_initial_solutions` registram a contabilidade das partidas, inclusive
+fornecidas por `initial_schedules`: entradas malformadas passam pelo avaliador,
+consomem avaliação e são rejeitadas; não entram na diversidade. Num erro de
+inicialização, o diagnóstico fica em `VNSVND.initialization` e na exceção.
+Os artefatos experimentais e snapshots preservam esse diagnóstico quando disponível.
+
+Esta mudança exige protocolo novo antes de uso experimental. Resultados e
+calibrações históricos pertencem ao inicializador anterior. A configuração
+provisória de validação é 16 partidas, 10 candidatos por vizinhança e 20 tentativas
+de shaking. Ela é **provisória e herdada da calibração do inicializador anterior**,
+não calibrada para LPT. O orquestrador identifica essa condição como
+`provisional_inherited_pre_lpt`, preservando fonte, trial e status da calibração
+anterior. Os defaults públicos permanecem os existentes. Não houve recalibração.
+
+O orquestrador `src/experiments/campaign.py` usa agora
+`data/output/experiments_vns_lpt_v1` por padrão. Cada identidade experimental deve
+usar um diretório próprio (`--output-dir`). `data/output/experiments` e seus
+subdiretórios ficam protegidos contra execução, reset e regeneração de métricas
+nesta versão; consulte-os apenas para leitura ou use o checkout histórico para
+reprodução. Não copie resultados antigos para uma campanha LPT.
+
+Antes de gravar checkpoint, iniciar sessão ou atualizar manifesto numa retomada,
+o orquestrador confere hashes das fontes e das instâncias já registradas contra
+a identidade persistida, inclusive quando uma instância não está selecionada, e os
+parâmetros solicitados contra checkpoint e manifesto, mesmo sem runs concluídos.
+Incompatibilidades exigem um novo diretório; `--force-config` é obsoleto e não
+contorna essa verificação. Diretórios não vazios sem checkpoint, checkpoints sem
+manifesto e identidades ausentes/divergentes são recusados, preservando os arquivos.
+Retomadas compatíveis mantêm resultados concluídos e os valores dos hashes;
+novas sessões continuam registradas no histórico. A guarda é conservadora: qualquer
+mudança nas fontes monitoradas exige uma campanha separada, mesmo de outro método.
+
 O padrão é 10.000 avaliações e seed 1. Também aceita `--initial-solutions`, `--max-candidates-per-neighborhood` e `--shaking-attempts`. O orçamento conta avaliações, não segundos. Uma falha de construção inicial não prova inviabilidade da instância.
 
 Os padrões dessas três opções são, respectivamente, 4, 100 e 20. O arquivo Pareto mantém alternativas incomparáveis encontradas, embora o avanço local do VND exija melhoria por dominância. O limite de candidatos vale por chamada à vizinhança; não equivale a explorar todos os vizinhos possíveis.
@@ -428,12 +476,12 @@ bibliotecas estão no `requirements.txt` da raiz.
 
 | Parâmetro nativo | Algoritmos | Valores padrão |
 |---|---|---|
-| `population_size` | MOEA/D, SPEA2, AGE | 20, 50, 100, 150, 200 |
-| `max_evaluations` | Todos | 2000, 4000, 8000, 12000, 20000 |
+| `population_size` | MOEA/D, SPEA2, AGE | 20, 50, 100, 150, 200, 300 |
+| `max_evaluations` | Todos (só no modo `effort`) | 2000, 4000, 8000, 12000, 20000 |
 | `n_neighbors` | MOEA/D | 2, 5, 10, 15, 20 |
 | `prob_neighbor_mating` | MOEA/D | 0; 0,25; 0,5; 0,75; 0,9; 1 |
 | `crossover_probability` | MOEA/D, SPEA2, AGE | 0,2; 0,4; 0,6; 0,7; 0,9; 1 |
-| `mutation_probability` | MOEA/D, SPEA2, AGE | 0,01; 0,05; 0,1; 0,2; 0,3; 0,5 |
+| `mutation_probability` | MOEA/D, SPEA2, AGE | 0,01; 0,05; 0,1; 0,2; 0,3; 0,5; 0,7 |
 | `initial_solutions` | VNS/VND | 1, 2, 4, 8, 16 |
 | `max_candidates_per_neighborhood` | VNS/VND | 10, 25, 50, 100, 200 |
 | `shaking_attempts` | VNS/VND | 1, 5, 10, 20, 40 |
@@ -448,21 +496,34 @@ Escolhas fixas de cada variante estão registradas no protocolo.
 
 Existem dois regimes para os quatro algoritmos:
 
-- `--budget-mode effort` (padrão): varia todos os campos da tabela aplicáveis ao
-  algoritmo, incluindo `max_evaluations`. O score mede qualidade da frente e não
-  penaliza tempo; configurações com mais avaliações podem ser favorecidas.
-- `--budget-mode evaluations --max-evaluations 8000`: mantém esse limite igual
-  para todas as configurações e varia os demais parâmetros. Prefira este regime
-  ao comparar qualidade com o mesmo orçamento de tentativas, registrando também
-  tempo e consumo real.
+- `--budget-mode evaluations --max-evaluations 8000` (padrão): mantém esse limite
+  igual para todas as configurações e varia os demais parâmetros, comparando
+  qualidade com o mesmo orçamento de tentativas.
+- `--budget-mode effort`: também varia `max_evaluations`. O score não penaliza
+  tempo, então o TPE tende a escolher o maior limite. Foi o que aconteceu nos
+  estudos v4: o MOEA/D escolheu 20000. Use apenas por opção explícita.
+
+O protocolo de calibração segue a decisão do grupo após a orientação do professor:
+**60 trials, 6 entradas (duas por porte), 8000 avaliações fixas e 3 seeds**,
+seguido de uma **fase de confirmação** em orçamentos maiores (abaixo). Nos
+estudos v4, as dez entradas de 6–14 tarefas davam HV entre 0,95 e 0,98 para
+quase qualquer configuração e pouco discriminavam. Também por isso
+`population_size` ganhou 300 e `mutation_probability` ganhou 0,7: os melhores
+trials v4 ficaram no limite superior da grade.
 
 ```bash
-python src/hyperparameters_tuning/main.py --algorithm moead --workers 4 --trials 30
-python src/hyperparameters_tuning/main.py --algorithm spea2 --budget-mode evaluations --max-evaluations 8000 --workers 4
+python src/hyperparameters_tuning/main.py --algorithm moead --workers 4
+python src/hyperparameters_tuning/main.py --algorithm spea2 --workers 4 --trial-timeout 900
 python src/hyperparameters_tuning/main.py --algorithm age --budget-mode effort --workers 4
-python src/hyperparameters_tuning/main.py --algorithm vns_vnd --budget-mode effort --workers 4
 python src/hyperparameters_tuning/main.py --algorithm moead --list-space
 ```
+
+`--trial-timeout SEGUNDOS` é um limite de segurança por trial; o menu sugere
+900 s (15 min). Ele é verificado antes de cada execução (entrada × seed), sem
+interromper uma execução em andamento. Um trial que excede o limite vira FAIL e
+a campanha continua. O critério de comparação continua sendo o número de
+avaliações, que não depende da máquina; o tempo serve apenas para descartar
+configurações inviáveis na prática. O valor fica no protocolo.
 
 `--list-space` mostra os valores sem iniciar uma campanha. `--search-space
 minha_grade.json` aceita um objeto JSON com exatamente as chaves da grade do
@@ -480,16 +541,20 @@ subproblemas. O último lote/varredura pode ser parcial. Gerações registradas 
 resultados são apenas métricas derivadas do consumo. VNS pode terminar antes do
 limite quando não há movimentos avaliáveis. Rejeições contam como tentativas.
 
-Os padrões atuais usam doze entradas: originais de 6–10 tarefas, derivadas de
-10–14 e originais de 50 e 250 tarefas, com seeds 11/29/47. Use `--inputs arquivo.dat
-pasta` e `--seeds 11,29,47` para selecionar outros casos. Caminhos relativos são
-resolvidos na raiz do projeto; conteúdos idênticos duplicados são recusados.
-Cada trial avalia uma configuração em todas as entradas e seeds. Com os padrões,
-30 × 12 × 3 = 1080 buscas por algoritmo; até 21.600.000 tentativas no maior limite,
-além das validações finais. A primeira proposta usa valores de referência compatíveis com a grade: P=100, E=8000, n_neighbors=20, acasalamento/crossover=0,9,
+As entradas padrão são duas por porte: pequenas `6_2_1439_3_S_1-9` e
+`14_2_1439_3_S_1-9_derivada`; médias `50_10_1439_5_S_1-9` e `50_20_1439_5_S_1-9`;
+grandes `250_10_1439_5_S_1-9` e `250_20_1439_5_S_1-9`. As seeds são 11/29/47.
+Use `--inputs arquivo.dat pasta` e `--seeds 11,29,47` para selecionar outros
+casos. Caminhos relativos são resolvidos na raiz do projeto; conteúdos idênticos
+duplicados são recusados. Cada trial avalia uma configuração em todas as entradas
+e seeds. Com os padrões, são 60 × 6 × 3 = 1080 buscas por algoritmo, com
+8000 tentativas cada, além das validações finais. Pelos tempos dos estudos v4,
+isso dá cerca de 7–9 min por trial e 2–2,5 h com 4 workers. A primeira proposta usa valores de referência compatíveis com a grade: P=100, E=8000, n_neighbors=20, acasalamento/crossover=0,9,
 mutação=0,3; VNS começa com 4 soluções, 100 candidatos e 20 tentativas de shaking.
-O TPE possui dez trials iniciais antes da modelagem adaptativa e explora somente
-uma parte da grade, sem garantir a melhor configuração global.
+`--startup-trials 20` reserva a exploração inicial antes da modelagem adaptativa.
+Configurações concluídas ou em avaliação não são executadas novamente; sugestões
+repetidas dão lugar a combinações inéditas. O TPE explora somente uma parte da
+grade, sem garantir a melhor configuração global.
 
 A configuração escolhida é generalista para o conjunto da campanha: maximiza a
 média entre instâncias do hipervolume mediano entre seeds. Os objetivos são
@@ -514,35 +579,111 @@ Resultados em `data/output/hyperparameters_tuning/<algoritmo>/<nome>/`:
 - `trials.csv`: parâmetros, esforço, score e estados COMPLETE/FAIL.
 - `best_parameters.json`: campos diretamente reutilizáveis no Config nativo.
 - `trials/trial_*.json`: evidência por entrada/seed, tempo, avaliações e frente.
+- `confirmation/`, `confirmation.csv` e `confirmation.json`: fase de confirmação.
+
+Os relatórios incluem `median_seconds_per_instance` e
+`estimated_30_runs_serial_seconds`: a estimativa serial de 30 execuções usa os
+tempos observados na calibração. Ela muda com os parâmetros, o orçamento final e
+a máquina; não é uma previsão garantida de tempo de parede nem deve ser dividida
+automaticamente pelo número de workers. `worker_pids` registra os processos que
+realmente executaram as avaliações, permitindo verificar o uso da CPU.
 
 ```bash
-python src/hyperparameters_tuning/main.py --algorithm moead --workers 4 --trials 50 --study-name moead_tpe_v4 --resume
+python src/hyperparameters_tuning/main.py --algorithm moead --workers 4 --trials 80 --resume
 ```
 
 `--trials` é o total desejado, incluindo configurações completas ou falhas. O
-protocolo é v4 e o nome padrão é `<algoritmo>_tpe_v4`.
+protocolo atual é v6 e o nome padrão é `<algoritmo>_tpe_v6`.
 Código, dados, seeds, grade, workers e dependências precisam coincidir para
 retomar; escolha outro estudo ao mudar o protocolo. O checkpoint é por trial:
 a população ou busca dentro de uma tentativa interrompida não é salva. Trials
 órfãos viram FAIL na retomada. Faça backup da pasta inteira do estudo.
+Ao mudar de computador, copie também `study.sqlite3` e `protocol.json` na mesma
+pasta. Caminhos absolutos diferentes para as entradas são aceitos quando a ordem,
+os hashes SHA-256 e os limites calculados coincidirem. A mensagem de erro lista
+os demais campos divergentes. A versão do Python e as versões das dependências
+continuam parte do protocolo; instale as mesmas versões para retomar.
 
 O coordenador é o único escritor SQLite e uma trava impede duas campanhas na
 mesma pasta. Workers executam trials em processos CPU, limitando threads numéricas.
-Resultados de cada lote são entregues ao Optuna na ordem do trial. A RNG do TPE
-usa sampler_seed + número do trial, sem reiniciar a sequência na retomada.
+As propostas usam lotes fixos; resultados são salvos assim que cada processo
+termina e o próximo lote é proposto depois de concluir o atual. O sampler
+permanece ativo, usa TPE multivariado para considerar relações entre parâmetros,
+e seu estado aleatório é salvo nos limites entre lotes para a retomada.
 Alterar workers ou interromper um lote pode mudar a sequência adaptativa;
 processos já iniciados podem precisar concluir antes do programa fechar.
 
-A opção GPU informa que está indisponível; `--device gpu` recusa a execução.
-Os algoritmos usam objetos Python e avaliação CPU. Optuna ou Ray não convertem
-operadores para CUDA. O paralelismo oferecido é entre configurações, com possível
-aumento de memória; buscas muito curtas podem não acelerar.
+**Fase 2: confirmação em vários orçamentos.** O TPE compara configurações sob
+um único limite (8000). Para verificar se a escolha se mantém com mais esforço e
+quanto o HV ainda cresce (convergência), reavalie as melhores configurações
+distintas nas mesmas entradas, com cinco seeds novas por padrão:
+
+```bash
+python src/hyperparameters_tuning/main.py confirm --algorithm moead --top 5 --budgets 8000,20000,50000 --workers 4 --promote-fraction 0.5 --diversity-slots 1
+```
+
+`--seeds 101,103,107,109,113` permite escolher as seeds da confirmação; elas
+precisam ser diferentes das usadas na calibração. A confirmação promove uma
+fração dos candidatos a cada orçamento; `--promote-fraction 1` reavalia todos em
+todos os orçamentos. `--diversity-slots 1` reserva diversidade na promoção.
+O plano de confirmação é salvo e precisa coincidir ao retomar; resultados são
+persistidos assim que terminam, mesmo se outro processo ainda estiver ocupado.
+O banco Optuna é apenas lido. O comando recusa rodar se o código ou as entradas
+mudaram desde a calibração. Cada par configuração × orçamento é salvo em
+`confirmation/trial_<n>_E<orçamento>.json`; repetir o comando continua de onde
+parou. `confirmation.json` traz o score por orçamento, o ranking em cada
+orçamento, o ganho de HV entre orçamentos consecutivos e `recommended`: o
+primeiro colocado no maior orçamento. As estimativas históricas de duração não
+incluem as novas seeds nem a promoção em etapas; meça os tempos na máquina da
+campanha antes de reservar a janela final.
+
+O paralelismo usa processos CPU separados entre configurações, com possível
+aumento de memória; buscas muito curtas podem não acelerar. Compare uma execução
+curta com `--workers 1`, `2` e `4` antes da campanha. Threads de bibliotecas
+numéricas são limitadas por processo para evitar multiplicar o paralelismo.
+
+**Campanha até 06/11/2026.** Reserve 28–29/10 para validar o fluxo e medir os
+tempos nas oito entradas; 30/10–02/11 para busca e confirmação; 03/11 para
+congelar os parâmetros; 04–05/11 para as execuções finais; 06/11 como margem de
+recuperação. São 4 algoritmos × 8 entradas × 30 seeds = **960 execuções finais**.
+A disponibilidade de tempo deve ser estimada com as entradas grandes e a máquina
+da campanha, incluindo confirmação e validações. Os tempos dos estudos antigos
+acima são referências históricas e não garantem conclusão nesse prazo.
+
+Para ampliar a busca, copie todos os campos da grade para um JSON e acrescente
+valores intermediários somente às regiões promissoras, mantendo as restrições
+descritas acima. Inicie um novo estudo com `--search-space minha_grade.json`
+ao mudar a grade. Probabilidades continuam sendo listas discretas, não intervalos
+contínuos. O comando abaixo gera, em outro arquivo, pontos médios dos intervalos
+vizinhos aos valores dos melhores trials. Preserva todos os valores originais,
+arredonda campos inteiros e valida a grade resultante. Ele apenas prepara a grade;
+não altera o estudo de origem nem inicia nova calibração.
+
+```bash
+python src/hyperparameters_tuning/main.py refine-space --output-dir data/output/hyperparameters_tuning/moead/moead_tpe_v6 --top 5 --output data/moead_grade_refinada.json
+python src/hyperparameters_tuning/main.py --algorithm moead --study-name moead_refinado_v6 --search-space data/moead_grade_refinada.json --workers 4
+```
+
+Uma triagem com orçamento baixo pode favorecer populações pequenas;
+na confirmação preserve candidatos com tamanhos de população diferentes antes
+de decidir o vencedor no orçamento comum final.
+
+`--seeds 11,29,47` controla as replicações do algoritmo: mantém as mesmas seeds
+para comparar todas as configurações. `--sampler-seed 42` controla a trajetória
+das sugestões do Optuna e deve permanecer fixo durante o estudo. Aumentar o
+valor de uma seed não melhora a qualidade. Outra seed do sampler serve para
+uma campanha independente de estabilidade, com outro nome. Na confirmação use
+seeds novas; para a avaliação final defina previamente 30 seeds distintas,
+preferencialmente diferentes das usadas na seleção dos parâmetros, e aplique a
+mesma lista aos quatro algoritmos.
 
 ### 5.7 Consultar e aplicar uma calibração salva
 
 A evidência de cada estudo está no próprio diretório de resultados: `protocol.json` define o experimento; `trials.csv` resume os trials; `trials/trial_*.json` contém as frentes e métricas; `best_parameters.json` identifica a configuração selecionada, seu score e o trial correspondente.
 
-Há estudos salvos de [AGE-MOEA](data/output/hyperparameters_tuning/age/age_tpe/best_parameters.json) e [MOEA/D](data/output/hyperparameters_tuning/moead/moead_tpe/best_parameters.json). Consulte os arquivos para obter os valores, sem tratar recomendações de estudos diferentes como defaults do código. Ambos registram calibração provisória em modo `effort`.
+Há estudos salvos de [AGE-MOEA](data/output/hyperparameters_tuning/age/age_tpe/best_parameters.json) e [MOEA/D](data/output/hyperparameters_tuning/moead/moead_tpe/best_parameters.json). Eles usam o **protocolo v4 antigo**: 30 trials, 12 entradas e modo `effort`. Estudos v4 e v5 ficam como histórico; o protocolo atual é v6 (seção 5.6). Não os trate como defaults do código.
+
+Em um estudo com confirmação, prefira `recommended.solver_config` de `confirmation.json` ao `best_parameters.json` da busca. Verifique em `ranking` se o primeiro colocado muda com o orçamento.
 
 Para aplicar uma configuração, copie os campos de `solver_config` para as opções do solver: por exemplo, `population_size` corresponde a `--population-size`, e `max_evaluations` a `--max-evaluations`. Acrescente a entrada, uma seed de avaliação e um diretório de saída próprio. Os solvers não leem `best_parameters.json` automaticamente. A retomada da calibração também precisa do banco SQLite local; os JSONs e CSVs, sozinhos, não reconstituem o histórico Optuna.
 
@@ -632,7 +773,7 @@ Os diretórios abaixo contêm evidências de execuções específicas. Seus par�
 | Comparação salva de VNS/VND, SPEA2 e MOEA/D | [manifest.json](data/output/final_comparison/manifest.json), [summary.csv](data/output/final_comparison/summary.csv), [run_outcomes.csv](data/output/final_comparison/run_outcomes.csv), [statistical_tests.json](data/output/final_comparison/statistical_tests.json) e `figures/`. |
 | Calibração Optuna | Diretórios e aplicação descritos na seção 5.7; não confundir esses estudos com os pilotos. |
 
-Os pilotos usam quatro entradas (6 original, 14 derivada, 50 e 250 originais) e seeds 11/29/47. Isso é diferente da grade padrão atual de doze entradas do calibrador. A comparação salva em `final_comparison` abrange somente VNS/VND, SPEA2 e MOEA/D; não inclui AGE. Seu experimento A usa 13 entradas originais, dez seeds e 8.000 tentativas; B usa quatro entradas de 750 tarefas, cinco seeds e 2.000 tentativas; C usa uma entrada de 250 tarefas, cinco seeds e 20.000 tentativas. B e C são análises separadas de escala e orçamento. Consulte os outcomes de falha de inicialização; ausência de frente nessas células não prova inviabilidade.
+Os pilotos usam quatro entradas (6 original, 14 derivada, 50 e 250 originais) e seeds 11/29/47. Isso é diferente das seis entradas padrão atuais do calibrador. A comparação salva em `final_comparison` abrange somente VNS/VND, SPEA2 e MOEA/D; não inclui AGE. Seu experimento A usa 13 entradas originais, dez seeds e 8.000 tentativas; B usa quatro entradas de 750 tarefas, cinco seeds e 2.000 tentativas; C usa uma entrada de 250 tarefas, cinco seeds e 20.000 tentativas. B e C são análises separadas de escala e orçamento. Consulte os outcomes de falha de inicialização; ausência de frente nessas células não prova inviabilidade.
 
 **Indicadores:** HV maior indica maior área dominada até o ponto de referência, desde que escala e referência sejam as mesmas. IGD+ menor indica menor distância à frente de referência, que pode ser apenas uma união empírica de soluções encontradas, sem prova de ótimo. Coverage `C(A,B)` é a fração de pontos de B dominados ou igualados por A; não é simétrica. Menores Cmax e TEC de uma frente podem pertencer a schedules diferentes. Cardinalidade da frente, rapidez e um extremo isolado não determinam qualidade multiobjetivo.
 
