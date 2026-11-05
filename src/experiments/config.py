@@ -9,9 +9,18 @@ import re
 from problem import PROJECT_ROOT
 
 TUNING_DIR = PROJECT_ROOT / "data/output/hyperparameters_tuning"
-DEFAULT_OUTPUT = PROJECT_ROOT / "data/output/experiments"
+LEGACY_OUTPUT = PROJECT_ROOT / "data/output/experiments"
+DEFAULT_OUTPUT = PROJECT_ROOT / "data/output/experiments_vns_lpt_v1"
 DEFAULT_RUNS = 30
 DEFAULT_BASE_SEED = 1000   # distinto das seeds de calibração (11, 29, 47) e confirmação (101..105)
+
+
+def require_campaign_output(output: Path) -> None:
+    """A campanha histórica é somente leitura nesta versão."""
+    path, legacy = Path(output).resolve(), LEGACY_OUTPUT.resolve()
+    if path == legacy or legacy in path.parents:
+        raise ValueError("data/output/experiments é histórico; use um diretório próprio via --output-dir")
+
 
 TIERS = {
     "small": ("set1/6_2_1439_3_S_1-9.dat", "set1/10_2_1439_3_S_1-9.dat",
@@ -156,4 +165,9 @@ def _resolve(algorithm, exact_options, tuning_dir):
             raise FileNotFoundError(f"Sem calibração para {algorithm} em {tuning_dir}")
         return dict(parameters=dict(VNS_FALLBACK), source="VNS_FALLBACK (VNSConfig defaults + 50000 avaliações)",
                     selection="fallback_pending_calibration", status="hyperparameters_pending")
+    if algorithm == "vns_vnd":
+        loaded = dict(loaded, status="provisional_inherited_pre_lpt",
+                      calibration_status=loaded.get("status"),
+                      initialization_strategy="randomized_lpt_earliest_end_v1",
+                      calibration_compatibility="herdada do inicializador anterior; não calibrada para LPT")
     return loaded

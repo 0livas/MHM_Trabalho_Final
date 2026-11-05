@@ -18,7 +18,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from experiments.config import (ALGORITHMS, ALGORITHM_BY_ID, default_algorithms, vns_calibrated, DEFAULT_BASE_SEED, DEFAULT_OUTPUT, DEFAULT_RUNS,
-                                INSTANCES, TIERS, resolve_configuration, select_instances)
+                                INSTANCES, TIERS, resolve_configuration, select_instances, require_campaign_output)
 from experiments.ledger import Ledger
 from experiments.runner import Campaign, _fmt, build_tasks, status_dashboard
 
@@ -52,7 +52,7 @@ def parse_args(argv=None):
     parser.add_argument("--heartbeat", type=float, default=2.0, help="intervalo (s) do heartbeat")
     parser.add_argument("--stop-after", type=int, help="para de forma limpa após N execuções nesta sessão")
     parser.add_argument("--simulate-interrupt-after", type=float, help=argparse.SUPPRESS)
-    parser.add_argument("--force-config", action="store_true", help="aceita configuração diferente da gravada")
+    parser.add_argument("--force-config", action="store_true", help="obsoleto; não permite misturar identidades ou configurações")
     parser.add_argument("--yes", action="store_true", help="não pede confirmação no --reset")
     return parser.parse_args(argv)
 
@@ -107,6 +107,7 @@ def dry_run(args, algorithms, instances):
 
 
 def run_metrics(args):
+    require_campaign_output(args.output_dir)
     from experiments.metrics import compute
     ledger = Ledger(args.output_dir)
     result = compute(args.output_dir, ledger.state)
@@ -119,10 +120,14 @@ def run_metrics(args):
 
 
 def do_reset(args, target):
+    require_campaign_output(args.output_dir)
     algorithm, _, instance = target.partition(":")
     if algorithm not in ALGORITHM_BY_ID:
         raise SystemExit(f"Algoritmo desconhecido: {algorithm}")
-    ledger = Ledger(args.output_dir)
+    guard = Campaign(args.output_dir, base_seed=args.base_seed,
+                     exact_options=exact_options(args), budget=args.budget)
+    guard.lock_configurations([algorithm], save=False)
+    ledger = guard.ledger
     if not args.yes and input(f"Apagar estado de {target}? Digite 'sim': ").strip().lower() != "sim":
         print("Cancelado.")
         return []
