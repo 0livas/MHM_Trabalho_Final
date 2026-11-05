@@ -363,6 +363,53 @@ python src/metaheuristics/vns_vnd.py data/input/set1/6_2_1439_3_S_1-9.dat --outp
 
 O método combina busca local VND e perturbações VNS, mantendo uma frente não dominada. As cinco vizinhanças alteram modo, espera, posição na mesma máquina, alocação entre máquinas e troca de tarefas. Uma melhoria por dominância faz o VND voltar à primeira vizinhança.
 
+A inicialização foi alterada, com autorização explícita, para LPT aleatório com
+extensões de menor término (`randomized_lpt_earliest_end_v1`). Ordena tarefas pela
+menor duração possível (decrescente), sorteia entre as primeiras
+`ceil(sqrt(tarefas restantes))` e escolhe máquina/modo pelo menor término viável,
+com desempate aleatório. Usa somente `random.Random(seed)` e a biblioteca padrão.
+A mesma seed reproduz a nova versão; trajetórias antigas não são preservadas.
+
+Há no máximo `max(20, initial_solutions * 50)` construções. Uma tentativa sem
+extensão viável falha sem consumir avaliação. Se nenhuma construção completar,
+a execução lança erro explícito; se obtiver menos partidas que a meta, prossegue
+com elas e registra a insuficiência. Não há garantia de viabilidade universal.
+Cada partida avaliada, inclusive duplicada, consome o orçamento de busca.
+`initial_schedules` continua permitindo fornecer partidas sem construção interna.
+O resultado exporta `initialization` com estratégia, meta, tentativas, falhas,
+quantidade obtida, representações válidas distintas, meta atingida e tempo de
+construção. `initial_evaluations`, `accepted_initial_solutions` e
+`rejected_initial_solutions` registram a contabilidade das partidas, inclusive
+fornecidas por `initial_schedules`: entradas malformadas passam pelo avaliador,
+consomem avaliação e são rejeitadas; não entram na diversidade. Num erro de
+inicialização, o diagnóstico fica em `VNSVND.initialization` e na exceção.
+Os artefatos experimentais e snapshots preservam esse diagnóstico quando disponível.
+
+Esta mudança exige protocolo novo antes de uso experimental. Resultados e
+calibrações históricos pertencem ao inicializador anterior. A configuração
+provisória de validação é 16 partidas, 10 candidatos por vizinhança e 20 tentativas
+de shaking. Ela é **provisória e herdada da calibração do inicializador anterior**,
+não calibrada para LPT. O orquestrador identifica essa condição como
+`provisional_inherited_pre_lpt`, preservando fonte, trial e status da calibração
+anterior. Os defaults públicos permanecem os existentes. Não houve recalibração.
+
+O orquestrador `src/experiments/campaign.py` usa agora
+`data/output/experiments_vns_lpt_v1` por padrão. Cada identidade experimental deve
+usar um diretório próprio (`--output-dir`). `data/output/experiments` e seus
+subdiretórios ficam protegidos contra execução, reset e regeneração de métricas
+nesta versão; consulte-os apenas para leitura ou use o checkout histórico para
+reprodução. Não copie resultados antigos para uma campanha LPT.
+
+Antes de gravar checkpoint, iniciar sessão ou atualizar manifesto numa retomada,
+o orquestrador confere hashes das fontes contra a identidade persistida e os
+parâmetros solicitados contra checkpoint e manifesto, mesmo sem runs concluídos.
+Incompatibilidades exigem um novo diretório; `--force-config` é obsoleto e não
+contorna essa verificação. Diretórios não vazios sem checkpoint, checkpoints sem
+manifesto e identidades ausentes/divergentes são recusados, preservando os arquivos.
+Retomadas compatíveis mantêm resultados concluídos e os valores dos hashes;
+novas sessões continuam registradas no histórico. A guarda é conservadora: qualquer
+mudança nas fontes monitoradas exige uma campanha separada, mesmo de outro método.
+
 O padrão é 10.000 avaliações e seed 1. Também aceita `--initial-solutions`, `--max-candidates-per-neighborhood` e `--shaking-attempts`. O orçamento conta avaliações, não segundos. Uma falha de construção inicial não prova inviabilidade da instância.
 
 Os padrões dessas três opções são, respectivamente, 4, 100 e 20. O arquivo Pareto mantém alternativas incomparáveis encontradas, embora o avanço local do VND exija melhoria por dominância. O limite de candidatos vale por chamada à vizinhança; não equivale a explorar todos os vizinhos possíveis.

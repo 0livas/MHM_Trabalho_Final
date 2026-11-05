@@ -23,7 +23,7 @@ import time
 import traceback
 
 from problem import PROJECT_ROOT, atomic_json, read_instance
-from experiments.config import ALGORITHM_BY_ID, InstanceSpec, resolve_configuration
+from experiments.config import ALGORITHM_BY_ID, InstanceSpec, resolve_configuration, require_campaign_output
 from experiments.ledger import TERMINAL, Ledger, now_iso, run_key
 
 SRC = PROJECT_ROOT / "src"
@@ -88,6 +88,7 @@ class Campaign:
                  exact_options: dict, mh_timeout: float | None = None, budget: int | None = None,
                  force_config=False):
         self.output = Path(output)
+        require_campaign_output(self.output)
         self.ledger = Ledger(self.output)
         self.base_seed = base_seed
         self.heartbeat_seconds = heartbeat_seconds
@@ -100,26 +101,56 @@ class Campaign:
         self.simulate_interrupt_after = None
 
     # -------------------------------------------------------------- configuração
-    def lock_configurations(self, algorithms):
-        """Mesma configuração em todas as replicações: diverge → erro (ou --force-config)."""
+    def source_fingerprints(self):
+        sources = sorted([*(SRC / "metaheuristics").glob("*.py"), *(SRC / "experiments").glob("*.py"),
+                          SRC / "exact_methods/custom_exact_dp.py", SRC / "heuristics/ociosidade/ociosidade.py",
+                          SRC / "problem.py", SRC / "schedule.py"])
+        return {p.relative_to(PROJECT_ROOT).as_posix(): sha256(p.read_bytes()).hexdigest()
+                for p in sources}
+
+    def validate_identity(self, *, allow_initial_manifest=False):
+        """Confere a identidade persistida antes de qualquer escrita de retomada."""
+        current = self.source_fingerprints()
+        path = self.output / "experiment_manifest.json"
+        manifest = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
         state = self.ledger.state
-        if state["base_seed"] is None:
-            state["base_seed"] = self.base_seed
-        elif state["base_seed"] != self.base_seed:
+        if not self.ledger.state_path.exists() and any(self.output.iterdir()):
+            raise ValueError("Diretório não vazio sem checkpoint; use um novo --output-dir")
+        if (self.ledger.state_path.exists() and manifest is None
+                and not (allow_initial_manifest and getattr(self, "_manifest_pending", False))):
+            raise ValueError("Checkpoint sem manifesto de identidade; use um novo --output-dir")
+        for saved in ([manifest] if manifest is not None else []) + ([state] if self.ledger.state_path.exists() else []):
+            sources = saved.get("source_sha256")
+            # Checkpoints antigos guardavam as fontes somente no manifesto.
+            if sources is None and saved is state and manifest is not None:
+                continue
+            normalized = {k.replace("\\", "/"): v for k, v in (sources or {}).items()}
+            if normalized != current:
+                raise ValueError("Fontes incompatíveis com a campanha; use um novo --output-dir")
+            if saved.get("base_seed") not in (None, self.base_seed):
+                raise ValueError("base_seed incompatível com a campanha")
+        return current, manifest
+
+    def lock_configurations(self, algorithms, *, save=True):
+        """Valida tudo antes de salvar; não permite mistura nem com --force-config."""
+        sources, manifest = self.validate_identity()
+        state = self.ledger.state
+        if state["base_seed"] not in (None, self.base_seed):
             raise ValueError(f"Campanha iniciada com base_seed={state['base_seed']}; use o mesmo valor")
         configurations = {}
         for algorithm in algorithms:
             config = resolve_configuration(algorithm, exact_options=self.exact_options, budget=self.budget)
-            saved = state["configurations"].get(algorithm)
-            has_runs = any(v["algorithm"] == algorithm and v["status"] in TERMINAL for v in state["runs"].values())
-            if saved and saved["parameters"] != config["parameters"] and has_runs and not self.force_config:
-                raise ValueError(f"Configuração de {algorithm} mudou desde as execuções gravadas:\n"
-                                 f"  gravada: {saved['parameters']}\n  atual:   {config['parameters']}\n"
-                                 "Use --reset para refazer o algoritmo ou --force-config para aceitar a mistura")
-            if saved and has_runs and not self.force_config:
-                config = saved
-            state["configurations"][algorithm] = config
-            configurations[algorithm] = config
+            for stored in (state["configurations"], (manifest or {}).get("configurations", {})):
+                saved = stored.get(algorithm)
+                if saved and saved["parameters"] != config["parameters"]:
+                    raise ValueError(f"Configuração de {algorithm} incompatível; use um novo --output-dir")
+            configurations[algorithm] = state["configurations"].get(algorithm, config)
+        if not save:
+            return configurations
+        self._manifest_pending = manifest is None
+        state["base_seed"] = self.base_seed
+        state["source_sha256"] = sources
+        state["configurations"].update(configurations)
         self.ledger.save()
         return configurations
 
@@ -130,9 +161,7 @@ class Campaign:
                 packages[name] = importlib.metadata.version(name)
             except importlib.metadata.PackageNotFoundError:
                 packages[name] = None
-        sources = sorted([*(SRC / "metaheuristics").glob("*.py"), *(SRC / "experiments").glob("*.py"),
-                          SRC / "exact_methods/custom_exact_dp.py", SRC / "heuristics/ociosidade/ociosidade.py",
-                          SRC / "problem.py", SRC / "schedule.py"])
+        sources, _ = self.validate_identity(allow_initial_manifest=True)
         info = []
         for spec in instances:
             instance = read_instance(spec.path)
@@ -143,13 +172,14 @@ class Campaign:
         manifest.update(updated=now_iso(), base_seed=self.base_seed, seed_rule="SEED_k = BASE_SEED + k (k = 1..R), compartilhada entre MHs",
                         configurations=self.ledger.state["configurations"], python=platform.python_version(),
                         platform=platform.platform(), cpu_count=os.cpu_count(), packages=packages,
-                        source_sha256={str(p.relative_to(PROJECT_ROOT)): sha256(p.read_bytes()).hexdigest() for p in sources})
+                        source_sha256=sources)
         manifest.setdefault("instances", {}).update({i["name"]: i for i in info})
         manifest["history"].append(dict(session=self.ledger.session["id"] if self.ledger.session else None,
                                         at=now_iso(), algorithms=list(algorithms), runs=runs,
                                         instances=[s.name for s in instances],
                                         configurations={a: configurations[a] for a in algorithms}))
         atomic_json(manifest_path, manifest)
+        self._manifest_pending = False
 
     # -------------------------------------------------------------- sinais
     def _on_signal(self, signum, frame):

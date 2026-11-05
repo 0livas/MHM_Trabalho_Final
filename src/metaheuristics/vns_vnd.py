@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import math
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -77,6 +78,7 @@ class VNSResult:
     stop_reason: str
     explored_origins: dict[tuple[int, int], int]
     trace: tuple[dict, ...] = field(default_factory=tuple)
+    initialization: dict = field(default_factory=dict)
 
     def to_result_dict(self) -> dict:
         return {
@@ -95,6 +97,7 @@ class VNSResult:
             "feasible_evaluations": self.feasible_evaluations,
             "rejected_evaluations": self.rejected_evaluations,
             "elapsed_seconds": self.elapsed_seconds,
+            "initialization": dict(self.initialization),
             "origin_selection_counts": [
                 {"objective_key": list(point), "selections": count}
                 for point, count in sorted(self.explored_origins.items())
@@ -113,31 +116,32 @@ class VNSResult:
 
 
 def _random_greedy_schedule(instance: Instance, rng: random.Random) -> Schedule | None:
-    # Constrói uma solução de início antecipado com extensões viáveis.
+    # LPT aleatório: prioriza tarefas difíceis e preserva folga pelo menor término.
+    # Não garante conclusão: uma construção sem extensão viável retorna None.
+    difficulty = [min(instance.duration(job, machine, mode)
+                      for machine in range(instance.m) for mode in range(instance.modes))
+                  for job in range(instance.n)]
+    remaining = sorted(range(instance.n), key=lambda job: (-difficulty[job], job))
     machine_jobs: list[list[tuple[int, int, int]]] = [[] for _ in range(instance.m)]
     machine_end = [0] * instance.m
     machine_last: list[int | None] = [None] * instance.m
-    jobs = list(range(instance.n))
-    rng.shuffle(jobs)
-    for job in jobs:
+    while remaining:
+        window_size = math.isqrt(len(remaining) - 1) + 1
+        job = remaining.pop(rng.randrange(window_size))
         options: list[tuple[int, int, int]] = []
         for machine in range(instance.m):
             previous = machine_last[machine]
             setup = instance.setup[machine][previous][job] if previous is not None else 0
-            start = machine_end[machine] + setup
             for mode in range(instance.modes):
-                if start + instance.duration(job, machine, mode) <= instance.horizon:
-                    options.append((machine, mode, start))
+                end = machine_end[machine] + setup + instance.duration(job, machine, mode)
+                if end <= instance.horizon:
+                    options.append((end, machine, mode))
         if not options:
             return None
-        machine, mode, _ = rng.choice(options)
-        previous = machine_last[machine]
-        wait = 0
-        end = machine_end[machine]
-        if previous is not None:
-            end += instance.setup[machine][previous][job]
-        end += instance.duration(job, machine, mode)
-        machine_jobs[machine].append((job, mode, wait))
+        earliest_end = min(option[0] for option in options)
+        end, machine, mode = rng.choice([option for option in options
+                                         if option[0] == earliest_end])
+        machine_jobs[machine].append((job, mode, 0))
         machine_end[machine] = end
         machine_last[machine] = job
     return tuple(tuple(sequence) for sequence in machine_jobs)
@@ -297,6 +301,7 @@ class VNSVND:
         self.rejected_evaluations = 0
         self.explored_origins: dict[tuple[int, int], int] = {}
         self.trace: list[dict] = []
+        self.initialization: dict = {}
         self.started = 0.0
 
     def _evaluate(self, schedule: Schedule) -> ParetoSolution | None:
@@ -384,6 +389,13 @@ class VNSVND:
     def run(self, initial_schedules: Iterable[Schedule] | None = None) -> VNSResult:
         self.started = time.monotonic()
         stop_reason = "budget_reached"
+        construction_started = time.monotonic()
+        self.initialization = dict(strategy="provided" if initial_schedules is not None
+                                   else "randomized_lpt_earliest_end_v1",
+                                   requested=self.config.initial_solutions,
+                                   construction_attempts=0, construction_failures=0,
+                                   obtained=0, unique_schedules=0, initial_evaluations=0,
+                                   accepted_initial_solutions=0, rejected_initial_solutions=0)
         if initial_schedules is None:
             seeds: list[Schedule] = []
             attempts = 0
@@ -394,8 +406,15 @@ class VNSVND:
                 candidate = _random_greedy_schedule(self.instance, self.rng)
                 if candidate is not None:
                     seeds.append(candidate)
+            self.initialization.update(construction_attempts=attempts,
+                                       construction_failures=attempts - len(seeds),
+                                       construction_attempt_limit=max_construction_attempts)
             if not seeds:
-                raise RuntimeError("Inicialização aleatória não encontrou schedule completo")
+                self.initialization["construction_seconds"] = time.monotonic() - construction_started
+                error = RuntimeError("Inicialização aleatória não encontrou schedule completo "
+                                     f"(LPT menor término; {attempts} tentativas)")
+                error.initialization = dict(self.initialization)
+                raise error
         else:
             seeds = list(initial_schedules)
             if not seeds:
@@ -403,12 +422,27 @@ class VNSVND:
             if len(seeds) > self.config.max_evaluations:
                 raise ValueError("Há mais schedules iniciais que o orçamento de avaliações")
 
+        # Só schedules aceitos pelo avaliador participam da diversidade. Partidas
+        # malformadas precisam chegar a _evaluate para consumir o orçamento.
+        unique_seeds = set()
+        self.initialization.update(obtained=len(seeds),
+                                   target_reached=len(seeds) >= self.config.initial_solutions,
+                                   construction_seconds=time.monotonic() - construction_started)
         for schedule in seeds:
             if self.evaluations >= self.config.max_evaluations:
                 break
-            self._evaluate(schedule)
+            solution = self._evaluate(schedule)
+            self.initialization["initial_evaluations"] += 1
+            if solution is None:
+                self.initialization["rejected_initial_solutions"] += 1
+            else:
+                self.initialization["accepted_initial_solutions"] += 1
+                unique_seeds.add(tuple(tuple(tuple(op) for op in machine) for machine in schedule))
+        self.initialization["unique_schedules"] = len(unique_seeds)
         if not self.archive:
-            raise RuntimeError("Inicialização não produziu nenhum schedule viável")
+            error = RuntimeError("Inicialização não produziu nenhum schedule viável")
+            error.initialization = dict(self.initialization)
+            raise error
 
         while self.evaluations < self.config.max_evaluations:
             origin = self._origin()
@@ -441,6 +475,7 @@ class VNSVND:
             tuple(solution for _, solution in self.archive),
             self.evaluations, self.feasible_evaluations, self.rejected_evaluations,
             elapsed, stop_reason, dict(self.explored_origins), tuple(self.trace),
+            dict(self.initialization),
         )
 
 

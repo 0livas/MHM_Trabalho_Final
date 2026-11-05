@@ -140,7 +140,8 @@ def install_vns_snapshots(instance, snapshot: Path, interval: float, read_memory
         value = original(self, schedule)
         if time.perf_counter() - last[0] >= interval and self.archive:
             data = audit(instance, [(key, solution.schedule) for key, solution in self.archive])
-            data.update(evaluations=self.evaluations, snapshot_elapsed_s=time.perf_counter() - started,
+            data.update(initialization=dict(self.initialization),
+                        evaluations=self.evaluations, snapshot_elapsed_s=time.perf_counter() - started,
                         **memory_fields(read_memory, baseline))
             atomic_json(snapshot, data)
             last[0] = time.perf_counter()
@@ -160,12 +161,18 @@ def _run_metaheuristic(algorithm, instance, parameters, seed, scratch: Path, sna
         result = plugin.run_single(instance, dict(parameters), seed)
     except RuntimeError as error:
         if any(message in str(error) for message in INIT_FAILURE_MESSAGES):
-            return dict(status="INIT_FAILED", error=str(error), candidates=[], pareto_proven=False)
+            outcome = dict(status="INIT_FAILED", error=str(error), candidates=[], pareto_proven=False)
+            if algorithm == "vns_vnd" and hasattr(error, "initialization"):
+                outcome["initialization"] = dict(error.initialization)
+            return outcome
         raise
     attempts = result.evaluations if algorithm == "vns_vnd" else result.attempts
-    return dict(status="COMPLETED", candidates=[(s.key, s.schedule) for s in result.front],
-                evaluations=attempts, rejected_evaluations=result.rejected_evaluations,
-                stop_reason=getattr(result, "stop_reason", "target_reached"), pareto_proven=False)
+    outcome = dict(status="COMPLETED", candidates=[(s.key, s.schedule) for s in result.front],
+                   evaluations=attempts, rejected_evaluations=result.rejected_evaluations,
+                   stop_reason=getattr(result, "stop_reason", "target_reached"), pareto_proven=False)
+    if algorithm == "vns_vnd":
+        outcome["initialization"] = dict(result.initialization)
+    return outcome
 
 
 def execute(algorithm: str, kind: str, instance_path: str, parameters: dict, seed, scratch: str,

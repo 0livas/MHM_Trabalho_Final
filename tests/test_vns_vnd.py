@@ -22,6 +22,7 @@ from vns_vnd import (  # noqa: E402
     _candidate_at_rank,
     _candidate_schedules,
     _movement_count,
+    _random_greedy_schedule,
 )
 
 
@@ -54,6 +55,84 @@ def machine_extended_instance(machine_count: int) -> Instance:
 
 
 SCHEDULE = (((0, 0, 0), (1, 0, 0)), ((2, 0, 0),))
+
+
+class InitializationTests(unittest.TestCase):
+    def test_tight_horizon_uses_fast_modes_and_earliest_machine(self):
+        instance = replace(small_instance(), slots_per_day=3, peaks=((1, 2),),
+                           processing=((4, 4),) * 3,
+                           setup=(((0, 0, 0),) * 3,) * 2,
+                           speed=(Fraction(1), Fraction(4)))
+        for seed in range(10):
+            schedule = _random_greedy_schedule(instance, random.Random(seed))
+            self.assertIsNotNone(schedule)
+            self.assertLessEqual(evaluate_schedule(instance, schedule).cmax, 2)
+            self.assertTrue(all(mode == 1 for seq in schedule for _, mode, _ in seq))
+            self.assertEqual(schedule, _random_greedy_schedule(instance, random.Random(seed)))
+
+    def test_lpt_window_starts_among_hardest_jobs(self):
+        instance = replace(small_instance(), n=9, m=1, modes=1,
+                           slots_per_day=100, processing=tuple((j+1,) for j in range(9)),
+                           setup=(tuple((0,) * 9 for _ in range(9)),))
+        schedule = _random_greedy_schedule(instance, random.Random(2))
+        self.assertIn(schedule[0][0][0], (8, 7, 6))
+        self.assertEqual(sorted(op[0] for op in schedule[0]), list(range(9)))
+
+    def test_failed_constructions_are_bounded_and_do_not_consume_evaluations(self):
+        runner = VNSVND(small_instance(), VNSConfig(initial_solutions=2))
+        with patch("vns_vnd._random_greedy_schedule", return_value=None) as constructor:
+            with self.assertRaisesRegex(RuntimeError, "100 tentativas"):
+                runner.run()
+        self.assertEqual(constructor.call_count, 100)
+        self.assertEqual(runner.evaluations, 0)
+        self.assertEqual(runner.initialization["construction_failures"], 100)
+        impossible = replace(small_instance(), slots_per_day=1,
+                             processing=((100, 100),) * 3)
+        self.assertIsNone(_random_greedy_schedule(impossible, random.Random(1)))
+
+    def test_partial_initialization_is_reported_and_duplicates_count_as_evaluations(self):
+        runner = VNSVND(small_instance(), VNSConfig(initial_solutions=3, max_evaluations=3))
+        with patch("vns_vnd._random_greedy_schedule", side_effect=[SCHEDULE, SCHEDULE] + [None]*148), \
+             patch.object(runner, "_shake", return_value=(None, False)):
+            result = runner.run()
+        self.assertEqual(result.initialization["obtained"], 2)
+        self.assertEqual(result.initialization["unique_schedules"], 1)
+        self.assertFalse(result.initialization["target_reached"])
+        self.assertEqual(result.evaluations, 2)
+        self.assertEqual(result.initialization["initial_evaluations"], 2)
+        self.assertEqual(result.initialization["accepted_initial_solutions"], 2)
+        self.assertEqual(result.initialization["rejected_initial_solutions"], 0)
+
+    def test_malformed_supplied_schedule_is_rejected_by_evaluator_and_charged(self):
+        runner = VNSVND(small_instance(), VNSConfig(initial_solutions=2, max_evaluations=2))
+        result = runner.run(initial_schedules=[None, SCHEDULE])
+        self.assertEqual((result.evaluations, result.feasible_evaluations,
+                          result.rejected_evaluations), (2, 1, 1))
+        self.assertEqual(result.initialization["initial_evaluations"], 2)
+        self.assertEqual(result.initialization["accepted_initial_solutions"], 1)
+        self.assertEqual(result.initialization["rejected_initial_solutions"], 1)
+        self.assertEqual(result.initialization["unique_schedules"], 1)
+        self.assertEqual(result.front[0].key, evaluate_schedule(small_instance(), SCHEDULE).objective_key)
+        self.assertTrue(any(e["event"] == "rejected" for e in result.trace))
+
+    def test_duplicate_supplied_schedules_are_both_initial_evaluations(self):
+        result = VNSVND(small_instance(), VNSConfig(initial_solutions=2, max_evaluations=2)).run(
+            initial_schedules=[SCHEDULE, SCHEDULE])
+        self.assertEqual((result.evaluations, result.feasible_evaluations,
+                          result.rejected_evaluations), (2, 2, 0))
+        self.assertEqual(result.initialization["initial_evaluations"], 2)
+        self.assertEqual(result.initialization["accepted_initial_solutions"], 2)
+        self.assertEqual(result.initialization["unique_schedules"], 1)
+        self.assertFalse(any(e["event"] == "origin" for e in result.trace))
+
+    def test_supplied_schedules_bypass_constructor_and_keep_budget(self):
+        runner = VNSVND(small_instance(), VNSConfig(initial_solutions=1, max_evaluations=1))
+        with patch("vns_vnd._random_greedy_schedule") as constructor:
+            result = runner.run(initial_schedules=[list(map(list, SCHEDULE))])
+        constructor.assert_not_called()
+        self.assertEqual(result.evaluations, 1)
+        self.assertEqual(result.initialization["strategy"], "provided")
+        self.assertEqual(result.initialization["construction_attempts"], 0)
 
 
 class NeighborhoodTests(unittest.TestCase):
