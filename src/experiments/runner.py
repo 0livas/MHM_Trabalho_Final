@@ -108,7 +108,7 @@ class Campaign:
         return {p.relative_to(PROJECT_ROOT).as_posix(): sha256(p.read_bytes()).hexdigest()
                 for p in sources}
 
-    def validate_identity(self, *, allow_initial_manifest=False):
+    def validate_identity(self, *, instances=(), allow_initial_manifest=False):
         """Confere a identidade persistida antes de qualquer escrita de retomada."""
         current = self.source_fingerprints()
         path = self.output / "experiment_manifest.json"
@@ -129,11 +129,24 @@ class Campaign:
                 raise ValueError("Fontes incompatíveis com a campanha; use um novo --output-dir")
             if saved.get("base_seed") not in (None, self.base_seed):
                 raise ValueError("base_seed incompatível com a campanha")
+        if manifest is not None:
+            selected = {spec.name: spec for spec in instances}
+            for name, recorded in manifest.get("instances", {}).items():
+                relative = recorded.get("path")
+                expected = recorded.get("sha256")
+                if not relative or not expected:
+                    raise ValueError(f"Instância {name} sem identidade persistida; use um novo --output-dir")
+                spec = selected.get(name)
+                if spec is not None and spec.relative.replace("\\", "/") != relative.replace("\\", "/"):
+                    raise ValueError(f"Instância {name} incompatível com o caminho registrado; use um novo --output-dir")
+                instance_path = spec.path if spec is not None else PROJECT_ROOT / "data/input" / relative.replace("\\", "/")
+                if sha256(instance_path.read_bytes()).hexdigest() != expected:
+                    raise ValueError(f"Instância {name} incompatível com SHA-256 registrado; use um novo --output-dir")
         return current, manifest
 
-    def lock_configurations(self, algorithms, *, save=True):
+    def lock_configurations(self, algorithms, *, instances=(), save=True):
         """Valida tudo antes de salvar; não permite mistura nem com --force-config."""
-        sources, manifest = self.validate_identity()
+        sources, manifest = self.validate_identity(instances=instances)
         state = self.ledger.state
         if state["base_seed"] not in (None, self.base_seed):
             raise ValueError(f"Campanha iniciada com base_seed={state['base_seed']}; use o mesmo valor")
@@ -161,7 +174,7 @@ class Campaign:
                 packages[name] = importlib.metadata.version(name)
             except importlib.metadata.PackageNotFoundError:
                 packages[name] = None
-        sources, _ = self.validate_identity(allow_initial_manifest=True)
+        sources, _ = self.validate_identity(instances=instances, allow_initial_manifest=True)
         info = []
         for spec in instances:
             instance = read_instance(spec.path)
@@ -199,7 +212,7 @@ class Campaign:
     def run(self, algorithms, instances, runs, *, stop_after=None, argv=()):
         tasks = build_tasks(algorithms, instances, runs, self.base_seed)
         pending = [t for t in tasks if self.ledger.status_of(t.key) not in TERMINAL]
-        configurations = self.lock_configurations(algorithms)
+        configurations = self.lock_configurations(algorithms, instances=instances)
         session = self.ledger.start_session(argv)
         self.write_manifest(algorithms, instances, runs, configurations)
         print(f"Sessão {session['id']}: {len(tasks) - len(pending)} execuções já concluídas, "

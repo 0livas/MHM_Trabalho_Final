@@ -401,7 +401,8 @@ nesta versão; consulte-os apenas para leitura ou use o checkout histórico para
 reprodução. Não copie resultados antigos para uma campanha LPT.
 
 Antes de gravar checkpoint, iniciar sessão ou atualizar manifesto numa retomada,
-o orquestrador confere hashes das fontes contra a identidade persistida e os
+o orquestrador confere hashes das fontes e das instâncias já registradas contra
+a identidade persistida, inclusive quando uma instância não está selecionada, e os
 parâmetros solicitados contra checkpoint e manifesto, mesmo sem runs concluídos.
 Incompatibilidades exigem um novo diretório; `--force-config` é obsoleto e não
 contorna essa verificação. Diretórios não vazios sem checkpoint, checkpoints sem

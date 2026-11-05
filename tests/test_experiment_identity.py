@@ -1,5 +1,6 @@
 """Isolated campaign identity and VNS diagnostics tests; never starts tuning."""
 from copy import deepcopy
+from types import SimpleNamespace
 import json
 from pathlib import Path
 import sys
@@ -64,6 +65,80 @@ class CampaignIdentityTests(unittest.TestCase):
         after = json.loads((self.output/'experiment_manifest.json').read_text())
         self.assertEqual(after['source_sha256'], manifest_before['source_sha256'])
         self.assertEqual(len(after['history']), 2)
+
+    def test_unchanged_instance_allows_adding_another_instance(self):
+        self.prepare()
+        path = self.output/'experiment_manifest.json'
+        before = json.loads(path.read_text())['instances'][self.instances[0].name]
+        instances = config.select_instances(['small'])[:2]
+        self.new_campaign().run(['vns_vnd'], instances, 1, stop_after=0)
+        after = json.loads(path.read_text())['instances']
+        self.assertEqual(after[self.instances[0].name], before)
+        self.assertIn(instances[1].name, after)
+
+    def test_modified_instance_blocks_resume_before_any_campaign_write(self):
+        original = self.instances[0]
+        path = Path(self.temp.name) / original.name
+        path.write_bytes(original.path.read_bytes())
+        spec = SimpleNamespace(path=path, name=original.name,
+                               relative=original.relative, tier=original.tier)
+        campaign = self.new_campaign()
+        campaign.run(['vns_vnd'], [spec], 1, stop_after=0)
+        task = build_tasks(['vns_vnd'], [spec], 1, 1000)[0]
+        target = result_path(self.output, task)
+        target.parent.mkdir(parents=True)
+        target.write_bytes(b'existing result')
+        campaign.ledger.state['runs'][task.key] = dict(
+            algorithm='vns_vnd', instance=spec.name, status='COMPLETED',
+            wall_seconds=1, result_file=str(target.relative_to(self.output)))
+        campaign.ledger.save()
+        path.write_bytes(path.read_bytes() + b'\n')
+        before = tree_bytes(self.output)
+        with self.assertRaisesRegex(ValueError, 'Instância.*incompatível'):
+            self.new_campaign().run(['vns_vnd'], [spec], 2, stop_after=0)
+        self.assertEqual(tree_bytes(self.output), before)
+        self.assertEqual(target.read_bytes(), b'existing result')
+
+    def test_changed_unselected_instance_blocks_resume(self):
+        fake_root = Path(self.temp.name) / 'project'
+        specs = []
+        for original in config.select_instances(['small'])[:2]:
+            path = fake_root / 'data/input' / original.relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(original.path.read_bytes())
+            specs.append(SimpleNamespace(path=path, name=original.name,
+                                         relative=original.relative, tier=original.tier))
+        sources = self.new_campaign().source_fingerprints()
+        with patch('experiments.runner.PROJECT_ROOT', fake_root), \
+             patch.object(Campaign, 'source_fingerprints', return_value=sources):
+            self.new_campaign().run(['vns_vnd'], specs, 1, stop_after=0)
+            specs[1].path.write_bytes(specs[1].path.read_bytes() + b'\n')
+            before = tree_bytes(self.output)
+            with self.assertRaisesRegex(ValueError, 'Instância.*incompatível'):
+                self.new_campaign().run(['vns_vnd'], specs[:1], 1, stop_after=0)
+            self.assertEqual(tree_bytes(self.output), before)
+
+    def test_direct_manifest_write_rejects_changed_instance(self):
+        original = self.instances[0]
+        path = Path(self.temp.name) / original.name
+        path.write_bytes(original.path.read_bytes())
+        spec = SimpleNamespace(path=path, name=original.name,
+                               relative=original.relative, tier=original.tier)
+        c = self.new_campaign()
+        c.run(['vns_vnd'], [spec], 1, stop_after=0)
+        path.write_bytes(path.read_bytes() + b'\n')
+        before = tree_bytes(self.output)
+        with self.assertRaisesRegex(ValueError, 'Instância.*incompatível'):
+            c.write_manifest(['vns_vnd'], [spec], 1, c.ledger.state['configurations'])
+        self.assertEqual(tree_bytes(self.output), before)
+
+    def test_missing_instance_digest_blocks_resume(self):
+        self.prepare()
+        path = self.output/'experiment_manifest.json'
+        manifest = json.loads(path.read_text())
+        del manifest['instances'][self.instances[0].name]['sha256']
+        path.write_text(json.dumps(manifest))
+        self.assert_blocked_unchanged(self.new_campaign(), 'sem identidade persistida')
 
     def test_source_change_blocks_before_checkpoint_or_manifest_write(self):
         self.prepare()
