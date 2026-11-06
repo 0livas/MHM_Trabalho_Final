@@ -1,0 +1,59 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "750_20_1439_5_S_1-124.dat",
+  "tier": "giant",
+  "run_id": 19,
+  "seed": 1019,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-05T10:29:42.080-03:00",
+  "end_timestamp": "2026-11-05T10:34:22.507-03:00",
+  "wall_seconds": 280.147407,
+  "cpu_seconds": 276.5,
+  "peak_rss_mib": 898.5390625,
+  "peak_rss_delta_mib": 782.25,
+  "nds": 5,
+  "evaluations": 10000,
+  "raw_size": 5,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 280.42596970000886,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 10,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 1289,
+  "pareto_proven": false,
+  "points": [
+    [
+      5734,
+      2981601429989
+    ],
+    [
+      6037,
+      2133157592553
+    ],
+    [
+      6039,
+      2056711595848
+    ],
+    [
+      6041,
+      2054797721372
+    ],
+    [
+      6045,
+      2048858182320
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 5,
+  "instance_sha256": "15b745b7fab1a2fe079a3f79cd453def84b10c213a2a31048d0e8666f42e5d97",
+  "cpu_seconds_child": 276.5,
+  "peak_private_mib": 920.70703125,
+  "baseline_rss_mib": 116.2890625,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 280.1474068000098
+}

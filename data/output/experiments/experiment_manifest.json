@@ -241,9 +241,569 @@
           "budget_override": 10000
         }
       }
+    },
+    {
+      "session": 4,
+      "at": "2026-11-05T00:23:11.457-03:00",
+      "algorithms": [
+        "exact_dp",
+        "ociosidade",
+        "spea2",
+        "moead",
+        "vns_vnd",
+        "age"
+      ],
+      "runs": 30,
+      "instances": [
+        "6_2_1439_3_S_1-9.dat",
+        "10_2_1439_3_S_1-9.dat",
+        "14_2_1439_3_S_1-9_derivada.dat",
+        "50_10_1439_5_S_1-9.dat",
+        "50_20_1439_5_S_1-124.dat",
+        "250_10_1439_5_S_1-9.dat",
+        "250_20_1439_5_S_1-124.dat",
+        "750_10_1439_5_S_1-9.dat",
+        "750_20_1439_5_S_1-124.dat"
+      ],
+      "configurations": {
+        "exact_dp": {
+          "parameters": {
+            "total_seconds": 3600,
+            "memory_limit_mib": 4096,
+            "max_jobs": 13,
+            "grace_seconds": 300
+          },
+          "source": "CLI (salvaguardas de tempo/memória)",
+          "selection": "exact_options",
+          "status": "deterministic"
+        },
+        "ociosidade": {
+          "parameters": {
+            "bases": "construtiva",
+            "modos": "livres"
+          },
+          "source": "ociosidade.executar defaults",
+          "selection": "defaults",
+          "status": "deterministic"
+        },
+        "spea2": {
+          "parameters": {
+            "population_size": 200,
+            "crossover_probability": 0.7,
+            "mutation_probability": 0.5,
+            "max_evaluations": 10000
+          },
+          "study": "spea2_tpe_v6_pedro",
+          "source": "data\\output\\hyperparameters_tuning\\spea2\\spea2_tpe_v6_pedro\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 66,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "moead": {
+          "parameters": {
+            "population_size": 300,
+            "n_neighbors": 10,
+            "prob_neighbor_mating": 0.9,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "moead_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\moead\\moead_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 44,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "vns_vnd": {
+          "parameters": {
+            "initial_solutions": 16,
+            "max_candidates_per_neighborhood": 10,
+            "shaking_attempts": 20,
+            "max_evaluations": 10000
+          },
+          "study": "vns_vnd_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\vns_vnd\\vns_vnd_tpe_v6\\best_parameters.json",
+          "selection": "best_parameters.solver_config",
+          "trial": 35,
+          "budget": 8000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 8000,
+          "budget_override": 10000
+        },
+        "age": {
+          "parameters": {
+            "population_size": 100,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "age_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\age\\age_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 43,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        }
+      }
+    },
+    {
+      "session": 5,
+      "at": "2026-11-05T07:38:12.203-03:00",
+      "algorithms": [
+        "exact_dp",
+        "ociosidade",
+        "spea2",
+        "moead",
+        "vns_vnd",
+        "age"
+      ],
+      "runs": 30,
+      "instances": [
+        "6_2_1439_3_S_1-9.dat",
+        "10_2_1439_3_S_1-9.dat",
+        "14_2_1439_3_S_1-9_derivada.dat",
+        "50_10_1439_5_S_1-9.dat",
+        "50_20_1439_5_S_1-124.dat",
+        "250_10_1439_5_S_1-9.dat",
+        "250_20_1439_5_S_1-124.dat",
+        "750_10_1439_5_S_1-9.dat",
+        "750_20_1439_5_S_1-124.dat"
+      ],
+      "configurations": {
+        "exact_dp": {
+          "parameters": {
+            "total_seconds": 3600,
+            "memory_limit_mib": 4096,
+            "max_jobs": 13,
+            "grace_seconds": 300
+          },
+          "source": "CLI (salvaguardas de tempo/memória)",
+          "selection": "exact_options",
+          "status": "deterministic"
+        },
+        "ociosidade": {
+          "parameters": {
+            "bases": "construtiva",
+            "modos": "livres"
+          },
+          "source": "ociosidade.executar defaults",
+          "selection": "defaults",
+          "status": "deterministic"
+        },
+        "spea2": {
+          "parameters": {
+            "population_size": 200,
+            "crossover_probability": 0.7,
+            "mutation_probability": 0.5,
+            "max_evaluations": 10000
+          },
+          "study": "spea2_tpe_v6_pedro",
+          "source": "data\\output\\hyperparameters_tuning\\spea2\\spea2_tpe_v6_pedro\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 66,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "moead": {
+          "parameters": {
+            "population_size": 300,
+            "n_neighbors": 10,
+            "prob_neighbor_mating": 0.9,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "moead_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\moead\\moead_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 44,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "vns_vnd": {
+          "parameters": {
+            "initial_solutions": 16,
+            "max_candidates_per_neighborhood": 10,
+            "shaking_attempts": 20,
+            "max_evaluations": 10000
+          },
+          "study": "vns_vnd_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\vns_vnd\\vns_vnd_tpe_v6\\best_parameters.json",
+          "selection": "best_parameters.solver_config",
+          "trial": 35,
+          "budget": 8000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 8000,
+          "budget_override": 10000
+        },
+        "age": {
+          "parameters": {
+            "population_size": 100,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "age_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\age\\age_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 43,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        }
+      }
+    },
+    {
+      "session": 6,
+      "at": "2026-11-05T14:43:48.736-03:00",
+      "algorithms": [
+        "exact_dp",
+        "ociosidade",
+        "spea2",
+        "moead",
+        "vns_vnd",
+        "age"
+      ],
+      "runs": 30,
+      "instances": [
+        "6_2_1439_3_S_1-9.dat",
+        "10_2_1439_3_S_1-9.dat",
+        "14_2_1439_3_S_1-9_derivada.dat",
+        "50_10_1439_5_S_1-9.dat",
+        "50_20_1439_5_S_1-124.dat",
+        "250_10_1439_5_S_1-9.dat",
+        "250_20_1439_5_S_1-124.dat",
+        "750_10_1439_5_S_1-9.dat",
+        "750_20_1439_5_S_1-124.dat"
+      ],
+      "configurations": {
+        "exact_dp": {
+          "parameters": {
+            "total_seconds": 3600,
+            "memory_limit_mib": 4096,
+            "max_jobs": 13,
+            "grace_seconds": 300
+          },
+          "source": "CLI (salvaguardas de tempo/memória)",
+          "selection": "exact_options",
+          "status": "deterministic"
+        },
+        "ociosidade": {
+          "parameters": {
+            "bases": "construtiva",
+            "modos": "livres"
+          },
+          "source": "ociosidade.executar defaults",
+          "selection": "defaults",
+          "status": "deterministic"
+        },
+        "spea2": {
+          "parameters": {
+            "population_size": 200,
+            "crossover_probability": 0.7,
+            "mutation_probability": 0.5,
+            "max_evaluations": 10000
+          },
+          "study": "spea2_tpe_v6_pedro",
+          "source": "data\\output\\hyperparameters_tuning\\spea2\\spea2_tpe_v6_pedro\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 66,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "moead": {
+          "parameters": {
+            "population_size": 300,
+            "n_neighbors": 10,
+            "prob_neighbor_mating": 0.9,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "moead_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\moead\\moead_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 44,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "vns_vnd": {
+          "parameters": {
+            "initial_solutions": 16,
+            "max_candidates_per_neighborhood": 10,
+            "shaking_attempts": 20,
+            "max_evaluations": 10000
+          },
+          "study": "vns_vnd_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\vns_vnd\\vns_vnd_tpe_v6\\best_parameters.json",
+          "selection": "best_parameters.solver_config",
+          "trial": 35,
+          "budget": 8000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 8000,
+          "budget_override": 10000
+        },
+        "age": {
+          "parameters": {
+            "population_size": 100,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "age_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\age\\age_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 43,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        }
+      }
+    },
+    {
+      "session": 7,
+      "at": "2026-11-05T18:06:28.742-03:00",
+      "algorithms": [
+        "exact_dp",
+        "ociosidade",
+        "spea2",
+        "moead",
+        "vns_vnd",
+        "age"
+      ],
+      "runs": 30,
+      "instances": [
+        "6_2_1439_3_S_1-9.dat",
+        "10_2_1439_3_S_1-9.dat",
+        "14_2_1439_3_S_1-9_derivada.dat",
+        "50_10_1439_5_S_1-9.dat",
+        "50_20_1439_5_S_1-124.dat",
+        "250_10_1439_5_S_1-9.dat",
+        "250_20_1439_5_S_1-124.dat",
+        "750_10_1439_5_S_1-9.dat",
+        "750_20_1439_5_S_1-124.dat"
+      ],
+      "configurations": {
+        "exact_dp": {
+          "parameters": {
+            "total_seconds": 3600,
+            "memory_limit_mib": 4096,
+            "max_jobs": 13,
+            "grace_seconds": 300
+          },
+          "source": "CLI (salvaguardas de tempo/memória)",
+          "selection": "exact_options",
+          "status": "deterministic"
+        },
+        "ociosidade": {
+          "parameters": {
+            "bases": "construtiva",
+            "modos": "livres"
+          },
+          "source": "ociosidade.executar defaults",
+          "selection": "defaults",
+          "status": "deterministic"
+        },
+        "spea2": {
+          "parameters": {
+            "population_size": 200,
+            "crossover_probability": 0.7,
+            "mutation_probability": 0.5,
+            "max_evaluations": 10000
+          },
+          "study": "spea2_tpe_v6_pedro",
+          "source": "data\\output\\hyperparameters_tuning\\spea2\\spea2_tpe_v6_pedro\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 66,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "moead": {
+          "parameters": {
+            "population_size": 300,
+            "n_neighbors": 10,
+            "prob_neighbor_mating": 0.9,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "moead_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\moead\\moead_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 44,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "vns_vnd": {
+          "parameters": {
+            "initial_solutions": 16,
+            "max_candidates_per_neighborhood": 10,
+            "shaking_attempts": 20,
+            "max_evaluations": 10000
+          },
+          "study": "vns_vnd_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\vns_vnd\\vns_vnd_tpe_v6\\best_parameters.json",
+          "selection": "best_parameters.solver_config",
+          "trial": 35,
+          "budget": 8000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 8000,
+          "budget_override": 10000
+        },
+        "age": {
+          "parameters": {
+            "population_size": 100,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "age_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\age\\age_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 43,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        }
+      }
+    },
+    {
+      "session": 8,
+      "at": "2026-11-05T22:31:34.223-03:00",
+      "algorithms": [
+        "exact_dp",
+        "ociosidade",
+        "spea2",
+        "moead",
+        "vns_vnd",
+        "age"
+      ],
+      "runs": 30,
+      "instances": [
+        "6_2_1439_3_S_1-9.dat",
+        "10_2_1439_3_S_1-9.dat",
+        "14_2_1439_3_S_1-9_derivada.dat",
+        "50_10_1439_5_S_1-9.dat",
+        "50_20_1439_5_S_1-124.dat",
+        "250_10_1439_5_S_1-9.dat",
+        "250_20_1439_5_S_1-124.dat",
+        "750_10_1439_5_S_1-9.dat",
+        "750_20_1439_5_S_1-124.dat"
+      ],
+      "configurations": {
+        "exact_dp": {
+          "parameters": {
+            "total_seconds": 3600,
+            "memory_limit_mib": 4096,
+            "max_jobs": 13,
+            "grace_seconds": 300
+          },
+          "source": "CLI (salvaguardas de tempo/memória)",
+          "selection": "exact_options",
+          "status": "deterministic"
+        },
+        "ociosidade": {
+          "parameters": {
+            "bases": "construtiva",
+            "modos": "livres"
+          },
+          "source": "ociosidade.executar defaults",
+          "selection": "defaults",
+          "status": "deterministic"
+        },
+        "spea2": {
+          "parameters": {
+            "population_size": 200,
+            "crossover_probability": 0.7,
+            "mutation_probability": 0.5,
+            "max_evaluations": 10000
+          },
+          "study": "spea2_tpe_v6_pedro",
+          "source": "data\\output\\hyperparameters_tuning\\spea2\\spea2_tpe_v6_pedro\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 66,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "moead": {
+          "parameters": {
+            "population_size": 300,
+            "n_neighbors": 10,
+            "prob_neighbor_mating": 0.9,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "moead_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\moead\\moead_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 44,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        },
+        "vns_vnd": {
+          "parameters": {
+            "initial_solutions": 16,
+            "max_candidates_per_neighborhood": 10,
+            "shaking_attempts": 20,
+            "max_evaluations": 10000
+          },
+          "study": "vns_vnd_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\vns_vnd\\vns_vnd_tpe_v6\\best_parameters.json",
+          "selection": "best_parameters.solver_config",
+          "trial": 35,
+          "budget": 8000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 8000,
+          "budget_override": 10000
+        },
+        "age": {
+          "parameters": {
+            "population_size": 100,
+            "crossover_probability": 0.9,
+            "mutation_probability": 0.7,
+            "max_evaluations": 10000
+          },
+          "study": "age_tpe_v6",
+          "source": "data\\output\\hyperparameters_tuning\\age\\age_tpe_v6\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 43,
+          "budget": 50000,
+          "status": "provisional_calibration",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        }
+      }
     }
   ],
-  "updated": "2026-11-04T00:16:50.403-03:00",
+  "updated": "2026-11-05T22:31:34.079-03:00",
   "base_seed": 1000,
   "seed_rule": "SEED_k = BASE_SEED + k (k = 1..R), compartilhada entre MHs",
   "configurations": {
