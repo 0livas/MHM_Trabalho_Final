@@ -840,3 +840,12 @@ Esses spikes verificam a integração e imprimem diagnósticos; não são execu�
 | Resultado já existe | Use outro `--output-dir`, `--resume` nos exatos ou substitua conscientemente com `--restart`/`--overwrite`. |
 | DP limitada a 13 tarefas | Use uma entrada menor; `--max-jobs` é uma ampliação experimental, com custo exponencial. |
 | `incomplete` por tempo/memória | Consulte o motivo, ajuste o orçamento e retome quando suportado. Isso não prova inviabilidade. |
+
+
+## 9. Dashboard comparativo
+
+Abra `data/output/dashboard/index.html` diretamente em um navegador; o arquivo é autossuficiente e funciona sem conexão. Ele reúne as campanhas, arquivos individuais dos exatos e heurísticas, tabelas 6–11 do artigo e análise em prosa. Os filtros selecionam protocolo e instância, com fronteiras individuais, sete combinações de categorias e cada meta-heurística contra a DP própria quando disponível. Os gráficos e tabelas filtradas podem ser exportados em SVG e CSV. A tabela unificada conserva a origem de cada resultado; valores de protocolos distintos não são diretamente intercambiáveis.
+
+Para atualizar os resultados após novas execuções, use `python src/build_dashboard.py`. Na primeira geração sem o texto extraído preservado, forneça `--article "caminho/Peerj-cs-2022-UPMSP.pdf"` (requer `pypdf`). A geração lê as evidências existentes, sem executar ou alterar os algoritmos. Os CSVs e `fontes.json` permitem conferir as fontes; `analise.txt` contém o texto entregue e deve ser revisto se os resultados forem atualizados.
+
+A opção inicial usa a referência da campanha original para comparar os dois VNS/VND. A versão corrigida tem seus indicadores geométricos recalculados nessa mesma referência; seus resultados na normalização original permanecem em protocolo separado. A correção foi necessária porque o construtor original falhava na primeira instância giant de 750 tarefas e dez máquinas. Falhas, execuções com fronteira e comprovação de completude são informações distintas. O artigo não disponibiliza coordenadas de todas as curvas no PDF, e as fronteiras ausentes não são reconstruídas visualmente.

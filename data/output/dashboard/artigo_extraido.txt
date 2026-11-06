@@ -1,0 +1,1202 @@
+A mathematical formulation and an
+NSGA-II algorithm for minimizing the
+makespan and energy cost under
+time-of-use electricity price in an unrelated
+parallel machine scheduling
+Marcelo F. Rego 1,2, Júlio Cesar E. M. Pinto 2, Luciano P. Cota 3 and
+Marcone J. F. Souza 2
+1 Department of Computing, Universidade Federal dos Vales dos Jequitinhonha e Mucuri,
+Diamantina, Minas Gerais, Brazil
+2 Department of Computing, Universidade Federal de Ouro Preto, Ouro Preto,
+Minas Gerais, Brazil
+3 Instituto Tecnológico Vale, Ouro Preto, Minas Gerais, Brazil
+ABSTRACT
+In many countries, there is an energy pricing policy that varies according to the time-
+of-use. In this context, it is ﬁnancially advantageous for the industries to plan their
+production considering this policy. This article introduces a new bi-objective
+unrelated parallel machine scheduling problem with sequence-dependent setup
+times, in which the objectives are to minimize the makespan and the total energy
+cost. We propose a mixed-integer linear programming formulation based on the
+weighted sum method to obtain the Pareto front. We also developed an NSGA-II
+method to address large instances of the problem since the formulation cannot solve
+it in an acceptable computational time for decision-making. The results showed that
+the proposed NSGA-II is able to ﬁnd a good approximation for the Pareto front when
+compared with the weighted sum method in small instances. In a large number of
+instances, NSGA-II outperforms, with a 95% con ﬁdence level, the MOGA and
+NSGA-I multi-objective techniques concerning the hypervolume and hierarchical
+cluster counting metrics. Thus, the proposed algorithm ﬁnds non-dominated
+solutions with good convergence, diversity, uniformity, and amplitude.
+Subjects Artiﬁcial Intelligence, Optimization Theory and Computation
+Keywords Unrelated parallel machine, Total energy cost, Makespan, Mixed-integer linear
+programming, NSGA-II, Multi-objective optimization
+INTRODUCTION
+The industrial sector is one of the largest consumers of energy in the world. According to
+EIA (2016) , this sector consumes around 54% of the total energy distributed globally.
+Among the various forms of energy used by the manufacturing industry, electricity has
+been one of the most consumed. In China, for example, this sector consumes about 50% of
+the electricity produced in the country ( Liu et al., 2014 ).
+In recent years, electricity prices have continuously increased for manufacturing
+companies in industrialized countries ( Willeke, Ullmann & Nyhuis, 2016 ). In Norway, the
+How to cite this article Rego MF, Pinto JCEM, Cota LP, Souza MJF. 2022. A mathematical formulation and an NSGA-II algorithm for
+minimizing the makespan and energy cost under time-of-use electricity price in an unrelated parallel machine scheduling. PeerJ Comput.
+Sci. 8:e844 DOI 10.7717/peerj-cs.844
+Submitted 27 September 2021
+Accepted 16 December 2021
+Published 3 February 2022
+Corresponding authors
+Marcelo F. Rego,
+marcelofr@ufvjm.edu.br
+Luciano P. Cota,
+luciano.p.cota@itv.org
+Academic editor
+Mehmet Cunkas
+Additional Information and
+Declarations can be found on
+page 25
+DOI 10.7717/peerj-cs.844
+Copyright
+2022 Rego et al.
+Distributed under
+Creative Commons CC-BY 4.0industrial electricity price, including taxes, increased by 47% between 2017 and 2018
+(BEIS, 2020). This increase has an impact on production costs and can reduce the
+competitiveness of companies. In countries that implement a pricing policy so that the
+energy price depends on the time-of-use, the reduction of electricity costs can occur
+through production planning that prioritizes periods when energy is less expensive.
+However, few studies address scheduling problems in which the energy price depends
+on the time-of-use tariffs. Among them, we mention Ebrahimi et al. (2020) , Zeng, Che &
+Wu (2018), Wang et al. (2016), Shrouf et al. (2014), Zhang et al. (2014), where the objective
+includes to minimize the total energy cost.
+On the other hand, among several scheduling environments, the unrelated parallel
+machine one has received much attention recently, given its wide applicability in the
+industry (Cota et al., 2019 ). In terms of performance measures, makespan minimization is
+one of the most common because this criterion aims at the good utilization of the machines
+(Pinedo, 2016). Lastly, the sequence-dependent setup times appear in many industrial
+and service applications ( Kopanos, Lanez & Puigjaner, 2009 ). However, as far as we know,
+no work reported in the literature addresses the unrelated parallel machine scheduling
+problem with sequence-dependent setup times (UPMSP-SDS), considering minimizing
+the makespan and the total energy cost. This paper, therefore, aims to ﬁll this gap.
+The main contributions of this work are the following: (i) introducing a new bi-objective
+unrelated parallel machine scheduling problem; (ii) introducing a new mixed-integer
+linear programming formulation able to solve small-scale instances of this problem;
+(iii) proposing an adapted version of the NSGA-II algorithm to treat large-scale instances
+of this problem; (iv) creating a set of instances for this problem; (v) performing an
+experimental study of the proposed methods.
+We organized the remainder of this article as follows: In “Literature Review”, we review
+the literature. In “Problem Statement”, we detail the problem addressed. In “Weighted
+Sum Method”, we introduce the proposed mathematical model. In “Proposed NSGA-II”,
+we show the adaptation of the NSGA-II algorithm to the problem. In “Computational
+Experiments”, we report the computational results, which include a comparison of the
+results of the proposed algorithm with the exact method on small instances and a
+comparison with other multi-objective algorithms on large instances. Finally, we present
+the conclusions and directions for future work in “Conclusions”.
+LITERATURE REVIEW
+Here, we present a literature review with previous research that addressed scheduling
+problems and considered objectives related to this work.
+Some studies address the scheduling problem only to minimize energy consumption.
+For example, Shrouf et al. (2014) proposed a mathematical model for the scheduling
+problem on a single machine. However, the model cannot solve large instances within a
+reasonable computational time for decision-making. For this reason, they also proposed a
+genetic algorithm. The computational results indicated the possibility of reducing
+energy consumption by up to 30% when they compared the genetic algorithm solution and
+the “as soon as possible” heuristic solution. Tsao, Thanh & Hwang (2020) presented a fuzzy
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 2/29model integrated into a genetic algorithm for a problem similar to that described
+previously. They tested their method in instances of up to 200 jobs. The results indicated a
+4.20% reduction in total energy consumption compared to the traditional genetic
+algorithm.
+Other studies address the scheduling problem and consider a second objective beyond
+minimizing energy consumption. Cota et al. (2018) proposed a mathematical model
+and applied a mathematical heuristic called multi-objective smart pool search for the
+UPMSP-SDS. The objective functions are to minimize the makespan and the total energy
+consumption. In the experiments, they used a set of instances with up to ﬁfteen jobs,
+and ﬁve machines randomly generated. They adopted hypervolume and set coverage
+metrics to compare the proposed algorithm with the e-constraint exact method. They
+showed that the objectives are conﬂicting and that energy consumption strongly inﬂuences
+the solution’s quality. Cota et al. (2019) introduced the MO-ALNS and MO-ALNS/D
+algorithms to handle instances of up to 250 jobs and 30 machines of the same problem
+described previously. The MO-ALNS algorithm is a multi-objective version of the
+Adaptive Large Neighborhood Search –ALNS (Ropke & Pisinger, 2006 ), and MO-ALNS/D
+combines the multi-objective MOEA/D (Zhang & Li, 2007) with ALNS. The MO-ALNS/D
+algorithm was able to ﬁnd better results than MO-ALNS in most instances in the
+hypervolume, set coverage, and Hierarchical Cluster Counting (HCC) ( Guimaraes,
+Wanner & Takahashi, 2009 ) metrics. ( Wu & Che, 2019 ) proposed a memetic differential
+evolution (MDE) algorithm for the UPMSP in which the objectives are also to minimize
+the makespan and the total energy consumption. The computational results showed
+that the proposed approach provides a signi ﬁcant improvement over the basic DE.
+Also, the MDE outperforms the SPEA-II and NSGA-II algorithms. ( Liang et al., 2015 )
+presented the Ant Colony Optimization algorithm with the Apparent Tardiness Cost
+(ACO-ATC) rule for the UPMSP seeking to minimize the total tardiness and the energy
+consumption. In this problem, machines need to wait until jobs are ready. However, it
+is necessary to decide whether the machine remains on or off during the wait. Turning off
+the machine to wait for the job to be ready saves energy. On the other hand, keep on the
+machine while waiting for the job saves time because it eliminates the need to prepare
+the machine again. They compared the ACO-ATC results with the classic ACO and a
+GRASP-based algorithm ( Feo & Resende, 1995 ). The proposed algorithm was better than
+the other approaches in most of the tested instances.
+There are studies that only address the minimization of the total energy cost. Ding et al.
+(2016) presented two approaches to UPMSP: the ﬁrst introduces a time-interval-based
+Mixed Integer Linear Programming (MILP) formulation. The second consists of a
+reformulation of the problem using the Dantzig-Wolfe decomposition and a column
+generation heuristic. According to the results, the MILP formulation overcame the column
+generation method in terms of solution quality and execution time when electricity
+prices stay stable for a relatively long period. On the other hand, the column generation
+method performed better when the electricity price frequently changed ( i.e., every half
+hour). Cheng, Chu & Zhou (2018) improved the formulation by Ding et al. (2016) and
+performed computational experiments with 120 randomly generated instances to compare
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 3/29the two formulations. The results showed that the new formulation achieves better results
+concerning the solution quality and execution time. Saberi-Aliabad, Reisi-Nafchi &
+Moslehi (2020) proposed the ﬁx-and-relax heuristic algorithm in two stages for this
+same problem. In the ﬁrst stage, jobs are assigned to the machines, and the second one
+solves a scheduling problem on simple machines. They tested its method in 20 instances
+randomly generated following the same parameter values as other previous studies.
+They compared the proposed method with the algorithms of Che, Zhang & Wu (2017) and
+Cheng, Chu & Zhou (2018) . The results showed that the ﬁx-and-relax algorithm overcame
+the others.
+Finally, we present studies that address the scheduling problem considering minimizing
+the energy cost combined with another objective. Zeng, Che & Wu (2018) dealt with
+the bi-objective uniform parallel machine scheduling to minimize the total energy cost and
+the number of machines. They proposed a new mathematical model and a heuristic
+algorithm for it. The computational results showed that the heuristic method generates
+high-quality solutions in a reasonable time limit for instances of up to 5,000 jobs. Cheng,
+Wu & Chu (2019) presented a mathematical formulation and a genetic algorithm for
+the UPMSP. They considered the objective of minimizing the weighted sum of makespan
+and total electricity cost. The results presented by their formulation overcome that of
+the genetic algorithm in terms of solution quality. Kurniawan et al. (2017) proposed a
+genetic algorithm with a delay mechanism for the UPMSP to minimize the weighted sum
+of makespan and total energy cost. The proposed algorithm handled instances of up to 30
+jobs and 15 machines. The results showed that the proposed method provided better
+solutions than the classical genetic algorithm.
+Although there are studies correlated to ours, of our knowledge, there is no work
+addressing the unrelated parallel machine scheduling problem with sequence-dependent
+Table 1 Summary of characteristics addressed by our work compared to literature studies.
+Reference Unrelated
+parallel
+machines
+Sequence-
+dependent
+setup
+Makespan Total
+energy
+cost
+Time-of-
+use
+Multi-
+objective
+Exact
+method
+Metaheuristic
+method
+Shrouf et al. (2014) pp p
+Liang et al. (2015) pp p p
+Ding et al. (2016) pp p p
+Kurniawan et al. (2017) pp p p p p
+Cota et al. (2018) ppp p p
+Cheng, Chu & Zhou (2018) pp p p
+Zeng, Che & Wu (2018) pp p pp
+Cota et al. (2019) ppp p p
+Wu & Che (2019) pp p p
+Cheng, Wu & Chu (2019) pp p p p p
+Tsao, Thanh & Hwang (2020) pp p
+Saberi-Aliabad, Reisi-Nafchi
+& Moslehi (2020)
+pp p p p
+Our proposal pppp p p p p
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 4/29setup times to minimize the makespan and the total energy cost. Table 1 summarizes the
+characteristics of scheduling problems treated by our work compared to literature
+references.
+PROBLEM STATEMENT
+To de ﬁne the UPMSP-SDS, we characterize the problem in this section and introduce a
+MILP formulation to solve it.
+The following are the characteristics of the problem addressed in this work:
+ There are a set N¼f 1; ... ; ng of jobs, a set M¼f 1; ... ; mg of machines, and a set
+L¼f 1; ... ; og of different operation modes, such that each operation mode l2 L is
+associated with a multiplication factor of speed vl and a multiplication factor of power /C21l;
+ The machines are unrelated parallel. In other words, the processing time of job j2 N
+can be different on each machine i2 M;
+ There is a planning horizon that consists of a set of H¼f 0; ... ;jHjg of time instants,
+and we must perform all jobs within this horizon;
+ All jobs are available to be processed at the beginning of the planning horizon h¼ 0;
+ Each job j2 N must be allocated to exactly one machine i2 M;
+ There is a processing time pij to process a job j2 N on a machine i2 M;
+ There is a sequence-dependent setup time Sijk to execute a job k2 N after another job
+j2 N on a machine i2 M;
+ Each machine i2 M has a power pi at normal operating speed;
+ The operation mode l2 L of each job determines the multiplication factor of power
+(/C21l). It also determines the multiplication factor of speed ( vl), which, in turn, is related to
+the execution time of each job;
+ There is a set D of days on the planning horizon H;
+ Each day is discretized into sizeD time intervals. For example, for discretizing a day in
+minutes, sizeD = 1,440; for the discretization of one day in hours, sizeD = 24;
+ To each day t2 H, we have a peak hour, which starts at the time startpt 2 H and ends
+at the time endpt 2 H;
+ EToff and ETon represent the energy tariff ($/KWh) in off-peak hours and on-peak
+hours, respectively.
+Table 2 presents the decision and auxiliary variables that are needed to model the
+problem.
+Thus, we can de ﬁne the problem through Eqs. (1) –(12).
+Table 2 Decision and auxiliary variables for the problem.
+Name Description
+Xijhl Binary variable that assumes value 1 if the job j is allocated on the machine i at time h and in the operation mode l, and value 0, otherwise
+PECont Partial Energy Cost ( $) during the on-peak in day t2 D
+PECofft Partial Energy Cost ( $) during the off-peak in day t2 D
+Cmax The maximum completion time of the jobs, also known as makespan
+TEC Total Energy Cost ( $)
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 5/29min Cmax (1)
+min TEC (2)
+Subject to:
+Xm
+i¼1
+Xo
+l¼1
+X
+jHj/C0 PijVl
+lm
+h¼0
+Xijhl¼ 1 8j2 N (3)
+Xijhlþ
+X
+min hþ PijVl
+lm
+þSijk/C01;jHj
+/C16/C17
+u¼h
+Xo
+l1¼1
+Xikul1 /C20 1 8i2 M; j2 N; k2 N; l2 L; j6¼ k (4)
+Cmax/C21 Xijhl/C2 hþ PijVl
+/C24/C25/C20/C21
+; 8i2 M; j2 N; h2 H; l2 L (5)
+PECont /C21 Xm
+i¼1
+Xn
+j¼1
+Xo
+l¼1
+/C21l/C2 pi/C2 ETon/C2 24
+sizeD /C2 (6)
+Xstartpt/C01
+h¼sizeD/C2ðt/C01Þ
+Xijhl /C2
+8
+<
+: max 0 ; min hþ PijVl
+/C24/C25
+/C0 1; endpt
+/C18/C19
+/C0ð startpt/C0 1Þ
+/C18/C19/C20/C21
+þ
+Xendpt/C01
+h¼startpt
+Xijhl/C2 min hþ PijVl
+/C24/C25
+; endptþ 1
+/C18/C19
+/C0 h
+/C20/C21 /C27
+8t2 D
+PECofft /C21 Xm
+i¼1
+Xn
+j¼1
+Xo
+l¼1
+/C21l/C2 pi/C2 EToff /C2 24
+sizeD /C2 (7)
+/C26 Xstartpt/C01
+h¼sizeD/C2ðt/C01Þ
+Xijhl/C2
+/C20
+min
+/C18
+hþ
+/C24Pij
+Vl
+/C25
+; startpt
+/C19
+/C0 hþ max
+/C18
+0; hþ
+/C24Pij
+Vl
+/C25
+/C0 endpt/C0 1
+/C19/C21
+þ
+Xendpt/C01
+h¼startpt
+Xijhl/C2
+/C20
+max
+/C18
+0; hþ
+/C24Pij
+Vl
+/C25
+/C0 endpt/C0 1
+/C19/C21
+þ
+XjHj/C01
+h¼endpt
+Xijhl/C2
+/C24Pij
+Vl
+/C25/C27
+8t2 D
+TEC/C21
+XsizeD
+t¼1
+PECofft þ PECont
+/C16/C17
+(8)
+Xijhl2f 0; 1g8 i2 M; j2 N; h2 H; l2 L (9)
+Cmax/C21 0 (10)
+PECofft /C21 0 8t2 D (11)
+PECont /C21 0 8t2 D (12)
+The objectives of the problem are to minimize, simultaneously, the makespan and the
+total energy cost, deﬁned by Eqs. (1) and (2), respectively. The set of constraints (3) ensures
+that every job j2 J is allocated on a machine has a single operation mode, and ends its
+execution inside the planning horizon. Constraints (4) deﬁne that if the job k is assigned to
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 6/29the machine i immediately after the job j, then the start time of the job k must be
+greater than the sum of the end time of the job j and the setup time between them. It is
+important to highlight that for the previous model to be valid, the setup and processing
+times must satisfy the triangular inequality, as de ﬁned by Rosa & Souza (2009) . The set
+of constraints (5) determines a lower bound for the makespan. Constraints (6) and (7)
+deﬁne a lower bound for the partial energy cost in the on-peak hours ( PECon) and the
+total energy cost for off-peak hours ( PECoff ), respectively. It is important to note that a job
+can be partially performed in the on-peak hours and partially in the off-peak hours and
+that the total energy cost is directly related to the energy price and the job execution
+time. Constraint (8) ensures a lower bound for the total energy cost. Constraints (9)–(12)
+deﬁne the domain of the decision and auxiliary variables of the problem.
+The calculation of the energy cost of a job j depends on its execution time during the on-
+peak and off-peak time. Thus, there are six possible cases:
+Case 1: The job j starts and ends before the on-peak hours;
+Case 2: The job j starts before the on-peak hours and ends in the on-peak hours;
+Case 3: The job j starts and ends in the on-peak hours;
+Case 4: The job j starts during the on-peak hours and ends after the on-peak hours;
+Case 5: The job j starts and ends after the on-peak hours;
+Case 6: The job j starts before the on-peak hours and ends after the on-peak hours.
+To illustrate cases 1 to 5, let Fig. 1. It shows the execution of ﬁve jobs N¼f 2; 4; 1; 5; 3g
+in the scheduling of a single machine i¼ 1 in a single operation mode l¼ 1 on day t¼ 1
+of the planning horizon. Let the start of the on-peak hours ( startp1) equal to 18; the
+end of the on-peak hours ( endp1) equal to 21; the multiplication factor of power ( /C21l) equal
+to 1; the energy consumption of machine at normal operation ( p1) equal to 100; the
+energy tariff in the on-peak hours ( ETon) equal to 0 :10$=KWh and in the off-peak hours
+(EToff ) equal to 0 :05$=KWh; the multiplication factor of speed vl equal to 1. In this
+example, we consider discretization in hours. This ﬁgure shows that jobs 4, 1, and 5 are
+performed in the on-peak hours, partially or totally, and jobs 2 and 3, in turn, in the
+off-peak hours.
+For this example, Eqs. (6) and (7) are reduced to Eqs. (13) and (14) below:
+PECon1 ¼ Xn
+j¼1
+1/C2 100/C2 0:10/C2 24
+24
+|ﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ ﬄ{zﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ ﬄ}
+Parcel 1ðaÞ
+/C2 (13)
+Figure 1 Example to illustrate the calculation of the energy cost on a machine.
+Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-1
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 7/29X18/C01
+h¼0
+X1jh1/C2
+(
+max 0 ; min hþ P1j
+1
+/C24/C25
+/C0 1; 21
+/C18/C19
+/C0ð 18/C0 1Þ
+/C18/C19/C20/C21
+|ﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ{zﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ}
+Parcel 2ðbÞ
+þ
+X21/C01
+h¼18
+X1jh1/C2 min hþ P1j1/C24/C25 ; 21þ 1/C18/C19 /C0 h/C20/C21 )
+|ﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ ﬄ{zﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ ﬄ}
+Parcel 3ðcÞ
+PECoff1 ¼ Xn
+j¼1
+1/C2 100/C2 5/C2 24
+24
+|ﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ ﬄ{zﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ ﬄ}
+Parcel 1ðdÞ
+/C2 (14)
+X18/C01
+h¼0
+X1jh1/C2
+(
+min hþ P1j
+1
+/C24/C25
+; 18
+/C18/C19
+/C0 hþ max 0 ; hþ P1j
+1
+/C24/C25
+/C0 21/C0 1
+/C18/C19/C20/C21
+|ﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ{zﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ}
+Parcel 2ðeÞ
+þ
+X21/C01
+h¼18
+X1jh1/C2 max 0 ; hþ P1j1/C24/C25 /C0 21/C0 1/C18/C19/C20/C21
+|ﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ ﬄ{zﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ ﬄ}
+Parcel 3ðfÞ
+þ
+X24/C01
+h¼21
+X1jh1/C2 P1j1/C24/C25 )
+|ﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ{zﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄﬄ}
+Parcel 4ðgÞ
+Table 3 illustrates the contribution of each job to the total energy cost, according to the
+example in Fig. 1. The column “# Job” represents the job, the column “Case” shows the
+contemplated case, and the columns “Contr. on-peak” and “Contr. off-peak” show the
+contributions of the job to the energy cost of each job in the on-peak and off-peak hours,
+respectively.
+The total energy cost found to the schedule shown in Fig. 1 is 105.
+Table 3 Energy cost by job in the example of Fig. 1 .
+# Job Case Contr. on-peak hours Contr. off-peak hours
+21 1 0 |{z}
+ðaÞ
+/C2ð 0|{z}
+ðbÞ
+þ 0|{z}
+ðcÞ
+Þ¼ 05 |{z}
+ðdÞ
+/C2ð 11|{z}
+ðeÞ
+þ 0|{z}
+ðfÞ
+þ 0|{z}
+ðgÞ
+Þ¼ 55
+42 1 0 |{z}
+ðaÞ
+/C2ð 1|{z}
+ðbÞ
+þ 0|{z}
+ðcÞ
+Þ¼ 10 5 |{z}
+ðdÞ
+/C2ð 2|{z}
+ðeÞ
+þ 0|{z}
+ðfÞ
+þ 0|{z}
+ðgÞ
+Þ¼ 10
+13 1 0 |{z}
+ðaÞ
+/C2ð 0|{z}
+ðbÞ
+þ 1|{z}
+ðcÞ
+Þ¼ 10 5 |{z}
+ðdÞ
+/C2ð 0|{z}
+ðeÞ
+þ 0|{z}
+ðfÞ
+þ 0|{z}
+ðgÞ
+Þ¼ 0
+54 1 0 |{z}
+ðaÞ
+/C2ð 0|{z}
+ðbÞ
+þ 1|{z}
+ðcÞ
+Þ¼ 10 5 |{z}
+ðdÞ
+/C2ð 0|{z}
+ðeÞ
+þ 1|{z}
+ðfÞ
+þ 0|{z}
+ðgÞ
+Þ¼ 5
+35 1 0 |{z}
+ðaÞ
+/C2ð 0|{z}
+ðbÞ
+þ 0|{z}
+ðcÞ
+Þ¼ 5|{z}
+ðdÞ
+/C2ð 0|{z}
+ðeÞ
+þ 0|{z}
+ðfÞ
+þ 1|{z}
+ðgÞ
+Þ¼ 5
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 8/29To illustrate case 6, consider Fig. 2. It shows the execution of three jobs N¼f 2; 1; 3g
+on a single machine i¼ 1 in operating mode l¼ 1 during day t¼ 1 of the planning
+horizon. Let also the start of the on-peak hours (startp1) equal to 18; the end of the on-peak
+hours ( endp1) equal to 21; the multiplication factor of power ( /C21l) equal to 1; the energy
+consumption of machines at normal operation ( p1) equal to 100; the energy tariff in
+the on-peak hours ( ETon) equal to 0.10 $=KWh and in the off-peak hours ( EToff ) equal to
+0:05 $=KWh; and the multiplication factor of speed equal to 1. Such as in the previous
+example, we consider discretization in hours. This ﬁgure shows that job 1 is performed in
+the on-peak hours and jobs 2 and 3, in turn, in the off-peak hours.
+The contribution of the job 1 to the energy cost in the on-peak hours is 30, and the
+contribution to the cost in the off-peak hours is 50.
+Thus, calculating similarly to the previous example, we conclude that the total energy
+cost for the schedule shown in Fig. 2 is 155.
+WEIGHTED SUM METHOD
+We used the weighted sum method ( Marler & Arora, 2004 ) to solve the multi-objective
+optimization problem addressed using a mathematical programming solver. This method
+converts the multi-objective problem into a single objective problem using the weighted
+sum of the objectives.
+For this, consider Eq. (15):
+min zðXÞ¼ a/C2 Cmax
+jHj
+/C18/C19
+þð 1/C0 aÞ/C2 TECCostmax
+/C18/C19/C20/C21
+(15)
+where:
+ a: real number in range [0, 1];
+jHj: represents the cardinality of the set H;
+ Costmax: is the estimate for the maximum energy cost used to normalize the total
+energy cost. It is calculated using a heuristic, as shown in “Initial Population”;
+The problem constraints are those de ﬁned by Eqs. (3) –(12).
+Algorithm 1 describes all the steps of the weighted sum method implemented.
+Algorithm 1 receives as input: the set D with the values for a and the time limit. In line,
+we initialize the non-dominated set ( NDS) as empty. Then, we execute the loop de ﬁned
+between lines 2 –7 for each value a. In line 3, we obtain the result from the execution of
+the model. Then, we get the Makespan and TEC values resulting from the model
+execution. Then, in line 6, we add the solution obtained to the NDS. Finally, in line 8, the
+method returns the generated non-dominated set.
+Figure 2 Schedule example for case 6. Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-2
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 9/29In the weighted sum method, the decision-maker must de ﬁne a weight for each
+objective function. The value of this weight re ﬂects the relative importance of each
+objective in the overall solution. We adopted several combinations of weights to ﬁnd the
+most signi ﬁcant number of optimal Pareto solutions to the problem addressed.
+We used the following parameters for Algorithm 1:
+ The set D¼f 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1g with the possible values for a;
+ The time limit for each execution of the mathematical model, de ﬁned as time_limit
+¼ 800/C2 n/C2 lnðmÞ sec for each a value, where m is the number of machines and n is
+the number of jobs;
+ sizeD¼ 144: to discretize the day at intervals of 10 min each.
+PROPOSED NSGA-II
+The problem addressed belongs to the NP-hard class because it is a generalization of the
+identical parallel machine scheduling problem, which is NP-hard (Garey & Johnson, 1979).
+For this reason, we used the NSGA-II multi-objective algorithm ( Deb et al., 2002 )t o
+address the problem since there are in literature many reports of successful use of this
+algorithm ( Deb, UdayaBhaskaraRao & Karthik, 2007 ; Liu et al., 2014 ; Wang et al., 2017 ;
+Babazadeh et al., 2018 ). This algorithm is an alternative to the exact method described in
+the previous section to ﬁnd an approximation of the Pareto-optimal front in large
+instances in an adequate computational time for decision-making.
+Algorithm 2 describes how the implemented NSGA-II works.
+Algorithm 2 receives the following input parameters: the population size (size pop), the
+probability of mutation ( probmut), and the stopping_criterion. In line 2, we created an
+initial population P0. Then, in the main loop (lines 4 –25), we combine the parent Pt and
+offspring population Qt to generate a new population Rt (line 5). In line 6, we apply the fast
+non-dominated sorting method to divide the population Rt into non-dominated sets,
+called fronts,F 1;F 2; ... ;F k. A frontF i dominates anotherF j, if and only if, i < j and
+Rt¼F 1[F 2 ... F k. In lines 9 –13, we select the best frontiers of F to include in the
+population Pt+1. We repeat this procedure as long as it is possible to include a new frontier
+in Pt+1 without exceeding the population size. Then we check the size of the population
+Algorithm 1 Weighted sum method.
+input: D¼f a1; a2;/C1/C1/C1 ; ang, time_limit
+1 NDS /C11 ;
+2 foreach ai2 D do
+3 model_result )RunWeightedSumModel(ai, time_limit);
+4 s.Makespan )GetMakespan(model_result);
+5s . TEC)GetTEC(model_result);
+6 NDS)AddSolution(s);
+7 end
+8 return NDS ;
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 10/29obtained. If it is not exactly sizepop, then we order the next frontier i ofF that has not yet
+been included in Pt+1, according to the crowding distance, and we select the sizepop -| Pt+1|
+ﬁrst to ﬁll all spaces of the population Pt+1. In lines 22 and 23, we apply the crossover and
+mutation operators in Pt+1 to generate the population Qt+1.
+The following subsections describe how an initial population is generated and the
+crossover and mutation operators, respectively.
+Initial population
+The initial population of the NSGA-II contains sizepop individuals. Two of them are
+constructed through a greedy strategy, one of which considers only the objective of
+Algorithm 2 NSGA-II.
+input :sizepop, probmut, stopping_criterion
+1P 0 )Generate initial population of size pop individuals ;
+2Q 0 )/C11;
+3 t )0;
+4 while stopping_criterion not satis ﬁed do
+5R t )Pt ∪Qt ;
+6 F )Fast non-dominated sorting(R t );
+7P t+1 )/C11 ;
+8 i)1;
+9 while |Pt+1|+|Fi| ≤ sizepop do
+10 Compute Crowding Distance ofFi ;
+11 P t+1 )Pt+1 ∪Fi;
+12 i)i+1 ;
+13 end
+14 if |Pt+1| < size pop then
+15 Sort ( Fi, ≺n);
+16 j =1;
+17 while |Pt+1| < size pop do
+18 P t+1 )Pt+1 ∪Fi[ j];
+19 j) j+1 ;
+20 end
+21 end
+22 Q t+1 )Crossover(Pt+1);
+23 Q t+1 )Qt+1 ∪ Mutation(Pt+1, prob mut );
+24 t )t +1 ;
+25 end
+26 NDS)non-dominated solutions of P t ;
+27 return NDS ;
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 11/29minimizing the makespan. In this case, we always choose the operation mode related to the
+highest speed factor. The other individual considers only the total energy cost. In this case,
+we choose the operation mode related to the lowest consumption factor. The other
+individuals ( sizepop-2) of the initial population are randomly generated.
+Algorithm 3 describes the greedy strategy for generating an individual to the initial
+population.
+Algorithm 3 starts with an empty initial individual (line 1). The loop between lines 2
+and 7 allocates each job n on the machines. Therefore, ﬁrst, we randomly select a job j,
+which has not yet been allocated (line 3). Then, we identi ﬁed in the best machine ibest of
+the individual s and the best position pos to insert the job j (line 5). In this case, we
+consider only one of the objectives of the problem: minimize the makespan or the total
+energy cost. Then, we allocate job j in position pos of machine ibest in individual s (line 6).
+At the end of this procedure, we return a valid individual s (line 8).
+Crossover
+We used the binary tournament selection method to choose each pair of individuals for the
+crossover operator. We run two tournaments with two individuals each and select the
+winner of each tournament for the crossover. In our approach, the dominant individual
+wins the tournament. If both individuals are non-dominated, then we randomly choose an
+objective and use it to de ﬁne the winner of the tournament.
+Figure 3 illustrates the crossover between two individuals.
+After selecting two individuals named parent 1 and parent 2, respectively, we applied
+the crossover operator to generate new individuals. We adopted the One Point Order
+Crossover operator from Vallada & Ruiz (2011) adapted to the parallel machine problem.
+We describe its operation below:
+1. We de ﬁne, at random, the crossover points of each machine, as shown in Fig. 3A ;
+2. We generate two offspring. The ﬁrst receives the genes to the left of the crossover point
+deﬁned on each machine of parent 1. The second receives the genes to the right, as
+shown in Fig. 3B;
+Algorithm 3 Greedy constructive heuristic.
+input: N,n,m,obj
+1s )/C11;
+2 for i =1 to n do
+3 j)random job ∈ N;
+4 N)N\ { j};
+5( ibest,pos))GreedyChoice(s, j, obj);
+6s )Insert(s, j, ibest,pos);
+7 end
+8 return s ;
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 12/293. We mark in parent 2 the genes present in each offspring, as shown in Fig. 3C ;
+4. We add the unmarked genes of parent 2 to offspring 1 and 2. We add these genes in
+the position that results in the lowest value for the objective function, whereas this
+problem has two objective functions, so we randomly select one at each crossover. In the
+end, we will have two new individuals, as shown in Fig. 3D .
+We repeat this procedure until to generate sizepop new individuals.
+Mutation
+We implemented three mutation operators (Swap, Insert, and Swap of operation mode),
+described below. These operators maintain the population ’s genetic diversity and reduce
+the chances that the algorithm getting stuck at a local optimum.
+Swap
+The swap operator works by randomly choosing a job j1, initially allocated in position a on
+machine i1 and another job j2 allocated in position b of machine i2. Then, we allocate job j1
+in position b of machine i2, and we allocate job j2 in position a of machine i1.
+Figure 4 illustrates the swap between two jobs j1 and j2. They are initially allocated on
+machines i1 and i2, respectively. After swapping, we allocate job j2 on machine i1 and job j1
+on machine i2.
+Insertion
+The insertion operator consists of randomly choosing a job j1 allocated at position a of
+machine i1 and randomly choosing position b of another machine i2. Then job j1 is
+removed from machine i1 and inserted into position b on the machine i2.
+Figure 5 illustrates this move. The left side shows the scheduling before, and the right
+side shows it after the insertion move.
+Mode change
+In the operation mode change operator, we randomly select a job and change its operation
+mode at random.
+Figure 6 illustrates the application of this operator to the scheduling of offspring 1 of
+Fig. 3D , which involves 12 jobs. As can be seen, job 8, which is in the sixth position of
+machine 2, has operation mode 3. After the application of this operator, the job changes to
+operation mode 1.
+The NSGA-II algorithm implemented performs a mutation with a probability equal to
+probmut .
+COMPUTATIONAL EXPERIMENTS
+We coded the NSGA-II algorithm in the C++ language and implemented the
+mathematical model with the Gurobi 7.0.2 API ( Gurobi Optimization, 2020 ). We
+performed the tests on a microcomputer with the following con ﬁgurations: Intel (R) Core
+(TM) i7-4510U processor with a frequency of 2 GHz, 16 GB of RAM, and 64-bits Ubuntu
+19.10 operating system.
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 13/29Figure 3 Crossover adapted from Vallada & Ruiz (2011) .
+Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-3
+Figure 4 Swap move between jobs j1 and j2. Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-4
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 14/29Furthermore, we compared the performance of the NSGA-II algorithm with two
+basic multi-objective algorithms: MOGA of Murata & Ishibuchi (1995) and NSGA-I of
+Srinivas & Deb (1994) . These algorithms use the same NSGA-II crossover and mutation
+operators described in “Crossover” and “Mutation” and the same stopping criterion.
+This section is organized as follows. “Instances Generation ” and “Metric description ”
+describe the instances and the metrics used to assess the quality of the set of non-
+dominated solutions generated by the algorithms. “Tuning of Algorithms ’ Parameters”
+shows the parameter calibration of the algorithms. “Results” reports the results.
+Instances generation
+Since, as far as we know, there is no set of instances in the literature for the problem
+addressed, we adapted two instance sets from the literature that deal with similar problems.
+The ﬁrst one, called set1, is a subset of the small instances of Cota et al. (2018) satisfying the
+triangular inequality, in which we add information about the energy price on-peak and
+off-peak hours. The second set, named set2, is also a subset of the large instances of Cota
+et al. (2018) , in which we included instances of 750 jobs. Table 4 shows the characteristics
+of these sets of instances, which are are available in Rego, Cota & Souza (2021) .
+Metric description
+The quality of the set of non-dominated solutions found by a method can be analyzed
+under three aspects: convergence, extension, and distribution. Convergence refers to the
+proximity of this set to the Pareto-optimal front or to the reference set. In turn, the
+extension assesses the breadth of the region covered by this set of non-dominated
+Figure 5 Insertion move of job j1 on machine i2. Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-5
+Figure 6 Example of the mode change operator. Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-6
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 15/29solutions. Finally, the distribution refers to the uniformity of the spacing between the
+solutions within the set.
+The hypervolume metric is sensitive for convergence and extension and the HCC
+metric, in turn, is sensitive for distribution and extension.
+Hypervolume
+The hypervolume or S metric is a measure of quality often used to compare results
+from multi-objective algorithms and it was proposed by Zitzler & Thiele (1998) . This
+metric has the ability to provide a combined estimate of convergence and diversity of a set
+of solutions ( Deb, 2014 ). The hypervolume of a non-dominated set measures the area
+covered or dominated by this set ’s points, limited by a Reference Point ( RP). In
+maximization problems, it is common to use the point (0; 0), while in minimization
+problems, an upper bound, also known as the Nadir point, is used to limit this area. In
+Fig. 7, the shaded area de ﬁnes the hypervolume of the set of non-dominated solutions A
+for a problem with two objective functions, in which the point ðmaxx; maxyÞ deﬁnes
+the upper limit. We denote by HVðAÞ the hypervolume of a set of non-dominated
+solutionsA relative to a reference point ( Deb, 2014 ).
+HCC
+Hierarchical cluster counting (HCC) is a metric proposed by Guimaraes, Wanner &
+Takahashi (2009) to evaluate the quality of non-dominated sets that were obtained by
+Table 4 Instance characteristics.
+Parameter set1 set2 Based on
+n 6, 7, 8, 9, 10 50, 250, 750 Vallada & Ruiz (2011) ; Cota et al. (2018)
+m 2 10, 20 Vallada & Ruiz (2011) ; Cota et al. (2018)
+o 35 Mansouri, Aktas & Besikci (2016) ; Ahilan et al. (2013) ; Cota et al. (2018)
+Pij U½1; 99/C138 U½1; 99/C138 Vallada & Ruiz (2011) ; Cota et al. (2018)
+Sijk U½1; 9/C138 U½1; 9/C138, U½1; 124/C138 Vallada & Ruiz (2011) ; Cota et al. (2018)
+pi U½40; 200/C138 U½40; 200/C138 Cota et al. (2018)
+Vl 1.2, 1, 0.8 1.2, 1.1, 1, 0.9, 0.8 Mansouri, Aktas & Besikci (2016) ; Ahilan et al. (2013) ; Cota et al. (2018)
+kl 1.5, 1, 0.6 1.5, 1.25, 1, 0.8, 0.6 Mansouri, Aktas & Besikci (2016) ; Ahilan et al. (2013) ; Cota et al. (2018)
+Figure 7 Hypervolume for set A. Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-7
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 16/29multi-objective optimization algorithms. It is based on hierarchical clustering techniques,
+such as the Sphere Counting (SC) ( Wanner et al., 2006 ) metric. According to Guimaraes,
+Wanner & Takahashi (2009) , the extent and uniformity of a non-dominated set is
+directly proportional to the HCC value calculated for it.
+We calculate the HCC for a set of points A as follows:
+1. Initially, we create a grouping for each point in the set, and consider that each group
+created is a sphere of radius equal to zero;
+2. Then, we calculate the minimum distances of fusion, which is a new assumed value for
+the radius of the spheres capable of decreasing the number of clusters;
+3. We group the points into the same cluster;
+4. We repeat steps 2 and 3 until all the points belong to the same grouping;
+5. We obtain the HCC value by adding, in each iteration, the product between the
+distances of fusion and the amount of grouping formed.
+Consider Fig. 8, which illustrates the steps to calculate the HCC for a six-point non-
+dominated set. Figure 8A shows the ﬁrst cluster in which each point is in a different sphere
+with radius zero. Figure 8B shows the points grouped into ﬁve spheres, each with radius r1.
+Figure 8 Example of how to calculate the HCC metric ( Guimaraes, Wanner & Takahashi, 2009 ).
+Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-8
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 17/29Figure 8C shows the points grouped into four spheres, each with radius r2. Figure 8D
+shows, in the Cartesian plane, the relationship between the number of clusters and the the
+radius of each cluster. The gray region area represents the value of the HCC metric for the
+set shown in Fig. 8.
+Tuning of algorithms ’ parameters
+The parameter values used in the NSGA-II, MOGA, and NSGA-I algorithms can affect its
+performance. Therefore, we use the Irace package ( López-Ibáñez et al., 2016 )t o ﬁnd the
+best values for these parameters. Irace is a software encoded in the R language that
+automatically performs an iterative procedure to ﬁnd the most appropriate optimization
+algorithm settings.
+Table 5 shows the test scenarios used. In the ﬁrst column, we present the description of
+each NSGA-II parameter; in the second column, the set of values tested for each parameter,
+and in the third column, the best value returned by Irace.
+Results
+In this section, we presented the results of two experiments used to evaluate the NSGA-II
+algorithm’s performance. First, we compare the NSGA-II results with those of the
+weighted sum method in instances with up to 10 jobs and two machines. Then, we
+compared the performance of the NSGA-II algorithm with that of the MOGA and NSGA-I
+algorithms in larger instances, with up to 750 jobs and 20 machines. In both cases, we
+executed the algorithms 30 times in each instance.
+We used the Relative Percentage Deviation ( RPDHVi ) to evaluate the HV metric for each
+method Alg and instance i. It is calculated by Eq. (16):
+RPDHVi ðAlgÞ¼ HVRSi /C0 HVviHVRSi ; (16)
+where HVRSi is the hypervolume value of the reference set in 30 executions of the algorithm
+Alg in the instance i. v can assume three values: min, max and avg, representing,
+respectively, the smallest, the largest, and the average of the hypervolume in 30 executions
+of the algorithm in the instance i.
+Table 5 Test scenarios for algorithms ’ parameters.
+Method Description Tested values Irace best value
+NSGA-II Population size ( sizepop) 80, 90, 100, 110 110
+Probability of mutation 0.04, 0.05, 0.06, 0.07 0 :05
+MOGA Population size ( sizepop) 80, 90, 100, 110 80
+Probability of mutation 0.04, 0.05, 0.06, 0.07 0 :06
+NSGA-I Population size ( sizepop) 80, 90, 100, 110 80
+Probability of mutation 0.04, 0.05, 0.06, 0.07 0 :06
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 18/29NSGA-II/C2 Gurobi
+In this section, we reported the results of the NSGA-II algorithm and the exact method in
+the set of instances set1.
+Table 6 shows the reference set data for these instances. In this table, the ﬁrst two
+columns show the instance identi ﬁer and name, respectively. The next two columns
+show the number of jobs and machines, respectively. The ﬁfth column presents the
+hypervolume of this reference set. Finally, the last column presents the reference point
+(Cmax; TEC) used to calculate the hypervolume of each instance.
+Tables 7 and 8 show the method results concerning the RPDHV and the HCC metrics. In
+these tables, the ﬁrst column identi ﬁes the instance. The next three columns show the
+minimum, maximum and average values of the RPDHV and HCC, respectively, concerning
+the NSGA-II method. The ﬁfth column shows the standard deviation of the results.
+The seventh column shows the upper bound (UB) returned by the exact method
+Table 6 Reference set data in the set1.
+# ID # Instance n m HV RP
+1 6_2_1439_3_S_1-9 6 2 6,406.67 (250; 239.91)
+2 7_2_1439_3_S_1-9 7 2 15,918.87 (400; 260.68)
+3 8_2_1439_3_S_1-9 8 2 3,338.29 (260; 302.58)
+4 9_2_1439_3_S_1-9 9 2 22,256.33 (440; 357.69)
+5 10_2_1439_3_S_1-9 10 2 31,789.09 (500; 370.68)
+Table 7 RPDHV and runtime of the methods in the set1.
+NSGA-II Gurobi
+# ID min max avg sd time (s) UB time (s)
+(%) (%) (%) (%)
+1 0.00 0.00 0.00 0.00 4.16 1.89 172.09
+2 0.68 0.68 0.68 0.00 4.85 1.12 549.86
+3 0.00 0.00 0.00 0.00 5.54 0.34 2,140.40
+4 0.00 0.75 0.62 0.28 6.24 5.12 8,312.92
+5 0.66 0.89 0.66 0.04 6.93 1.51 39,396.63
+Table 8 HCC and runtime of the methods in the set1.
+# ID NSGA-II Gurobi
+min max avg sd time (s) UB time (s)
+1 305.16 305.16 305.16 0.00 4.16 253.78 172.09
+2 75.87 75.87 75.87 0.00 4.85 43.52 549.86
+3 356.33 356.33 356.33 0.00 5.54 215.71 2,140.40
+4 70.63 80.64 78.97 12.80 6.24 6.56 8,312.92
+5 84.98 87.79 87.70 2.05 6.93 77.15 39,393.63
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 19/29concerning the RPDHV and HCC metrics. Finally, the sixth and eighth columns show the
+times, in seconds, of the NSGA-II and the exact method, respectively.
+We can see in Table 6 that in the set of instances set1, the RPDHV of the NSGA-II
+algorithm is lower in all comparisons (min, max e avg) compared to the exact method. We
+can also verify that the standard deviation of the NSGA-II algorithm in instances with up
+to 8 jobs (ID 1, 2, 3) is equal to zero. In other words, in these instances, all NSGA-II
+executions obtained the same set non-dominated. We also can note that the execution time
+of the NSGA-II is much less than that of the exact algorithm.
+Concerning Table 8, we noted that the NSGA-II algorithm has a higher HCC value than
+the exact method in all comparisons. Thus, we can conclude that the non-dominated set of
+the NSGA-II method has better diversity and uniformity.
+Figure 9 presents the non-dominated sets obtained by an NSGA-II execution and the
+other using the exact method in two randomly selected instances. The ﬁrst instance has
+six jobs and two machines, and the second has 10 jobs and two machines. In this ﬁgure,
+the blue dots represent the solutions of the NSGA-II, and the red dots represent the
+solutions of the exact method. The x axis represents the makespan, and the y axis
+represents the total energy cost.
+We can notice in Fig. 9A that the NSGA-II non-dominated set contains all the solutions
+found by the exact method, plus two additional solutions. In this example, the two
+methods have the same amplitude, and the NSGA-II was able to ﬁnd a set of solutions with
+higher cardinality. On the other hand, Fig. 9B shows that the non-dominated set contains
+six of the eight solutions found by the exact method and eight other solutions. In this
+example, the exact method showed better amplitude than the NSGA-II, but this obtained
+higher cardinality than the exact method.
+Considering these results, we observed that the NSGA-II ﬁnds good quality solutions
+and requires less computational time than the exact method.
+NSGA-II in large instances compared with other literature algorithms
+Here, we presented the results of the NSGA-II, MOGA, and NSGA-I algorithms in the set
+of instances set2.
+Table 9 shows the reference set data for the instances of set2. Its organization follows the
+same description as the previous section ’s tables.
+Figure 9 Frontiers found by NSGA-II and Gurobi methods.
+Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-9
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 20/29Tables 10 and 11 report the RPDHV and HCC values, respectively, of the algorithms in
+the set of instances set2. As can be seen, NSGA-II achieved the best average results
+regarding hypervolume in all instances. On the other hand, it won in 2/3 of the instances
+concerning the HCC. These results indicate that the NSGA-II algorithm outperforms
+MOGA and NSGA-I algorithms concerning these metrics.
+Figures 10A and 10B illustrate the Pareto front obtained from each algorithm in two
+different instances. The ﬁrst instance has 50 jobs and 20 machines, and the second has 750
+jobs and 10 machines. As can be seen, the NSGA-II produced sets of non-dominated
+Table 9 Reference set data in the set2.
+# ID # Instance n mH V R P
+1 50_10_1439_5_S_1-9 50 10 56,872 (280; 452.653)
+2 50_10_1439_5_S_1-124 50 10 181,673 (456; 909.559)
+3 50_20_1439_5_S_1-9 50 20 15,933 (114; 323.339)
+4 50_20_1439_5_S_1-124 50 20 151,884 (392; 642.568)
+5 250_10_1439_5_S_1-9 250 10 1,488,058 (1,457; 2,245.16)
+6 250_10_1439_5_S_1-124 250 10 6,986,225 (4,374; 2,930.02)
+7 250_20_1439_5_S_1-9 250 20 526,773 (420; 2,570.86)
+8 250_20_1439_5_S_1-124 250 20 1,383,849 (988; 3,179.8)
+9 750_10_1439_5_S_1-9 750 10 7,678,168 (3,665; 5,630.8)
+10 750_10_1439_5_S_1-124 750 10 105,897,123 (19,400; 9,442.33)
+11 750_20_1439_5_S_1-9 750 20 3,791,005 (1,364; 5,573.7)
+12 750_20_1439_5_S_1-124 750 20 34,971,819 (7,740; 7,065.71)
+Table 10 RPDHV and runtime of the algorithms in the set2.
+# ID MOGA NSGA-I NSGA-II
+min (%) max (%) avg (%) sd min (%) max (%) avg (%) sd min (%) max (%) avg (%) sd time (s)
+1 0.08 0.28 0.19 0.06 0.04 0.18 0.10 0.03 0.01 0.18 0.10 0.03 115.13
+2 0.03 0.20 0.12 0.04 0.05 0.20 0.11 0.04 0.03 0.20 0.10 0.04 115.13
+3 0.04 0.27 0.15 0.06 0.07 0.25 0.15 0.05 0.05 0.21 0.12 0.05 149.79
+4 0.04 0.16 0.11 0.03 0.02 0.16 0.10 0.03 0.02 0.17 0.09 0.03 149.79
+5 0.22 0.27 0.24 0.02 0.02 0.09 0.06 0.02 0.01 0.04 0.03 0.01 575.65
+6 0.01 0.11 0.06 0.03 0.01 0.04 0.02 0.01 0.01 0.03 0.02 0.01 575.65
+7 0.13 0.36 0.24 0.06 0.05 0.14 0.10 0.02 0.01 0.08 0.05 0.02 748.93
+8 0.03 0.11 0.07 0.02 0.04 0.12 0.08 0.02 0.04 0.12 0.07 0.02 748.93
+9 0.21 0.33 0.24 0.03 0.02 0.06 0.04 0.01 0.01 0.02 0.01 0.00 1,726.94
+10 0.10 0.15 0.13 0.01 0.01 0.03 0.02 0.00 0.01 0.02 0.01 0.00 1,727.94
+11 0.13 0.21 0.17 0.02 0.05 0.17 0.10 0.03 0.01 0.05 0.02 0.01 2,246.80
+12 0.04 0.07 0.06 0.01 0.01 0.02 0.02 0.00 0.00 0.02 0.01 0.00 2,246.80
+Note:
+The best average values are highlighted in bold.
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 21/29solutions with good convergence, diversity, uniformity, and amplitude when compared
+with others algorithms.
+Figures 11 and 12 show the boxplot of the RPD and HCC results, respectively.
+To verify if the differences between the results presented by the algorithms are
+statistically signi ﬁcant, we performed the hypothesis tests below.
+/C26 H0 : l1¼ l2¼ l3
+H1 :9i; jj li6¼ lj
+In the ﬁrst test, l1, l2, and l3 represent the average RPD HV for NSGA-II, MOGA, and
+NSGA-I, respectively. In the second test, l1, l2, and l3 represent the average HCC for the
+algorithms in the same sequence.
+Table 11 HCC and runtime of the algorithms in the set2.
+# ID MOGA NSGA-I NSGA-II Time (s)
+min max avg sd min max avg sd min max avg sd
+1 555.75 835.13 701.86 89.97 1,181.10 1,654.00 1,422.89 129.12 1,253.90 1,715.60 1,446.94 128.44 115.13
+2 846.86 2,116.50 1,503.49 278.61 1,234.80 2,466.60 1,844.78 343.75 1,063.80 2,224.00 1,653.94 323.72 115.13
+3 171.46 639.33 401.74 97.33 210.11 2,466.60 397.67 106.53 279.32 659.35 431.34 89.45 149.79
+4 1,343.70 2,357.30 1,838.98 271.90 1,251.30 573.29 1,885.60 240.14 1,325.60 2,530.40 1,861.56 276.50 149.79
+5 713.06 1,217.10 937.12 105.39 6,684.20 573.29 8,270.10 788.31 8,268.30 10,702.62 9,187.19 535.43 575.65
+6 1,483.80 10,998.41 5,175.87 2,765.31 9,301.70 2,402.80 10,844.27 1,222.07 9,866.60 12,470.58 11,042.90 669.22 575.65
+7 448.98 1,231.10 762.16 226.50 1,726.60 2,402.80 3,429.42 903.29 1,878.40 4,193.80 2,556.17 514.60 748.93
+8 6,488.40 9,807.20 8,451.12 954.44 6,942.00 9,516.80 8,739.29 864.36 7,360.40 10,702.12 8,790.46 872.03 748.93
+9 1,441.00 2,348.90 1,796.00 220.21 17,117.09 9,516.80 19,413.19 946.57 20,218.49 23,418.80 21,967.44 858.86 1,726.94
+10 9,766.60 26,604.74 18,781.83 3,936.60 50,872.40 14,703.88 61,504.40 9,730.96 53,824.74 75,091.86 60,472.87 6,184.92 1,726.94
+11 900.31 1,775.60 1,386.85 199.20 8,076.50 14,703.88 11,851.43 1,450.16 10,215.91 15,284.62 12,925.00 1,473.66 2,246.80
+12 6,576.30 14,153.94 10,179.42 2,092.55 25,197.32 5,275.80 29,611.39 3,419.31 26,060.88 33,175.70 29,703.90 1,663.63 2,246.80
+Note:
+The best average values are highlighted in bold.
+Figure 10 The Pareto front obtained from each algorithm.
+Full-size DOI: 10.7717/peerj-cs.835/ ﬁg-10
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 22/29Figure 11 Boxplot of the RPDHV results. Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-11
+Figure 12 Boxplot of the HCC results. Full-size DOI: 10.7717/peerj-cs.844/ ﬁg-12
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 23/29Before performing the hypothesis tests, we need to choose the test type, parametric or
+non-parametric. Generally, parametric tests are more powerful; however, to use them, it is
+necessary to satisfy three assumptions:
+1. Normality: every sample must originate from a population with normal distribution,
+2. Independence: the samples must be independent of each other,
+3. Homoscedasticity: there must be equality of variances across samples.
+We applied the Shapiro-Wilk normality test to the samples with the RPD HV and HCC
+values from each algorithm and showed its results in Table 12 .
+With conﬁdence level of 95% ( a¼ 0:05), we can say that the results presented in
+Table 12 not present evidence that the results of the algorithms come from a population
+with normal distribution.
+Thus, we applied the paired Wilcoxon signed-rank non-parametric test ( Wilcoxon,
+1945). Table 13 reports the results of this test obtained by the NSGA-II, MOGA, and
+NSGA-I algorithms for the samples of the RPD HV and HCC values.
+According to Table 13, there are signi ﬁcant statistical difference between each pair of
+algorithms. Thus, these tests con ﬁrm the results in Tables 10 and 11, indicating that
+NSGA-II outperforms both MOGA and NSGA-I.
+CONCLUSIONS
+This paper addressed the unrelated parallel machine scheduling problem with sequence-
+dependent setup times for minimizing the total energy cost and the makespan.
+To solve it, we developed a mixed-integer linear programming formulation and applied
+the weighted sum method to generate sets of non-dominated solutions to the problem.
+Considering that this formulation could not solve larger instances of the problem, we
+adapted the NSGA-II algorithm to deal with them.
+To test the two solution methods, we adapted instances of the literature to contemplate
+all the problem ’s characteristics. We divided these instances into two groups. The ﬁrst
+Table 12 p-values of the Shapiro-Wilk normality test concerning RPDHV and HCC values.
+Algorithm RPDHV HCC
+MOGA 0.0072 2.2e −16
+NSGA-I 0.0002 2.2e −16
+NSGA-II 2.289e −06 2.2e −16
+Table 13 p-values of the paired Wilcoxon signed-rank test concerning RPDHV and HCC values
+(a¼ 0:05).
+Comparison RPDHV HCC
+MOGA vs NSGA-I 8.0e −08 2e −16
+MOGA vs NSGA-II 7.8e −10 2e −16
+NSGA-I vs NSGA-II 1.8e −08 0.0001
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 24/29group consists of small instances with up to 10 jobs and 2 machines, while the second
+group contains large instances, with up to 750 jobs and 20 machines. We evaluated the
+methods concerning the hypervolume and HCC metrics.
+Initially, we used part of the set of instances to tuning the parameter values of the
+NSGA-II algorithm. To this end, we used the Irace package.
+We validated the NSGA-II algorithm in small instances, comparing its results with
+those produced by the exact method. The NSGA-II algorithm showed good convergence
+and diversity. Besides, it spent much shorter CPU time than that required by the exact
+method.
+In large instances, the results showed that the NSGA-II outperforms, with 95%
+conﬁdence level, MOGA and NSGA-I algorithms concerning the hypervolume and HCC
+metrics. Thus, the proposed algorithm ﬁnds non-dominated solutions with good
+convergence, diversity, uniformity, and amplitude.
+As future work, we suggest testing other crossover and mutation operators for the
+NSGA-II. Besides, we intend to implement other multi-objective algorithms, such as
+Strength Pareto Evolutionary Algorithm 2 (SPEA2), Niched Pareto Genetic Algorithm
+(NPGA), Pareto Envelope-based Selection Algorithm II (PESA-II), Multi-objective
+Variable Neighborhood Search (MOVNS), and Multi-objective Evolutionary Algorithm
+Based on Decomposition (MOEA/D).
+ACKNOWLEDGEMENTS
+The authors thank the Universidade Federal de Ouro Preto, the Universidade Federal dos
+Vales do Jequitinhonha, and the Instituto Tecnológico Vale for the use of the physical
+infrastructure and equipment used to produce this work. They also thank the Universidade
+Federal dos Vales do Jequitinhonha for granting Marcelo Ferreira Rego the temporary
+removal of his role as professor of the institution.
+ADDITIONAL INFORMATION AND DECLARATIONS
+Funding
+This work was supported by the Coordenação de Aperfeiçoamento de Pessoal de Nível
+Superior-Brazil (CAPES)-Finance Code 001, Fundação de Amparo à Pesquisa do Estado
+de Minas Gerais (FAPEMIG, grant 676-17), and Conselho Nacional de Desenvolvimento
+Cientíﬁco e Tecnológico (CNPq, grant 303266/2019-8). The funders had no role in
+study design, data collection and analysis, decision to publish, or preparation of the
+manuscript.
+Grant Disclosures
+The following grant information was disclosed by the authors:
+Coordenação de Aperfeiçoamento de Pessoal de Nível Superior- Brazil: 001.
+Fundação de Amparo à Pesquisa do Estado de Minas Gerais: 676-17.
+Conselho Nacional de Desenvolvimento Cientí ﬁco e Tecnológico: 303266/2019-8.
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 25/29Competing Interests
+The authors declare that they have no competing interests.
+Author Contributions
+/C15 Marcelo F. Rego conceived and designed the experiments, performed the experiments,
+analyzed the data, performed the computation work, prepared ﬁgures and/or tables,
+authored or reviewed drafts of the paper, and approved the ﬁnal draft.
+/C15 Júlio Cesar E. M. Pinto conceived and designed the experiments, performed the
+experiments, analyzed the data, performed the computation work, prepared ﬁgures
+and/or tables, authored or reviewed drafts of the paper, and approved the ﬁnal draft.
+/C15 Luciano P. Cota conceived and designed the experiments, performed the experiments,
+analyzed the data, performed the computation work, prepared ﬁgures and/or tables,
+authored or reviewed drafts of the paper, and approved the ﬁnal draft.
+/C15 Marcone J. F. Souza conceived and designed the experiments, performed the
+experiments, analyzed the data, performed the computation work, prepared ﬁgures
+and/or tables, authored or reviewed drafts of the paper, and approved the ﬁnal draft.
+Data Availability
+The following information was supplied regarding data availability:
+Data is available at GitHub: https://github.com/marcelofr/UPMSP_ME_INSTANCE.
+Supplemental Information
+Supplemental information for this article can be found online at http://dx.doi.org/10.7717/
+peerj-cs.844#supplemental-information.
+REFERENCES
+Ahilan C, Kumanan S, Sivakumaran N, Dhas JER. 2013. Modeling and prediction of machining
+quality in CNC turning process using intelligent hybrid decision making tools. Applied Soft
+Computing 13(3):1543–1551 DOI 10.1016/j.asoc.2012.03.071 .
+Babazadeh H, Alavidoost M, Zarandi MF, Sayyari S. 2018. An enhanced NSGA-II algorithm for
+fuzzy bi-objective assembly line balancing problems. Computers & Industrial Engineering
+123(3):189–208 DOI 10.1016/j.cie.2018.06.014 .
+BEIS. 2020. Industrial electricity prices in the IEA 2020.; U.K. Department for business energy
+industrial strategy. Available at https://assets.publishing.service.gov.uk/government/uploads/
+system/uploads/attachment_data/ﬁle/895162/table_531.xlsx (accessed 28 February 2020).
+Che A, Zhang S, Wu X. 2017. Energy-conscious unrelated parallel machine scheduling under
+time-of-use electricity tariffs. Journal of Cleaner Production 156(2):688–697
+DOI 10.1016/j.jclepro.2017.04.018 .
+Cheng J, Chu F, Zhou M. 2018. An improved model for parallel machine scheduling under time-
+of-use electricity price. IEEE Transactions on Automation Science and Engineering
+15(2):896–899 DOI 10.1109/TASE.2016.2631491 .
+Cheng J, Wu P, Chu F. 2019. Mixed-integer programming for unrelated parallel machines
+scheduling problem considering electricity cost and makespan penalty cost. In: 2019
+International Conference on Industrial Engineering and Systems Management (IESM) . Shanghai,
+China: IEEE, 1 –5.
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 26/29Cota LP, Coelho VN, Guimarães FG, Souza MJF. 2018. Bi-criteria formulation for green
+scheduling with unrelated parallel machines with sequence-dependent setup times.
+International Transactions in Operational Research 28(2):996–1017 DOI 10.1111/itor.12566 .
+Cota LP, Guimarães FG, Ribeiro RG, Meneghini IR, de Oliveira FB, Souza MJF, Siarry P. 2019.
+An adaptive multi-objective algorithm based on decomposition and large neighborhood search
+for a green machine scheduling problem. Swarm and Evolutionary Computation 51(1):100601
+DOI 10.1016/j.swevo.2019.100601 .
+Deb K. 2014. Multi-objective optimization. In: Search Methodologies . Berlin: Springer, 403 –449.
+Deb K, Pratap A, Agarwal S, Meyarivan T. 2002. A fast and elitist multiobjective genetic
+algorithm: NSGA-II. IEEE Transactions on Evolutionary Computation 6(2):182–197
+DOI 10.1109/4235.996017 .
+Deb K, UdayaBhaskaraRao N, Karthik S. 2007. Dynamic multi-objective optimization and
+decision-making using modi ﬁed NSGA-II: a case study on hydro-thermal power scheduling. In:
+International Conference on Evolutionary Multi-Criterion Optimization . Springer, 803 –817.
+Ding J, Song S, Zhang R, Chiong R, Wu C. 2016. Parallel machine scheduling under time-of-use
+electricity prices: new models and optimization approaches. IEEE Transactions on Automation
+Science and Engineering 13(2):1138–1154 DOI 10.1109/TASE.2015.2495328 .
+Ebrahimi A, Jeon HW, Lee S, Wang C. 2020. Minimizing total energy cost and tardiness penalty
+for a scheduling-layout problem in a ﬂexible job shop system: a comparison of four
+metaheuristic algorithms. Computers & Industrial Engineering 141(1):106295
+DOI 10.1016/j.cie.2020.106295 .
+EIA. 2016. International energy outlook 2016 with projections to 2040. Technical Report DOE/
+EIA-0484, U.S. Energy Information Administration, U.S. Department of Energy, Washington,
+D.C. Available at https://www.eia.gov/outlooks/ieo/pdf/0484(2016).pdf (accessed 1 February
+2020).
+Feo TA, Resende MG. 1995. Greedy randomized adaptive search procedures. Journal of Global
+Optimization 6(2):109–133 DOI 10.1007/BF01096763 .
+Garey MR, Johnson DS. 1979. Computers and intractability. In: A Guide to the Theory of
+NP-Completeness. San Francisco: Freeman.
+Guimaraes FG, Wanner EF, Takahashi RHC. 2009. A quality metric for multi-objective
+optimization based on hierarchical clustering techniques. In: 2009 IEEE Congress on
+Evolutionary Computation . Piscataway: IEEE, 3292 –3299.
+Gurobi Optimization L. 2020. Gurobi optimizer reference manual. Available at http://www.
+gurobi.com.
+Kopanos GM, Lanez JM, Puigjaner L. 2009. An ef ﬁcient mixed-integer linear programming
+scheduling framework for addressing sequence-dependent setup issues in batch plants.
+Industrial & Engineering Chemistry Research 48(13):6346–6357 DOI 10.1021/ie801127t .
+Kurniawan B, Gozali A, Weng W, Fujimura S. 2017. A genetic algorithm for unrelated parallel
+machine scheduling minimizing makespan cost and electricity cost under time-of-use (ToU)
+tariffs with job delay mechanism. In: 2017 IEEE International Conference on Industrial
+Engineering and Engineering Management (IEEM) . Piscataway: IEEE, 583 –587.
+Liang P, Yang H, Liu G-s, Guo J. 2015. An ant optimization model for unrelated parallel machine
+scheduling with energy consumption and total tardiness. Mathematical Problems in Engineering
+2015:1–8 DOI 10.1155/2015/907034 .
+Liu Y, Dong H, Lohse N, Petrovic S, Gindy N. 2014. An investigation into minimising total energy
+consumption and total weighted tardiness in job shops. Journal of Cleaner Production 65:87–96
+DOI 10.1016/j.jclepro.2013.07.060 .
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 27/29López-Ibáñez M, Dubois-Lacoste J, Cáceres LP, Birattari M, Stützle T. 2016. The irace package:
+iterated racing for automatic algorithm con ﬁguration. Operations Research Perspectives
+3(1):43–58 DOI 10.1016/j.orp.2016.09.002 .
+Mansouri SA, Aktas E, Besikci U. 2016. Green scheduling of a two-machine ﬂowshop: trade-off
+between makespan and energy consumption. European Journal of Operational Research
+248(3):772–788 DOI 10.1016/j.ejor.2015.08.064 .
+Marler RT, Arora JS. 2004. Survey of multi-objective optimization methods for engineering.
+Structural and Multidisciplinary Optimization 26(6):369–395 DOI 10.1007/s00158-003-0368-6.
+Murata T, Ishibuchi H. 1995. MOGA: multi-objective genetic algorithms. IEEE International
+Conference on Evolutionary Computation 1:289–294 DOI 10.1109/ICEC.1995.489161 .
+Pinedo ML. 2016. Scheduling: theory, algorithms, and systems . New York: Springer International
+Publishing.
+Rego MF, Cota LP, Souza MJF. 2021. Instances for the upmsp with sequence-dependent setup
+times under time-of-use electricity price. Available at https://github.com/marcelofr/UPMSP_
+ME_INSTANCE.
+Ropke S, Pisinger D. 2006. An adaptive large neighborhood search heuristic for the pickup and
+delivery problem with time windows. Transportation Science 40(4):455–472
+DOI 10.1287/trsc.1050.0135 .
+Rosa BF, Souza MJF. 2009. Uma nova formulaçao de programaçao matemática indexada no
+tempo para uma classe de problemas de sequenciamento em uma máquina. In: Anais do XLI
+Simpósio Brasileiro de Pesquisa Operacional . 2898 –2909.
+Saberi-Aliabad H, Reisi-Nafchi M, Moslehi G. 2020. Energy-efﬁcient scheduling in an unrelated
+parallel-machine environment under time-of-use electricity tariffs. Journal of Cleaner
+Production 249(2):119393 DOI 10.1016/j.jclepro.2019.119393 .
+Shrouf F, Ordieres-Meré J, García-Sánchez A, Ortega-Mier M. 2014. Optimizing the production
+scheduling of a single machine to minimize total energy consumption costs. Journal of Cleaner
+Production 67:197–207 DOI 10.1016/j.jclepro.2013.12.024 .
+Srinivas N, Deb K. 1994. Muiltiobjective optimization using nondominated sorting in genetic
+algorithms. Evolutionary Computation 2(3):221–248 DOI 10.1162/evco.1994.2.3.221 .
+Tsao Y, Thanh V, Hwang F. 2020. Energy-efﬁcient single-machine scheduling problem with
+controllable job processing times under differential electricity pricing. Resources, Conservation
+and Recycling 161(4):104902 DOI 10.1016/j.resconrec.2020.104902 .
+Vallada E, Ruiz R. 2011. A genetic algorithm for the unrelated parallel machine scheduling
+problem with sequence dependent setup times. European Journal of Operational Research
+211(3):612–622 DOI 10.1016/j.ejor.2011.01.011 .
+Wang H, Fu Y, Huang M, Huang GQ, Wang J. 2017. A NSGA-II based memetic algorithm for
+multiobjective parallel ﬂowshop scheduling problem. Computers & Industrial Engineering
+113(2):185–194 DOI 10.1016/j.cie.2017.09.009 .
+Wang S, Liu M, Chu F, Chu C. 2016. Bi-objective optimization of a single machine batch
+scheduling problem with energy cost consideration. Journal of Cleaner Production
+137(3):1205–1215 DOI 10.1016/j.jclepro.2016.07.206 .
+Wanner EF, Guimaraes FG, Takahashi RH, Fleming PJ. 2006. A quadratic approximation-based
+local search procedure for multiobjective genetic algorithms. In: 2006 IEEE International
+Conference on Evolutionary Computation . Piscataway: IEEE, 938 –945.
+Wilcoxon F. 1945. Some uses of statistics in plant pathology. Biometrics Bulletin 1(4):41–45
+DOI 10.2307/3002011 .
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 28/29Willeke S, Ullmann G, Nyhuis P. 2016. Method for an energy-cost-oriented manufacturing
+control to reduce energy costs: Energy cost reduction by using a new sequencing method. In:
+2016 International Conference on Industrial Engineering, Management Science and Application
+(ICIMSA). Piscataway: IEEE, 1 –5.
+Wu X, Che A. 2019. A memetic differential evolution algorithm for energy-ef ﬁcient parallel
+machine scheduling. Omega 82(4):155–165 DOI 10.1016/j.omega.2018.01.001 .
+Zeng Y, Che A, Wu X. 2018. Bi-objective scheduling on uniform parallel machines considering
+electricity cost. Engineering Optimization 50(1):19–36 DOI 10.1080/0305215X.2017.1296437 .
+Zhang Q, Li H. 2007. MOEA/D: a multiobjective evolutionary algorithm based on decomposition.
+IEEE Transactions on Evolutionary Computation 11(6):712–731
+DOI 10.1109/TEVC.2007.892759 .
+Zhang H, Zhao F, Fang K, Sutherland JW. 2014. Energy-conscious ﬂow shop scheduling under
+time-of-use electricity tariffs. CIRP Annals 63(1):37–40 DOI 10.1016/j.cirp.2014.03.011 .
+Zitzler E, Thiele L. 1998. Multiobjective optimization using evolutionary algorithms –a
+comparative case study. In: Parallel Problem Solving from Nature-PPSN V . Berlin, Heidelberg:
+Springer, 292 –301.
+Rego et al. (2022), PeerJ Comput. Sci. , DOI 10.7717/peerj-cs.844 29/29
