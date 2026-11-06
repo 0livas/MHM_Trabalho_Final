@@ -1,0 +1,121 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "50_10_1439_5_S_1-9.dat",
+  "tier": "medium",
+  "run_id": 30,
+  "seed": 1030,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-06T01:46:18.445-03:00",
+  "end_timestamp": "2026-11-06T01:46:28.675-03:00",
+  "wall_seconds": 10.02289,
+  "cpu_seconds": 9.890625,
+  "peak_rss_mib": 48.69921875,
+  "peak_rss_delta_mib": 23.19140625,
+  "nds": 17,
+  "evaluations": 10000,
+  "raw_size": 17,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 10.228760999998485,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 543,
+  "pareto_proven": false,
+  "initialization": {
+    "strategy": "randomized_lpt_earliest_end_v1",
+    "requested": 16,
+    "construction_attempts": 16,
+    "construction_failures": 0,
+    "obtained": 16,
+    "unique_schedules": 16,
+    "initial_evaluations": 16,
+    "accepted_initial_solutions": 16,
+    "rejected_initial_solutions": 0,
+    "construction_attempt_limit": 800,
+    "target_reached": true,
+    "construction_seconds": 0.125
+  },
+  "points": [
+    [
+      71,
+      46958268814
+    ],
+    [
+      72,
+      44800475370
+    ],
+    [
+      75,
+      44202741858
+    ],
+    [
+      76,
+      42992651088
+    ],
+    [
+      110,
+      39815618058
+    ],
+    [
+      111,
+      39706666308
+    ],
+    [
+      113,
+      39597714558
+    ],
+    [
+      116,
+      39571178754
+    ],
+    [
+      119,
+      39196384734
+    ],
+    [
+      120,
+      39189508668
+    ],
+    [
+      127,
+      28734208200
+    ],
+    [
+      128,
+      27896167480
+    ],
+    [
+      129,
+      27866468040
+    ],
+    [
+      131,
+      27647983464
+    ],
+    [
+      161,
+      27241617648
+    ],
+    [
+      1313,
+      27186157172
+    ],
+    [
+      1314,
+      26986008772
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 17,
+  "instance_sha256": "c9147e6b8b3bcab1863b62202baffbeee4e1fce0791b4e6309397c4037406da7",
+  "cpu_seconds_child": 9.890625,
+  "peak_private_mib": 197.82421875,
+  "baseline_rss_mib": 25.5078125,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 10.02289010000095
+}

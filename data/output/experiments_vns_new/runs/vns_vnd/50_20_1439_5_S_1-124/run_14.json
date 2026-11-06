@@ -1,0 +1,81 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "50_20_1439_5_S_1-124.dat",
+  "tier": "medium",
+  "run_id": 14,
+  "seed": 1014,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-06T01:49:41.600-03:00",
+  "end_timestamp": "2026-11-06T01:49:56.268-03:00",
+  "wall_seconds": 14.468326,
+  "cpu_seconds": 14.25,
+  "peak_rss_mib": 49.17578125,
+  "peak_rss_delta_mib": 21.3671875,
+  "nds": 7,
+  "evaluations": 10000,
+  "raw_size": 7,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 14.665639799997734,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 968,
+  "pareto_proven": false,
+  "initialization": {
+    "strategy": "randomized_lpt_earliest_end_v1",
+    "requested": 16,
+    "construction_attempts": 16,
+    "construction_failures": 0,
+    "obtained": 16,
+    "unique_schedules": 16,
+    "initial_evaluations": 16,
+    "accepted_initial_solutions": 16,
+    "rejected_initial_solutions": 0,
+    "construction_attempt_limit": 800,
+    "target_reached": true,
+    "construction_seconds": 0.25
+  },
+  "points": [
+    [
+      135,
+      53677928524
+    ],
+    [
+      137,
+      53525040972
+    ],
+    [
+      139,
+      53278406492
+    ],
+    [
+      142,
+      53219524124
+    ],
+    [
+      144,
+      52761377980
+    ],
+    [
+      164,
+      51446596684
+    ],
+    [
+      315,
+      23570637736
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 7,
+  "instance_sha256": "68dc887344623bd8ccb0f79cd3d024d5c0650eb2449e9e9696dc3f0bb023d780",
+  "cpu_seconds_child": 14.25,
+  "peak_private_mib": 198.60546875,
+  "baseline_rss_mib": 27.80859375,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 14.468325800000457
+}

@@ -1,0 +1,93 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "250_10_1439_5_S_1-9.dat",
+  "tier": "large",
+  "run_id": 14,
+  "seed": 1014,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-06T02:04:19.800-03:00",
+  "end_timestamp": "2026-11-06T02:05:07.273-03:00",
+  "wall_seconds": 47.26914,
+  "cpu_seconds": 47.015625,
+  "peak_rss_mib": 54.578125,
+  "peak_rss_delta_mib": 24.34765625,
+  "nds": 10,
+  "evaluations": 10000,
+  "raw_size": 10,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 47.47561680000217,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 760,
+  "pareto_proven": false,
+  "initialization": {
+    "strategy": "randomized_lpt_earliest_end_v1",
+    "requested": 16,
+    "construction_attempts": 16,
+    "construction_failures": 0,
+    "obtained": 16,
+    "unique_schedules": 16,
+    "initial_evaluations": 16,
+    "accepted_initial_solutions": 16,
+    "rejected_initial_solutions": 0,
+    "construction_attempt_limit": 800,
+    "target_reached": true,
+    "construction_seconds": 0.625
+  },
+  "points": [
+    [
+      372,
+      264049134028
+    ],
+    [
+      373,
+      263851568188
+    ],
+    [
+      374,
+      263739872468
+    ],
+    [
+      376,
+      263397166756
+    ],
+    [
+      378,
+      262951546028
+    ],
+    [
+      380,
+      262921071820
+    ],
+    [
+      383,
+      262717985758
+    ],
+    [
+      700,
+      158963928296
+    ],
+    [
+      702,
+      158809491208
+    ],
+    [
+      765,
+      157246009384
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 10,
+  "instance_sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+  "cpu_seconds_child": 47.015625,
+  "peak_private_mib": 203.37890625,
+  "baseline_rss_mib": 30.23046875,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 47.26914019999822
+}

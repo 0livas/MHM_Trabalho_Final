@@ -1,0 +1,97 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "250_10_1439_5_S_1-9.dat",
+  "tier": "large",
+  "run_id": 2,
+  "seed": 1002,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-06T01:54:42.332-03:00",
+  "end_timestamp": "2026-11-06T01:55:30.342-03:00",
+  "wall_seconds": 47.796228,
+  "cpu_seconds": 47.421875,
+  "peak_rss_mib": 54.34375,
+  "peak_rss_delta_mib": 24.0625,
+  "nds": 11,
+  "evaluations": 10000,
+  "raw_size": 11,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 48.008850999998685,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 635,
+  "pareto_proven": false,
+  "initialization": {
+    "strategy": "randomized_lpt_earliest_end_v1",
+    "requested": 16,
+    "construction_attempts": 16,
+    "construction_failures": 0,
+    "obtained": 16,
+    "unique_schedules": 16,
+    "initial_evaluations": 16,
+    "accepted_initial_solutions": 16,
+    "rejected_initial_solutions": 0,
+    "construction_attempt_limit": 800,
+    "target_reached": true,
+    "construction_seconds": 0.6560000000026776
+  },
+  "points": [
+    [
+      379,
+      279577357104
+    ],
+    [
+      380,
+      279193201304
+    ],
+    [
+      381,
+      278048965814
+    ],
+    [
+      382,
+      277774568814
+    ],
+    [
+      383,
+      277696446374
+    ],
+    [
+      385,
+      276322427608
+    ],
+    [
+      408,
+      275053519034
+    ],
+    [
+      630,
+      175430201728
+    ],
+    [
+      631,
+      172328676296
+    ],
+    [
+      632,
+      172293036968
+    ],
+    [
+      673,
+      169562754536
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 11,
+  "instance_sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+  "cpu_seconds_child": 47.421875,
+  "peak_private_mib": 203.0546875,
+  "baseline_rss_mib": 30.28125,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 47.796227999999246
+}

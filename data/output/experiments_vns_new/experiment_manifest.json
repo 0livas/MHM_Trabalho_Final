@@ -1,0 +1,181 @@
+{
+  "history": [
+    {
+      "session": 1,
+      "at": "2026-11-06T01:38:06.448-03:00",
+      "algorithms": [
+        "vns_vnd"
+      ],
+      "runs": 30,
+      "instances": [
+        "6_2_1439_3_S_1-9.dat",
+        "10_2_1439_3_S_1-9.dat",
+        "14_2_1439_3_S_1-9_derivada.dat",
+        "50_10_1439_5_S_1-9.dat",
+        "50_20_1439_5_S_1-124.dat",
+        "250_10_1439_5_S_1-9.dat",
+        "250_20_1439_5_S_1-124.dat",
+        "750_10_1439_5_S_1-9.dat",
+        "750_20_1439_5_S_1-124.dat"
+      ],
+      "configurations": {
+        "vns_vnd": {
+          "parameters": {
+            "initial_solutions": 16,
+            "max_candidates_per_neighborhood": 25,
+            "shaking_attempts": 20,
+            "max_evaluations": 10000
+          },
+          "study": "vns_vnd_tpe_v7",
+          "source": "data\\output\\hyperparameters_tuning\\vns_vnd\\vns_vnd_tpe_v7\\confirmation.json",
+          "selection": "confirmation.recommended",
+          "trial": 65,
+          "budget": 50000,
+          "status": "provisional_inherited_pre_lpt",
+          "calibration_status": "provisional_calibration",
+          "initialization_strategy": "randomized_lpt_earliest_end_v1",
+          "calibration_compatibility": "herdada do inicializador anterior; não calibrada para LPT",
+          "tuned_max_evaluations": 50000,
+          "budget_override": 10000
+        }
+      }
+    }
+  ],
+  "updated": "2026-11-06T01:38:06.401-03:00",
+  "base_seed": 1000,
+  "seed_rule": "SEED_k = BASE_SEED + k (k = 1..R), compartilhada entre MHs",
+  "configurations": {
+    "vns_vnd": {
+      "parameters": {
+        "initial_solutions": 16,
+        "max_candidates_per_neighborhood": 25,
+        "shaking_attempts": 20,
+        "max_evaluations": 10000
+      },
+      "study": "vns_vnd_tpe_v7",
+      "source": "data\\output\\hyperparameters_tuning\\vns_vnd\\vns_vnd_tpe_v7\\confirmation.json",
+      "selection": "confirmation.recommended",
+      "trial": 65,
+      "budget": 50000,
+      "status": "provisional_inherited_pre_lpt",
+      "calibration_status": "provisional_calibration",
+      "initialization_strategy": "randomized_lpt_earliest_end_v1",
+      "calibration_compatibility": "herdada do inicializador anterior; não calibrada para LPT",
+      "tuned_max_evaluations": 50000,
+      "budget_override": 10000
+    }
+  },
+  "python": "3.12.10",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "cpu_count": 6,
+  "packages": {
+    "pymoo": "0.6.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "numba": "0.68.1",
+    "optuna": "4.9.0"
+  },
+  "source_sha256": {
+    "src/exact_methods/custom_exact_dp.py": "aee35f5f71362a4529d84ebf78e94d3a71e0c025905757ce0dc0c1a5ccc473d9",
+    "src/experiments/__init__.py": "3c7e45ba3548d29ba1014d429dfe25b964601881e4ac567d58c38e744387eb22",
+    "src/experiments/adapters.py": "5098c0f9ce7f5859ee0e2a7aa8880a58de33d0b59058d148ae8ea83cc4145ec5",
+    "src/experiments/campaign.py": "86ff0315ab6fdb3e817fa3128404d41100f2e74b5fcfef58bacb49f4fab9b887",
+    "src/experiments/config.py": "4770c2014b0bf18ba5176c7a14fea1fb5b547939a37d25c401abda3b9234c479",
+    "src/experiments/ledger.py": "5b03b38137521336d8fec7a889490386a5d6ca20f51a70262ecb140ef0e9b141",
+    "src/experiments/metrics.py": "986fb54149e28f435de36bbccae731ed153e93771dd45cb742df295d4cccedb8",
+    "src/experiments/runner.py": "ecec93feaad3e95865ef0132e47b6cab328c3d40f44a1a0820d301d7085c4f2d",
+    "src/heuristics/ociosidade/ociosidade.py": "944029d25c596ace2c1835c64ea351356ed545e8790aa49c1bb1ca300384b4e2",
+    "src/metaheuristics/age.py": "3abc6496a26986626dff136dfc7cea120e857ec5c3df67b70e51906cb911ed59",
+    "src/metaheuristics/age_spike.py": "999b19f6a18e527bcb840bad4b27b80326dbabade0993070e8b9749d774a1fed",
+    "src/metaheuristics/moead.py": "de61294fe419f7ae11d11a5ac6efa67069e754f07d3a95f7276a750d62a715b7",
+    "src/metaheuristics/pymoo_spike.py": "c1d930e6300e9aec4a0927a372c2c0102eb0d6cb0640f285f8c3ddcfbc80c7f8",
+    "src/metaheuristics/spea2.py": "2ba3364c8f266b7dac633327c68458a27d8a26929ede2f3c0191cfaecebff457",
+    "src/metaheuristics/vns_vnd.py": "a050f12370f03115f08bf7754aeaeb8b1bd2f2cfab54afce5f4d909264cd25bb",
+    "src/metaheuristics/vns_vnd_original.py": "1e35d6a95db7ef2124273311db4a599f3d5f689285a6f382a55b48249764c0ed",
+    "src/problem.py": "66f07126313eba35d3c1eaad0ea870c982d93a8b01b28c3ecff0f5663cc4ca4b",
+    "src/schedule.py": "2457a3b0960176303773a81cf975da0e4cec60af254806aee175f1a3c65f0a16"
+  },
+  "instances": {
+    "6_2_1439_3_S_1-9.dat": {
+      "name": "6_2_1439_3_S_1-9.dat",
+      "tier": "small",
+      "path": "set1/6_2_1439_3_S_1-9.dat",
+      "sha256": "c27aafe109609de23235d989af5593c4ebdf9faaa365649ab21ec4a8c3f07cc4",
+      "n": 6,
+      "m": 2,
+      "horizon": 1440
+    },
+    "10_2_1439_3_S_1-9.dat": {
+      "name": "10_2_1439_3_S_1-9.dat",
+      "tier": "small",
+      "path": "set1/10_2_1439_3_S_1-9.dat",
+      "sha256": "d2b758d6fe2f6844905ffd376128f805c98bbcf357374dcc15006ef66f4a80a4",
+      "n": 10,
+      "m": 2,
+      "horizon": 1440
+    },
+    "14_2_1439_3_S_1-9_derivada.dat": {
+      "name": "14_2_1439_3_S_1-9_derivada.dat",
+      "tier": "small",
+      "path": "set1/14_2_1439_3_S_1-9_derivada.dat",
+      "sha256": "70ff0f54e92fbb4ee92af0eee49be2de8443a1580da898c97da2959e5253c8bb",
+      "n": 14,
+      "m": 2,
+      "horizon": 1440
+    },
+    "50_10_1439_5_S_1-9.dat": {
+      "name": "50_10_1439_5_S_1-9.dat",
+      "tier": "medium",
+      "path": "set2/50_10_1439_5_S_1-9.dat",
+      "sha256": "c9147e6b8b3bcab1863b62202baffbeee4e1fce0791b4e6309397c4037406da7",
+      "n": 50,
+      "m": 10,
+      "horizon": 1440
+    },
+    "50_20_1439_5_S_1-124.dat": {
+      "name": "50_20_1439_5_S_1-124.dat",
+      "tier": "medium",
+      "path": "set2/50_20_1439_5_S_1-124.dat",
+      "sha256": "68dc887344623bd8ccb0f79cd3d024d5c0650eb2449e9e9696dc3f0bb023d780",
+      "n": 50,
+      "m": 20,
+      "horizon": 1440
+    },
+    "250_10_1439_5_S_1-9.dat": {
+      "name": "250_10_1439_5_S_1-9.dat",
+      "tier": "large",
+      "path": "set2/250_10_1439_5_S_1-9.dat",
+      "sha256": "9b1e592319e4dcdc8df7c50abe2b11aba12ca2ab27fd528ac1d0a262c02ca62c",
+      "n": 250,
+      "m": 10,
+      "horizon": 1440
+    },
+    "250_20_1439_5_S_1-124.dat": {
+      "name": "250_20_1439_5_S_1-124.dat",
+      "tier": "large",
+      "path": "set2/250_20_1439_5_S_1-124.dat",
+      "sha256": "eaf520eb58ef7fe37ad006c84ea868969b8f9c2cc53e519a2bf0054ffa96a702",
+      "n": 250,
+      "m": 20,
+      "horizon": 2880
+    },
+    "750_10_1439_5_S_1-9.dat": {
+      "name": "750_10_1439_5_S_1-9.dat",
+      "tier": "giant",
+      "path": "set2/750_10_1439_5_S_1-9.dat",
+      "sha256": "7cc354aca0759ff365f677fe6a90fbe84cfb925eb6357eceea4aaf70f14b5297",
+      "n": 750,
+      "m": 10,
+      "horizon": 2880
+    },
+    "750_20_1439_5_S_1-124.dat": {
+      "name": "750_20_1439_5_S_1-124.dat",
+      "tier": "giant",
+      "path": "set2/750_20_1439_5_S_1-124.dat",
+      "sha256": "15b745b7fab1a2fe079a3f79cd453def84b10c213a2a31048d0e8666f42e5d97",
+      "n": 750,
+      "m": 20,
+      "horizon": 8640
+    }
+  }
+}

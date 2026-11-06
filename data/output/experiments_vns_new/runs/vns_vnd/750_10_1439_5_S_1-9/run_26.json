@@ -1,0 +1,93 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "750_10_1439_5_S_1-9.dat",
+  "tier": "giant",
+  "run_id": 26,
+  "seed": 1026,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-06T04:35:56.947-03:00",
+  "end_timestamp": "2026-11-06T04:40:23.664-03:00",
+  "wall_seconds": 266.471536,
+  "cpu_seconds": 264.59375,
+  "peak_rss_mib": 201.48828125,
+  "peak_rss_delta_mib": 131.8125,
+  "nds": 10,
+  "evaluations": 10000,
+  "raw_size": 10,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 266.7154924999995,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 847,
+  "pareto_proven": false,
+  "initialization": {
+    "strategy": "randomized_lpt_earliest_end_v1",
+    "requested": 16,
+    "construction_attempts": 16,
+    "construction_failures": 0,
+    "obtained": 16,
+    "unique_schedules": 16,
+    "initial_evaluations": 16,
+    "accepted_initial_solutions": 16,
+    "rejected_initial_solutions": 0,
+    "construction_attempt_limit": 800,
+    "target_reached": true,
+    "construction_seconds": 1.937999999994645
+  },
+  "points": [
+    [
+      1135,
+      804426251995
+    ],
+    [
+      1143,
+      752566063348
+    ],
+    [
+      1144,
+      752308334838
+    ],
+    [
+      1145,
+      752305224788
+    ],
+    [
+      1147,
+      752177351548
+    ],
+    [
+      1149,
+      751916413098
+    ],
+    [
+      1154,
+      751857443014
+    ],
+    [
+      1157,
+      751729256744
+    ],
+    [
+      1161,
+      750976985872
+    ],
+    [
+      1174,
+      750508230256
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 10,
+  "instance_sha256": "7cc354aca0759ff365f677fe6a90fbe84cfb925eb6357eceea4aaf70f14b5297",
+  "cpu_seconds_child": 264.59375,
+  "peak_private_mib": 250.8359375,
+  "baseline_rss_mib": 69.67578125,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 266.47153550000075
+}

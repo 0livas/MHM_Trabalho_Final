@@ -1,0 +1,97 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "250_20_1439_5_S_1-124.dat",
+  "tier": "large",
+  "run_id": 7,
+  "seed": 1007,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-06T02:23:25.916-03:00",
+  "end_timestamp": "2026-11-06T02:24:20.670-03:00",
+  "wall_seconds": 54.542535,
+  "cpu_seconds": 53.984375,
+  "peak_rss_mib": 123.1484375,
+  "peak_rss_delta_mib": 86.18359375,
+  "nds": 11,
+  "evaluations": 10000,
+  "raw_size": 11,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 54.75644070000271,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 673,
+  "pareto_proven": false,
+  "initialization": {
+    "strategy": "randomized_lpt_earliest_end_v1",
+    "requested": 16,
+    "construction_attempts": 16,
+    "construction_failures": 0,
+    "obtained": 16,
+    "unique_schedules": 16,
+    "initial_evaluations": 16,
+    "accepted_initial_solutions": 16,
+    "rejected_initial_solutions": 0,
+    "construction_attempt_limit": 800,
+    "target_reached": true,
+    "construction_seconds": 1.2659999999959837
+  },
+  "points": [
+    [
+      695,
+      597154372920
+    ],
+    [
+      715,
+      481655897884
+    ],
+    [
+      716,
+      481424371380
+    ],
+    [
+      718,
+      481305057108
+    ],
+    [
+      719,
+      480876287584
+    ],
+    [
+      724,
+      480556631220
+    ],
+    [
+      750,
+      477845750270
+    ],
+    [
+      759,
+      474554503524
+    ],
+    [
+      1095,
+      303191607540
+    ],
+    [
+      1096,
+      295690718440
+    ],
+    [
+      1358,
+      294590869816
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 11,
+  "instance_sha256": "eaf520eb58ef7fe37ad006c84ea868969b8f9c2cc53e519a2bf0054ffa96a702",
+  "cpu_seconds_child": 53.984375,
+  "peak_private_mib": 212.21875,
+  "baseline_rss_mib": 36.96484375,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 54.54253459999745
+}

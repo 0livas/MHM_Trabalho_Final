@@ -1,0 +1,93 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "50_20_1439_5_S_1-124.dat",
+  "tier": "medium",
+  "run_id": 27,
+  "seed": 1027,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-06T01:52:54.604-03:00",
+  "end_timestamp": "2026-11-06T01:53:09.285-03:00",
+  "wall_seconds": 14.486139,
+  "cpu_seconds": 14.34375,
+  "peak_rss_mib": 49.15625,
+  "peak_rss_delta_mib": 21.3203125,
+  "nds": 10,
+  "evaluations": 10000,
+  "raw_size": 10,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 14.681553199996415,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 954,
+  "pareto_proven": false,
+  "initialization": {
+    "strategy": "randomized_lpt_earliest_end_v1",
+    "requested": 16,
+    "construction_attempts": 16,
+    "construction_failures": 0,
+    "obtained": 16,
+    "unique_schedules": 16,
+    "initial_evaluations": 16,
+    "accepted_initial_solutions": 16,
+    "rejected_initial_solutions": 0,
+    "construction_attempt_limit": 800,
+    "target_reached": true,
+    "construction_seconds": 0.25
+  },
+  "points": [
+    [
+      121,
+      79334951920
+    ],
+    [
+      133,
+      46502543820
+    ],
+    [
+      134,
+      46467679260
+    ],
+    [
+      135,
+      46411508580
+    ],
+    [
+      141,
+      46123230320
+    ],
+    [
+      147,
+      45971504920
+    ],
+    [
+      194,
+      45729325356
+    ],
+    [
+      205,
+      45318698316
+    ],
+    [
+      317,
+      27100739000
+    ],
+    [
+      324,
+      26820143856
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 10,
+  "instance_sha256": "68dc887344623bd8ccb0f79cd3d024d5c0650eb2449e9e9696dc3f0bb023d780",
+  "cpu_seconds_child": 14.34375,
+  "peak_private_mib": 197.93359375,
+  "baseline_rss_mib": 27.8359375,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 14.486139099994034
+}

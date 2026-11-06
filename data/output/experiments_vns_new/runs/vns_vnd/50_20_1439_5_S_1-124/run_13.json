@@ -1,0 +1,101 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "50_20_1439_5_S_1-124.dat",
+  "tier": "medium",
+  "run_id": 13,
+  "seed": 1013,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-06T01:49:26.790-03:00",
+  "end_timestamp": "2026-11-06T01:49:41.575-03:00",
+  "wall_seconds": 14.589157,
+  "cpu_seconds": 14.421875,
+  "peak_rss_mib": 49.19140625,
+  "peak_rss_delta_mib": 21.40234375,
+  "nds": 12,
+  "evaluations": 10000,
+  "raw_size": 12,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 14.784434799999872,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 921,
+  "pareto_proven": false,
+  "initialization": {
+    "strategy": "randomized_lpt_earliest_end_v1",
+    "requested": 16,
+    "construction_attempts": 16,
+    "construction_failures": 0,
+    "obtained": 16,
+    "unique_schedules": 16,
+    "initial_evaluations": 16,
+    "accepted_initial_solutions": 16,
+    "rejected_initial_solutions": 0,
+    "construction_attempt_limit": 800,
+    "target_reached": true,
+    "construction_seconds": 0.25
+  },
+  "points": [
+    [
+      124,
+      81811949780
+    ],
+    [
+      125,
+      81686049980
+    ],
+    [
+      128,
+      75654642510
+    ],
+    [
+      152,
+      72433221730
+    ],
+    [
+      380,
+      40554585320
+    ],
+    [
+      381,
+      34739693224
+    ],
+    [
+      382,
+      34724585248
+    ],
+    [
+      386,
+      34504034624
+    ],
+    [
+      387,
+      34419197528
+    ],
+    [
+      486,
+      34412612000
+    ],
+    [
+      498,
+      33970219472
+    ],
+    [
+      518,
+      33690528224
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 12,
+  "instance_sha256": "68dc887344623bd8ccb0f79cd3d024d5c0650eb2449e9e9696dc3f0bb023d780",
+  "cpu_seconds_child": 14.421875,
+  "peak_private_mib": 197.71875,
+  "baseline_rss_mib": 27.7890625,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 14.589157300004445
+}

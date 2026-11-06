@@ -1,0 +1,97 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "50_20_1439_5_S_1-124.dat",
+  "tier": "medium",
+  "run_id": 30,
+  "seed": 1030,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-06T01:53:39.036-03:00",
+  "end_timestamp": "2026-11-06T01:53:53.774-03:00",
+  "wall_seconds": 14.540403,
+  "cpu_seconds": 14.40625,
+  "peak_rss_mib": 48.99609375,
+  "peak_rss_delta_mib": 21.37890625,
+  "nds": 11,
+  "evaluations": 10000,
+  "raw_size": 11,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 14.738224199994875,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 601,
+  "pareto_proven": false,
+  "initialization": {
+    "strategy": "randomized_lpt_earliest_end_v1",
+    "requested": 16,
+    "construction_attempts": 16,
+    "construction_failures": 0,
+    "obtained": 16,
+    "unique_schedules": 16,
+    "initial_evaluations": 16,
+    "accepted_initial_solutions": 16,
+    "rejected_initial_solutions": 0,
+    "construction_attempt_limit": 800,
+    "target_reached": true,
+    "construction_seconds": 0.25
+  },
+  "points": [
+    [
+      126,
+      98431046200
+    ],
+    [
+      127,
+      50806961136
+    ],
+    [
+      128,
+      50755632756
+    ],
+    [
+      129,
+      50514098832
+    ],
+    [
+      148,
+      49944644352
+    ],
+    [
+      163,
+      48799343556
+    ],
+    [
+      175,
+      36414870768
+    ],
+    [
+      184,
+      34377489184
+    ],
+    [
+      185,
+      34261790496
+    ],
+    [
+      224,
+      34039432080
+    ],
+    [
+      272,
+      33118620312
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 11,
+  "instance_sha256": "68dc887344623bd8ccb0f79cd3d024d5c0650eb2449e9e9696dc3f0bb023d780",
+  "cpu_seconds_child": 14.40625,
+  "peak_private_mib": 197.79296875,
+  "baseline_rss_mib": 27.6171875,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 14.54040299999906
+}

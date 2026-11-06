@@ -1,0 +1,145 @@
+{
+  "algorithm": "vns_vnd",
+  "instance": "250_20_1439_5_S_1-124.dat",
+  "tier": "large",
+  "run_id": 15,
+  "seed": 1015,
+  "status": "COMPLETED",
+  "start_timestamp": "2026-11-06T02:30:47.883-03:00",
+  "end_timestamp": "2026-11-06T02:31:42.668-03:00",
+  "wall_seconds": 54.556077,
+  "cpu_seconds": 53.9375,
+  "peak_rss_mib": 122.375,
+  "peak_rss_delta_mib": 85.37890625,
+  "nds": 23,
+  "evaluations": 10000,
+  "raw_size": 23,
+  "infeasible": 0,
+  "stop_reason": "budget_reached",
+  "error": null,
+  "process_wall_seconds": 54.78360740000062,
+  "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20,
+    "max_evaluations": 10000
+  },
+  "rejected_evaluations": 754,
+  "pareto_proven": false,
+  "initialization": {
+    "strategy": "randomized_lpt_earliest_end_v1",
+    "requested": 16,
+    "construction_attempts": 16,
+    "construction_failures": 0,
+    "obtained": 16,
+    "unique_schedules": 16,
+    "initial_evaluations": 16,
+    "accepted_initial_solutions": 16,
+    "rejected_initial_solutions": 0,
+    "construction_attempt_limit": 800,
+    "target_reached": true,
+    "construction_seconds": 1.2660000000032596
+  },
+  "points": [
+    [
+      670,
+      641930636790
+    ],
+    [
+      691,
+      589161833950
+    ],
+    [
+      706,
+      483933974060
+    ],
+    [
+      707,
+      483560471320
+    ],
+    [
+      708,
+      483512693960
+    ],
+    [
+      709,
+      483475698788
+    ],
+    [
+      710,
+      483405582284
+    ],
+    [
+      711,
+      482928066940
+    ],
+    [
+      715,
+      482773113340
+    ],
+    [
+      718,
+      481701350940
+    ],
+    [
+      761,
+      480021395660
+    ],
+    [
+      800,
+      475388283020
+    ],
+    [
+      1294,
+      323509523154
+    ],
+    [
+      1305,
+      297508673924
+    ],
+    [
+      1319,
+      269818454124
+    ],
+    [
+      1322,
+      267526429476
+    ],
+    [
+      1323,
+      266928223276
+    ],
+    [
+      1324,
+      266864190396
+    ],
+    [
+      1329,
+      266717832284
+    ],
+    [
+      1332,
+      266562405996
+    ],
+    [
+      1364,
+      265652611584
+    ],
+    [
+      1373,
+      265122899316
+    ],
+    [
+      1426,
+      264845871036
+    ]
+  ],
+  "objective_mismatches": 0,
+  "filtered_size": 23,
+  "instance_sha256": "eaf520eb58ef7fe37ad006c84ea868969b8f9c2cc53e519a2bf0054ffa96a702",
+  "cpu_seconds_child": 53.9375,
+  "peak_private_mib": 212.11328125,
+  "baseline_rss_mib": 36.99609375,
+  "memory_source": "Windows GetProcessMemoryInfo",
+  "wall_seconds_child": 54.556077000001096
+}
