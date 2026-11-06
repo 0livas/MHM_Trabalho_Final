@@ -177,7 +177,50 @@ def main():
     export(OUT/'execucoes.csv',outcomes)
     unified=allrows+[dict(campanha='artigo',**r) for r in article]
     export(OUT/'tabela_unificada.csv',unified)
-    data=dict(campaigns=campaigns,baselines=baselines,article=article,analysis=analysis,outcomes=outcomes)
+    comparison=[]
+    for c in campaigns:
+        grouped={}
+        for r in c['summary']:
+            key=(r['instancia'],r['algoritmo'])
+            row=grouped.setdefault(key,dict(origem='Nosso trabalho',protocolo=c['label'],instancia=key[0],algoritmo=key[1]))
+            metric=r['metric']
+            aliases={'hv':'HV','elapsed_seconds':'tempo_s','wall_s':'tempo_s','front_size':'NDS','igd_plus':'IGD_plus'}
+            metric=aliases.get(metric,metric)
+            for stat in ['mean','std','median','best','worst','n']:
+                if stat in r:row[metric+'_'+stat]=r[stat]
+            if r.get('situacao'):row['situacao']=r['situacao']
+        
+        if c['id']=='experiments_vns_new':
+            for row in grouped.values():row['algoritmo']='vns_vnd_new'
+        comparison.extend(grouped.values())
+    for r in article:
+        row=dict(origem='Artigo — Rego et al. (2022)',protocolo='Tabelas 6–11; ambiente e referências publicados',instancia=r['instancia'],algoritmo=r['algoritmo'],HV_referencia_artigo=r['HV_ref'],RP_Cmax=r['RP_Cmax'],RP_TEC=r['RP_TEC'],tempo_s_mean=r.get('tempo_s'),RPD_HV_pct_mean=r.get('RPD_media'),RPD_HV_pct_std=r.get('RPD_dp'),RPD_HV_pct_UB=r.get('RPD_UB'),HCC_mean=r.get('HCC_media'),HCC_std=r.get('HCC_dp'),HCC_UB=r.get('HCC_UB'),repeticoes=r.get('n'))
+        comparison.append(row)
+    paper_refs={r['instancia']:r for r in article}
+    for row in comparison:
+        ref=paper_refs.get(row['instancia'])
+        if ref is None:
+            row['normalizacao_comum']='Sem referência publicada para esta instância'
+            continue
+        x,y=ref['RP_Cmax'],ref['RP_TEC']
+        row['normalizacao_comum']='Cmax/RP_Cmax; TEC/RP_TEC; referência (1,1)'
+        row['RP_Cmax']=x;row['RP_TEC']=y
+        row['HV_ref_artigo_comum']=ref['HV_ref']/(x*y)
+        if row['origem']=='Nosso trabalho':
+            campaign=next(c for c in campaigns if c['label']==row['protocolo'])
+            algorithm='vns_vnd' if campaign['id']=='experiments_vns_new' else row['algoritmo']
+            series=next((s for s in campaign['series'] if s['instance']==row['instancia'] and s['algorithm']==algorithm),None)
+            if series is None:continue
+            samples=series.get('runs') or [dict(points=series['points'])]
+            values=[hypervolume_2d([[a/x,b/y] for a,b in r['points']],reference=(1,1)) for r in samples if r['points']]
+            row['HV_comum_execucoes_com_fronteira']=len(values)
+            if values:
+                row['HV_comum_mean']=statistics.mean(values)
+                row['HV_comum_std']=statistics.stdev(values) if len(values)>1 else None
+                row['HV_comum_min']=min(values);row['HV_comum_max']=max(values)
+    comparison.sort(key=lambda r:(r['instancia'],r['origem'],r['algoritmo'],r['protocolo']))
+    export(OUT/'comparacao_artigo_nossos.csv',comparison)
+    data=dict(campaigns=campaigns,baselines=baselines,article=article,analysis=analysis,outcomes=outcomes,comparison=comparison)
     provenance=[]
     for folder in ['experiments','experiments_vns_new','final_comparison']:
         for p in sorted((ROOT/'data/output'/folder).rglob('*.csv')):
