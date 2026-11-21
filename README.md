@@ -4,6 +4,31 @@ Minimização do makespan (`Cmax`, maior término das tarefas) e do custo total 
 
 Este guia descreve como preparar o ambiente, criar uma entrada, executar os métodos, retomar buscas e consultar os resultados. Execute os comandos a partir da raiz do repositório. Os caminhos com `/` funcionam no PowerShell, Git Bash e terminais Linux/macOS; coloque caminhos com espaços entre aspas.
 
+## Apresentação Manim
+
+Na branch `first-test-animation`, a apresentação tem 10 cenas e 33 trechos para uma fala de 30 minutos em português. A partir da raiz do repositório, use **Python 3.12** para instalar as dependências e gerar os vídeos e o player local:
+
+```bash
+python -m pip install -r src/presentation/requirements.txt
+python src/presentation/apresentar.py --render --quality m
+```
+
+No Windows, se houver várias versões de Python, use `py -3.12` no lugar de `python`. `--quality m` gera a apresentação em 720p. Use `--quality l` para uma prévia rápida e `--quality h` para 1080p. Os vídeos e o player são gerados localmente em `media/mhm/`.
+
+Abra `media/mhm/index.html` no Chrome ou Edge. No PowerShell, use `Start-Process media/mhm/index.html` para abrir no navegador padrão. Clique em **Reproduzir** para iniciar o cronômetro. O player mantém o último quadro de cada trecho na tela para a fala. Use as **setas** para navegar, **R** para repetir e **F** para alternar tela cheia. As marcas de tempo e a narração estão no [roteiro de apresentação](src/presentation/ROTEIRO.md).
+
+O apêndice do player filtra [estatísticas de HV, Purity e Eq. 3.6](src/presentation/data/metrics_summary.csv) por instância e indicador. Os [resultados por execução](src/presentation/data/metrics_per_run.csv) e os [dados do replay VNS/VND](src/presentation/data/vns_trace.json) também podem ser consultados diretamente. O cálculo usa o ideal e o nadir da campanha original para o HV e a união das frentes observadas por instância para Purity e Eq. 3.6. Execuções sem frente aparecem com métricas indisponíveis.
+
+Para renderizar uma única cena ou reproduzir a análise a partir dos dados arquivados:
+
+```bash
+python -m manim -ql --save_sections src/presentation/apresentacao.py CasoVNS
+python src/presentation/analysis.py
+python src/presentation/trace_vns.py --check
+```
+
+Se os vídeos já estiverem prontos, omita `--render` e mantenha a mesma qualidade para recriar apenas o player. O launcher aceita `--media-dir` para escolher outro destino. A apresentação foi verificada com Manim Community 0.22.1. As fórmulas usam MathText e SVG. [Registro da avaliação](src/presentation/AVALIACAO.md)
+
 ## Organização e regras do repositório
 
 Este README é a única documentação mantida do código. Instruções de instalação, execução, parâmetros, formatos e limitações devem ser atualizadas aqui; não criar guias `.md` separados por método ou campanha.
@@ -13,6 +38,7 @@ Este README é a única documentação mantida do código. Instruções de insta
 | Local | Responsabilidade |
 | --- | --- |
 | `src/` | Implementações e infraestrutura compartilhada. |
+| `src/presentation/` | Cenas Manim, roteiro e dados da apresentação. |
 | `tests/` | Verificações automatizadas, incluindo calibração. |
 | `data/input/` | Entradas `.dat`, com instâncias derivadas identificadas pelo nome. |
 | `data/baselines/` | Referências exatas produzidas pelos solvers. |

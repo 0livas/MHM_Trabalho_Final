@@ -44,8 +44,10 @@ data/output/final_comparison/summarize_blocked.py
 /data/output/hyperparameters_tuning/**/study.sqlite3*
 /data/output/hyperparameters_tuning/**/study.lock
 
-# Documentação única do projeto; relatórios Markdown gerados ficam locais.
+# O README centraliza as instruções de uso. Roteiro e avaliação integram a apresentação.
 *.md
 !/README.md
+!/src/presentation/ROTEIRO.md
+!/src/presentation/AVALIACAO.md
 /data/output/experiments/scratch/
 /data/output/experiments/heartbeat.json

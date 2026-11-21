@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MHM — apresentação e resultados</title>
+<style>
+  :root { color-scheme: dark; font: 16px/1.5 system-ui, sans-serif; background: #14171c; color: #f1f3f9; }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; }
+  main { max-width: 1360px; margin: 0 auto; padding: 20px; }
+  #stage { display: grid; place-items: center; background: #14171c; aspect-ratio: 16/9; max-height: 82vh; }
+  #stage:fullscreen { width: 100vw; height: 100vh; max-height: none; }
+  video { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+  .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0 20px; }
+  button, select, a.action { font: inherit; padding: 7px 12px; border: 1px solid #55647a; border-radius: 4px;
+    color: #f1f3f9; background: #1e252e; text-decoration: none; }
+  button:enabled, select, summary { cursor: pointer; }
+  button:disabled { opacity: .46; }
+  :focus-visible { outline: 2px solid #78d7e9; outline-offset: 3px; }
+  a { color: #78d7e9; }
+  #clock { color: #b5c0d0; font-variant-numeric: tabular-nums; margin-inline-start: auto; }
+  details { border-top: 1px solid #435063; padding: 14px 0; }
+  summary { color: #78d7e9; width: fit-content; font-weight: bold; }
+  .scroll { overflow-x: auto; }
+  table { width: 100%; min-width: 850px; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { padding: 8px 10px; border-bottom: 1px solid #354255; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  p { max-width: 92ch; color: #b5c0d0; }
+  #error { margin: 8px 0; color: #ff967f; }
+</style>
+<main>
+  <div id="stage" tabindex="-1"><video id="slide" muted playsinline aria-label="Animação da apresentação"></video></div>
+  <div class="controls" aria-label="Controles da apresentação">
+    <button type="button" id="prev" title="Seta esquerda">Anterior</button>
+    <button type="button" id="play" title="R">Reproduzir</button>
+    <button type="button" id="next" title="Seta direita ou espaço">Próximo</button>
+    <label for="section">Trecho</label>
+    <select id="section"></select>
+    <button type="button" id="full" title="F">Tela cheia</button>
+    <a id="notes" class="action" target="_blank" rel="noopener">Roteiro</a>
+    <output id="clock" aria-label="Tempo observado e intervalo do roteiro"></output>
+  </div>
+  <div id="error" role="alert" hidden></div>
+  <details>
+    <summary>Apêndice estatístico por algoritmo e instância</summary>
+    <div class="controls">
+      <label for="cohort">Resultados</label>
+      <select id="cohort"><option value="instances">Campanhas de avaliação</option><option value="individual">Execuções individuais</option></select>
+      <label for="instance">Instância</label><select id="instance"></select>
+      <label for="metric">Indicador</label>
+      <select id="metric"><option value="HV">Hipervolume</option><option>Purity</option><option value="Eq36">Equação 3.6</option></select>
+      <a id="csv" download>Baixar dados (CSV)</a>
+    </div>
+    <p id="reference"></p>
+    <div class="scroll"><table>
+      <thead><tr><th>Algoritmo</th><th>Frentes / execuções</th><th>n</th><th>Média</th><th>DP</th><th>Mín.</th>
+        <th>Q1</th><th>Mediana</th><th>Q3</th><th>IQR</th><th>Máx.</th><th>Falhas / cortes</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <p>O desvio-padrão amostral requer pelo menos duas observações. Um traço indica valor indisponível.</p>
+  </details>
+</main>
+<script>
+  const deck = /*DADOS_DO_DECK*/;
+  const ui = Object.fromEntries([...document.querySelectorAll('[id]')].map(node => [node.id, node]));
+  const number = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 6 });
+  const shown = value => value == null ? '—' : number.format(value);
+  const algorithmNames = { age: 'AGE-MOEA', exact_dp: 'DP própria', moead: 'MOEA/D', ociosidade: 'Ociosidade',
+    spea2: 'SPEA2', vns_vnd: 'VNS/VND original', vns_vnd_new: 'VNS/VND revisto',
+    cpsat: 'CP-SAT', custom_exact: 'Backtracking', custom_exact_dp: 'DP própria',
+    heuristica_construtiva: 'Construtiva', heuristica_ociosidade: 'Ociosidade' };
+  const statusNames = { INIT_FAILED: 'falha de partida', TIMEOUT_OR_MEM_LIMIT: 'corte ou limite',
+    INCOMPLETE: 'incompleta', PARTIAL: 'parcial', ERROR: 'erro' };
+  let current = 0;
+  let epoch = null;
+  const clips = deck.clips;
+  const option = (value, label) => new Option(label, value);
+  const time = elapsed => `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
+
+  function showClock() {
+    const clip = clips[current];
+    const elapsed = epoch == null ? 0 : Math.floor((performance.now() - epoch) / 1000);
+    ui.clock.textContent = `${time(elapsed)} · alvo ${clip.start}–${clip.end}`;
+  }
+
+  function play(rewind = false) {
+    if (epoch == null) epoch = performance.now() - clips[current].start_seconds * 1000;
+    if (rewind && ui.slide.readyState > 0) ui.slide.currentTime = 0;
+    ui.slide.play().catch(error => {
+      if (error.name !== 'AbortError') {
+        ui.error.hidden = false;
+        ui.error.textContent = 'O vídeo não pôde ser reproduzido. Confira o arquivo renderizado e tente Reproduzir.';
+      }
+    });
+    showClock();
+  }
+
+  function select(index, autoplay) {
+    if (index < 0 || index >= clips.length) return;
+    current = index;
+    const clip = clips[index];
+    ui.error.hidden = true;
+    ui.slide.src = clip.url;
+    ui.section.value = index;
+    ui.prev.disabled = index === 0;
+    ui.next.disabled = index === clips.length - 1;
+    showClock();
+    if (autoplay) play();
+  }
+
+  function full() {
+    const operation = document.fullscreenElement ? document.exitFullscreen() : ui.stage.requestFullscreen();
+    operation.catch(() => {
+      ui.error.hidden = false;
+      ui.error.textContent = 'A tela cheia está indisponível neste navegador.';
+    });
+  }
+
+  function showStats() {
+    const record = deck.summary[ui.cohort.value][ui.instance.value];
+    const stats = ui.metric.value;
+    ui.reference.textContent = stats === 'HV'
+      ? 'HV calculado com o ideal, o nadir e o ponto de referência (1,10; 1,10) do protocolo.'
+      : `Primeira camada com ${record.purity_reference_size} pontos. A união analisada tem ${record.rank_count} camadas.`;
+    ui.rows.replaceChildren(...Object.entries(record.algorithms).map(([algorithm, run]) => {
+      const line = document.createElement('tr');
+      const distribution = run.metrics[stats];
+      const problems = Object.entries(run.statuses).map(([key, count]) => [key.toUpperCase(), count])
+        .filter(([key]) => key !== 'COMPLETE' && key !== 'COMPLETED')
+        .map(([key, count]) => `${count} ${statusNames[key] ?? key}`).join(', ');
+      const cells = [algorithmNames[algorithm] ?? algorithm, `${run.fronts} / ${run.runs}`,
+        ...['n', 'mean', 'std', 'min', 'q1', 'median', 'q3', 'iqr', 'max'].map(key => shown(distribution[key])), problems || '—'];
+      for (const [index, value] of cells.entries()) {
+        const cell = document.createElement(index === 0 ? 'th' : 'td');
+        if (index === 0) cell.scope = 'row';
+        cell.textContent = value;
+        line.append(cell);
+      }
+      return line;
+    }));
+  }
+
+  function setInstances() {
+    ui.instance.replaceChildren(...Object.keys(deck.summary[ui.cohort.value]).map(id => option(id, id)));
+    showStats();
+  }
+
+  ui.section.replaceChildren(...clips.map((clip, index) => option(index, `${clip.start} · ${clip.name.replaceAll('_', ' ')}`)));
+  ui.notes.href = deck.notes;
+  ui.csv.href = deck.csv;
+  ui.prev.onclick = () => { select(current - 1, true); ui.stage.focus({preventScroll:true}); };
+  ui.next.onclick = () => { select(current + 1, true); ui.stage.focus({preventScroll:true}); };
+  ui.play.onclick = () => { play(true); ui.stage.focus({preventScroll:true}); };
+  ui.full.onclick = () => { ui.stage.focus({preventScroll:true}); full(); };
+  ui.section.onchange = () => select(Number(ui.section.value), true);
+  ui.cohort.onchange = setInstances;
+  ui.instance.onchange = showStats;
+  ui.metric.onchange = showStats;
+  window.addEventListener('keydown', event => {
+    const target = event.target.tagName;
+    if (event.repeat || /^(SELECT|INPUT)$/.test(target)
+        || (event.key === ' ' && /^(BUTTON|A|SUMMARY)$/.test(target))) return;
+    const handlers = { ArrowRight: () => select(current + 1, true), ArrowLeft: () => select(current - 1, true),
+      ' ': () => (epoch == null ? play() : select(current + 1, true)), r: () => play(true), f: full };
+    if (handlers[event.key]) {
+      event.preventDefault();
+      handlers[event.key]();
+    }
+  });
+  select(0, false);
+  setInstances();
+  setInterval(showClock, 250);
+</script>
+</html>

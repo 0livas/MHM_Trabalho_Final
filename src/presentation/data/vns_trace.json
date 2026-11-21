@@ -1,0 +1,104 @@
+{
+  "scope": "primeira construção por versão, sem busca VNS/VND e fora da campanha experimental",
+  "instance": "750_10_1439_5_S_1-9.dat",
+  "seed": 1001,
+  "construction": 1,
+  "jobs": 750,
+  "machines": 10,
+  "modes": 5,
+  "days": 2,
+  "slots_per_day": 1440,
+  "horizon": 2880,
+  "peak_intervals": [
+    [
+      1080,
+      1260
+    ],
+    [
+      2520,
+      2700
+    ]
+  ],
+  "original": {
+    "assigned": 516,
+    "machine_ends": [
+      2875,
+      2879,
+      2880,
+      2880,
+      2877,
+      2872,
+      2878,
+      2876,
+      2874,
+      2879
+    ],
+    "jobs_per_machine": [
+      52,
+      47,
+      56,
+      48,
+      57,
+      56,
+      48,
+      53,
+      53,
+      46
+    ],
+    "completed": false,
+    "blocked_job_zero_based": 107,
+    "minimum_candidate_end": 2889,
+    "minimum_candidate_ends_by_machine": [
+      2956,
+      2958,
+      2898,
+      2937,
+      2933,
+      2889,
+      2896,
+      2889,
+      2920,
+      2912
+    ],
+    "makespan": null
+  },
+  "revised": {
+    "assigned": 750,
+    "machine_ends": [
+      1161,
+      1157,
+      1154,
+      1151,
+      1165,
+      1169,
+      1155,
+      1166,
+      1160,
+      1147
+    ],
+    "jobs_per_machine": [
+      82,
+      70,
+      78,
+      71,
+      77,
+      79,
+      77,
+      72,
+      74,
+      70
+    ],
+    "completed": true,
+    "blocked_job_zero_based": null,
+    "minimum_candidate_end": null,
+    "minimum_candidate_ends_by_machine": null,
+    "makespan": 1169
+  },
+  "source_sha256_lf": {
+    "data/input/set2/750_10_1439_5_S_1-9.dat": "fc924e1402d95de05a095a91de5a2aa43dba42ca4e672daea1331e02ac21a5d8",
+    "src/problem.py": "37f61cdcce558a6e50e1ff348d51a90729a88b3b5943e6b58fe84480dc3c0c7c",
+    "src/schedule.py": "4bc4a0d930e788cc833706bf2410dc7e39b26b072c657deb6bc0702be1da08b1",
+    "src/metaheuristics/vns_vnd_original.py": "c9f363c00b7b6a11804863fd5e985f737bc1be410109768c32dfe58c2baf2097",
+    "src/metaheuristics/vns_vnd.py": "9aae953344b17b16d622f0fefbc849c9adfc92bd06505b7929c015b9458b1042"
+  }
+}
