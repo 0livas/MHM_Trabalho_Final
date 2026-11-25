@@ -4,6 +4,7 @@ from functools import lru_cache
 import hashlib
 import json
 from pathlib import Path
+import sys
 
 from manim import (
     Axes, DashedLine, Dot, FadeIn, Line, ManimColor, Rectangle, Scene, SVGMobject,
@@ -11,6 +12,7 @@ from manim import (
 )
 from matplotlib import rc_context
 from matplotlib.mathtext import math_to_image
+from manimpango import list_fonts
 import numpy as np
 
 
@@ -43,13 +45,17 @@ LABELS = {
 JOBS = (GOLD, CYAN, GREEN, CORAL, "#C1A5EE", "#92B3FA")
 
 
+# Fora do Windows, a fonte padrão pode ser larga demais para as margens.
+FONTE = "Lato" if sys.platform != "win32" and "Lato" in list_fonts() else ""
+
+
 def pos(x, y):
     return np.array([x, y, 0.0])
 
 
 def text(value, size=30, color=INK, width=12.85, bold=False):
     label = Text(value, font_size=size, color=color, weight="BOLD" if bold else "NORMAL",
-                 line_spacing=1.0)
+                 line_spacing=1.0, font=FONTE)
     if label.width > width:
         label.scale_to_fit_width(width)
     return label
