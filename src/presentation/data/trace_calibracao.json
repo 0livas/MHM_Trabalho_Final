@@ -1,0 +1,6459 @@
+{
+ "studies": {
+  "vns_vnd": {
+   "study": "vns_vnd_tpe_v7",
+   "grid": {
+    "initial_solutions": [
+     1,
+     2,
+     4,
+     8,
+     16
+    ],
+    "max_candidates_per_neighborhood": [
+     10,
+     25,
+     50,
+     100,
+     200
+    ],
+    "shaking_attempts": [
+     1,
+     5,
+     10,
+     20,
+     40
+    ]
+   },
+   "size": 125,
+   "trials": [
+    {
+     "trial": 0,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9300162472615459,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 1,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9315688600584672,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 2,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9323160094044082,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 3,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9264652859523982,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 4,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9323939264679963,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 5,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9346156901847278,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 6,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9343224988245376,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 7,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.925892545188279,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 8,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9394944455486445,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 9,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9231031637591038,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 10,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9312397307637788,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 11,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.93939591586844,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 12,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9366937430094998,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 13,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9294817215112742,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 14,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9333436557560474,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 15,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9340174153616982,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 16,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9319856074823829,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 17,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9326131593771477,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 18,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9257417090157445,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 19,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9346726602344911,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 20,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9344385721128292,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 21,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9356996648424734,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 22,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9385523473768818,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 23,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9344160188852048,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 24,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": 22,
+     "failure": null
+    },
+    {
+     "trial": 25,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9376862469911328,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 26,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": 8,
+     "failure": null
+    },
+    {
+     "trial": 27,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": 11,
+     "failure": null
+    },
+    {
+     "trial": 28,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9398429312213131,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 29,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9301321752772306,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 30,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9363846161428351,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 31,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9399429631656179,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 32,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9407661119668475,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 33,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": 28,
+     "failure": null
+    },
+    {
+     "trial": 34,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": 31,
+     "failure": null
+    },
+    {
+     "trial": 35,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9364181625584649,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 36,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": 32,
+     "failure": null
+    },
+    {
+     "trial": 37,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9299627586094013,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 38,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.940271287472076,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 39,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9382582236876666,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 40,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9246740645277164,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 41,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9316966647918385,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 42,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": 38,
+     "failure": null
+    },
+    {
+     "trial": 43,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9388812158026782,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 44,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9382038383179535,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 45,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9363996510431744,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 46,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9391726913825081,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 47,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9316187964235199,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 48,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9314000346711127,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 49,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9365881013484307,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 50,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9370665964703676,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 51,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9297331577002157,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 52,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9332622635748045,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 53,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9391269995972557,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 54,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9333514540989957,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 55,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9230384090423982,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 56,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9360415441632597,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 57,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9346260164359965,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 58,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9326042706658395,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 59,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9272915486730724,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 60,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9328385833868276,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 61,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": 46,
+     "failure": null
+    },
+    {
+     "trial": 62,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9328930910980038,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 63,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9359963701192885,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 64,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9311445308685525,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 65,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9404342811022397,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 66,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9371227380671246,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 67,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": 11,
+     "failure": null
+    },
+    {
+     "trial": 68,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.935454509624016,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    }
+   ],
+   "record": [
+    {
+     "trial": 0,
+     "score": 0.9300162472615459,
+     "source": "exploration"
+    },
+    {
+     "trial": 1,
+     "score": 0.9315688600584672,
+     "source": "exploration"
+    },
+    {
+     "trial": 2,
+     "score": 0.9323160094044082,
+     "source": "exploration"
+    },
+    {
+     "trial": 4,
+     "score": 0.9323939264679963,
+     "source": "exploration"
+    },
+    {
+     "trial": 5,
+     "score": 0.9346156901847278,
+     "source": "exploration"
+    },
+    {
+     "trial": 8,
+     "score": 0.9394944455486445,
+     "source": "exploration"
+    },
+    {
+     "trial": 28,
+     "score": 0.9398429312213131,
+     "source": "tpe"
+    },
+    {
+     "trial": 31,
+     "score": 0.9399429631656179,
+     "source": "tpe"
+    },
+    {
+     "trial": 32,
+     "score": 0.9407661119668475,
+     "source": "tpe"
+    }
+   ],
+   "counts": {
+    "complete": 60,
+    "fail": 0,
+    "timeout": 0,
+    "interrupted": 0,
+    "duplicate": 9,
+    "attempts": 60,
+    "exploration": 20,
+    "tpe": 40
+   },
+   "best": {
+    "trial": 32,
+    "score": 0.9407661119668475,
+    "parameters": {
+     "initial_solutions": 16,
+     "max_candidates_per_neighborhood": 10,
+     "shaking_attempts": 1
+    }
+   },
+   "protocol": {
+    "seeds": [
+     11,
+     29,
+     47
+    ],
+    "budget_per_run": 8000,
+    "reference": [
+     1.05,
+     1.05
+    ],
+    "startup_trials": 20,
+    "multivariate": true,
+    "pruning": false,
+    "sampler_seed": 42,
+    "aggregation": "mean(instance median(seed normalized_HV / 1.05^2))",
+    "python": "3.12.15",
+    "packages": {
+     "optuna": "4.9.0",
+     "pymoo": "0.6.2",
+     "numpy": "2.5.4",
+     "scipy": "1.18.1",
+     "moocore": "0.3.2",
+     "threadpoolctl": "3.8.0"
+    }
+   },
+   "instances": [
+    "6_2_1439_3_S_1-9.dat",
+    "14_2_1439_3_S_1-9_derivada.dat",
+    "50_10_1439_5_S_1-9.dat",
+    "50_20_1439_5_S_1-9.dat",
+    "250_10_1439_5_S_1-9.dat",
+    "250_20_1439_5_S_1-9.dat"
+   ],
+   "confirmation": {
+    "budgets": [
+     8000,
+     20000,
+     50000
+    ],
+    "seeds": [
+     101,
+     102,
+     103,
+     104,
+     105
+    ],
+    "promote_fraction": 0.5,
+    "diversity_slots": 1,
+    "stages": [
+     {
+      "budget": 8000,
+      "ranking": [
+       32,
+       65,
+       31,
+       38,
+       10
+      ],
+      "scores": {
+       "32": 0.9385898588949795,
+       "65": 0.9367709422250563,
+       "38": 0.9354609279144349,
+       "31": 0.9365581134146237,
+       "10": 0.9315587217836854
+      },
+      "promoted_by_score": [
+       32,
+       65
+      ],
+      "promoted_by_diversity": [
+       10
+      ],
+      "eliminated": [
+       31,
+       38
+      ]
+     },
+     {
+      "budget": 20000,
+      "ranking": [
+       65,
+       32,
+       10
+      ],
+      "scores": {
+       "32": 0.9421887514532526,
+       "65": 0.9422250750416863,
+       "10": 0.9376525026096212
+      },
+      "promoted_by_score": [
+       65
+      ],
+      "promoted_by_diversity": [
+       10
+      ],
+      "eliminated": [
+       32
+      ]
+     },
+     {
+      "budget": 50000,
+      "ranking": [
+       65,
+       10
+      ],
+      "scores": {
+       "65": 0.9457408332362389,
+       "10": 0.9430609223497377
+      }
+     }
+    ],
+    "candidates": [
+     {
+      "trial": 32,
+      "search_score": 0.9407661119668475,
+      "parameters": {
+       "initial_solutions": 16,
+       "max_candidates_per_neighborhood": 10,
+       "shaking_attempts": 1
+      }
+     },
+     {
+      "trial": 65,
+      "search_score": 0.9404342811022397,
+      "parameters": {
+       "initial_solutions": 16,
+       "max_candidates_per_neighborhood": 25,
+       "shaking_attempts": 20
+      }
+     },
+     {
+      "trial": 38,
+      "search_score": 0.940271287472076,
+      "parameters": {
+       "initial_solutions": 16,
+       "max_candidates_per_neighborhood": 50,
+       "shaking_attempts": 5
+      }
+     },
+     {
+      "trial": 31,
+      "search_score": 0.9399429631656179,
+      "parameters": {
+       "initial_solutions": 16,
+       "max_candidates_per_neighborhood": 25,
+       "shaking_attempts": 10
+      }
+     },
+     {
+      "trial": 10,
+      "search_score": 0.9312397307637788,
+      "parameters": {
+       "initial_solutions": 8,
+       "max_candidates_per_neighborhood": 100,
+       "shaking_attempts": 40
+      }
+     }
+    ],
+    "recommended": {
+     "trial": 65,
+     "budget": 50000,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 20
+     }
+    }
+   }
+  },
+  "spea2": {
+   "study": "spea2_tpe_v6_pedro",
+   "grid": {
+    "population_size": [
+     20,
+     50,
+     100,
+     150,
+     200,
+     300
+    ],
+    "crossover_probability": [
+     0.2,
+     0.4,
+     0.6,
+     0.7,
+     0.9,
+     1.0
+    ],
+    "mutation_probability": [
+     0.01,
+     0.05,
+     0.1,
+     0.2,
+     0.3,
+     0.5,
+     0.7
+    ]
+   },
+   "size": 252,
+   "trials": [
+    {
+     "trial": 0,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9465331402140973,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 1,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9240667195004948,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 2,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9426091439564769,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 3,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9446780873348253,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 4,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9408015156563077,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 5,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.937246960907177,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 6,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9435884491402037,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 7,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9383934730904766,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 8,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9329623564610006,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 9,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9436370884102988,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 10,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9445790542067801,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 11,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9460539880412641,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 12,
+     "state": "FAIL",
+     "source": "exploration",
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": "timeout"
+    },
+    {
+     "trial": 13,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.928259054815207,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 14,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9385941774494089,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 15,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.926810231345665,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 16,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9451121601052977,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 17,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.937513654382261,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 18,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.934724868533218,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 19,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9343409601787217,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 20,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9252026069561493,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 21,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9413506390000748,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 22,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": "timeout"
+    },
+    {
+     "trial": 23,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": "timeout"
+    },
+    {
+     "trial": 24,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": 0,
+     "failure": null
+    },
+    {
+     "trial": 25,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9462227712846618,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 26,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9466358035037236,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 27,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9417180592088182,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 28,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": 16,
+     "failure": null
+    },
+    {
+     "trial": 29,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": 11,
+     "failure": null
+    },
+    {
+     "trial": 30,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9440421160953087,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 31,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9451564020076189,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 32,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9243893630630667,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 33,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": 25,
+     "failure": null
+    },
+    {
+     "trial": 34,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": 26,
+     "failure": null
+    },
+    {
+     "trial": 35,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.933537085283234,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 36,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": "timeout"
+    },
+    {
+     "trial": 37,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9474889452476098,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 38,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9465987359767719,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 39,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9425943328639932,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 40,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": "timeout"
+    },
+    {
+     "trial": 41,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": "interrupted"
+    },
+    {
+     "trial": 42,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": "interrupted"
+    },
+    {
+     "trial": 43,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 37,
+     "failure": null
+    },
+    {
+     "trial": 44,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": 38,
+     "failure": null
+    },
+    {
+     "trial": 45,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": "interrupted"
+    },
+    {
+     "trial": 46,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": 12,
+     "failure": null
+    },
+    {
+     "trial": 47,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": "interrupted"
+    },
+    {
+     "trial": 48,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": 45,
+     "failure": null
+    },
+    {
+     "trial": 49,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": "timeout"
+    },
+    {
+     "trial": 50,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": "timeout"
+    },
+    {
+     "trial": 51,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9481268351735872,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 52,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9442939102191953,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 53,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": "timeout"
+    },
+    {
+     "trial": 54,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 51,
+     "failure": null
+    },
+    {
+     "trial": 55,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": "timeout"
+    },
+    {
+     "trial": 56,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9448392052116525,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 57,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": 50,
+     "failure": null
+    },
+    {
+     "trial": 58,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 42,
+     "failure": null
+    },
+    {
+     "trial": 59,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9415364032628634,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 60,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": 40,
+     "failure": null
+    },
+    {
+     "trial": 61,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9471729098535925,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 62,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9435690686078919,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 63,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9460500497227015,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 64,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9456532798536127,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 65,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 61,
+     "failure": null
+    },
+    {
+     "trial": 66,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9448813631828125,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 67,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9442162528767633,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 68,
+     "state": "FAIL",
+     "source": "tpe",
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": "timeout"
+    },
+    {
+     "trial": 69,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9387062482559835,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 70,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 53,
+     "failure": null
+    },
+    {
+     "trial": 71,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9460613291850624,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 72,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": 47,
+     "failure": null
+    },
+    {
+     "trial": 73,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9452764126374563,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 74,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9447317246054999,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 75,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9469747493131841,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    }
+   ],
+   "record": [
+    {
+     "trial": 0,
+     "score": 0.9465331402140973,
+     "source": "exploration"
+    },
+    {
+     "trial": 26,
+     "score": 0.9466358035037236,
+     "source": "tpe"
+    },
+    {
+     "trial": 37,
+     "score": 0.9474889452476098,
+     "source": "tpe"
+    },
+    {
+     "trial": 51,
+     "score": 0.9481268351735872,
+     "source": "tpe"
+    }
+   ],
+   "counts": {
+    "complete": 46,
+    "fail": 14,
+    "timeout": 10,
+    "interrupted": 4,
+    "duplicate": 16,
+    "attempts": 60,
+    "exploration": 20,
+    "tpe": 40
+   },
+   "best": {
+    "trial": 51,
+    "score": 0.9481268351735872,
+    "parameters": {
+     "population_size": 150,
+     "crossover_probability": 0.9,
+     "mutation_probability": 0.7
+    }
+   },
+   "protocol": {
+    "seeds": [
+     11,
+     29,
+     47
+    ],
+    "budget_per_run": 8000,
+    "reference": [
+     1.05,
+     1.05
+    ],
+    "startup_trials": 20,
+    "multivariate": true,
+    "pruning": false,
+    "sampler_seed": 42,
+    "aggregation": "mean(instance median(seed normalized_HV / 1.05^2))",
+    "python": "3.10.12",
+    "packages": {
+     "optuna": "4.9.0",
+     "pymoo": "0.6.2",
+     "numpy": "2.2.6",
+     "scipy": "1.15.1",
+     "moocore": "0.3.2",
+     "threadpoolctl": "3.5.0"
+    }
+   },
+   "instances": [
+    "6_2_1439_3_S_1-9.dat",
+    "14_2_1439_3_S_1-9_derivada.dat",
+    "50_10_1439_5_S_1-9.dat",
+    "50_20_1439_5_S_1-9.dat",
+    "250_10_1439_5_S_1-9.dat",
+    "250_20_1439_5_S_1-9.dat"
+   ],
+   "confirmation": {
+    "budgets": [
+     20000,
+     50000
+    ],
+    "seeds": [
+     101,
+     103,
+     107,
+     109,
+     113
+    ],
+    "promote_fraction": 0.4,
+    "diversity_slots": 1,
+    "stages": [
+     {
+      "budget": 20000,
+      "ranking": [
+       51,
+       66,
+       37,
+       61,
+       75
+      ],
+      "scores": {
+       "51": 0.9515012109834258,
+       "37": 0.9511642547044593,
+       "61": 0.9504350705620533,
+       "75": 0.9502660406438016,
+       "66": 0.9514026501331125
+      },
+      "promoted_by_score": [
+       51
+      ],
+      "promoted_by_diversity": [
+       66
+      ],
+      "eliminated": [
+       37,
+       61,
+       75
+      ]
+     },
+     {
+      "budget": 50000,
+      "ranking": [
+       66,
+       51
+      ],
+      "scores": {
+       "51": 0.9536951165499128,
+       "66": 0.9538295712563617
+      }
+     }
+    ],
+    "candidates": [
+     {
+      "trial": 51,
+      "search_score": 0.9481268351735872,
+      "parameters": {
+       "population_size": 150,
+       "crossover_probability": 0.9,
+       "mutation_probability": 0.7
+      }
+     },
+     {
+      "trial": 37,
+      "search_score": 0.9474889452476098,
+      "parameters": {
+       "population_size": 100,
+       "crossover_probability": 1.0,
+       "mutation_probability": 0.7
+      }
+     },
+     {
+      "trial": 61,
+      "search_score": 0.9471729098535925,
+      "parameters": {
+       "population_size": 100,
+       "crossover_probability": 0.9,
+       "mutation_probability": 0.7
+      }
+     },
+     {
+      "trial": 75,
+      "search_score": 0.9469747493131841,
+      "parameters": {
+       "population_size": 150,
+       "crossover_probability": 0.9,
+       "mutation_probability": 0.3
+      }
+     },
+     {
+      "trial": 66,
+      "search_score": 0.9448813631828125,
+      "parameters": {
+       "population_size": 200,
+       "crossover_probability": 0.7,
+       "mutation_probability": 0.5
+      }
+     }
+    ],
+    "recommended": {
+     "trial": 66,
+     "budget": 50000,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.5
+     }
+    }
+   }
+  },
+  "moead": {
+   "study": "moead_tpe_v6",
+   "grid": {
+    "population_size": [
+     20,
+     50,
+     100,
+     150,
+     200,
+     300
+    ],
+    "n_neighbors": [
+     2,
+     5,
+     10,
+     15,
+     20
+    ],
+    "prob_neighbor_mating": [
+     0.0,
+     0.25,
+     0.5,
+     0.75,
+     0.9,
+     1.0
+    ],
+    "crossover_probability": [
+     0.2,
+     0.4,
+     0.6,
+     0.7,
+     0.9,
+     1.0
+    ],
+    "mutation_probability": [
+     0.01,
+     0.05,
+     0.1,
+     0.2,
+     0.3,
+     0.5,
+     0.7
+    ]
+   },
+   "size": 7560,
+   "trials": [
+    {
+     "trial": 0,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9408142752808581,
+     "parameters": {
+      "population_size": 100,
+      "n_neighbors": 20,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 1,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9348649025408672,
+     "parameters": {
+      "population_size": 20,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 2,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9291340900944705,
+     "parameters": {
+      "population_size": 20,
+      "n_neighbors": 2,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 3,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9275821209223686,
+     "parameters": {
+      "population_size": 200,
+      "n_neighbors": 20,
+      "prob_neighbor_mating": 0.0,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 4,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9323532193309874,
+     "parameters": {
+      "population_size": 50,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 1.0,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 5,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9414728620679496,
+     "parameters": {
+      "population_size": 50,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 1.0,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 6,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9358672087785811,
+     "parameters": {
+      "population_size": 50,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.25,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 7,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9398516661612122,
+     "parameters": {
+      "population_size": 20,
+      "n_neighbors": 20,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 8,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9428749103369796,
+     "parameters": {
+      "population_size": 200,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 1.0,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 9,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9127366148955902,
+     "parameters": {
+      "population_size": 20,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.5,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 10,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9176043109821348,
+     "parameters": {
+      "population_size": 200,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.0,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 11,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9297497872263029,
+     "parameters": {
+      "population_size": 200,
+      "n_neighbors": 20,
+      "prob_neighbor_mating": 0.0,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 12,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9365852469586182,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 20,
+      "prob_neighbor_mating": 0.0,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 13,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9349275318396413,
+     "parameters": {
+      "population_size": 150,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 14,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9398603848247518,
+     "parameters": {
+      "population_size": 20,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 15,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9372625077253234,
+     "parameters": {
+      "population_size": 150,
+      "n_neighbors": 20,
+      "prob_neighbor_mating": 0.25,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 16,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9422599356579676,
+     "parameters": {
+      "population_size": 100,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 17,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9283919660700926,
+     "parameters": {
+      "population_size": 20,
+      "n_neighbors": 5,
+      "prob_neighbor_mating": 0.0,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 18,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.8955484632791079,
+     "parameters": {
+      "population_size": 20,
+      "n_neighbors": 2,
+      "prob_neighbor_mating": 1.0,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 19,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9316685270521503,
+     "parameters": {
+      "population_size": 20,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.0,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 20,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9291828604685292,
+     "parameters": {
+      "population_size": 50,
+      "n_neighbors": 5,
+      "prob_neighbor_mating": 0.0,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 21,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9355178654830517,
+     "parameters": {
+      "population_size": 200,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.5,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 22,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9410438124577419,
+     "parameters": {
+      "population_size": 100,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.5,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 23,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9355305819179593,
+     "parameters": {
+      "population_size": 200,
+      "n_neighbors": 2,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 24,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 50,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 1.0,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 5,
+     "failure": null
+    },
+    {
+     "trial": 25,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.943473107372966,
+     "parameters": {
+      "population_size": 100,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 26,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9394260659737591,
+     "parameters": {
+      "population_size": 200,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 1.0,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 27,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9413162062072776,
+     "parameters": {
+      "population_size": 200,
+      "n_neighbors": 5,
+      "prob_neighbor_mating": 1.0,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 28,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9424010110250693,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 29,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.940813237802231,
+     "parameters": {
+      "population_size": 100,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 30,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9403600089208329,
+     "parameters": {
+      "population_size": 100,
+      "n_neighbors": 5,
+      "prob_neighbor_mating": 0.5,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 31,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.942919922193787,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 32,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9436161048325504,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 33,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9402725882433618,
+     "parameters": {
+      "population_size": 100,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.25,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 34,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9421076223101682,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 35,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9216451951028863,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 36,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.942214445214066,
+     "parameters": {
+      "population_size": 100,
+      "n_neighbors": 5,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 37,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9432644050437388,
+     "parameters": {
+      "population_size": 50,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 38,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9392041226929557,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 39,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9393111578055198,
+     "parameters": {
+      "population_size": 150,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 40,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9426026788950309,
+     "parameters": {
+      "population_size": 200,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 41,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9440878010766427,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 42,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9326713137452385,
+     "parameters": {
+      "population_size": 150,
+      "n_neighbors": 2,
+      "prob_neighbor_mating": 1.0,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 43,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 50,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 37,
+     "failure": null
+    },
+    {
+     "trial": 44,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9435179820615123,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 45,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9427240076016457,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 1.0,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 46,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9412592113367253,
+     "parameters": {
+      "population_size": 20,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 47,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9407019846437744,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 48,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9324869533066601,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 49,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9327974029509325,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.25,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 50,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9421946545590758,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 51,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9424663425437382,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 52,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 44,
+     "failure": null
+    },
+    {
+     "trial": 53,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9159629354641872,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 5,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 54,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9393524340393723,
+     "parameters": {
+      "population_size": 20,
+      "n_neighbors": 2,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 55,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9332921347268859,
+     "parameters": {
+      "population_size": 50,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 56,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9411932415349301,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 5,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 57,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9428323619719955,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 20,
+      "prob_neighbor_mating": 0.75,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 58,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.940358144615836,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 20,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 59,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9398932073323296,
+     "parameters": {
+      "population_size": 100,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 60,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9414636264241836,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 20,
+      "prob_neighbor_mating": 0.25,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 61,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 25,
+     "failure": null
+    },
+    {
+     "trial": 62,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9363445666252741,
+     "parameters": {
+      "population_size": 150,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 0.0,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 63,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.915860849361184,
+     "parameters": {
+      "population_size": 50,
+      "n_neighbors": 15,
+      "prob_neighbor_mating": 1.0,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    }
+   ],
+   "record": [
+    {
+     "trial": 0,
+     "score": 0.9408142752808581,
+     "source": "exploration"
+    },
+    {
+     "trial": 5,
+     "score": 0.9414728620679496,
+     "source": "exploration"
+    },
+    {
+     "trial": 8,
+     "score": 0.9428749103369796,
+     "source": "exploration"
+    },
+    {
+     "trial": 25,
+     "score": 0.943473107372966,
+     "source": "tpe"
+    },
+    {
+     "trial": 32,
+     "score": 0.9436161048325504,
+     "source": "tpe"
+    },
+    {
+     "trial": 41,
+     "score": 0.9440878010766427,
+     "source": "tpe"
+    }
+   ],
+   "counts": {
+    "complete": 60,
+    "fail": 0,
+    "timeout": 0,
+    "interrupted": 0,
+    "duplicate": 4,
+    "attempts": 60,
+    "exploration": 20,
+    "tpe": 40
+   },
+   "best": {
+    "trial": 41,
+    "score": 0.9440878010766427,
+    "parameters": {
+     "population_size": 300,
+     "n_neighbors": 15,
+     "prob_neighbor_mating": 0.9,
+     "crossover_probability": 0.9,
+     "mutation_probability": 0.7
+    }
+   },
+   "protocol": {
+    "seeds": [
+     11,
+     29,
+     47
+    ],
+    "budget_per_run": 8000,
+    "reference": [
+     1.05,
+     1.05
+    ],
+    "startup_trials": 20,
+    "multivariate": true,
+    "pruning": false,
+    "sampler_seed": 42,
+    "aggregation": "mean(instance median(seed normalized_HV / 1.05^2))",
+    "python": "3.14.8",
+    "packages": {
+     "optuna": "4.9.0",
+     "pymoo": "0.6.2",
+     "numpy": "2.5.4",
+     "scipy": "1.18.1",
+     "moocore": "0.3.2",
+     "threadpoolctl": "3.7.0"
+    }
+   },
+   "instances": [
+    "6_2_1439_3_S_1-9.dat",
+    "14_2_1439_3_S_1-9_derivada.dat",
+    "50_10_1439_5_S_1-9.dat",
+    "50_20_1439_5_S_1-9.dat",
+    "250_10_1439_5_S_1-9.dat",
+    "250_20_1439_5_S_1-9.dat"
+   ],
+   "confirmation": {
+    "budgets": [
+     8000,
+     20000,
+     50000
+    ],
+    "seeds": [
+     101,
+     102,
+     103,
+     104,
+     105
+    ],
+    "promote_fraction": 0.5,
+    "diversity_slots": 1,
+    "stages": [
+     {
+      "budget": 8000,
+      "ranking": [
+       25,
+       44,
+       41,
+       32,
+       15
+      ],
+      "scores": {
+       "41": 0.9425322784561992,
+       "32": 0.9421126371883122,
+       "44": 0.9427710184717811,
+       "25": 0.9429383627083162,
+       "15": 0.9365373059241686
+      },
+      "promoted_by_score": [
+       25,
+       44
+      ],
+      "promoted_by_diversity": [
+       15
+      ],
+      "eliminated": [
+       41,
+       32
+      ]
+     },
+     {
+      "budget": 20000,
+      "ranking": [
+       44,
+       25,
+       15
+      ],
+      "scores": {
+       "44": 0.9470149453662526,
+       "25": 0.9456059326579238,
+       "15": 0.9421193226743533
+      },
+      "promoted_by_score": [
+       44
+      ],
+      "promoted_by_diversity": [
+       15
+      ],
+      "eliminated": [
+       25
+      ]
+     },
+     {
+      "budget": 50000,
+      "ranking": [
+       44,
+       15
+      ],
+      "scores": {
+       "44": 0.9498581187202262,
+       "15": 0.9456774560753405
+      }
+     }
+    ],
+    "candidates": [
+     {
+      "trial": 41,
+      "search_score": 0.9440878010766427,
+      "parameters": {
+       "population_size": 300,
+       "n_neighbors": 15,
+       "prob_neighbor_mating": 0.9,
+       "crossover_probability": 0.9,
+       "mutation_probability": 0.7
+      }
+     },
+     {
+      "trial": 32,
+      "search_score": 0.9436161048325504,
+      "parameters": {
+       "population_size": 300,
+       "n_neighbors": 15,
+       "prob_neighbor_mating": 0.75,
+       "crossover_probability": 0.7,
+       "mutation_probability": 0.7
+      }
+     },
+     {
+      "trial": 44,
+      "search_score": 0.9435179820615123,
+      "parameters": {
+       "population_size": 300,
+       "n_neighbors": 10,
+       "prob_neighbor_mating": 0.9,
+       "crossover_probability": 0.9,
+       "mutation_probability": 0.7
+      }
+     },
+     {
+      "trial": 25,
+      "search_score": 0.943473107372966,
+      "parameters": {
+       "population_size": 100,
+       "n_neighbors": 15,
+       "prob_neighbor_mating": 0.9,
+       "crossover_probability": 0.9,
+       "mutation_probability": 0.7
+      }
+     },
+     {
+      "trial": 15,
+      "search_score": 0.9372625077253234,
+      "parameters": {
+       "population_size": 150,
+       "n_neighbors": 20,
+       "prob_neighbor_mating": 0.25,
+       "crossover_probability": 0.6,
+       "mutation_probability": 0.2
+      }
+     }
+    ],
+    "recommended": {
+     "trial": 44,
+     "budget": 50000,
+     "parameters": {
+      "population_size": 300,
+      "n_neighbors": 10,
+      "prob_neighbor_mating": 0.9,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     }
+    }
+   }
+  },
+  "age": {
+   "study": "age_tpe_v6",
+   "grid": {
+    "population_size": [
+     20,
+     50,
+     100,
+     150,
+     200,
+     300
+    ],
+    "crossover_probability": [
+     0.2,
+     0.4,
+     0.6,
+     0.7,
+     0.9,
+     1.0
+    ],
+    "mutation_probability": [
+     0.01,
+     0.05,
+     0.1,
+     0.2,
+     0.3,
+     0.5,
+     0.7
+    ]
+   },
+   "size": 252,
+   "trials": [
+    {
+     "trial": 0,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9443694838188305,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 1,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9213309818428924,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 2,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9435322177471851,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 3,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9423437458387847,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 4,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9406632202425863,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 5,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9394570851555952,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 6,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9439095091404285,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 7,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9390558045864825,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 8,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9236816294173148,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 9,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9451289515814861,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 10,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9423808344479503,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 11,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9420324649969868,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 12,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9321911039902726,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 13,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9260789238789418,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 14,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9383185565627814,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 15,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9249184324676984,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 16,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9465606228566517,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 17,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9386851227684782,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 18,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9354755299777217,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 19,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.9373894123837018,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 20,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": 16,
+     "failure": null
+    },
+    {
+     "trial": 21,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9455808455264954,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 22,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": 0,
+     "failure": null
+    },
+    {
+     "trial": 23,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 9,
+     "failure": null
+    },
+    {
+     "trial": 24,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9400505144533621,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 25,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.944989234875723,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 26,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9328978260524019,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 27,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": 21,
+     "failure": null
+    },
+    {
+     "trial": 28,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9405210746478125,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 29,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9443473535693874,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 30,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9452150823271134,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 31,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9396674398764833,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 32,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 30,
+     "failure": null
+    },
+    {
+     "trial": 33,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9406909073342311,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 34,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9450509036449369,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 35,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.945467864661108,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 36,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9416108137601733,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 37,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9400774523549207,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 38,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": 35,
+     "failure": null
+    },
+    {
+     "trial": 39,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9445512449684498,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 40,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9437400660464329,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 41,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9433413592708482,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 42,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9422919978356927,
+     "parameters": {
+      "population_size": 20,
+      "crossover_probability": 0.6,
+      "mutation_probability": 0.3
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 43,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9474833826374516,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 44,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9278083253094797,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 45,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9339161720293223,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 46,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9473231938374341,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 47,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9436718624048029,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.2,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 48,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 43,
+     "failure": null
+    },
+    {
+     "trial": 49,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9404086406495438,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.7,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 50,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9455429428386094,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 51,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": 50,
+     "failure": null
+    },
+    {
+     "trial": 52,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 46,
+     "failure": null
+    },
+    {
+     "trial": 53,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9314795968362961,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 54,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9439904746347036,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 55,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9477792732687746,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 56,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9417301213270433,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 57,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": 55,
+     "failure": null
+    },
+    {
+     "trial": 58,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9424031588859573,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.2
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 59,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9470726105545737,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 60,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9391795113340843,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 61,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9438555974440154,
+     "parameters": {
+      "population_size": 200,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 62,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 59,
+     "failure": null
+    },
+    {
+     "trial": 63,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.939707985561056,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.05
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 64,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9469321137489761,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 65,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9459437859077301,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 66,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9215052814624951,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.01
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 67,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9456791149058563,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.4,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 68,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": 65,
+     "failure": null
+    },
+    {
+     "trial": 69,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.946065900164604,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 70,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "population_size": 50,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     },
+     "duplicate_of": 64,
+     "failure": null
+    },
+    {
+     "trial": 71,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9424051902664544,
+     "parameters": {
+      "population_size": 300,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 72,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.9418764348337787,
+     "parameters": {
+      "population_size": 150,
+      "crossover_probability": 1.0,
+      "mutation_probability": 0.1
+     },
+     "duplicate_of": null,
+     "failure": null
+    }
+   ],
+   "record": [
+    {
+     "trial": 0,
+     "score": 0.9443694838188305,
+     "source": "exploration"
+    },
+    {
+     "trial": 9,
+     "score": 0.9451289515814861,
+     "source": "exploration"
+    },
+    {
+     "trial": 16,
+     "score": 0.9465606228566517,
+     "source": "exploration"
+    },
+    {
+     "trial": 43,
+     "score": 0.9474833826374516,
+     "source": "tpe"
+    },
+    {
+     "trial": 55,
+     "score": 0.9477792732687746,
+     "source": "tpe"
+    }
+   ],
+   "counts": {
+    "complete": 60,
+    "fail": 0,
+    "timeout": 0,
+    "interrupted": 0,
+    "duplicate": 13,
+    "attempts": 60,
+    "exploration": 20,
+    "tpe": 40
+   },
+   "best": {
+    "trial": 55,
+    "score": 0.9477792732687746,
+    "parameters": {
+     "population_size": 100,
+     "crossover_probability": 1.0,
+     "mutation_probability": 0.5
+    }
+   },
+   "protocol": {
+    "seeds": [
+     11,
+     29,
+     47
+    ],
+    "budget_per_run": 8000,
+    "reference": [
+     1.05,
+     1.05
+    ],
+    "startup_trials": 20,
+    "multivariate": true,
+    "pruning": false,
+    "sampler_seed": 42,
+    "aggregation": "mean(instance median(seed normalized_HV / 1.05^2))",
+    "python": "3.14.4",
+    "packages": {
+     "optuna": "4.9.0",
+     "pymoo": "0.6.2",
+     "numpy": "2.4.4",
+     "scipy": "1.17.1",
+     "moocore": "0.3.2",
+     "threadpoolctl": "3.6.0",
+     "numba": "0.68.0",
+     "llvmlite": "0.50.0"
+    }
+   },
+   "instances": [
+    "6_2_1439_3_S_1-9.dat",
+    "14_2_1439_3_S_1-9_derivada.dat",
+    "50_10_1439_5_S_1-9.dat",
+    "50_20_1439_5_S_1-9.dat",
+    "250_10_1439_5_S_1-9.dat",
+    "250_20_1439_5_S_1-9.dat"
+   ],
+   "confirmation": {
+    "budgets": [
+     8000,
+     20000,
+     50000
+    ],
+    "seeds": [
+     101,
+     102,
+     103,
+     104,
+     105
+    ],
+    "promote_fraction": 0.5,
+    "diversity_slots": 1,
+    "stages": [
+     {
+      "budget": 8000,
+      "ranking": [
+       59,
+       43,
+       46,
+       55,
+       3
+      ],
+      "scores": {
+       "55": 0.9473096669961787,
+       "43": 0.9477438238955345,
+       "46": 0.9474997986633216,
+       "59": 0.9477792024421658,
+       "3": 0.9414080065559436
+      },
+      "promoted_by_score": [
+       59,
+       43
+      ],
+      "promoted_by_diversity": [
+       3
+      ],
+      "eliminated": [
+       46,
+       55
+      ]
+     },
+     {
+      "budget": 20000,
+      "ranking": [
+       43,
+       59,
+       3
+      ],
+      "scores": {
+       "43": 0.9516164578801201,
+       "59": 0.9507706164958387,
+       "3": 0.9487069305736893
+      },
+      "promoted_by_score": [
+       43
+      ],
+      "promoted_by_diversity": [
+       3
+      ],
+      "eliminated": [
+       59
+      ]
+     },
+     {
+      "budget": 50000,
+      "ranking": [
+       43,
+       3
+      ],
+      "scores": {
+       "43": 0.9535911716431476,
+       "3": 0.9526775312076585
+      }
+     }
+    ],
+    "candidates": [
+     {
+      "trial": 55,
+      "search_score": 0.9477792732687746,
+      "parameters": {
+       "population_size": 100,
+       "crossover_probability": 1.0,
+       "mutation_probability": 0.5
+      }
+     },
+     {
+      "trial": 43,
+      "search_score": 0.9474833826374516,
+      "parameters": {
+       "population_size": 100,
+       "crossover_probability": 0.9,
+       "mutation_probability": 0.7
+      }
+     },
+     {
+      "trial": 46,
+      "search_score": 0.9473231938374341,
+      "parameters": {
+       "population_size": 100,
+       "crossover_probability": 1.0,
+       "mutation_probability": 0.7
+      }
+     },
+     {
+      "trial": 59,
+      "search_score": 0.9470726105545737,
+      "parameters": {
+       "population_size": 50,
+       "crossover_probability": 1.0,
+       "mutation_probability": 0.7
+      }
+     },
+     {
+      "trial": 3,
+      "search_score": 0.9423437458387847,
+      "parameters": {
+       "population_size": 200,
+       "crossover_probability": 0.7,
+       "mutation_probability": 0.2
+      }
+     }
+    ],
+    "recommended": {
+     "trial": 43,
+     "budget": 50000,
+     "parameters": {
+      "population_size": 100,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.7
+     }
+    }
+   }
+  },
+  "vns_v6": {
+   "study": "vns_vnd_tpe_v6",
+   "grid": {
+    "initial_solutions": [
+     1,
+     2,
+     4,
+     8,
+     16
+    ],
+    "max_candidates_per_neighborhood": [
+     10,
+     25,
+     50,
+     100,
+     200
+    ],
+    "shaking_attempts": [
+     1,
+     5,
+     10,
+     20,
+     40
+    ]
+   },
+   "size": 125,
+   "trials": [
+    {
+     "trial": 0,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6090242674227222,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 1,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6295060862405619,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 2,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6714845144598156,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 3,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.5930909681455713,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 4,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6292826585882421,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 5,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.651040009721112,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 6,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.648609884169949,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 7,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.5978018006194779,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 8,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.681825583991422,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 9,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.605065183447738,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 10,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6172589792832166,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 11,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6699644214950051,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 12,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6801894302500636,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 13,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6235893071416035,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 14,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6505964151294482,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 15,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.632965128374647,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 16,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6615111972667377,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 17,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6703905580703564,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 18,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.5901243702251058,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 19,
+     "state": "COMPLETE",
+     "source": "exploration",
+     "score": 0.6228001420951191,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 20,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": 8,
+     "failure": null
+    },
+    {
+     "trial": 21,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": 2,
+     "failure": null
+    },
+    {
+     "trial": 22,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": 12,
+     "failure": null
+    },
+    {
+     "trial": 23,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6858107540623193,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 24,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.67893182335318,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 25,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": 23,
+     "failure": null
+    },
+    {
+     "trial": 26,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6707685914257288,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 27,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6779329590205527,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 28,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6249786888203491,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 29,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6619869053666786,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 30,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6024516990161733,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 31,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": 24,
+     "failure": null
+    },
+    {
+     "trial": 32,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6687541043521616,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 40
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 33,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6668885692672618,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 34,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6702107210520272,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 35,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6901685381857035,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 36,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": 35,
+     "failure": null
+    },
+    {
+     "trial": 37,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6675220295522648,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 38,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.5922829719141939,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 39,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6427558953750568,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 40,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6257383441938582,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 41,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6660743445367416,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 42,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6038744793425761,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 43,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6889672844991942,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 44,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": 43,
+     "failure": null
+    },
+    {
+     "trial": 45,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6867128253934667,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 46,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": 45,
+     "failure": null
+    },
+    {
+     "trial": 47,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.667963754772273,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 48,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6448580397111319,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 49,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.5691894208267709,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 50,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.64896786683576,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 51,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6161131283616039,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 52,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6602835233875547,
+     "parameters": {
+      "initial_solutions": 4,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 53,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6848758166131348,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 54,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": 53,
+     "failure": null
+    },
+    {
+     "trial": 55,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6839844079234412,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 56,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": 55,
+     "failure": null
+    },
+    {
+     "trial": 57,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6027957299145998,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 58,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6551969119491792,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 59,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6647932659872686,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 60,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6170207486698422,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 61,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6729357845877754,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 62,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6742691291997744,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 25,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 63,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": 8,
+     "failure": null
+    },
+    {
+     "trial": 64,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": 45,
+     "failure": null
+    },
+    {
+     "trial": 65,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.5911502701317097,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 66,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.5934002810145684,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 5
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 67,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6038055928471302,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 200,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 68,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6481813922746098,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 50,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 69,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6669385637753453,
+     "parameters": {
+      "initial_solutions": 1,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 70,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6594999713117856,
+     "parameters": {
+      "initial_solutions": 2,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 1
+     },
+     "duplicate_of": null,
+     "failure": null
+    },
+    {
+     "trial": 71,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": 12,
+     "failure": null
+    },
+    {
+     "trial": 72,
+     "state": "PRUNED",
+     "source": null,
+     "score": null,
+     "parameters": {
+      "initial_solutions": 8,
+      "max_candidates_per_neighborhood": 10,
+      "shaking_attempts": 20
+     },
+     "duplicate_of": 23,
+     "failure": null
+    },
+    {
+     "trial": 73,
+     "state": "COMPLETE",
+     "source": "tpe",
+     "score": 0.6227597509904006,
+     "parameters": {
+      "initial_solutions": 16,
+      "max_candidates_per_neighborhood": 100,
+      "shaking_attempts": 10
+     },
+     "duplicate_of": null,
+     "failure": null
+    }
+   ],
+   "record": [
+    {
+     "trial": 0,
+     "score": 0.6090242674227222,
+     "source": "exploration"
+    },
+    {
+     "trial": 1,
+     "score": 0.6295060862405619,
+     "source": "exploration"
+    },
+    {
+     "trial": 2,
+     "score": 0.6714845144598156,
+     "source": "exploration"
+    },
+    {
+     "trial": 8,
+     "score": 0.681825583991422,
+     "source": "exploration"
+    },
+    {
+     "trial": 23,
+     "score": 0.6858107540623193,
+     "source": "tpe"
+    },
+    {
+     "trial": 35,
+     "score": 0.6901685381857035,
+     "source": "tpe"
+    }
+   ],
+   "counts": {
+    "complete": 60,
+    "fail": 0,
+    "timeout": 0,
+    "interrupted": 0,
+    "duplicate": 14,
+    "attempts": 60,
+    "exploration": 20,
+    "tpe": 40
+   },
+   "best": {
+    "trial": 35,
+    "score": 0.6901685381857035,
+    "parameters": {
+     "initial_solutions": 16,
+     "max_candidates_per_neighborhood": 10,
+     "shaking_attempts": 20
+    }
+   },
+   "protocol": {
+    "seeds": [
+     11,
+     29,
+     47
+    ],
+    "budget_per_run": 8000,
+    "reference": [
+     1.05,
+     1.05
+    ],
+    "startup_trials": 20,
+    "multivariate": true,
+    "pruning": false,
+    "sampler_seed": 42,
+    "aggregation": "mean(instance median(seed normalized_HV / 1.05^2))",
+    "python": "3.11.2",
+    "packages": {
+     "optuna": "4.9.0",
+     "pymoo": "0.6.2",
+     "numpy": "2.4.6",
+     "scipy": "1.17.1",
+     "moocore": "0.3.2",
+     "threadpoolctl": "3.7.0"
+    }
+   },
+   "instances": [
+    "6_2_1439_3_S_1-9.dat",
+    "14_2_1439_3_S_1-9_derivada.dat",
+    "50_10_1439_5_S_1-9.dat",
+    "50_20_1439_5_S_1-9.dat",
+    "250_10_1439_5_S_1-9.dat",
+    "250_20_1439_5_S_1-9.dat"
+   ]
+  }
+ },
+ "score_demo": {
+  "method": "spea2",
+  "trial": 0,
+  "parameters": {
+   "population_size": 100,
+   "crossover_probability": 0.9,
+   "mutation_probability": 0.3,
+   "max_evaluations": 8000
+  },
+  "rows": [
+   {
+    "instance": "6_2_1439_3_S_1-9.dat",
+    "runs": [
+     {
+      "seed": 11,
+      "score": 0.9823188606495186
+     },
+     {
+      "seed": 29,
+      "score": 0.9822045224521638
+     },
+     {
+      "seed": 47,
+      "score": 0.982294803103191
+     }
+    ],
+    "median": 0.982294803103191
+   },
+   {
+    "instance": "14_2_1439_3_S_1-9_derivada.dat",
+    "runs": [
+     {
+      "seed": 11,
+      "score": 0.9595635781763272
+     },
+     {
+      "seed": 29,
+      "score": 0.9550836254928735
+     },
+     {
+      "seed": 47,
+      "score": 0.9481245407916796
+     }
+    ],
+    "median": 0.9550836254928735
+   },
+   {
+    "instance": "50_10_1439_5_S_1-9.dat",
+    "runs": [
+     {
+      "seed": 11,
+      "score": 0.9690289110988856
+     },
+     {
+      "seed": 29,
+      "score": 0.9666090253015388
+     },
+     {
+      "seed": 47,
+      "score": 0.9663708638247362
+     }
+    ],
+    "median": 0.9666090253015388
+   },
+   {
+    "instance": "50_20_1439_5_S_1-9.dat",
+    "runs": [
+     {
+      "seed": 11,
+      "score": 0.9827454402899968
+     },
+     {
+      "seed": 29,
+      "score": 0.9836055591863857
+     },
+     {
+      "seed": 47,
+      "score": 0.9841693625824907
+     }
+    ],
+    "median": 0.9836055591863857
+   },
+   {
+    "instance": "250_10_1439_5_S_1-9.dat",
+    "runs": [
+     {
+      "seed": 11,
+      "score": 0.8600125547924693
+     },
+     {
+      "seed": 29,
+      "score": 0.8570505034248653
+     },
+     {
+      "seed": 47,
+      "score": 0.8603100447928518
+     }
+    ],
+    "median": 0.8600125547924693
+   },
+   {
+    "instance": "250_20_1439_5_S_1-9.dat",
+    "runs": [
+     {
+      "seed": 11,
+      "score": 0.9317615934378286
+     },
+     {
+      "seed": 29,
+      "score": 0.9315932734081254
+     },
+     {
+      "seed": 47,
+      "score": 0.9301066088332786
+     }
+    ],
+    "median": 0.9315932734081254
+   }
+  ],
+  "score": 0.9465331402140973
+ },
+ "clouds": [
+  {
+   "completed": 19,
+   "good": [
+    0,
+    11
+   ],
+   "rest": [
+    16,
+    3,
+    10,
+    9,
+    6,
+    2,
+    4,
+    14,
+    7,
+    17,
+    5,
+    18,
+    19,
+    8,
+    13,
+    15,
+    1
+   ],
+   "levels": [
+    0.01,
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.5,
+    0.7
+   ],
+   "good_count": [
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    0
+   ],
+   "rest_count": [
+    4,
+    3,
+    4,
+    2,
+    0,
+    1,
+    3
+   ],
+   "ratio": [
+    0.5333333333333333,
+    0.6666666666666666,
+    0.5333333333333333,
+    0.8888888888888888,
+    8.0,
+    1.3333333333333333,
+    0.6666666666666666
+   ]
+  }
+ ],
+ "cloud_parameter": "mutation_probability",
+ "campaign": {
+  "spea2": {
+   "parameters": {
+    "population_size": 200,
+    "crossover_probability": 0.7,
+    "mutation_probability": 0.5
+   },
+   "max_evaluations": 10000,
+   "tuned_max_evaluations": 50000,
+   "status": "provisional_calibration",
+   "trial": 66,
+   "study": "spea2_tpe_v6_pedro"
+  },
+  "moead": {
+   "parameters": {
+    "population_size": 300,
+    "n_neighbors": 10,
+    "prob_neighbor_mating": 0.9,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7
+   },
+   "max_evaluations": 10000,
+   "tuned_max_evaluations": 50000,
+   "status": "provisional_calibration",
+   "trial": 44,
+   "study": "moead_tpe_v6"
+  },
+  "age": {
+   "parameters": {
+    "population_size": 100,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.7
+   },
+   "max_evaluations": 10000,
+   "tuned_max_evaluations": 50000,
+   "status": "provisional_calibration",
+   "trial": 43,
+   "study": "age_tpe_v6"
+  },
+  "vns_vnd": {
+   "parameters": {
+    "initial_solutions": 16,
+    "max_candidates_per_neighborhood": 25,
+    "shaking_attempts": 20
+   },
+   "max_evaluations": 10000,
+   "tuned_max_evaluations": 50000,
+   "status": "provisional_inherited_pre_lpt",
+   "trial": 65,
+   "study": "vns_vnd_tpe_v7"
+  }
+ },
+ "overlap_instances": [
+  "14_2_1439_3_S_1-9_derivada.dat",
+  "250_10_1439_5_S_1-9.dat",
+  "50_10_1439_5_S_1-9.dat",
+  "6_2_1439_3_S_1-9.dat"
+ ],
+ "vns_source": {
+  "changed_between_v6_and_v7": [
+   "src/metaheuristics/vns_vnd.py"
+  ],
+  "v6_matches_vns_vnd_original": true,
+  "v7_matches_current_vns_vnd": true,
+  "current_has_lpt": true
+ },
+ "sha256": {
+  "data/output/experiments/experiment_manifest.json": "6d4413751f241ab000952228e634f3ce126c30b3e5ecdde04fa47309d908065f",
+  "data/output/experiments_vns_new/experiment_manifest.json": "05dfac48d27b4772bd3c45393d3173b15c3344d46d43f3037324fcb61e3ef0cb",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/best_parameters.json": "d4469af3fc544cb4d6a4bd563e8e98556f772eea9ac39366f638e08d451875b0",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/confirmation.csv": "d111f8c27859551aadcea01cfc7c223cab1fe171e6f5c2cde16aa207d646ad73",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/confirmation.json": "db90a66345ee41ae4336d0fbdf1a35142047e03ce2a8d16c5fa66b7c9f8d26d5",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/confirmation/plan.json": "cd8648c4aca0eececdee9cab4a77eb0ee4e5a3fc9dc05657725b6e97e7c56a9e",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/protocol.json": "8a3eb26d5711e2229380bf34b14c643fbb8cf2e46fd80e68cfe3db945a75e8b0",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials.csv": "839a35c295b49b7115141826c41b9c19224150ff75d3072b4433bfba125d13b7",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000000.json": "3b9022c65ec05784fc1b910c0446f3032a00d2bf490cf8242135dda6b327b3c8",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000001.json": "7bdce2bf30eab1e0357ad3049dec16a7a1c9b23a19b7f128c5092296edeebc25",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000002.json": "94ae7a288e94a979a8b17ddf029e1342bc193c74a4eada8decab9e9ecd83841d",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000003.json": "032113e799dc6771a9a60a272ad7afb1ecb1f7a1a56f5a131d7803daf21b10fc",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000004.json": "169f7366e5bf439e89c18e796a52caa781776a22aa316a2b159375069b4613c3",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000005.json": "0dbca4aff58a4e5de5349a821492009a6b0d1a920d64b6a76c7b633cb2dcb41d",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000006.json": "ab6798fb7b10463799aba3762149daf1f3dfcef1004e224bb17c41876b98d2ea",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000007.json": "39d589cc813e548a374e0332776afa670a0329f8a5afcf7ca84295a402c80776",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000008.json": "754cea772d3f9f716cb81c9186bc80b856ed528f772772df4da87268b225b580",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000009.json": "f1449ccea5d545aacc97969f4168cbc180fbe08241425945f2ddf4952ea51442",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000010.json": "d5b1b980347aa94d6d44ca61d47878fcefea360b3e8f5c78cc941013fa305178",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000011.json": "86b27234ac173dae1e73e39828a395b6caadbc28ebb742abbcf35bed139f9491",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000012.json": "645bc9bf0c128d07ab9fc61a776ee03b2e90b72f75765ae1819c02b2de525b7a",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000013.json": "ef194993d55ba96febf100096e3a85bb16359710b7a9398647c49f5934e6cc25",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000014.json": "0940128830b25d02b588915201712f3495dc3587c1b5713206dca6ba4f1656ab",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000015.json": "f4f71aa11da3bebfc5fe797b82fef898ea478357f7f7a8a8317e41d887572dfc",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000016.json": "95fd164598e4c240fcc3628c5eccb43913502ea91f15baa9020fe8ce6c5de3f7",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000017.json": "8290c1fb3fc7964247e17b6ed9fb61cd2a6317165bb49543b2d0c5c017aff26b",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000018.json": "5d5286c4c1c58f9c8d8a63c2cbba5631fdf28bb7593b469b2f6bc37ac394ccd3",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000019.json": "88664772efeceed9859ab326c24426b9e97c167a77b22f4069034f8d75e90ef5",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000021.json": "858d219a078c60a365e8ae14d8628ac4886ab6cadef98c9d2e619e295092c39a",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000024.json": "cfe51981949b7ae486dc4430eacafa3a923285027cf32c063b34ece905e109a5",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000025.json": "3367088921257ace11973fd41a36e1839cfb39a3284c3b6fa38a10de82404452",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000026.json": "e502caaf62a79e290e5553ad03c84fcbdcd0a12c5fa28554bcfa08cd69de3df5",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000028.json": "ca0e0ed39ec504e6ae35b2ce39e79978bc297f2b72b3947f35b017c57254ada3",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000029.json": "acbc33cb1c29413fd2c8537009a737cf235cb8fd3ddc228cea10c444ecd69ea7",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000030.json": "0a528ea847d5a50062701ef8995f4e1ccee9e0703e9eec5ec2393598b73fba4b",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000031.json": "0c4ab5f0015f4c04319f549756d0d1b23ab4ac646eb1901a38eea9a15408f42b",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000033.json": "5889a7f7e6f30c9163a22d586d06e4c8f037b90139b9e8096e3da6cc08de1dc5",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000034.json": "17715e7c7696a3d9d2c3f85a2a2735d4d2db29d41b1017b1df6d4e971b9bcbe7",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000035.json": "430e41e040a483ee8e768ee1e2390a435781b36d4fe9ce37d61affe517a16e3a",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000036.json": "d70299c55aa6c5e13478810f090693f229d71341d0f206dd493189ebd3111efb",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000037.json": "fe993f402a1f5289e0e9fb8bc0eb31f82f692dd0b8522e436da4ca5b0a89d208",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000039.json": "dd270e62d283c5117435f838d7fc9d5b47018dedec0c5ac8cf7cecc42586d733",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000040.json": "1fe1a417406009ed4b96e7188cf895318f8c0eea633ed5c5af04568b8a5ac1bf",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000041.json": "f73f7ea3fd21a808fc19769244548b2f23e91d17377ad4be1696e8c5cb3a9d36",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000042.json": "d592ce3985d12547273c98b4ca355eebed6a543abe9f57dbff622a5f16fa330f",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000043.json": "d7c6c47e36befc76353a64daa13c644d4db31eab2a904c16f3ea71de386ea09f",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000044.json": "260b065c7a565feaf25b2ec696b1bd848bce697f544c95eabe36280974cc2bab",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000045.json": "61a58347a259e6fd27b37383bf6578845f024b76c0b8fedbf149e4b1adf0aeba",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000046.json": "4fb57447994b4e1c5fef6251237008a3ca7f7e086bf43b1169bd077930979c0d",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000047.json": "a7fcf442957b44ddd3f3a88ac92a1c3e8b5d559748a90ffecc0b8219563da0eb",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000049.json": "9f1598e8513540e093a45eca352e48d448eb8569bca895bd7dd1e04fe2ba3a27",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000050.json": "84522b4a36337e19ebbab6c58a483ae780f0a9a62ebdd25e4d0168b9ca9ff384",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000053.json": "50679beecfd13fb97afe5e4915b6196d1f8a91ca2e433eadf238a35241d6cf63",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000054.json": "c999deee1c32fcea2792f66efafff78dc765ab8c8e245e58d4cc3e4fa24f997f",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000055.json": "4645278e0e2679979565f42d677e392d2b91eeaaf996a351fbe78238e6ca2ff0",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000056.json": "44f3377b3d5e66b54e1636400e43625979ff87a0835b6dcb8ace6cd298b0f7d4",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000058.json": "29ec4a230211a3cab6347c19afb014eb222a17dfcd44b02f3630a870365b9688",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000059.json": "654a508013d9b0e42860a1f2bac9a5ca322ace93f8915473481d5de59763c411",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000060.json": "9c1ee26c27bdc64e64bf47e145d545f5b7ba651379f69f5fb7e6cc05c43029eb",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000061.json": "795b68341b973625ba90188fe9c89e19b9d5bf5a589f6dc836d77094685ca9c0",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000063.json": "4efd423bf24f7d08d450eda2f9da112b0ba5a884cfa5d383528d26835e7153b5",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000064.json": "e1e3769a4a70aaa1dc99c11d6f973c7e0cabb5612fd8a181a49734ffcdf9d9f3",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000065.json": "208d1fbcf9886af7b15e1a778e5261a194d93715059b4a6a8270c8f572210cfd",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000066.json": "f53cc4f982a3a82f605cd9056e701ca121827cba603b5b5cfbf9518f8c46d602",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000067.json": "35bf0b2c782e939506028ef3f9bfe4904b6458e6856c4f032f55dd6f8c4df903",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000069.json": "381daaa7337d0d9fb132e9bfc6600940098f4c38a5ec6155bcb2799e4bc0c294",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000071.json": "3c3389e97d08c3613904791f025725274fbf73930e6bf5cdf1c5825b4ef1378a",
+  "data/output/hyperparameters_tuning/age/age_tpe_v6/trials/trial_000072.json": "41e58d9ec1a6c9d76df9eeda690d343b65cb6e76eb93502bb0b80c08ce7e28c7",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/best_parameters.json": "c962cb8f97bb7d21024939946e739df7544ebb7ab0f9f656846dcce8dde54016",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/confirmation.csv": "4793d3160b689bbc672a7dccd5e8016af98f2833f87a955c607fc4fc4d47dbd4",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/confirmation.json": "50f4a8532057fca95ff5c4af4dd0cf802af4621d80b16e9a57e6e5ac59e30bc0",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/confirmation/plan.json": "ad8dc57b70e2a73518af6a2f1bcb040005b7dddedc2dca279511ee8b31ac074b",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/protocol.json": "a893a427c9aaf26177b26d49d1d0b18f35494df1f90a2981144e18e75c5571c5",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials.csv": "c0eebd356088685363daaabe220c22bc592cd0100cd66031f5e1f54d494c5a00",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000000.json": "772630e62b300ee2ad3712e9250e5822a95282b4129ed14affdf6bf53c234960",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000001.json": "e4b18d9582e2abb2ada0dd84bb7635ccda00794f4cb9c112b17b8011b4796688",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000002.json": "75e3e930a882bb2f395d5a67091a0f7587ec733bdbb99438b2b096543bff0322",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000003.json": "3bf44a8a333d0934ec1fd1fa02e246075c03e1ebe511cfecbda251cd9702ab9a",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000004.json": "0f3fda340e8bae7d58235561293fc7686f546f126c47b5640ec58ace697d1c6c",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000005.json": "bf24438fbec5465c99c920d97241e2bfac58dbceecec13c7211dfd8e3d656155",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000006.json": "774932cccaea45d3ab684377f68c57942d6afd14a224b4e93cdb308acbf5e1f7",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000007.json": "02f5c64e4caad01a155be8d04b769014bdb1d70da6050f5b1a552ef1d1f9667c",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000008.json": "43a13719e994da1008f61c027421767f68d15bd18a6d8cb8ded8b674c86dfb3e",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000009.json": "dde3545fbcdf1b66080f9df69539020c79438647fa1e9c1c35a106d723d44e7a",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000010.json": "6ddfa9f0f8821497a760a19a5141e4a48a94d44e0c59715d206f98e302a02b04",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000011.json": "e1e6b059351ad19aec2b94df79379b3896da664e117b6b4a52eb7a8924cf7a6a",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000012.json": "d766cb211912713f0ec4b78b3e408bc939d0d6255367e75557555a443638c21c",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000013.json": "590b5c075ff5b019639d8509120f7a2746f0e0f32cbb00459459ca937b21d3e9",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000014.json": "70ac0965021ae414e7c902f8ceb523a33dc4ed3c777b0a910589f196f3d17b98",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000015.json": "a51b03a80803c6b46729b96a1b2d065385b59d98f403d59ca9b30fb62a48c7d0",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000016.json": "2f228553a61e468dc4a21f15e4ac6224a43eeaf271a22e254d70b614a70eafa4",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000017.json": "74bd1d8da5d1ab3b7c83b0581211a2431e5a1c55339c02f70cd4c854c42984e0",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000018.json": "748d0f1581673da114c0b020664946fae38021c7d391c98415c42c6b5f0c188c",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000019.json": "ac083f23a0c492ce2603e6a843b198ade2d9796a087f99b463fd688ed6154f28",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000020.json": "a401b54654b7dc2888ce1e371e7814ee5a1f5e038d53be61eb690d540edd004d",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000021.json": "4edbe0d89168837a11fb1903d19f88e04aa1882ba8ecbe303e685be13fd06431",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000022.json": "17990217460841a762363817f915c1f12cb888694ee563a1a108419b3178b5c5",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000023.json": "5953fc5416c749b406bb57eb55174a8ba66d5f24d36556ff0855d797f08581f3",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000025.json": "413b30a778ffeb0eae73b3c72c07c35d8ae04b96c0e9e28ea32a2910ec8aa1fc",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000026.json": "5b236b46d0c84f5530ec27a19be7329f8d80507b94fd5b271acdc69c5f30e5e9",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000027.json": "101135875083ba35785420e57220d922aa27fa3fec0228543ef46be1a36e3a89",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000028.json": "515fbe1866fca94e9e1f64a54b79dd9a2ae9faa454f40bf2dcabd1903650ce30",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000029.json": "abcb5e6209a451a58d50f4702a82e1ae6bb3fa9d9cae4306eaf529c0f310a17d",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000030.json": "c2da5692ae7b6bbca1cff7a2e4665cdd96cba426c62ae080bcf9c4752c01effa",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000031.json": "b20fa3fc999da2163e11f6e79ea8dcc796733b92f2c0336a7f5f16f9d3cb7d23",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000032.json": "d4d29dfbb3e4becc6313ca04bcf975bc51da417c91d58f64c391bac020fd8f78",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000033.json": "fb945fc05bb68aa4711ecf6e1fd1b155d46ea080f2ad2b0315acfb79422e7eee",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000034.json": "d2360db8d5cd0dbc719ee7017bfd9d91ca399243d70a5198a93dd30e44c15d4e",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000035.json": "e50d3ed596a66126a4d2644230b869ed463a934aeb33072290f232b8f9bde2cc",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000036.json": "19832b987523b0cdb706d2b2b7df286885e078cf1b8267b5970877c5541fa5fa",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000037.json": "d00610eb5e7bd27358f960bbf0e4423f3b138a6f560674dcf7e0bb7e470136b7",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000038.json": "dc724e6e42e4e5e4177dd3769d4a7a0bb00b5cbef5a768e3e7d67b789d1d4f3d",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000039.json": "65b94bc8e9fe52176ad9bc0e202dd0772271b4703ca5e7c1a1c69e8ece817ca7",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000040.json": "ab91f73c18c5ec546e6a2c8f955f09ed93570555b749466f27ba9a894ada8114",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000041.json": "0df4ac249b8abf1b94f0f1c0924bee65c87fff34298dec406a4bda10186b769b",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000042.json": "7a3b1e212b5fee0eca01f35f97a2a72485ec03a10b421057b92825f36d9cf503",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000044.json": "c0bed9bd9315e1931f248b834c4272fd0dd0db4affe1fed15aa1a18deb2d62fa",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000045.json": "c0bb36128a1ca3f3365295db7409589b0099b75ceb790aaf39e3c94d18f2b842",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000046.json": "09e1698988dbe453ad59dfba773a91c1588fdf59f238ed2fe41253463a301c6f",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000047.json": "939457eccea7fa01df821e2d775b9322a6ffbf4f2442512aea427250d5853795",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000048.json": "35c2d38d6f506f8561cd5fef3e40b7694dda65805408bb0e586ae25c23bc1ce1",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000049.json": "563e53ff9fe4c2d771b37f58b91fee819db013dbcf701c1325b561e451d2e18e",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000050.json": "3105c81ad78868a60ea58c045d30fa05e9e15247bd02f3c75f49d3ed0a277029",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000051.json": "8897ac7bdbb44b35c6e16a5ee638d1baa8696889569cb0eebb60773bc7173bea",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000053.json": "866a1b3fdb5adae58f3404058af8c6edf2e8f625db5fb5c974249f2a638d6469",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000054.json": "9ddd7ac329fed4165a3dbdb071411a91b0fd1f0681c565e57af637c6ecd3a309",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000055.json": "7b15c9db3ce7795b13265826aaf47d2652dd77410ffdbe131e07ebdc85f1959e",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000056.json": "e1681f32ab69e49a75f3b2bd5f59b81265abb87958d0cad1eb5e1ad3beb2075a",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000057.json": "57b77198a5412bb7aab1c42df804e4affce1986f644f233e0dec90c68a07c4bd",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000058.json": "47c7f6531aaad6074d4bcf0bae4d3f8a2e795100e0186c0f836885a52feaedb7",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000059.json": "bfa9e956619a62fe14b16769301bf797f742722cc79c05bbe64ff72a4e989f69",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000060.json": "8d997f68199af6d5f1dc2449151c84660d67c1dd87644ff8f9c0cecf5434a99f",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000062.json": "6f516cff7f2136c09a1da28cb7596e850b200829046d91504adf6b0a43c9f3a2",
+  "data/output/hyperparameters_tuning/moead/moead_tpe_v6/trials/trial_000063.json": "a3354c31b8793194d9b9152dc900c9f48ab92513078cd2ffc8c50d6216baf326",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/best_parameters.json": "8a1c43b6a083b7e1fbc240b1ffcb418b1c7def9df5bf0aa930e42d0452864019",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/confirmation.csv": "b59f17d6af7ab5da3ac4afbc5de9d031491e2241ed734d7d37c2ff941f02c3eb",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/confirmation.json": "d2300e3ed252848c93a0f005108cf4d8d023bbd9d1730dacffca65b0e7c123e6",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/confirmation/plan.json": "3e5e4b9e0d210b5954d346ef6dd1b9c36acdb973dda9338712bae825499306dd",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/protocol.json": "42beee387c0c3a58fdd6a613368cf99bc9d36f150758fc35d5c17f65c1507663",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials.csv": "645c20ca8a89484e3ae489b52fe95358f342359373b910d83e5fd5ec65f0cf65",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000000.json": "3738955edf857118b68e453a89b01f6a304f74dddbdbc428c75f9eebb52e53fa",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000001.json": "ad3f964b51f5b6ea61285bac3dcb66a7dc719920727ba10d727ae95c2153b320",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000002.json": "ed37e77ef51420e8104cb1b9d277e909bb919f7ee8a61826a8d6a36ed09b4386",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000003.json": "ce560478ca1309d57aade39c8c4998113829cbbd432316f928cec8b2c1a48776",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000004.json": "3d7035594d2c9a9732b478aa9e8b62bf765b5620239c4bb22adab6f07757c571",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000005.json": "f147c05984d381e69d4c827f1643e4215c67dc363134034b802dd3354c10e0aa",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000006.json": "dc83939dd60acb3aa3530a055be1ebca4e9bd62cd2b73e5a21c39c7d76decfd5",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000007.json": "c3f9a55f140ef70b8bd6532951940c1447ffc30a8d6ef1a442796e3ddc9a9835",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000008.json": "25768780acf20383be645750d5446ca45b8cc29b16d069e7130f3b59776d1889",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000009.json": "ded274bb2799ebdbfbb2288c1c21981c93e8ed81f5be3c5a0bb364d6686c880f",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000010.json": "e86fac742e5b6191077001075ad5f64c9dc8ff9a054518cef169dc36c62bb937",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000011.json": "98be58f2af3c3a7bfb3ef003b131dc31c828e39913e3d6488c6a1017588353ff",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000013.json": "029bfb1639bc3d9d7f8b18690798eb0fe435a4e5bce89eadf2148305e614d26e",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000014.json": "fe2f71fd67991f89de83bcb8ad62f142093692974f87c31bae2f99b500e8f039",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000015.json": "194fac3c7f1ac0da8a910f9c0327036c62346dc53c714a055cb2b72328a5d1f1",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000016.json": "9891cb9496e9d781b8a11de46d1151df8761625f58e6168d17b800b23995660f",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000017.json": "fdc3f59c5cb51dc470e6fec6558b26b7ea18e77b46d9a2bfb967fa44047a2cc6",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000018.json": "bae02fa96fa2e8e45542028080e068e1518795b2b58260624b7e355ccc81ab65",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000019.json": "fbfd1ce3be887f3f6e7485f4508061523063c3c624858a75f33ef60191d49c9e",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000020.json": "b28d3193ce66739452b60d02d8c780b3a561ae05d0f6eee71c9f520190802ab4",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000021.json": "d7b20a90511915859288b7b2ddde84e5cf9e1fa8100d936526a07bc8cca6e64e",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000025.json": "0a35551c767fc996771c979f5a492c09273853fa032c752f005a3cac592de5ac",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000026.json": "fb82cf2b88f086c0a1cb17927c04c57f7a3c5dd6233836b1ccbf63b1c226269c",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000027.json": "fb8a8af64cb90ac1b60d55107703928ae9b9f0c9ccc329149493e19ef928b963",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000030.json": "2f04a6bee4e674646aa2a52d7ecea2bfad7eeb813c3dccdc1b900c3c72b461db",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000031.json": "ebaff346008dad4b77bf2b88f30a3cf2f75252ef6ce34be3a17bcd72ef6bcd21",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000032.json": "52b524e1b147147993ce9be12ce7f0727f14b7b5d607b73fbae3a85de41ed7f8",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000035.json": "42ee90fab394fd04107ae3e923fa208f6654786a4d3a32be4ca981828b971835",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000037.json": "1265f62707f1eed99e722720d704ff6bdc587c9ab5e956b7c1a42c3f574b154f",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000038.json": "293486e0225d2d8ba5de3ec975acf5d958ec570991b6393a3080917ccda03018",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000039.json": "45285f3ca2189cd53865299cc69e65eb60e80cabf47459cb34a87531fedcc693",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000051.json": "26d876586091b9c9fb49a5fb2a905aaafe788ae3200c67445edac8279fa1c4bd",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000052.json": "73b15d6b16240bce0b1477c8c28e5c27d7ee086e6fba2ae8828bd87fad0ccf1c",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000056.json": "f40ef03e6967efa07f7d573139f59633cba523a2cb163bb46716792b6cc2d324",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000059.json": "c5aa903ace5c7425feac47b1f456e3e102bc415e3c262d673c2678dea4c1d700",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000061.json": "541f2957dadaaea1b500e8a9f166fa8691685fcc9fe4a947086fa07be9d63283",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000062.json": "646f90f281519f920ca2108535734bc8c46520cc56d677d19a39c2955183bc42",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000063.json": "02e0562bc3042a4309d4ec867ee93537fd7bb16acf6db8ea779a2422e09cd6a7",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000064.json": "d52e5947731355c613befbeb744ac0b6f1092ef9080f49703de1d8f4546f753f",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000066.json": "dca734563c8ce9f798a3c0eaadac0750fb8e36d4efd202caf48d59df8cd3ddaa",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000067.json": "66546ce892a33b163cd7082fc3b889de231e53f203ceae7fa502b8051de0d5c9",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000069.json": "2b22afcb70ca6864aa0993569e7669dceb6fb3dd6fc6eb204e0ffbf079637970",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000071.json": "13243ba3196df750520a732a076aa629a622f6cbe3c4eb89be39a814ee623d2d",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000073.json": "153ad7d6e685deba80ec9923dbead0be0a38295fff1519a33d3611a4b60cd571",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000074.json": "9f272de4322e710966209069e297b86ba07e179e6c9cacec1628b25e6bbf024d",
+  "data/output/hyperparameters_tuning/spea2/spea2_tpe_v6_pedro/trials/trial_000075.json": "001bd9b85c1d2a5c2d07fc3d9210c9302b8bdbf0f55a9b3dc6123afeb8b81b02",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/best_parameters.json": "a3eab24a61fe55c4c86ff015ba476610ae36d9de29df1a215ec4e8cc7a452227",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/protocol.json": "556092cc9e7df3769baf595a6f1eca663a570653cfb2c9ecfab7d13317ab37aa",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials.csv": "d024eff69e46b118c0f24a7d875de707317ef86a641b9e7e8b3cad44dab38bce",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000000.json": "c627a371a197484470e6db26ca481ab32c68dd192683173acc835d3c474e3577",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000001.json": "0da1fc60848d5f58c66fd6193521b47074d7a2825b8311e78d8da3bafed16a48",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000002.json": "9074485e97388efa07515ca6d46386746abd8f09e79c68660b97ad677ec8571f",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000003.json": "f0a05c3c9b3349cbc6134c9becf2e01f295ab9ad645f7629086604b8f80a4ecb",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000004.json": "fd7a5800d4317377aef9fdd48c0ef0827039f2110819a8d1470f0ec745ed7174",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000005.json": "80c59a1d7cb285aee187013fe17cec845268eb86e06599bd00dded389c3d7d11",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000006.json": "55436f31b62c0a67674221baf980ea341753b7675aaf6b950fad62831633e659",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000007.json": "21426d546f9776a09a4add5650fa81e0ceab07591bdebed5b090349ee45b236c",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000008.json": "ac134429ef8672f82b43c62d4f96c61583057c49d61e5a1f5b4d2657f5567a2c",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000009.json": "0a7888b747cfcae382a3ccf8171769c20de4fbd76a7bb636145a89052470473f",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000010.json": "8758b1cd20fed27d1b0b39716b392e6c34308726b38a5b99e6fe7e8f0d8aa2a2",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000011.json": "bcc5413d026a5171a1d6d3f528395acc0d8b5507fff5178d1f5ac397467ae0ed",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000012.json": "68bb2ef76da125fe74b15df6fee3927427af737a5bde975923d75332f3dbc1fe",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000013.json": "006d68b35b4fa77d79ea46027e7a145804dc9f48a523e7bbb2360c2c90c78c0e",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000014.json": "67ad560aa0d1b9836e20ce5311113fecc69cd67df93e231f7bbab7ba7d3b1c9e",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000015.json": "45f903524332e9ac59965393ce4d5ae67d019cec0e6cab74d65660ced7407269",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000016.json": "dee8b51a6a31a0174f4dd902a726b933cd8dcf01d7ff42f6a628e0161752cbd9",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000017.json": "68c3dd39c8f81ef7a57d8be72cba0e1aeb4ee9d4f3dae8dece5b120a23df243a",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000018.json": "d3a322c23020f26cdd1f2e2e13e905a1f6ffc738db6c340222365564b33d0417",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000019.json": "e370781e0c7c9ecedaef2c02995111d6f12836556a60b1a0b88518f8cec068d6",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000023.json": "35ec088f67d058eaafbef954c59eed2972062e456a9b59223ee269f259467582",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000024.json": "7988915ebb047ce18043f83281e6f063bc5bcdbbbfc106d931f43622c36dcc09",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000026.json": "06df3d88b795b4117b25d2fffc475e954f097df3aca0ca2cfbe950467e234f30",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000027.json": "1f8d239ab4e920eedf1f7b28cf908598f70de18816d553479f3688441f2cd59d",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000028.json": "276bf3789fcc77d78814d401bc4dde70534766b296aa0b62491924290f05becb",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000029.json": "30b210f4d874390ff311794e4f55a0943e4001278056be242143dfd6a2affc82",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000030.json": "0037f23ae2634be372c3509e6e434f4662bbeeb5bf4c7e252880ba7670324a82",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000032.json": "f83ba7259ab81e6888825469742e74f5e899f2f9f13f55b5c14d25a25d8cbb4b",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000033.json": "8ae8fbd72717609b7481cb960ea7263c8020d9bf8ebbfaf6330f231a70d6eb36",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000034.json": "405f812cda2ee9066affd68e535e6555cf0df004b5e3b97fbe763be7fb6042c8",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000035.json": "1c2faedfbda6d01f9b104e3120d3c4f1d319a60e9d5367892fb6e7beaed0c1b8",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000037.json": "158178f16d1f1f9378fc125bd90357dad1e86d902376de017fe84f20f6c828ff",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000038.json": "0773399e5e23e63be813e77941ff4320279fcf7f98efa0b9ad66b08cb07614b7",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000039.json": "6f9b41aecc8b680855a32812e5363623a180636a50232ae1a2cd6b90b9915b0b",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000040.json": "864b10d3547e8876fdb7dab05ac7eb898f701ee3d3424cb59eb61ebf8adafc0d",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000041.json": "afc66f1a8c56ccf8bbb844513fe916e29507d4ed1c5d2039b268e298d396f48b",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000042.json": "be62ccf4f35d850e14470f426a8700a20f13f7191353ac92b01ae7e1f8ff2f53",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000043.json": "e8051f3cfa10a5a3703f820f2fb2f1c2ee92f0b913339ed2fe8eaae56adff8d0",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000045.json": "56cd1280472d6a02e9870ab8c0750977e202480f455d0e63536bc7051cd8f41a",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000047.json": "cd503d7ef9586024e4979560bcb675e0e2fcc344a73f10a5498658894afa7baf",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000048.json": "91dff053859cd96c5409715e33bb5df5a2dffaa4fb4ba642422afb0f95f77729",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000049.json": "a7eccb9361fecdacf0562930d740c020a3869b99bb75a3b2e51683e039eef3b6",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000050.json": "a08430655573fbfbc2275941879237688e3ee3073f5b9535b3dfc3a652482023",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000051.json": "ce1b4445e79bcb44b1c46700f770548a2b3bc49739efb2637f5071041ce6bc4f",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000052.json": "a17782b8141df5aedd7b7b02b1708be12d995d70381fad8950f42ba8e984beb9",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000053.json": "9a4712b58ff3d7ea1d29f55eb4c299fb8d570c14fb65c9c08a71a892fd1c0417",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000055.json": "9b058e6ca1cdb0a0bafea1cf64cf1d232193471f68a182778412444ffc920592",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000057.json": "2a6804f7160ea4f5a454cec82f0a6152c49e1267df83a60939e28b24d8f527f1",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000058.json": "68221273a100087fde6c9b2633f59a7d959ed2138156211c62f32f18f54c7ddd",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000059.json": "60bf2aa0a47b513c0ef3e6bf155aae3f8ebe5a7c4d19e58e0f17366f5513531c",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000060.json": "23a9cc6e44ff9a98882e372510fb9a0715cc142e26f51406fb4bd25ef2846c45",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000061.json": "ce5ba93414877e36eff0152deaf7bf1c7d60ad719dedc83404a1c327d5fa7add",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000062.json": "ee08d2355e105f6b97b94ef501943f3f04f947d85008cf02e313538dcab95a64",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000065.json": "67de1eeccaff5f64e11782ef23b5645a9d6c677efa134caefdb25e1a01f51202",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000066.json": "1ccc9d71e6a18003ce034dd99542fbae3ae220e16a7166b2920a00d6896808c5",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000067.json": "ae2c206f00b8b4a209474b10039eac8e81e8eb9fd3e0c35f87117199b4a31759",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000068.json": "e7fd8d181190b0a71c0a8c70a17c4aab75d2ea40061efccf622a18265507882b",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000069.json": "dc8be468640ae85060f31f9c57a58486c5991a9f8f54f179fdc34625f0b98f14",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000070.json": "3d23a0cdb568bb8d0984fbf1b7e5d52c44e23d9202b7954c776e5e69ab3321e0",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v6/trials/trial_000073.json": "adc3fc086840de7cf93cb28703e9959e5230fa954bcdf7810545af21a97bd7a2",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/best_parameters.json": "701ef3b24b558629415c095e463da4232b7ed64a08f93bc13fd053a94d88b13b",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/confirmation.csv": "98b9e695be8fa745834cbbffecd6c1547e94a191c0993f5c7a617bf13bdc873c",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/confirmation.json": "1373d4f59cecfd0bf38998064cbbd822ccf04b75bdb8eaae121e6dcbad21bd99",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/confirmation/plan.json": "dfa983e78a12854fe8c12ec66dc297f618b8de9511fe29c4348d1ebe7b6b9329",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/protocol.json": "e46c0221c60b0170b96ceec6ca369455f9ba2936f3e6d7530765100e46dbe1b2",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials.csv": "6babdec81e2e2713a09f1b7525f6920eaeebbd18a0c13da5264e17982e6b150f",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000000.json": "ede127d72b0c357ec36b44d0562a136d4258107287ae0165f21fd533ae7bd6c8",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000001.json": "fcd308f2f1c72c035a8e9a47814cea1d35442816f600688bb515fb7bbf7cb22e",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000002.json": "92685f9548d1e8335f1f6db7ba750b945347e5bd040101c134aac16b510299b1",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000003.json": "d7ce72c47dd29eb47fd66a17553bb4bc342861b0206365111676410b24620938",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000004.json": "3407d3d00b3f35664d8f5e63a268a113cb5e6eeeb47e23e958b68a59cea2c2a7",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000005.json": "fd24f6cf786f7b90fc223aab8e76917d74585afda8d28c395b3452fc96e3280e",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000006.json": "f75ae3892a9c2d9112cea805e81d76a4a1f41140f9a9819c56fb3ef81ba160a8",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000007.json": "d54799ec43a7ce6e95293a9b0c9d70991c1aad8542ddfba1c1950629f927e562",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000008.json": "7c1d2a7290e97d987b363a8e91160e7c3dcbf134fe25c83b663e5bc322d3c1b2",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000009.json": "7d4207bf797bbd7962fa53cd016572533a22440c7861b540c3b92fd5afa5390b",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000010.json": "09e312829bfec55917c761f564a3db43ae79965b1b88aed647b20740cf4dae6c",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000011.json": "e2c1373dc69cd38d223ffed87f2100c0ab3896eed3d61233c07b8fc20d4122cb",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000012.json": "726f800bd05a1213f09ed7ca5a0deb5765aec20969d78a276a7b562350b2091e",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000013.json": "857069eb63ba3b547c86b7cfbd40480261732b3d4ae752f5669d055350961639",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000014.json": "b6afb07f66efeb70334a10d7f3b588a003ad354b7c7fbfe1662c6bdab365cedc",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000015.json": "6d12a1a51a578b6b577e66b0973f1760af54d3a96a13a7e3f31e2e385b50f3a9",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000016.json": "a80fd8f66c2472ab850c4ee2c61d228f5fe4f51d9b19a04743cf3df461a55e2a",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000017.json": "617639e64a63beeb3ffee652f0fd0d990ce64b969ebd4d945486c01cd86373e1",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000018.json": "adaa2d42bb179cf949c9f82cd47f4cdcb53cdce39588aac354f6dad54dee2f40",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000019.json": "dc97128cb1b095c9234b91b569b93531703545143d8d82698dd4cf9a9dcbf661",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000020.json": "8e0dcb1a392eda1c264cd669061722786bb08ea5e0cd1623b28a84464410e4db",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000021.json": "630487fa732c099252547c9821581cf6d97b227d3f08159585a2c9685045b7f4",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000022.json": "d5f21ba59b88d22c59e11b4a3a9dace522d1ed1a030f1f8d71051cedfb543e56",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000023.json": "79821ceaf327a71c7b32a6b066a88f5e9b842a87ec3cd4048c12597b64b9c039",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000025.json": "cd03d61eaf529142784eb42c9337ffe200c9bb029302b0397cab26ecedf4ca3d",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000028.json": "9480854344a039c569f0091ebdcc740547039460ba102b1cd5ff6549f65169ad",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000029.json": "6aed5e8a136368fb7991e35d0738445938315f77d6b1330cb87d645c10c220b4",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000030.json": "e97504179fa0a96043695d88b8b0db5e004061ec8d5d0aa132ca2cf38adaf458",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000031.json": "3085d8f154a74c561654d345bd094c847e5f84057c46639fb51dd21f30c1fe60",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000032.json": "2f8199bb5432ec17fc34891e86129933293333350a2b1a80c26b8b435ccd8f22",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000035.json": "3af8cb9636b30e9257566ca778e0742df4cfdf3a22542afa23dd236f026e54fa",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000037.json": "bfdf4f18905c9bcdf5d8babdb07ac173c1e1b6240de89160594643045294dd19",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000038.json": "3181e5acb02fc5e2df22b2863124fedb351a22637efd34e0084d0956814ec6de",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000039.json": "5fbde363692fe3bbf2b56becad9b81c87d3052ee706c80aa8f52307ca1009d9d",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000040.json": "7d9b64b000d6161720e7528194f80e15ae41280d7c82b3e94e96800e2fc516da",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000041.json": "f442b432ae7b26443d27742b299d95912aa0c3e521f28581df9a26ea57c8da54",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000043.json": "4035ca6332fbb44dc8f633d94772c22157b445c832aecf61f27057530cea93b2",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000044.json": "9ccf29f99b3b591025a2b2e2f0cdad92989b99b06ffdc95b99b7e7d31381a96e",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000045.json": "04e89b71c2f874298807ba328eca5cd3fb324cc4f0105f9cef401496dbaf1ca2",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000046.json": "cf8a464b6c3be69ba7ccb900f92d356e7c8c270f365cc3ad1dc88f1595fb9660",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000047.json": "b3303b8ce6e0f7fccacb25b28d1543adb18b557ad57b05e877eaa22e7b881a5a",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000048.json": "4cc88b6dacd49241cc8e52323de8a9c1a70db64f45022e58aef924a46a2ab04a",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000049.json": "33cf02080ad3479abef4833c71c7f42943f9ab3e54de74a3432eaf30abe42473",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000050.json": "8e1a13d45d18a1ded167203c52e02cf97602e692ab7c5cdd3ff779854d5328df",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000051.json": "7931ffbbe5dd7c6f68f4c925e21eba1f4c599d0a4699c28cf2701e443ff02cc7",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000052.json": "503cf064966d2f17ef9b16b5cac6926a42d4a98ea498c2a69602f95473a354f8",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000053.json": "0a3776e6c7ed0862b65c864eb05ab81bb9981724de94a074c733091fbfe84527",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000054.json": "f7be9f8c5fd5e032b2cad961f8b6214f81cb263223b99a3923e56acbe40e9404",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000055.json": "dc539a89755561fc0cb945537b36f9d1eadf70ec05dd5e3e5bdbb48677035849",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000056.json": "40046cd366b5d8bdaf636f15b079c1720bb52876500bc0bc9a9c747c2afb8e03",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000057.json": "5f6dc5522ea10a7c86598dcce71c422af07f3f71a009c295ed49be6ab5659051",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000058.json": "818eaee86a9e8280b89a1c6f24ea95e11cc78d42e49a8487993c21169c469fb7",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000059.json": "2117c7ba8d3801c392b9d63204fd42aefe502a906d75429496db8d3c285eb716",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000060.json": "1cf927da04a03430d3b59f68b5d03bc5ec10e90f2cfabd3699e36271a19b39b6",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000062.json": "1a96927511ba34addf4353c093fa45500ee7a335d8a74fa26337d28483f73005",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000063.json": "fab42a99c1cd7767fdb7a09140824058425ccd0310ae6fe684e492b39d759781",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000064.json": "454f73fb7ecef1b427b71169e3fc442d60dde107cb1ec24fd378534ba7ee8087",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000065.json": "5f41a5c26cb74ac92b5c44beef7aa26ef479a9bed24857a3b806547045566638",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000066.json": "832d25eb1a35476e757986f49f604f8364b6ec423c0dbda1598ce1e3a9165c8c",
+  "data/output/hyperparameters_tuning/vns_vnd/vns_vnd_tpe_v7/trials/trial_000068.json": "210e5ac56f6da52ef6695ef7c311b02bd04e2f7991e93ed99af44e359068ec05"
+ }
+}
