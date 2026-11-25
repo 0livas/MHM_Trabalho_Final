@@ -888,3 +888,21 @@ Abra `data/output/dashboard/index.html` diretamente em um navegador; o arquivo �
 Para atualizar os resultados após novas execuções, use `python src/build_dashboard.py`. Na primeira geração sem o texto extraído preservado, forneça `--article "caminho/Peerj-cs-2022-UPMSP.pdf"` (requer `pypdf`). A geração lê as evidências existentes, sem executar ou alterar os algoritmos. Os CSVs e `fontes.json` permitem conferir as fontes; `analise.txt` contém o texto entregue e deve ser revisto se os resultados forem atualizados.
 
 A opção inicial usa a referência da campanha original para comparar os dois VNS/VND. A versão corrigida tem seus indicadores geométricos recalculados nessa mesma referência; seus resultados na normalização original permanecem em protocolo separado. A correção foi necessária porque o construtor original falhava na primeira instância giant de 750 tarefas e dez máquinas. Falhas, execuções com fronteira e comprovação de completude são informações distintas. O artigo não disponibiliza coordenadas de todas as curvas no PDF, e as fronteiras ausentes não são reconstruídas visualmente.
+
+## 10. Interpretação final
+
+```bash
+python src/interpretacao_final.py
+```
+
+O script compara os seis algoritmos da campanha (DP própria, ociosidade, AGE-MOEA, SPEA2, MOEA/D e VNS/VND corrigido) nas nove instâncias, sem executar solvers, e grava CSVs, `figuras/` e `tabelas/` (LaTeX, requer `booktabs` e `graphicx`) em `data/output/interpretacao_final/`. O VNS/VND original não participa do ranking nem da formação das fronteiras. CP-SAT, backtracking e a construtiva ficam fora por não integrarem a campanha.
+
+| Métrica (maior é melhor) | Definição |
+| --- | --- |
+| Hipervolume | Referência publicada em `experiments/metrics/reference_fronts.json`, caixa 1,1. |
+| Participação | Pontos da solução em P* divididos por todos os pontos de P*; P* é a frente não dominada da união de todas as soluções da instância. |
+| Rank ponderado | `z = (1/N) Σ (R + 1 − rank(ponto))`, com as R fronteiras obtidas por remoção sucessiva. Entre instâncias usa-se `z/R`. |
+
+Cada execução é uma solução; o ranking usa a média das 30 execuções e atribui a posição média aos empates. `ranking_geral.csv` tem dois escopos: `nao_exatos` (cinco métodos, nove instâncias) e `com_exato` (seis métodos, as duas instâncias com fronteira provada). Em `por_instancia.csv`, a vantagem do 1º sobre o 2º fica vazia quando o segundo vale zero. `uniao_30.csv` mede a união das execuções de cada algoritmo e não entra no ranking.
+
+**Limitações:** HV zero indica frente fora da caixa de referência, e não ausência de solução: as quatro metaheurísticas empatam em zero nas duas instâncias de 750 tarefas. A referência do HV foi formada com o VNS original e difere de P* na instância de 14 tarefas. Da instância de 14 tarefas em diante, P* é empírica. `z/R` não penaliza frentes pequenas. As diferenças são descritivas; não há teste de significância nesta etapa.
