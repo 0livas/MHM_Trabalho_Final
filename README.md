@@ -19,6 +19,19 @@ Abra `media/mhm/index.html` no Chrome ou Edge. No PowerShell, use `Start-Process
 
 O apêndice do player filtra [estatísticas de HV, Purity e Eq. 3.6](src/presentation/data/metrics_summary.csv) por instância e indicador. Os [resultados por execução](src/presentation/data/metrics_per_run.csv) e os [dados do replay VNS/VND](src/presentation/data/vns_trace.json) também podem ser consultados diretamente. O cálculo usa o ideal e o nadir da campanha original para o HV e a união das frentes observadas por instância para Purity e Eq. 3.6. Execuções sem frente aparecem com métricas indisponíveis.
 
+### Introdução animada
+
+O deck `introducao` explica o problema com uma fábrica simulada: 3 cenas, 10 trechos e 8 minutos de fala. O player fica em `media/introducao/index.html` e a fala no [roteiro da introdução](src/presentation/ROTEIRO_INTRODUCAO.md). Os números vêm da instância didática `src/presentation/data/didatica.dat`, resolvida pela DP do projeto; ela não é uma instância do artigo.
+
+```bash
+python src/presentation/apresentar.py --deck introducao --render --quality m
+python src/presentation/cenario.py --check
+```
+
+As animações da metodologia têm uma [diretriz por vídeo](src/presentation/diretrizes/00_GUIA_COMUM.md), para produção em sessões independentes. Seus decks já estão registrados em `apresentar.py`.
+
+Fora do Windows, as cenas usam a fonte Lato quando instalada, porque fontes mais largas ultrapassam as margens.
+
 Para renderizar uma única cena ou reproduzir a análise a partir dos dados arquivados:
 
 ```bash
