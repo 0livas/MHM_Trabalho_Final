@@ -5,7 +5,7 @@ from math import ceil
 from manim import (
     Create, DashedLine, Dot, FadeIn, FadeOut, GrowFromEdge, Indicate, LaggedStart, Line, Rectangle,
     ReplacementTransform, SurroundingRectangle, Transform, VGroup, ValueTracker,
-    always_redraw, linear, smooth, LEFT,
+    always_redraw, linear, smooth, LEFT, Arrow,
 )
 
 from fabrica import (
@@ -34,14 +34,27 @@ def quadro_objetivo():
     points = dots(axis, [FRENTE[0], FRENTE[-1]], GOLD, .12)
     names = VGroup(text("rápido", 24, GOLD).next_to(points[0], pos(1, 0), buff=.16),
                    text("barato", 24, GOLD).next_to(points[1], pos(0, 1), buff=.16))
-    question = VGroup(left(text("Como encontrar os", 32), 1.75, .85),
-                      left(text("melhores compromissos?", 32, GOLD, bold=True), 1.75, .30),
+    question = VGroup(left(text("Como encontrar os", 32, width=4.8), 1.75, .85),
+                      left(text("melhores compromissos?", 32, GOLD, width=4.8, bold=True), 1.75, .30),
                       left(text("Referência do problema", 21, MUTED), 1.75, -1.05),
                       left(text("Rego et al. (2022) · PeerJ CS 8:e844", 22, width=4.8), 1.75, -1.45))
     return VGroup(axis, labels), points, names, question
 
 
-class IntroFabrica(CenaContinua):
+class IntroducaoCalma(CenaContinua):
+    """Ritmo próprio da introdução, sem alterar os demais decks."""
+    total = 4
+
+    def play(self, *animations, **kwargs):
+        kwargs['run_time'] = max(1.0, kwargs.get('run_time', 1.0) * 1.4)
+        return super().play(*animations, **kwargs)
+
+    def hold(self):
+        super().hold()
+        self.wait(2.4)
+
+
+class IntroFabrica(IntroducaoCalma):
     chapter, number = "INTRODUÇÃO", 1
 
     def construct(self):
@@ -122,7 +135,7 @@ def celula(i, j, value, x=4.25, y=1.2, dx=.75, dy=.40, color=INK, bold=False):
     return text(str(value), 22, color, bold=bold).move_to(pos(x + j * dx, y - i * dy))
 
 
-class ProblemaMaquinas(CenaContinua):
+class ProblemaMaquinas(IntroducaoCalma):
     chapter, number = "O PROBLEMA", 2
 
     def construct(self):
@@ -154,11 +167,13 @@ class ProblemaMaquinas(CenaContinua):
                 alvo = celula(job, m, d, color=GREEN if m == melhor else INK, bold=m == melhor)
                 voo = text(f"{d} h", 22).next_to(viva, pos(1, 0), buff=.15)
                 self.play(FadeIn(voo), run_time=.25)
+                self.wait(2.0)
                 self.play(ReplacementTransform(voo, alvo), run_time=.6)
                 grupo.add(alvo)
             fim = EIXO.tarefa(job, melhor, origem, origem + valores[melhor])
             self.play(Transform(viva, fim), run_time=.7)
             self.play(Indicate(viva, color=GREEN), run_time=.6)
+            self.wait(2.5)
             barras.add(viva)
             linhas.add(grupo)
         resto = VGroup(*(VGroup(text(f"T{j + 1}", 21, CORES[j], bold=True).move_to(pos(3.5, 1.2 - .4 * j)),
@@ -169,7 +184,30 @@ class ProblemaMaquinas(CenaContinua):
         self.play(FadeIn(regra := text("verde · máquina mais rápida", 18, GREEN).move_to(pos(5.0, -2.25))), run_time=.4)
         self.hold()
 
-        self.beat("modos", "O modo troca velocidade por potência", barras, linhas, resto, cab, regra)
+        # Comparação parcial verificável: as mesmas duas tarefas, modo normal.
+        # M3 executa T1 em 3 h, mas T2 em 6 h. M2 executa T2 em 2 h.
+        self.play(FadeOut(barras), FadeOut(linhas), FadeOut(resto), FadeOut(cab), FadeOut(regra))
+        d1, d2 = DADOS['processing'][0][2], DADOS['processing'][1][2]
+        preparo = DADOS['setup'][2][0][1]
+        t1 = EIXO.tarefa(0, 2, 0, d1)
+        t2 = EIXO.tarefa(1, 2, d1+preparo, d1+preparo+d2)
+        setup = EIXO.caixa(2,d1,d1+preparo,.45,fill_color=MUTED,fill_opacity=.6)
+        fim = d1+preparo+d2
+        marco = DashedLine(pos(EIXO.at(fim),1.65),pos(EIXO.at(fim),-1.55),color=GOLD)
+        leitura = VGroup(text('Duas tarefas · modo normal',21,MUTED,width=3.5).move_to(pos(4.8,1.25)),
+                         text(f'Término: {fim} h',28,GOLD,width=3.5).move_to(pos(4.8,.4)),
+                         text('M2 está livre',24,CYAN).move_to(pos(4.8,-.5)))
+        self.play(FadeIn(t1),FadeIn(t2),FadeIn(setup),Create(marco),FadeIn(leitura),run_time=1.5)
+        self.wait(3)
+        novo = DADOS['processing'][1][1]
+        self.play(Transform(t2,EIXO.tarefa(1,1,0,novo)),FadeOut(setup),
+                  Transform(marco,DashedLine(pos(EIXO.at(max(d1,novo)),1.65),pos(EIXO.at(max(d1,novo)),-1.55),color=GOLD)),
+                  Transform(leitura[1],text(f'Término: {max(d1,novo)} h',28,GOLD,width=3.5).move_to(pos(4.8,.4))),
+                  Transform(leitura[2],text('As máquinas trabalham juntas',21,CYAN,width=3.5).move_to(pos(4.8,-.5))),run_time=2.8)
+        self.hold()
+        self.play(FadeOut(t1),FadeOut(t2),FadeOut(marco),FadeOut(leitura))
+
+        self.beat("modos", "O modo troca velocidade por potência")
         job, m = 4, 0
         base = DADOS["processing"][job][m]
         duracoes = [ceil(round(base / v, 9)) for v in DADOS["speed"]]
@@ -327,7 +365,7 @@ def quadro_ponta(cena):
     return itens, local
 
 
-class ProblemaSimulacao(CenaContinua):
+class ProblemaSimulacao(IntroducaoCalma):
     chapter, number = "O PROBLEMA EM EXECUÇÃO", 3
 
     def construct(self):
@@ -363,6 +401,7 @@ class ProblemaSimulacao(CenaContinua):
             if pre:
                 self.play(*pre, run_time=.4)
             self.play(ReplacementTransform(fila[j], alvo, path_arc=-.5), FadeIn(tripla), run_time=.9)
+            self.wait(1.8 if k < 3 else .7)
             tarefas[j] = alvo
             triplas.add(tripla)
         self.hold()
@@ -422,4 +461,99 @@ class ProblemaSimulacao(CenaContinua):
                         formula(r"\min\;(C_{\mathrm{max}},\;TEC)", 3.6, .38, GOLD).move_to(pos(4.6, -2.86)))
         self.play(FadeOut(self.tarifa), FadeOut(self.tarifa_rotulos), run_time=.4)
         self.play(LaggedStart(*(FadeIn(x, shift=pos(0, .12)) for x in modelo), lag_ratio=.35), run_time=1.3)
+        self.hold()
+
+
+class ObjetivosECaminhos(IntroducaoCalma):
+    chapter, number = "ESCOLHER E COMPARAR", 4
+
+    def construct(self):
+        self.abrir()
+        self.beat("maior_termino", "Minimizar o maior término")
+        _, trilhos, maquinas, horas, _, _ = self.base()
+        blocos = VGroup(*(EIXO.bloco(b) for b in MEIO['blocks']),
+                        *(EIXO.setup(b) for b in MEIO['blocks']),
+                        *(EIXO.espera(b) for b in MEIO['blocks']))
+        self.play(FadeIn(trilhos), FadeIn(maquinas), FadeIn(horas), FadeIn(blocos))
+        terminos = [max(b['end'] for b in MEIO['blocks'] if b['machine'] == i) for i in range(3)]
+        marcas = VGroup()
+        for i, fim in enumerate(terminos):
+            marca = VGroup(DashedLine(pos(EIXO.at(fim), FAIXAS[i]-.4),
+                                     pos(EIXO.at(fim), FAIXAS[i]+.4), color=CYAN),
+                           text(f"M{i+1}: {fim} h", 23, CYAN).move_to(pos(4.6, 1.2-i*.65)))
+            self.play(Create(marca[0]), FadeIn(marca[1]), run_time=1.2)
+            marcas.add(marca)
+            self.wait(2)
+        maior = terminos.index(max(terminos))
+        self.play(Indicate(marcas[maior], color=GOLD), run_time=1.4)
+        explicacao = VGroup(
+            text(f"Cmax = {max(terminos)} h", 31, GOLD, bold=True).move_to(pos(4.6,-1.25)),
+            text("máximo dentro do plano", 23, MUTED).move_to(pos(0,-2.35)),
+            text("mínimo entre os planos", 25, GOLD).move_to(pos(0,-2.85)))
+        self.play(FadeIn(explicacao[0]))
+        self.wait(2)
+        self.play(FadeIn(explicacao[1]))
+        self.wait(2)
+        self.play(FadeIn(explicacao[2]))
+        self.hold()
+
+        self.beat("minimizar", "Dois objetivos: menor é melhor", trilhos, maquinas, horas, blocos, marcas, explicacao)
+        axis, labels = plano_objetivos((-2.3,-.35), 6.8, 3.7)
+        pontos = dots(axis, FRENTE, GOLD, .09)
+        self.play(Create(axis), FadeIn(labels))
+        self.play(LaggedStart(*(FadeIn(p) for p in pontos), lag_ratio=.35), run_time=2.5)
+        horizontal = Arrow(pos(-.4,-2.85), pos(-4.5,-2.85), color=CYAN, buff=0)
+        vertical = Arrow(pos(1.65,1.2), pos(1.65,-1.8), color=GREEN, buff=0)
+        prazo = text("terminar mais cedo", 25, CYAN, width=4.2).move_to(pos(4.5,.9))
+        custo = text("pagar menos energia", 25, GREEN, width=4.2).move_to(pos(4.5,-.1))
+        self.play(Create(horizontal), FadeIn(prazo), Indicate(pontos[0], color=CYAN), run_time=2)
+        self.wait(3)
+        self.play(Create(vertical), FadeIn(custo), Indicate(pontos[-1], color=GREEN), run_time=2)
+        self.wait(3)
+        regra = text("minimizar (Cmax, TEC)", 25, GOLD, width=4.3).move_to(pos(4.5,-1.4))
+        self.play(FadeIn(regra))
+        self.hold()
+
+        self.beat("dominancia", "Quando podemos descartar um plano?", horizontal, vertical, prazo, custo, regra)
+        # Um plano viável: atrasar a última tarefa do plano econômico em 1 h,
+        # ainda fora da ponta e dentro do horizonte. Mantém o TEC e aumenta Cmax.
+        dominado = (BARATO['cmax']+1, BARATO['tec'])
+        ruim = Dot(axis.c2p(*dominado), color=CORAL, radius=.11)
+        seta = Arrow(ruim.get_center(), pontos[-1].get_center(), color=GREEN, buff=.12)
+        detalhe = VGroup(text("Mesmo custo", 28, GREEN).move_to(pos(4.5,1.1)),
+                         text("Uma hora a menos", 27, CYAN).move_to(pos(4.5,.35)),
+                         text("O plano atrasado é dominado", 22, MUTED, width=4.1).move_to(pos(4.5,-.6)))
+        self.play(FadeIn(ruim))
+        self.wait(3)
+        self.play(Create(seta), FadeIn(detalhe[0]), run_time=1.5)
+        self.wait(2)
+        self.play(FadeIn(detalhe[1]), Indicate(pontos[-1], color=GREEN))
+        self.wait(3)
+        self.play(ruim.animate.set_opacity(.2), FadeIn(detalhe[2]))
+        self.play(Create(curva := staircase(axis,FRENTE,GOLD)), run_time=2)
+        self.hold()
+
+        self.beat("caminhos", "Como procurar esses planos?", axis,labels,pontos,ruim,seta,detalhe,curva)
+        grupos = VGroup()
+        familias = [(-4.3,"EXATOS",GOLD,["Backtracking próprio","Programação dinâmica","CP-SAT / OR-Tools"],"Provar quando concluem"),
+                    (0,"HEURÍSTICAS",CYAN,["Construção ponderada","Modos e ociosidade"],"Construir e melhorar planos"),
+                    (4.3,"META-HEURÍSTICAS",GREEN,["VNS/VND · SPEA2","MOEA/D · AGE-MOEA"],"Explorar novas alternativas")]
+        for x,nome,cor,metodos,papel in familias:
+            caixa=Rectangle(width=4.0,height=3.5,stroke_color=cor,fill_color=cor,fill_opacity=.04).move_to(pos(x,.15))
+            grupo=VGroup(caixa,text(nome,24,cor,width=3.7,bold=True).move_to(pos(x,1.45)))
+            self.play(Create(caixa),FadeIn(grupo[1]),run_time=1.2)
+            for j,metodo in enumerate(metodos):
+                item=text(metodo,23,width=3.65).move_to(pos(x,.65-j*.55))
+                grupo.add(item)
+                self.play(FadeIn(item),run_time=.8)
+            legenda=text(papel,20,cor,width=3.65).move_to(pos(x,-1.15))
+            grupo.add(legenda)
+            self.play(FadeIn(legenda))
+            self.wait(3)
+            grupos.add(grupo)
+        comum=text("Mesmas restrições · mesmo avaliador · dois objetivos",25,GOLD,width=12).move_to(pos(0,-2.3))
+        self.play(FadeIn(comum))
+        self.wait(3)
+        proximo=text("A seguir: acompanhar as decisões de cada método",23,MUTED,width=12).move_to(pos(0,-2.9))
+        self.play(FadeIn(proximo))
         self.hold()

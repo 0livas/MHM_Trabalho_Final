@@ -21,7 +21,7 @@ O apêndice do player filtra [estatísticas de HV, Purity e Eq. 3.6](src/present
 
 ### Introdução animada
 
-O deck `introducao` explica o problema com uma fábrica simulada: 3 cenas, 10 trechos e 8 minutos de fala. O player fica em `media/introducao/index.html` e a fala no [roteiro da introdução](src/presentation/ROTEIRO_INTRODUCAO.md). Os números vêm da instância didática `src/presentation/data/didatica.dat`, resolvida pela DP do projeto; ela não é uma instância do artigo.
+O deck `introducao` explica o problema com uma fábrica simulada: 4 cenas, 14 trechos e 11 minutos e 30 segundos de fala. O player fica em `media/introducao/index.html` e a fala no [roteiro da introdução](src/presentation/ROTEIRO_INTRODUCAO.md). Os números vêm da instância didática `src/presentation/data/didatica.dat`, resolvida pela DP do projeto; ela não é uma instância do artigo.
 
 ```bash
 python src/presentation/apresentar.py --deck introducao --render --quality m

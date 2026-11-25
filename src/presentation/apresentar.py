@@ -20,8 +20,8 @@ BEAT = re.compile(r"^### (\d\d:\d\d) · `([a-z0-9_]+)`$", re.MULTILINE)
 DECKS = {
     "completo": dict(file="apresentacao", scenes=SCENES, notes="ROTEIRO.md", seconds=1800, media="mhm",
                      title="MHM — apresentação e resultados", appendix=True),
-    "introducao": dict(file="introducao", scenes=("IntroFabrica", "ProblemaMaquinas", "ProblemaSimulacao"),
-                       notes="ROTEIRO_INTRODUCAO.md", seconds=480, media="introducao",
+    "introducao": dict(file="introducao", scenes=("IntroFabrica", "ProblemaMaquinas", "ProblemaSimulacao", "ObjetivosECaminhos"),
+                       notes="ROTEIRO_INTRODUCAO.md", seconds=690, media="introducao",
                        title="MHM — introdução e problema", appendix=False),
     # Metodologia: um deck por sessão de trabalho; ver diretrizes/.
     "exato": dict(file="anim_exato", scenes=("ExatoEstados", "ExatoEscada"),
