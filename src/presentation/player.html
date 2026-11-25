@@ -74,6 +74,10 @@
   let current = 0;
   let epoch = null;
   const clips = deck.clips;
+  const ahead = document.createElement('video');
+  ahead.preload = 'auto';
+  document.title = deck.title;
+  if (!deck.appendix) document.querySelectorAll('details').forEach(node => { node.hidden = true; });
   const option = (value, label) => new Option(label, value);
   const time = elapsed => `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
 
@@ -101,6 +105,7 @@
     const clip = clips[index];
     ui.error.hidden = true;
     ui.slide.src = clip.url;
+    if (clips[index + 1]) ahead.src = clips[index + 1].url;
     ui.section.value = index;
     ui.prev.disabled = index === 0;
     ui.next.disabled = index === clips.length - 1;
