@@ -1,0 +1,46 @@
+% Requer \usepackage{booktabs,graphicx}
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Posição média (1 é a melhor), vitórias isoladas, empates no topo e razão média para o melhor.}
+\label{tab:ranking}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lllrrrrr}
+\toprule
+Escopo & Métrica & Algoritmo & Inst. & Posição & Vitórias & Empates & Razão \\
+\midrule
+Não exatos & Hipervolume & Ociosidade & 9 & 1.44 & 8 & 0 & 0.998 \\
+Não exatos & Hipervolume & AGE-MOEA & 9 & 2.33 & 0 & 0 & 0.531 \\
+Não exatos & Hipervolume & SPEA2 & 9 & 3.00 & 1 & 0 & 0.513 \\
+Não exatos & Hipervolume & MOEA/D & 9 & 3.78 & 0 & 0 & 0.490 \\
+Não exatos & Hipervolume & VNS revisto & 9 & 4.44 & 0 & 0 & 0.429 \\
+Não exatos & Participação na melhor fronteira & Ociosidade & 9 & 1.67 & 7 & 0 & 0.850 \\
+Não exatos & Participação na melhor fronteira & AGE-MOEA & 9 & 3.00 & 1 & 0 & 0.220 \\
+Não exatos & Participação na melhor fronteira & SPEA2 & 9 & 3.11 & 1 & 0 & 0.193 \\
+Não exatos & Participação na melhor fronteira & VNS revisto & 9 & 3.44 & 0 & 0 & 0.076 \\
+Não exatos & Participação na melhor fronteira & MOEA/D & 9 & 3.78 & 0 & 0 & 0.066 \\
+Não exatos & Rank ponderado (z/R) & Ociosidade & 9 & 1.56 & 7 & 0 & 0.985 \\
+Não exatos & Rank ponderado (z/R) & AGE-MOEA & 9 & 2.22 & 1 & 0 & 0.791 \\
+Não exatos & Rank ponderado (z/R) & SPEA2 & 9 & 2.89 & 1 & 0 & 0.740 \\
+Não exatos & Rank ponderado (z/R) & VNS revisto & 9 & 3.89 & 0 & 0 & 0.570 \\
+Não exatos & Rank ponderado (z/R) & MOEA/D & 9 & 4.44 & 0 & 0 & 0.597 \\
+Com exato & Hipervolume & DP própria & 2 & 1.00 & 2 & 0 & 1.000 \\
+Com exato & Hipervolume & AGE-MOEA & 2 & 3.00 & 0 & 0 & 0.994 \\
+Com exato & Hipervolume & SPEA2 & 2 & 3.00 & 0 & 0 & 0.993 \\
+Com exato & Hipervolume & Ociosidade & 2 & 4.00 & 0 & 0 & 0.986 \\
+Com exato & Hipervolume & MOEA/D & 2 & 4.50 & 0 & 0 & 0.979 \\
+Com exato & Hipervolume & VNS revisto & 2 & 5.50 & 0 & 0 & 0.970 \\
+Com exato & Participação na melhor fronteira & DP própria & 2 & 1.00 & 2 & 0 & 1.000 \\
+Com exato & Participação na melhor fronteira & AGE-MOEA & 2 & 2.50 & 0 & 0 & 0.449 \\
+Com exato & Participação na melhor fronteira & SPEA2 & 2 & 2.50 & 0 & 0 & 0.431 \\
+Com exato & Participação na melhor fronteira & VNS revisto & 2 & 4.50 & 0 & 0 & 0.191 \\
+Com exato & Participação na melhor fronteira & Ociosidade & 2 & 5.00 & 0 & 0 & 0.233 \\
+Com exato & Participação na melhor fronteira & MOEA/D & 2 & 5.50 & 0 & 0 & 0.177 \\
+Com exato & Rank ponderado (z/R) & DP própria & 2 & 1.00 & 2 & 0 & 1.000 \\
+Com exato & Rank ponderado (z/R) & AGE-MOEA & 2 & 2.50 & 0 & 0 & 0.933 \\
+Com exato & Rank ponderado (z/R) & SPEA2 & 2 & 3.00 & 0 & 0 & 0.921 \\
+Com exato & Rank ponderado (z/R) & Ociosidade & 2 & 4.50 & 0 & 0 & 0.871 \\
+Com exato & Rank ponderado (z/R) & MOEA/D & 2 & 5.00 & 0 & 0 & 0.795 \\
+Com exato & Rank ponderado (z/R) & VNS revisto & 2 & 5.00 & 0 & 0 & 0.767 \\
+\bottomrule
+\end{tabular}}
+\end{table}

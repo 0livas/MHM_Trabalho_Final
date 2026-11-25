@@ -1,0 +1,22 @@
+% Requer \usepackage{booktabs,graphicx}
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Rank ponderado $z$, de máximo $R$ em cada instância. Média e desvio das execuções; melhor em negrito; -- indica ausência de frente; * instância derivada.}
+\label{tab:rank}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrrr}
+\toprule
+Instância & $R$ & DP própria & Ociosidade & AGE-MOEA & SPEA2 & MOEA/D & VNS revisto \\
+\midrule
+6\_2\_3\_S\_1-9 & 17 & \textbf{17.00} & 14.41 & 16.32 $\pm$ 0.32 & 16.38 $\pm$ 0.29 & 14.68 $\pm$ 0.83 & 14.86 $\pm$ 1.14 \\
+10\_2\_3\_S\_1-9 & 72 & \textbf{72.00} & 64.42 & 65.23 $\pm$ 2.11 & 63.30 $\pm$ 2.38 & 52.29 $\pm$ 4.27 & 47.59 $\pm$ 6.24 \\
+14\_2\_3\_S\_1-9* & 73 & -- & \textbf{72.40} & 58.81 $\pm$ 3.57 & 56.83 $\pm$ 4.33 & 50.03 $\pm$ 4.08 & 30.84 $\pm$ 6.12 \\
+50\_10\_5\_S\_1-9 & 86 & -- & \textbf{85.99} & 67.86 $\pm$ 8.78 & 63.29 $\pm$ 9.11 & 55.36 $\pm$ 8.99 & 37.08 $\pm$ 7.38 \\
+50\_20\_5\_S\_1-124 & 43 & -- & \textbf{43.00} & 27.38 $\pm$ 5.86 & 26.78 $\pm$ 5.96 & 20.91 $\pm$ 4.54 & 23.24 $\pm$ 6.76 \\
+250\_10\_5\_S\_1-9 & 82 & -- & \textbf{82.00} & 69.88 $\pm$ 6.52 & 60.38 $\pm$ 8.82 & 34.27 $\pm$ 7.39 & 39.07 $\pm$ 8.83 \\
+250\_20\_5\_S\_1-124 & 49 & -- & \textbf{49.00} & 30.10 $\pm$ 6.03 & 29.35 $\pm$ 7.29 & 27.86 $\pm$ 5.62 & 37.90 $\pm$ 6.15 \\
+750\_10\_5\_S\_1-9 & 87 & -- & \textbf{87.00} & 75.89 $\pm$ 6.35 & 54.61 $\pm$ 7.00 & 29.67 $\pm$ 7.86 & 13.36 $\pm$ 6.80 \\
+750\_20\_5\_S\_1-124 & 47 & -- & \textbf{47.00} & 25.72 $\pm$ 8.02 & 27.61 $\pm$ 8.01 & 24.64 $\pm$ 5.31 & 32.53 $\pm$ 9.13 \\
+\bottomrule
+\end{tabular}}
+\end{table}
